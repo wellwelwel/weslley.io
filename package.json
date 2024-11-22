@@ -2,12 +2,12 @@
   "type": "module",
   "scripts": {
     "build": "npm run build:clean && npm run build:html && npm run build:scss && npm run build:images",
-    "build:clean": "rm -rf dist",
+    "build:clean": "rm -rf docs",
     "build:html": "bun Render.tsx",
-    "build:scss": "sass --no-source-map --style compressed --update src/styles:dist/styles && postcss --no-map dist/styles/*.css --use autoprefixer -d dist/styles/",
-    "build:images": "mkdir -p dist/images && cp -R src/images/. dist/images",
+    "build:scss": "sass --no-source-map --style compressed --update src/styles:docs/styles && postcss --no-map docs/styles/*.css --use autoprefixer -d docs/styles/",
+    "build:images": "mkdir -p docs/images && cp -R src/images/. docs/images",
     "watch:html": "nodemon --ext ts,tsx --exec 'npm run build' --watch src",
-    "watch:scss": "sass --no-source-map --style compressed --watch src/styles:dist/styles",
+    "watch:scss": "sass --no-source-map --style compressed --watch src/styles:docs/styles",
     "watch:images": "nodemon --watch src/images --exec 'npm run build:images'",
     "watch": "nodemon --config nodemon.json"
   },

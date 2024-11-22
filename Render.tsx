@@ -6,5 +6,5 @@ import { App } from './src/App.js';
 const app = renderToStaticMarkup(<App />);
 const html = `<!DOCTYPE html>${app}`;
 
-await mkdir('dist', { recursive: true });
-await writeFile('dist/index.html', html, 'utf-8');
+await mkdir('docs', { recursive: true });
+await writeFile('docs/index.html', html, 'utf-8');
