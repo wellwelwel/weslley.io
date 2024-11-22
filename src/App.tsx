@@ -1,12 +1,12 @@
 import React from 'react';
 import Card from './components/Card.js';
-import { Star } from 'lucide-react';
 
 export const App = () => (
   <html lang='pt-BR'>
     <head>
       <meta name='viewport' content='width=device-width, initial-scale=1.0' />
       <meta charSet='UTF-8' />
+      <link rel='shortcut icon' href='/favicon.ico' type='image/x-icon' />
       <link rel='stylesheet' href='/styles/reset.css' />
       <link rel='stylesheet' href='/styles/main.css' />
       <title>Weslley Araújo: Links</title>
@@ -57,7 +57,7 @@ export const App = () => (
         </nav>
         <nav>
           <h2>
-            <img src="/images/star.svg" alt="Ícone de Estrela" />
+            <img src='/images/star.svg' alt='Ícone de Estrela' />
             Principais Projetos
           </h2>
           <Card
@@ -80,7 +80,11 @@ export const App = () => (
           />
         </nav>
         <small>
-          <a href='#' target='_blank' rel='noopener noreferrer'>
+          <a
+            href='https://github.com/wellwelwel/weslley.io'
+            target='_blank'
+            rel='noopener noreferrer'
+          >
             <img src='/images/hands.svg' alt='Cumprimento de mãos' />
             <span>Veja como esse site foi criado</span>
           </a>
