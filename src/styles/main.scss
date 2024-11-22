@@ -3,12 +3,17 @@ $mobile: 630px;
 
 body {
   min-width: 320px;
+  padding: 50px;
   background-image: linear-gradient(
     90deg,
     #c9c0ff 0%,
     #c9c6ff 35%,
     #a9b1ff 100%
   );
+
+  @media (max-width: $mobile) {
+    padding: 0;
+  }
 
   &::before {
     content: '';
@@ -169,7 +174,8 @@ body {
         font-weight: 400;
         color: #6f84ff;
 
-        svg, img {
+        svg,
+        img {
           width: 24px;
         }
       }
