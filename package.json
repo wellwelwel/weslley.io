@@ -11,6 +11,7 @@
     "watch:images": "nodemon --watch src/images --exec 'npm run build:images'",
     "watch": "nodemon --config nodemon.json"
   },
+  "license": "AGPL-3.0-only",
   "devDependencies": {
     "@types/node": "^22.9.1",
     "@types/react": "^18.3.12",
