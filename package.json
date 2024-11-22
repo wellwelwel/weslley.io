@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "npm run build:clean && npm run build:html && npm run build:scss && npm run build:images",
+    "build": "npm run build:clean && npm run build:html && npm run build:scss && npm run build:images && cp -R src/CNAME docs/CNAME",
     "build:clean": "rm -rf docs",
     "build:html": "bun Render.tsx",
     "build:scss": "sass --no-source-map --style compressed --update src/styles:docs/styles && postcss --no-map docs/styles/*.css --use autoprefixer -d docs/styles/",
