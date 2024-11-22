@@ -1,0 +1,5 @@
+{
+  "watch": ["src"],
+  "ext": "ts,tsx,scss,jpg,jpeg,png,gif,svg",
+  "exec": "npm run build:html && npm run build:scss && npm run build:images"
+}

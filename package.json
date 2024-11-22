@@ -1,0 +1,30 @@
+{
+  "type": "module",
+  "scripts": {
+    "build": "npm run build:clean && npm run build:html && npm run build:scss && npm run build:images",
+    "build:clean": "rm -rf dist",
+    "build:html": "bun Render.tsx",
+    "build:scss": "sass --no-source-map --style compressed --update src/styles:dist/styles && postcss --no-map dist/styles/*.css --use autoprefixer -d dist/styles/",
+    "build:images": "mkdir -p dist/images && cp -R src/images/. dist/images",
+    "watch:html": "nodemon --ext ts,tsx --exec 'npm run build' --watch src",
+    "watch:scss": "sass --no-source-map --style compressed --watch src/styles:dist/styles",
+    "watch:images": "nodemon --watch src/images --exec 'npm run build:images'",
+    "watch": "nodemon --config nodemon.json"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "autoprefixer": "^10.4.20",
+    "lucide-react": "^0.460.0",
+    "nodemon": "^3.1.7",
+    "postcss": "^8.4.49",
+    "postcss-cli": "^11.0.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass": "^1.81.0"
+  },
+  "browserslist": [
+    "> 0%"
+  ]
+}
