@@ -11,8 +11,10 @@ export const App = () => (
       <link rel='stylesheet' href='/styles/main.css' />
       <title>Weslley Araújo: Links</title>
       <link rel='preconnect' href='https://fonts.googleapis.com' />
+      <link rel='preconnect' href='https://fonts.googleapis.com' />
+      <link rel='preconnect' href='https://fonts.gstatic.com' crossOrigin='' />
       <link
-        href='https://fonts.googleapis.com/css2?family=family=Poppins:wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&display=swap'
+        href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap'
         rel='stylesheet'
       />
     </head>
