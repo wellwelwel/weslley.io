@@ -1,0 +1,185 @@
+@import 'mixins';
+
+$mainColor: #6f65ff;
+$mobile: 630px;
+
+#projects,
+#about,
+#contacts {
+  padding: 20px;
+  padding-bottom: 10px;
+
+  @media (max-width: $mobile) {
+    padding: 0;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &,
+  & > main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+
+  & > main {
+    position: relative;
+    gap: 45px;
+    padding: 40px;
+    padding-top: 30px;
+
+    @media (max-width: $mobile) {
+      justify-content: flex-start;
+      width: 100%;
+      padding-inline: 25px;
+      border-radius: 0;
+    }
+
+    & > header {
+      @include flex(row, flex-end, space-between, wrap);
+
+      h1 {
+        font-family: 'Noto Sans', serif;
+        font-optical-sizing: auto;
+        font-variation-settings: 'wdth' 100;
+        border-bottom: 5px solid #5448ff;
+      }
+
+      img {
+        height: 128px;
+      }
+
+      small {
+        display: block;
+        min-width: 100%;
+        font-weight: 400;
+        font-size: 14px;
+        color: #625da4;
+      }
+    }
+
+    & > * {
+      width: 100%;
+      max-width: 860px;
+    }
+
+    nav {
+      padding: 25px 50px;
+      border: 1px solid #d7dcff;
+      border-radius: 15px;
+      background-color: #ffffff6a;
+
+      @media (max-width: $mobile) {
+        padding: 25px;
+      }
+
+      & > section {
+        h2 {
+          font-size: 20px;
+          font-weight: 600;
+          color: #3f3996;
+        }
+
+        p,
+        & > div {
+          font-size: 14.5px;
+          color: #655ebf;
+
+          a {
+            font-weight: 600;
+
+            &:hover {
+              color: #3f3996;
+            }
+          }
+
+          .container {
+            overflow-x: auto;
+
+            table {
+              min-width: 540px;
+            }
+          }
+        }
+
+        & > img {
+          border-radius: 10px;
+          box-shadow: 2.5px 2.5px 5px #22213d56;
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
+
+        & > footer {
+          margin-top: 20px;
+          width: max-content;
+
+          a {
+            @include flex(row, center, flex-start);
+            gap: 10px;
+            padding: 12.5px 20px;
+            border-radius: 7.5px;
+            background-color: #6f65ff;
+            color: #b5b0fb;
+            transition: background-color 0.15s;
+
+            p {
+              font-size: 13px;
+              color: #edecfa;
+            }
+
+            svg {
+              min-width: 28px;
+              min-height: 28px;
+            }
+
+            &:hover {
+              background-color: #493eea;
+            }
+          }
+        }
+
+        & + section {
+          margin-top: 40px;
+        }
+      }
+    }
+  }
+}
+
+#projects {
+  & > main {
+    & > * {
+      max-width: 1366px;
+    }
+
+    & > .container {
+      @include flex(row, stretch, center, wrap);
+      gap: 25px 50px;
+
+      nav {
+        min-width: 310px;
+        width: 100%;
+        max-width: 480px;
+
+        section {
+          @include flex(column, flex-start, flex-start);
+          height: 100%;
+          flex-grow: 1;
+
+          p {
+            flex-grow: 1;
+          }
+        }
+      }
+
+      & > small {
+        margin-top: 20px;
+        text-align: center;
+      }
+    }
+  }
+}

@@ -1,10 +1,11 @@
-import React from 'react';
-import { ArrowRight } from 'lucide-react';
+import React, { ReactNode } from 'react';
+import { ExternalLink } from 'lucide-react';
+import Link from '@docusaurus/Link';
 
 type CardOptions = {
   icon: string;
   name: string;
-  description: string;
+  description: ReactNode;
   href: string;
   alt?: string;
 };
@@ -17,14 +18,14 @@ const Card: React.FC<CardOptions> = ({
   description,
 }) => {
   return (
-    <a href={href} target='_blank' rel='noopener noreferrer'>
-      <img loading='lazy' src={`/images/${icon}.svg`} alt={alt} title={alt} />
+    <Link to={href} target='_blank' rel='noopener noreferrer'>
+      <img loading='lazy' src={`/img/${icon}.svg`} alt={alt} title={alt} />
       <p>
         <strong>{name}</strong>
         <span>{description}</span>
       </p>
-      <ArrowRight />
-    </a>
+      <ExternalLink />
+    </Link>
   );
 };
 

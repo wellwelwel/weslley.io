@@ -1,35 +1,63 @@
 {
-  "type": "module",
-  "scripts": {
-    "build": "npm run build:clean && npm run build:html && npm run build:scss && npm run build:images && cp -R src/CNAME docs/CNAME",
-    "build:clean": "rm -rf docs",
-    "build:html": "bun Render.tsx",
-    "build:scss": "sass --no-source-map --style compressed --update src/styles:docs/styles && postcss --no-map docs/styles/*.css --use autoprefixer -d docs/styles/",
-    "build:images": "mkdir -p docs/images && cp -R src/images/. docs/images && cp -R src/favicon.ico docs/favicon.ico",
-    "watch:html": "nodemon --ext ts,tsx --exec 'npm run build' --watch src",
-    "watch:scss": "sass --no-source-map --style compressed --watch src/styles:docs/styles",
-    "watch:images": "nodemon --watch src/images --exec 'npm run build:images'",
-    "watch": "nodemon --config nodemon.json"
-  },
-  "devDependencies": {
-    "@types/node": "^22.9.1",
-    "@types/react": "^18.3.12",
-    "@types/react-dom": "^18.3.1",
-    "autoprefixer": "^10.4.20",
-    "lucide-react": "^0.460.0",
-    "nodemon": "^3.1.7",
-    "postcss": "^8.4.49",
-    "postcss-cli": "^11.0.0",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "sass": "^1.81.0"
-  },
-  "browserslist": [
-    "> 0%"
-  ],
+  "name": "weslley-io",
+  "version": "0.1.0",
+  "license": "AGPL-3.0-only",
   "funding": {
     "type": "github",
     "url": "https://github.com/sponsors/wellwelwel"
   },
-  "license": "AGPL-3.0-only"
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "start": "docusaurus start",
+    "start:br": "docusaurus start --locale pt-BR",
+    "build": "docusaurus build",
+    "swizzle": "docusaurus swizzle",
+    "clear": "docusaurus clear",
+    "preview": "npm run build && docusaurus serve",
+    "write-translations": "docusaurus write-translations",
+    "write-heading-ids": "docusaurus write-heading-ids",
+    "typecheck": "tsc",
+    "lint": "prettier --check .",
+    "lint:fix": "prettier --write .",
+    "update": "pu minor && npm i && (npm audit fix || true)",
+    "postupdate": "npm run lint:fix"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@docusaurus/core": "^3.7.0",
+    "@docusaurus/module-type-aliases": "3.7.0",
+    "@docusaurus/preset-classic": "3.7.0",
+    "@docusaurus/tsconfig": "3.7.0",
+    "@docusaurus/types": "3.7.0",
+    "@mdx-js/react": "^3.1.0",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "docusaurus-plugin-sass": "^0.2.6",
+    "jsonc.min": "^1.1.0",
+    "lucide-react": "^0.469.0",
+    "packages-update": "^2.0.0",
+    "poku": "^2.7.1",
+    "prettier": "^3.4.2",
+    "prism-react-renderer": "^2.4.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "sass": "^1.83.1",
+    "typescript": "^5.7.3"
+  },
+  "browserslist": {
+    "production": [
+      ">0%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 3 chrome version",
+      "last 3 firefox version",
+      "last 5 safari version"
+    ]
+  },
+  "engines": {
+    "node": ">=22.0"
+  },
+  "private": true
 }

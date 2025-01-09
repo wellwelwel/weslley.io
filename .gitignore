@@ -1,2 +1,5 @@
-node_modules
+/node_modules
+/build
+.docusaurus
+.cache-loader
 .DS_Store
