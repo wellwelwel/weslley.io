@@ -1,9 +1,6 @@
-name: '🚀 CD (Website) — Publish'
+name: '🚀 CD (Website) — Purge Cache'
 
 on:
-  push:
-    branches:
-      - 'main'
   workflow_dispatch:
 
 jobs:
@@ -30,19 +27,8 @@ jobs:
       - name: Installing Dependencies
         run: npm ci
 
-      - name: Checking Types
-        run: npm run typecheck
-
-      - name: Checking Lint
-        run: npm run lint
-
-      - name: Building Site
-        run: npm run build
-
-      - name: Deploy
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./build
-          cname: weslley.io
-          allow_empty_commit: true
+      - name: Purge Cache
+        run: npm run purge
+        env:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_TOKEN: ${{ secrets.CF_TOKEN }}
