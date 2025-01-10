@@ -3,3 +3,4 @@
 .docusaurus
 .cache-loader
 .DS_Store
+.env

@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - 'main'
-  pull_request:
   workflow_dispatch:
 
 jobs:
@@ -47,3 +46,13 @@ jobs:
           publish_dir: ./build
           cname: weslley.io
           allow_empty_commit: true
+
+      - name: Purge Cache
+        run: npm run purge
+        with:
+          CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
+          CF_TOKEN: ${{ secrets.CF_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          INTERVAL: 15000
+          ATTEMPTS: 30
