@@ -33,6 +33,8 @@ try {
 } catch (error) {
   console.error('Error purging cache.');
 
-  if (!CI) throw error;
-  else exit(1);
+  // if (!CI) throw error;
+  // else exit(1);
+
+  throw error;
 }
