@@ -2,8 +2,6 @@ import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Admonition from '@theme/Admonition';
-
-import '../css/about.scss';
 import Link from '@docusaurus/Link';
 
 export default (): ReactNode => {

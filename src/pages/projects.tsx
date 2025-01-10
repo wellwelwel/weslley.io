@@ -2,8 +2,6 @@ import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-
-import '../css/about.scss';
 import { Github } from 'lucide-react';
 
 export default (): ReactNode => {
@@ -239,7 +237,7 @@ export default (): ReactNode => {
               </section>
             </nav>
 
-            <nav data-awsSslProfiles>
+            <nav data-awssslprofiles>
               <section>
                 <h2>AWS SSL Profiles</h2>
                 <p>

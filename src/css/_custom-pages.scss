@@ -1,7 +1,4 @@
-@import 'mixins';
-
-$mainColor: #6f65ff;
-$mobile: 630px;
+@use 'mixins';
 
 #projects,
 #about,
@@ -9,7 +6,7 @@ $mobile: 630px;
   padding: 20px;
   padding-bottom: 10px;
 
-  @media (max-width: $mobile) {
+  @media (max-width: 630px) {
     padding: 0;
   }
 
@@ -32,7 +29,7 @@ $mobile: 630px;
     padding: 40px;
     padding-top: 30px;
 
-    @media (max-width: $mobile) {
+    @media (max-width: 630px) {
       justify-content: flex-start;
       width: 100%;
       padding-inline: 25px;
@@ -40,12 +37,10 @@ $mobile: 630px;
     }
 
     & > header {
-      @include flex(row, flex-end, space-between, wrap);
+      @include mixins.flex(row, flex-end, space-between, wrap);
 
       h1 {
-        font-family: 'Noto Sans', serif;
-        font-optical-sizing: auto;
-        font-variation-settings: 'wdth' 100;
+        font-family: var(--ifm-font-family-featured);
         border-bottom: 5px solid #5448ff;
       }
 
@@ -64,7 +59,7 @@ $mobile: 630px;
 
     & > * {
       width: 100%;
-      max-width: 860px;
+      max-width: 1020px;
     }
 
     nav {
@@ -73,7 +68,7 @@ $mobile: 630px;
       border-radius: 15px;
       background-color: #ffffff6a;
 
-      @media (max-width: $mobile) {
+      @media (max-width: 630px) {
         padding: 25px;
       }
 
@@ -118,7 +113,7 @@ $mobile: 630px;
           width: max-content;
 
           a {
-            @include flex(row, center, flex-start);
+            @include mixins.flex(row, center, flex-start);
             gap: 10px;
             padding: 12.5px 20px;
             border-radius: 7.5px;
@@ -152,13 +147,9 @@ $mobile: 630px;
 
 #projects {
   & > main {
-    & > * {
-      max-width: 1366px;
-    }
-
     & > .container {
-      @include flex(row, stretch, center, wrap);
-      gap: 25px 50px;
+      @include mixins.flex(row, stretch, center, wrap);
+      gap: 25px;
 
       nav {
         min-width: 310px;
@@ -166,7 +157,7 @@ $mobile: 630px;
         max-width: 480px;
 
         section {
-          @include flex(column, flex-start, flex-start);
+          @include mixins.flex(column, flex-start, flex-start);
           height: 100%;
           flex-grow: 1;
 

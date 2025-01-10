@@ -1,9 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap&family=Noto+Sans:wght@600;700;800');
-@import 'mixins';
+/**
+ * This file adjusts or resets Docusaaurus' default styles.
+ */
 
-$mobile: 630px;
+@use 'sass:meta';
+@use 'configs';
+@use 'main';
+@use 'mixins';
 
-// reset
+@include meta.load-css('main');
+@include meta.load-css('custom-pages');
 
 a,
 img,
@@ -13,26 +18,6 @@ svg {
   & > * {
     pointer-events: none;
   }
-}
-
-:root {
-  --ifm-color-primary: #7a77ff;
-  --ifm-color-primary-dark: #5552ff;
-  --ifm-color-primary-darker: #433fff;
-  --ifm-color-primary-darkest: #0c07ff;
-  --ifm-color-primary-light: #9f9cff;
-  --ifm-color-primary-lighter: #b1afff;
-  --ifm-color-primary-lightest: #b1afff;
-  --docusaurus-highlighted-code-line-bg: #0c0d152b;
-  --ifm-table-stripe-background: #5e30a0 !important;
-  --ifm-table-background: transparent !important;
-  --ifm-font-family-base: 'Poppins', sans-serif;
-  --ifm-link-hover-decoration: none;
-}
-
-::selection {
-  color: #e8e7ff;
-  background-color: #7977ffa4;
 }
 
 table {
@@ -85,9 +70,7 @@ table {
         &,
         & > a {
           margin: 0 !important;
-          font-family: 'Noto Sans', serif;
-          font-optical-sizing: auto;
-          font-variation-settings: 'wdth' 100;
+          font-family: var(--ifm-font-family-featured);
           font-size: 24px;
           font-weight: 800;
           color: #4c44e6;
@@ -111,7 +94,7 @@ table {
     }
   }
 
-  @media (max-width: $mobile) {
+  @media (max-width: 630px) {
     padding: 20px !important;
 
     article {
@@ -127,23 +110,21 @@ table {
 .navbar__items > .navbar__brand {
   margin-right: 0;
 
-  @media (max-width: $mobile) {
+  @media (max-width: 630px) {
     display: none;
   }
 }
 
-@media (max-width: $mobile) {
+@media (max-width: 630px) {
   .navbar__toggle {
-    @include flex(row, center, space-between);
+    @include mixins.flex(row, center, space-between);
     width: 100%;
     gap: 12.5px;
 
     &::after {
       content: 'Menu';
       color: #9e95ff;
-      font-family: 'Noto Sans', serif;
-      font-optical-sizing: auto;
-      font-variation-settings: 'wdth' 100;
+      font-family: var(--ifm-font-family-featured);
       font-size: 14px;
       font-weight: 700;
     }
@@ -170,17 +151,15 @@ table {
   svg {
     color: #ffb8ea;
 
-    @media (max-width: $mobile) {
+    @media (max-width: 630px) {
       color: #e0c6ff;
     }
   }
 
   &,
   a {
+    font-family: var(--ifm-font-family-featured);
     font-weight: 600;
-    font-family: 'Noto Sans', serif;
-    font-optical-sizing: auto;
-    font-variation-settings: 'wdth' 100;
     font-size: 15px;
     color: #d3d3ff;
 
@@ -188,7 +167,7 @@ table {
       color: #fff;
     }
 
-    @media (max-width: $mobile) {
+    @media (max-width: 630px) {
       color: #683bff;
 
       &:hover {
@@ -211,13 +190,13 @@ table {
 }
 
 .title-section {
-  @include flex(row, flex-start, space-between);
+  @include mixins.flex(row, flex-start, space-between);
   gap: 2.5rem;
 }
 
 #__docusaurus {
   & > footer {
-    @include flex(row, center, center);
+    @include mixins.flex(row, center, center);
     width: 100%;
     padding: 15px 20px;
     background-color: #2d2f4a;
@@ -225,7 +204,7 @@ table {
     color: #a6c2d2;
     gap: 25px;
 
-    @media (max-width: $mobile) {
+    @media (max-width: 630px) {
       flex-direction: column;
       padding: 40px 20px;
     }
@@ -250,7 +229,7 @@ table {
 
     aside {
       flex-grow: 1;
-      @include flex(row, center, flex-start);
+      @include mixins.flex(row, center, flex-start);
       gap: 10px;
 
       &.left {
@@ -260,7 +239,7 @@ table {
           width: 28px;
         }
 
-        @media (max-width: $mobile) {
+        @media (max-width: 630px) {
           flex-direction: column;
           text-align: center;
           gap: 20px;
@@ -276,7 +255,7 @@ table {
         gap: 25px;
 
         a {
-          @include flex(row, center, center);
+          @include mixins.flex(row, center, center);
           padding-bottom: 4px;
           border-color: #1da8ff;
 

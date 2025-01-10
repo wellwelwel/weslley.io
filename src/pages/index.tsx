@@ -5,8 +5,7 @@ import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Card from '../components/Card';
-
-import '../css/main.scss';
+import Name from '../components/Name';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
@@ -21,20 +20,7 @@ export default (): ReactNode => {
           <header>
             <img loading='lazy' src='/img/avatar.png' alt='Avatar' />
             <h1>
-              <span>W</span>
-              <span>e</span>
-              <span>s</span>
-              <span>l</span>
-              <span>l</span>
-              <span>e</span>
-              <span>y</span>
-              <span> </span>
-              <span>A</span>
-              <span>r</span>
-              <span>a</span>
-              <span>ú</span>
-              <span>j</span>
-              <span>o</span>
+              <Name name={siteConfig.title} />
             </h1>
             <small>
               Open Sourcerer | End-to-End Developer

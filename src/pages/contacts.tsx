@@ -3,8 +3,6 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
-import '../css/about.scss';
-
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
 
