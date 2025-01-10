@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
+import SafeLink from '../components/SafeLink';
 
 export default (): ReactNode => {
   return (
@@ -20,13 +20,9 @@ export default (): ReactNode => {
               <p>
                 🙋🏻‍♂️ Para assuntos gerais, dicas e dúvidas sobre programação,
                 etc., fique à vontade para se conectar comigo no{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://www.linkedin.com/in/wellwelwel/'
-                >
+                <SafeLink to='https://www.linkedin.com/in/wellwelwel/'>
                   LinkedIn
-                </Link>{' '}
+                </SafeLink>{' '}
                 e me chamar.
               </p>
             </section>
@@ -34,13 +30,9 @@ export default (): ReactNode => {
               <h2>Bate Papo</h2>
               <p>
                 🫰🏻 Quer conversar sobre algo casual? Me chama no{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://www.instagram.com/wellwelwel/'
-                >
+                <SafeLink to='https://www.instagram.com/wellwelwel/'>
                   Instagram
-                </Link>
+                </SafeLink>
                 . Eu respondo de verdade.
               </p>
             </section>
@@ -55,21 +47,13 @@ export default (): ReactNode => {
               <h2>Contato Profissional</h2>
               <p>
                 👔 Me chame no{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://www.linkedin.com/in/wellwelwel/'
-                >
+                <SafeLink to='https://www.linkedin.com/in/wellwelwel/'>
                   LinkedIn
-                </Link>{' '}
+                </SafeLink>{' '}
                 ou no{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://www.instagram.com/wellwelwel/'
-                >
+                <SafeLink to='https://www.instagram.com/wellwelwel/'>
                   Instagram
-                </Link>{' '}
+                </SafeLink>{' '}
                 com um resuminho e, se a gente estiver alinhados, eu te envio
                 meu e-mail ou número de celular.
               </p>

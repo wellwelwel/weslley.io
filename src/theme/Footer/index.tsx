@@ -1,4 +1,5 @@
 import Link from '@docusaurus/Link';
+import SafeLink from '@site/src/components/SafeLink';
 import { Github, Instagram, Linkedin } from 'lucide-react';
 import React, { type ReactNode } from 'react';
 
@@ -15,62 +16,41 @@ function Footer(): ReactNode {
               </Link>
             </strong>{' '}
             é um site{' '}
-            <Link
-              target='_blank'
-              rel='noopener noreferrer'
-              to='https://github.com/wellwelwel/weslley.io'
-            >
+            <SafeLink to='https://github.com/wellwelwel/weslley.io'>
               <strong>open-source</strong>
-            </Link>{' '}
+            </SafeLink>{' '}
             sob a licença{' '}
-            <Link
-              target='_blank'
-              rel='noopener noreferrer'
-              to='https://github.com/wellwelwel/weslley.io/blob/main/LICENSE'
-            >
+            <SafeLink to='https://github.com/wellwelwel/weslley.io/blob/main/LICENSE'>
               <strong className='underline'>AGPL-3.0</strong> (GNU Affero
               General Public License)
-            </Link>
+            </SafeLink>
             .
           </p>
           <p>
             Direitos Reservados © 2024-present{' '}
-            <Link
-              target='_blank'
-              rel='noopener noreferrer'
-              to='https://github.com/wellwelwel'
-            >
+            <SafeLink to='https://github.com/wellwelwel'>
               <strong className='feat'>Weslley Araújo</strong>
-            </Link>
+            </SafeLink>
             .
           </p>
         </section>
       </aside>
       <aside className='right'>
-        <Link
-          target='_blank'
-          rel='noopener noreferrer'
+        <SafeLink
           to='https://www.linkedin.com/in/wellwelwel/'
           className='underline'
         >
           <Linkedin />
-        </Link>
-        <Link
-          target='_blank'
-          rel='noopener noreferrer'
-          to='https://github.com/wellwelwel'
-          className='underline'
-        >
+        </SafeLink>
+        <SafeLink to='https://github.com/wellwelwel' className='underline'>
           <Github />
-        </Link>
-        <Link
-          target='_blank'
-          rel='noopener noreferrer'
+        </SafeLink>
+        <SafeLink
           to='https://www.instagram.com/wellwelwel/'
           className='underline'
         >
           <Instagram />
-        </Link>
+        </SafeLink>
       </aside>
     </footer>
   );

@@ -7,6 +7,7 @@ import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Card from '../components/Card';
 import Name from '../components/Name';
 import Parallax from '../components/Parallax';
+import SafeLink from '../components/SafeLink';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
@@ -31,15 +32,7 @@ export default (): ReactNode => {
               <Translate id='home.header.mysql'>
                 MySQL2 Co-Maintainer
               </Translate>{' '}
-              | Criador do{' '}
-              <a
-                href='https://poku.io/'
-                target='_blank'
-                rel='noopener noreferrer'
-              >
-                Poku
-              </a>{' '}
-              ✨
+              | Criador do <SafeLink to='https://poku.io/'>Poku</SafeLink> ✨
             </small>
             <menu>
               <section>

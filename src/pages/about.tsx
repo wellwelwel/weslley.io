@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
 import Admonition from '@theme/Admonition';
-import Link from '@docusaurus/Link';
+import SafeLink from '../components/SafeLink';
 
 export default (): ReactNode => {
   return (
@@ -228,13 +228,9 @@ export default (): ReactNode => {
                 , o driver <strong>MySQL</strong> mais performático e baixado
                 para <strong>Node.js</strong>, <strong>Bun</strong> e{' '}
                 <strong>Deno</strong>, utilizado por{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://github.com/sidorares/node-mysql2/network/dependents'
-                >
+                <SafeLink to='https://github.com/sidorares/node-mysql2/network/dependents'>
                   mais de 880 mil projetos públicos
-                </Link>{' '}
+                </SafeLink>{' '}
                 no <strong>GitHub</strong>.
               </p>
             </section>
@@ -242,13 +238,9 @@ export default (): ReactNode => {
               <h2>Poku</h2>
               <p>
                 🐷 Também sou o criador do{' '}
-                <Link
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  to='https://github.com/wellwelwel/poku'
-                >
+                <SafeLink to='https://github.com/wellwelwel/poku'>
                   Poku
-                </Link>
+                </SafeLink>
                 , um executor de testes de alta performance que simplifica a
                 forma como você testa seu código com <strong>JavaScript</strong>
                 .

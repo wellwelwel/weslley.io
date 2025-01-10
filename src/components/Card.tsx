@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { ExternalLink } from 'lucide-react';
-import Link from '@docusaurus/Link';
 import Parallax from './Parallax';
+import SafeLink from './SafeLink';
 
 type CardOptions = {
   icon: string;
@@ -20,14 +20,14 @@ const Card: FC<CardOptions> = ({
 }) => {
   return (
     <Parallax tiltMaxAngleX={1} tiltMaxAngleY={1} perspective={1000}>
-      <Link to={href} target='_blank' rel='noopener noreferrer'>
+      <SafeLink to={href}>
         <img loading='lazy' src={`/img/${icon}.svg`} alt={alt} title={alt} />
         <p>
           <strong>{name}</strong>
           <span>{description}</span>
         </p>
         <ExternalLink />
-      </Link>
+      </SafeLink>
     </Parallax>
   );
 };
