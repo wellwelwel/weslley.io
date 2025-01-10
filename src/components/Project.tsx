@@ -1,9 +1,9 @@
-import type { FC, ReactNode, ReactSVGElement } from 'react';
+import type { FC, ReactNode } from 'react';
 import { Github } from 'lucide-react';
-import SafeLink from './SafeLink';
-import Parallax from './Parallax';
+import { SafeLink } from './SafeLink';
+import { Parallax } from './Parallax';
 
-type ProjectOptions = {
+export type ProjectOptions = {
   name: string;
   /**
    * Describe your project here. It expects a sequence of paragraphs, but you can use it any way you like.
@@ -40,10 +40,10 @@ type ProjectOptions = {
    * @default `https://github.com/${organization}/${repository}`
    */
   url?: string;
-  icon?: ReactSVGElement;
+  icon?: ReactNode;
 };
 
-const Project: FC<ProjectOptions> = ({
+export const Project: FC<ProjectOptions> = ({
   name,
   children = null,
   license,
@@ -72,43 +72,45 @@ const Project: FC<ProjectOptions> = ({
         {npm ? (
           <Parallax>
             <p>
-              <img
-                src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
-              />
+              <SafeLink to={`https://www.npmjs.com/package/${npm}`}>
+                <img
+                  src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
+                />
+              </SafeLink>
             </p>
           </Parallax>
         ) : null}
 
         {link ? (
           <footer>
-            <SafeLink
-              to={
-                url ? url : `https://github.com/${organization}/${repository}`
-              }
-            >
-              {(() => {
-                if (icon) return icon;
-                if (hasRepository) return <Github />;
-                return null;
-              })()}
+            <Parallax>
+              <SafeLink
+                to={
+                  url ? url : `https://github.com/${organization}/${repository}`
+                }
+              >
+                {(() => {
+                  if (icon) return icon;
+                  if (hasRepository) return <Github />;
+                  return null;
+                })()}
 
-              {hasRepository ? (
-                <p>
-                  {`${organization}/${repository}`}
-                  <br />
-                  {license ? (
-                    <>
-                      Licença: <strong>{license}</strong>
-                    </>
-                  ) : null}
-                </p>
-              ) : null}
-            </SafeLink>
+                {hasRepository ? (
+                  <p>
+                    {`${organization}/${repository}`}
+                    <br />
+                    {license ? (
+                      <>
+                        Licença: <strong>{license}</strong>
+                      </>
+                    ) : null}
+                  </p>
+                ) : null}
+              </SafeLink>
+            </Parallax>
           </footer>
         ) : null}
       </section>
     </nav>
   );
 };
-
-export default Project;

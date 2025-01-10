@@ -1,9 +1,9 @@
 import Link from '@docusaurus/Link';
-import SafeLink from '@site/src/components/SafeLink';
+import { memo, type ReactNode } from 'react';
 import { Github, Instagram, Linkedin } from 'lucide-react';
-import React, { type ReactNode } from 'react';
+import { SafeLink } from '@site/src/components/SafeLink';
 
-function Footer(): ReactNode {
+const Footer = (): ReactNode => {
   return (
     <footer>
       <aside className='left'>
@@ -54,6 +54,6 @@ function Footer(): ReactNode {
       </aside>
     </footer>
   );
-}
+};
 
-export default React.memo(Footer);
+export default memo(Footer);

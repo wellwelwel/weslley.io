@@ -1,6 +1,6 @@
-import SafeLink from '../components/SafeLink';
+import { SafeLink } from '../components/SafeLink';
 
-const WIP = () => (
+export const WIP = () => (
   <small>
     São MUITOS projetos e com o tempo prometo colocar cada um deles aqui, mas é
     só você olhar meu{' '}
@@ -8,5 +8,3 @@ const WIP = () => (
     lá 💡
   </small>
 );
-
-export default WIP;

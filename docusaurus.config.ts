@@ -47,7 +47,7 @@ const config: Config = {
         src: 'img/logo.png',
       },
       items: [
-        { to: '/projects', label: 'Projetos (OSS)', position: 'left' },
+        { to: '/projects', label: 'Projetos (OSI)', position: 'left' },
         { to: '/talks', label: 'Palestras', position: 'left' },
         { to: '/articles', label: 'Artigos', position: 'left' },
         { to: '/about', label: 'Sobre', position: 'left' },

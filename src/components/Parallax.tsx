@@ -1,11 +1,11 @@
 import type { FC, ReactNode } from 'react';
 import Tilt, { ReactParallaxTiltProps } from 'react-parallax-tilt';
 
-type ParallaxOptions = {
+export type ParallaxOptions = {
   children: ReactNode;
 } & ReactParallaxTiltProps;
 
-const Parallax: FC<ParallaxOptions> = ({ children, ...props }) => (
+export const Parallax: FC<ParallaxOptions> = ({ children, ...props }) => (
   <Tilt
     tiltMaxAngleX={7.5}
     tiltMaxAngleY={7.5}
@@ -18,5 +18,3 @@ const Parallax: FC<ParallaxOptions> = ({ children, ...props }) => (
     {children}
   </Tilt>
 );
-
-export default Parallax;

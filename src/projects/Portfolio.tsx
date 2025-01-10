@@ -1,11 +1,13 @@
-import Project from '../components/Project';
+import { Heart } from 'lucide-react';
+import { Project } from '../components/Project';
 
-const Portfolio = () => (
+export const Portfolio = () => (
   <Project
     name='Esse site aqui (esse mesmo)'
     organization='wellwelwel'
     repository='weslley.io'
     license='AGPL-3.0'
+    icon={<Heart />}
   >
     <p>
       👨🏻‍🎨 Já viu aquele portfólio dahora, mas não tem ideia de como o programador
@@ -18,5 +20,3 @@ const Portfolio = () => (
     </p>
   </Project>
 );
-
-export default Portfolio;

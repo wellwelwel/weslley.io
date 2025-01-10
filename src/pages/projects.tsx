@@ -1,12 +1,12 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import Portfolio from '../projects/Portfolio';
-import LRU_Min from '../projects/LRU_Min';
-import MySQL2 from '../projects/MySQL2';
-import Poku from '../projects/Poku';
-import SVPS from '../projects/SVPS';
-import AWS_SSL_Profiles from '../projects/AWS_SSL_Profiles';
-import WIP from '../projects/WIP';
+import { Portfolio } from '../projects/Portfolio';
+import { LRU_Min } from '../projects/LRU_Min';
+import { MySQL2 } from '../projects/MySQL2';
+import { Poku } from '../projects/Poku';
+import { SVPS } from '../projects/SVPS';
+import { AWS_SSL_Profiles } from '../projects/AWS_SSL_Profiles';
+import { WIP } from '../projects/WIP';
 
 export default (): ReactNode => {
   return (
@@ -22,6 +22,8 @@ export default (): ReactNode => {
             <small>
               Aqui você vai conhecer um pouquinho da história de cada projeto
               que eu mantenho ou co-mantenho.
+              <br />
+              <strong>OSI:</strong> Open Source Initiative.
             </small>
           </header>
           <div className='container'>

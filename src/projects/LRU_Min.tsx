@@ -1,7 +1,7 @@
-import Project from '../components/Project';
-import SafeLink from '../components/SafeLink';
+import { Project } from '../components/Project';
+import { SafeLink } from '../components/SafeLink';
 
-const LRU_Min = () => (
+export const LRU_Min = () => (
   <Project
     name='lru.min'
     organization='wellwelwel'
@@ -26,5 +26,3 @@ const LRU_Min = () => (
     </p>
   </Project>
 );
-
-export default LRU_Min;

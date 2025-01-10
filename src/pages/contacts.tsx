@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import SafeLink from '../components/SafeLink';
+import { SafeLink } from '../components/SafeLink';
 
 export default (): ReactNode => {
   return (

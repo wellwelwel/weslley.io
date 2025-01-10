@@ -129,10 +129,15 @@
             svg {
               min-width: 24px;
               min-height: 24px;
+              transition: stroke 0.15s;
             }
 
             &:hover {
               background-color: #493eea;
+
+              & > svg {
+                stroke: #ff6bb0;
+              }
             }
           }
         }
@@ -164,6 +169,10 @@
 
           p {
             flex-grow: 1;
+
+            & + * {
+              margin-top: 15px;
+            }
           }
         }
 

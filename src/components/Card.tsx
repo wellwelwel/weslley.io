@@ -1,9 +1,9 @@
 import type { FC, ReactNode } from 'react';
 import { ExternalLink } from 'lucide-react';
-import Parallax from './Parallax';
-import SafeLink from './SafeLink';
+import { Parallax } from './Parallax';
+import { SafeLink } from './SafeLink';
 
-type CardOptions = {
+export type CardOptions = {
   icon: string;
   name: string;
   description: ReactNode;
@@ -11,7 +11,7 @@ type CardOptions = {
   alt?: string;
 };
 
-const Card: FC<CardOptions> = ({
+export const Card: FC<CardOptions> = ({
   name,
   icon,
   alt = name,
@@ -31,5 +31,3 @@ const Card: FC<CardOptions> = ({
     </Parallax>
   );
 };
-
-export default Card;

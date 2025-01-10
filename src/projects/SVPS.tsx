@@ -1,6 +1,6 @@
-import Project from '../components/Project';
+import { Project } from '../components/Project';
 
-const SVPS = () => (
+export const SVPS = () => (
   <Project
     name='SVPS: Simplifying VPS'
     organization='wellwelwel'
@@ -24,5 +24,3 @@ const SVPS = () => (
     </p>
   </Project>
 );
-
-export default SVPS;

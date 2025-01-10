@@ -1,6 +1,6 @@
-import Project from '../components/Project';
+import { Project } from '../components/Project';
 
-const AWS_SSL_Profiles = () => (
+export const AWS_SSL_Profiles = () => (
   <Project
     name='AWS SSL Profiles'
     organization='mysqljs'
@@ -21,5 +21,3 @@ const AWS_SSL_Profiles = () => (
     </p>
   </Project>
 );
-
-export default AWS_SSL_Profiles;

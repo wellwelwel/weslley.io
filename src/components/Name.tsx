@@ -1,10 +1,10 @@
 import type { FC } from 'react';
 
-type NameOptions = {
+export type NameOptions = {
   name: string;
 };
 
-const Name: FC<NameOptions> = ({ name }) =>
+export const Name: FC<NameOptions> = ({ name }) =>
   name.split('').map((char, i) => (
     <span
       key={`name:${char}:${i}`}
@@ -17,5 +17,3 @@ const Name: FC<NameOptions> = ({ name }) =>
       {char}
     </span>
   ));
-
-export default Name;

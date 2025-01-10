@@ -4,10 +4,10 @@ import Layout from '@theme/Layout';
 import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
-import Card from '../components/Card';
-import Name from '../components/Name';
-import Parallax from '../components/Parallax';
-import SafeLink from '../components/SafeLink';
+import { Card } from '../components/Card';
+import { Name } from '../components/Name';
+import { Parallax } from '../components/Parallax';
+import { SafeLink } from '../components/SafeLink';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();

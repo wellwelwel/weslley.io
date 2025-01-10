@@ -1,7 +1,7 @@
-import Project from '../components/Project';
-import SafeLink from '../components/SafeLink';
+import { Project } from '../components/Project';
+import { SafeLink } from '../components/SafeLink';
 
-const Poku = () => (
+export const Poku = () => (
   <Project
     name='Poku'
     organization='wellwelwel'
@@ -29,5 +29,3 @@ const Poku = () => (
     </p>
   </Project>
 );
-
-export default Poku;

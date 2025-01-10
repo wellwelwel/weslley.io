@@ -1,7 +1,7 @@
-import Project from '../components/Project';
-import SafeLink from '../components/SafeLink';
+import { Project } from '../components/Project';
+import { SafeLink } from '../components/SafeLink';
 
-const MySQL2 = () => (
+export const MySQL2 = () => (
   <Project
     name='MySQL2'
     organization='sidorares'
@@ -33,5 +33,3 @@ const MySQL2 = () => (
     </p>
   </Project>
 );
-
-export default MySQL2;
