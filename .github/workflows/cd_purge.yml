@@ -1,4 +1,4 @@
-name: '🚀 CD (Website) — Purge Cache'
+name: '🗑️ CD (Website) — Purge Cache'
 
 on:
   workflow_dispatch:
