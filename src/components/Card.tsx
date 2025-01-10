@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import { ExternalLink } from 'lucide-react';
 import Link from '@docusaurus/Link';
 import Parallax from './Parallax';
@@ -11,7 +11,7 @@ type CardOptions = {
   alt?: string;
 };
 
-const Card: React.FC<CardOptions> = ({
+const Card: FC<CardOptions> = ({
   name,
   icon,
   alt = name,

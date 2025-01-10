@@ -1,10 +1,10 @@
-import React from 'react';
+import type { FC } from 'react';
 
 type NameOptions = {
   name: string;
 };
 
-const Name: React.FC<NameOptions> = ({ name }) =>
+const Name: FC<NameOptions> = ({ name }) =>
   name.split('').map((char, i) => (
     <span
       key={`name:${char}:${i}`}

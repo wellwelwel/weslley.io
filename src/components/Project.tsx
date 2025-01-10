@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import type { FC, ReactNode } from 'react';
 import Link from '@docusaurus/Link';
 import { Github } from 'lucide-react';
 // import Parallax from './Parallax';
@@ -11,7 +11,7 @@ type ProjectOptions = {
   alt?: string;
 };
 
-const Project: React.FC<ProjectOptions> = ({
+const Project: FC<ProjectOptions> = ({
   name,
   icon,
   alt = name,

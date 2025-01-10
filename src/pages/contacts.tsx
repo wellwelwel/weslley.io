@@ -1,14 +1,11 @@
 import type { ReactNode } from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 
 export default (): ReactNode => {
-  const { siteConfig } = useDocusaurusContext();
-
   return (
     <Layout
-      title={`Contatos | ${siteConfig.title}`}
+      title='Contatos'
       description='Formas de falar comigo sem sinal de fumaça.'
     >
       <div id='contacts'>

@@ -1,15 +1,12 @@
 import type { ReactNode } from 'react';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import { Github } from 'lucide-react';
 
 export default (): ReactNode => {
-  const { siteConfig } = useDocusaurusContext();
-
   return (
     <Layout
-      title={`Projetos | ${siteConfig.title}`}
+      title='Projetos'
       description='Lista com a maioria dos projetos que mantenho e co-mantenho com a iniciativa open-source.'
     >
       <div id='projects'>

@@ -13,7 +13,7 @@ export default (): ReactNode => {
 
   return (
     <Layout
-      title={`Links | ${siteConfig.title}`}
+      title='Links'
       description='Minhas principais redes sociais e projetos'
     >
       <div id='home'>
