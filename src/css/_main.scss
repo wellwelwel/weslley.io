@@ -1,8 +1,8 @@
 @use 'mixins';
 
 body {
-  min-height: calc(100vh - 60px);
-  min-height: calc(100vh - 60px);
+  min-height: calc(100vh - 55px);
+  min-height: calc(100dvh - 55px);
   min-width: 320px;
   background-image: var(--background-desktop);
 
@@ -13,8 +13,7 @@ body {
   &::before {
     content: '';
     position: fixed;
-    width: 100%;
-    height: 100%;
+    inset: 0;
     background-image: radial-gradient(
       var(--background-dots-pattern-color) 0.5px,
       transparent 0.5px
@@ -63,21 +62,27 @@ body {
 
     & > header {
       position: relative;
-      text-align: center;
       z-index: 1;
+      @include mixins.flex(column, center, flex-start);
       width: 100%;
+      text-align: center;
 
       & > div {
         position: relative;
         z-index: -1;
+        border-radius: 50%;
+        overflow: hidden;
+        width: 90px;
+        height: 90px;
+        margin-bottom: 10px;
+        border: 4px solid #ecebf6;
+        box-shadow: 0 0 10px #00000075;
 
         img {
-          display: inline-block;
-          width: 90px;
-          margin-bottom: 10px;
-          border-radius: 50%;
-          border: 4px solid #fff;
-          box-shadow: 0 0 10px #00000075;
+          height: 100%;
+          width: 100%;
+          object-fit: cover;
+          pointer-events: none;
         }
       }
 
@@ -331,6 +336,75 @@ body {
             svg {
               color: #2a98ff;
             }
+          }
+        }
+      }
+    }
+  }
+}
+
+[data-theme='dark'] {
+  #home {
+    & > main {
+      & > header {
+        & > div {
+          border-color: #000000;
+        }
+
+        h1 {
+          color: #5747ff;
+        }
+
+        small {
+          color: #57619e;
+
+          a {
+            border-color: #5747ff;
+            color: #57619e;
+
+            &:hover {
+              border-color: #dd47ff;
+            }
+          }
+        }
+
+        menu {
+          section {
+            a {
+              border-color: #17103c;
+              background-color: #0000006a;
+
+              &:hover {
+                border-color: #32409f;
+              }
+            }
+          }
+        }
+      }
+
+      nav {
+        a {
+          border-color: #17103c;
+          background-color: #0000006a;
+
+          p {
+            strong {
+              color: #a299ff;
+            }
+
+            span {
+              color: #beb8ff;
+            }
+          }
+
+          &:hover {
+            border-color: #272167;
+          }
+        }
+
+        & > small {
+          a {
+            background-color: unset;
           }
         }
       }

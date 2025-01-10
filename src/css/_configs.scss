@@ -1,6 +1,6 @@
 @use 'functions';
 
-/** Import the fonts you want based in their URL names (preconfigured for Google fonts) */
+// Import the fonts you want based in their URL names (preconfigured for Google fonts)
 $baseFontFamily: 'Poppins';
 $featuredFontFamily: 'Noto+Sans';
 
@@ -19,8 +19,6 @@ $featuredFontFamily: 'Noto+Sans';
   --ifm-color-primary-lighter: #b1afff;
   --ifm-color-primary-lightest: #b1afff;
   --ifm-table-stripe-background: #5e30a0 !important;
-  --ifm-table-background: transparent !important;
-  --ifm-link-hover-decoration: none;
   --docusaurus-highlighted-code-line-bg: #0c0d152b;
   --background-dots-pattern-color: #444cf750;
   --background-dots-blur-intensity: 0.5px;
@@ -36,9 +34,33 @@ $featuredFontFamily: 'Noto+Sans';
     #e9e8fa 50%,
     #ece8ff 100%
   );
+  --ifm-table-background: transparent !important;
+  --ifm-link-hover-decoration: none;
 }
 
 ::selection {
   color: #e8e7ff;
   background-color: #7977ffa4;
+}
+
+// Soon
+[data-theme='dark'] {
+  --ifm-color-primary: #7a77ff;
+  --ifm-color-main: #6f65ff;
+  --ifm-color-primary-dark: #5552ff;
+  --ifm-color-primary-darker: #433fff;
+  --ifm-color-primary-darkest: #0c07ff;
+  --ifm-color-primary-light: #9f9cff;
+  --ifm-color-primary-lighter: #b1afff;
+  --ifm-color-primary-lightest: #b1afff;
+  --ifm-table-stripe-background: #5e30a0 !important;
+  --docusaurus-highlighted-code-line-bg: #0c0d152b;
+  --background-dots-pattern-color: #355dff50;
+  --background-desktop: linear-gradient(
+    90deg,
+    #0d0921 0%,
+    #0e0927 50%,
+    #1a1342 100%
+  );
+  --background-mobile: var(--background-desktop);
 }

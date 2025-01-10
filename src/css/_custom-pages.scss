@@ -64,8 +64,8 @@
 
     nav {
       padding: 25px 50px;
-      border: 1px solid #d7dcff;
       border-radius: 15px;
+      border: 1px solid #d7dcff;
       background-color: #ffffff6a;
 
       @media (max-width: 630px) {
@@ -175,6 +175,44 @@
       & > small {
         margin-top: 20px;
         text-align: center;
+      }
+    }
+  }
+}
+
+[data-theme='dark'] {
+  #projects,
+  #about,
+  #contacts {
+    & > main {
+      nav {
+        border-color: #17103c;
+        background-color: #0000006a;
+
+        h2 {
+          color: #7265ff;
+        }
+
+        p {
+          color: #beb8ff;
+        }
+
+        & > section {
+          & > footer {
+            a {
+              background-color: #493eea;
+              color: #847cf6;
+
+              p {
+                color: #c1bdff;
+              }
+
+              &:hover {
+                background-color: #6f65ff;
+              }
+            }
+          }
+        }
       }
     }
   }
