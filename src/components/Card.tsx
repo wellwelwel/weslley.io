@@ -1,6 +1,7 @@
 import React, { ReactNode } from 'react';
 import { ExternalLink } from 'lucide-react';
 import Link from '@docusaurus/Link';
+import Parallax from './Parallax';
 
 type CardOptions = {
   icon: string;
@@ -18,14 +19,16 @@ const Card: React.FC<CardOptions> = ({
   description,
 }) => {
   return (
-    <Link to={href} target='_blank' rel='noopener noreferrer'>
-      <img loading='lazy' src={`/img/${icon}.svg`} alt={alt} title={alt} />
-      <p>
-        <strong>{name}</strong>
-        <span>{description}</span>
-      </p>
-      <ExternalLink />
-    </Link>
+    <Parallax tiltMaxAngleX={1} tiltMaxAngleY={1} perspective={1000}>
+      <Link to={href} target='_blank' rel='noopener noreferrer'>
+        <img loading='lazy' src={`/img/${icon}.svg`} alt={alt} title={alt} />
+        <p>
+          <strong>{name}</strong>
+          <span>{description}</span>
+        </p>
+        <ExternalLink />
+      </Link>
+    </Parallax>
   );
 };
 

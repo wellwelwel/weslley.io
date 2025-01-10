@@ -6,6 +6,7 @@ import Link from '@docusaurus/Link';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import Card from '../components/Card';
 import Name from '../components/Name';
+import Parallax from '../components/Parallax';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
@@ -18,7 +19,9 @@ export default (): ReactNode => {
       <div id='home'>
         <main>
           <header>
-            <img loading='lazy' src='/img/avatar.png' alt='Avatar' />
+            <Parallax scale={1.1} tiltMaxAngleX={15} tiltMaxAngleY={15}>
+              <img loading='lazy' src='/img/avatar.png' alt='Avatar' />
+            </Parallax>
             <h1>
               <Name name={siteConfig.title} />
             </h1>
@@ -39,13 +42,24 @@ export default (): ReactNode => {
               ✨
             </small>
             <menu>
-              <Link to='/articles'>
-                Artigos <ArrowLeft />
-              </Link>
-              <Link to='/talks'>
-                <ArrowRight />
-                Palestras
-              </Link>
+              <section>
+                <Link to='/projects'>
+                  Projetos <ArrowLeft />
+                </Link>
+                <Link to='/talks'>
+                  <ArrowRight />
+                  Palestras
+                </Link>
+              </section>
+              <section>
+                <Link to='/articles'>
+                  Artigos <ArrowLeft />
+                </Link>
+                <Link to='/about'>
+                  <ArrowRight />
+                  Sobre
+                </Link>
+              </section>
             </menu>
           </header>
           <nav>

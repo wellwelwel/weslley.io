@@ -3,12 +3,16 @@
  */
 
 @use 'sass:meta';
+@use 'mixins';
 @use 'configs';
 @use 'main';
-@use 'mixins';
+@use 'custom-pages';
+@use 'animations';
 
+@include meta.load-css('configs');
 @include meta.load-css('main');
 @include meta.load-css('custom-pages');
+@include meta.load-css('animations');
 
 a,
 img,
@@ -123,7 +127,7 @@ table {
 
     &::after {
       content: 'Menu';
-      color: #9e95ff;
+      color: #e0c6ff;
       font-family: var(--ifm-font-family-featured);
       font-size: 14px;
       font-weight: 700;
@@ -147,6 +151,7 @@ table {
 
 .navbar.navbar--fixed-top {
   background-color: #683bff;
+  box-shadow: 0 5px 5px #00000025;
 
   svg {
     color: #ffb8ea;
