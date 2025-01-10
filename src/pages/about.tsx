@@ -251,7 +251,7 @@ export default (): ReactNode => {
             <section>
               <h2>Impacto</h2>
               <p>
-                🌎 Direta ou indiretamente, meu trabalho na comunidade
+                🌎 Direta ou indiretamente, meu trabalho na comunidade{' '}
                 <em>open-source</em> impacta e apoia milhões de desenvolvedores
                 globalmente, especialmente no ecossistema{' '}
                 <strong>JavaScript</strong>.

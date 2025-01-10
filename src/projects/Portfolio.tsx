@@ -10,13 +10,13 @@ export const Portfolio = () => (
     icon={<Heart />}
   >
     <p>
-      👨🏻‍🎨 Já viu aquele portfólio dahora, mas não tem ideia de como o programador
-      fez? Meu portfólio é <em>open-source</em> e você pode não só olhar, como
-      criar um <em>fork</em> e adaptar para usar no seu próprio portfólio.
+      👨🏻‍🎨 Já viu aquele portfólio dahora, mas não tem ideia de como foi feito?
+      Meu portfólio é <em>open-source</em> e você pode não só olhar, como criar
+      um <em>fork</em> e adaptar pra usar no seu próprio portfólio.
     </p>
     <p>
       Ele também serve como uma amostra da minha atuação no <em>frontend</em>,
-      visto que a maioria dos meus projetos são focados no <em>backend</em>.
+      já que a maioria dos meus projetos são focados no <em>backend</em>.
     </p>
   </Project>
 );

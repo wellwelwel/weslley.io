@@ -17,7 +17,7 @@ export const MySQL2 = () => (
       <SafeLink to='https://github.com/sidorares/node-mysql2/network/dependents'>
         mais de 880 mil repositórios públicos
       </SafeLink>{' '}
-      no GitHub.
+      no <strong>GitHub</strong>.
     </p>
     <p>
       Ele é o principal componente por traz de projetos como{' '}
@@ -29,7 +29,7 @@ export const MySQL2 = () => (
       Em 24 de março de 2024, migrei todo o conjunto de testes do{' '}
       <strong>MySQL2</strong> para o <strong>Poku</strong>, garantindo a
       compatibilidade entre <strong>Node.js</strong>, <strong>Bun</strong> e{' '}
-      <strong>Deno</strong>, o que nos leva para o próximo projeto.
+      <strong>Deno</strong>, o que nos leva para o meu próximo projeto.
     </p>
   </Project>
 );
