@@ -49,7 +49,7 @@ jobs:
 
       - name: Purge Cache
         run: npm run purge
-        with:
+        env:
           CF_ZONE_ID: ${{ secrets.CF_ZONE_ID }}
           CF_TOKEN: ${{ secrets.CF_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
