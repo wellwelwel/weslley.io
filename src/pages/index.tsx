@@ -21,7 +21,7 @@ export default (): ReactNode => {
         <main>
           <header>
             <Parallax scale={1.1} tiltMaxAngleX={15} tiltMaxAngleY={15}>
-              <img loading='lazy' src='/img/avatar.png' alt='Avatar' />
+              <img loading='eager' src='/img/avatar.png' alt='Avatar' />
             </Parallax>
             <h1>
               <Name name={siteConfig.title} />
@@ -57,7 +57,11 @@ export default (): ReactNode => {
           </header>
           <nav>
             <h2>
-              <img src='/img/social.svg' alt='Ícone de Estrela' />
+              <img
+                loading='lazy'
+                src='/img/social.svg'
+                alt='Ícone de Estrela'
+              />
               Redes Sociais
             </h2>
             <Card
@@ -97,7 +101,7 @@ export default (): ReactNode => {
           </nav>
           <nav>
             <h2>
-              <img src='/img/star.svg' alt='Ícone de Estrela' />
+              <img loading='lazy' src='/img/star.svg' alt='Ícone de Estrela' />
               Principais Projetos
             </h2>
             <Card

@@ -1,5 +1,5 @@
 /**
- * This file adjusts or resets Docusaaurus' default styles.
+ * This file adjusts or resets Docusaurus' default styles.
  */
 
 @use 'sass:meta';
@@ -9,10 +9,7 @@
 @use 'custom-pages';
 @use 'animations';
 
-// @include meta.load-css('configs');
-// @include meta.load-css('main');
-// @include meta.load-css('custom-pages');
-// @include meta.load-css('animations');
+@include meta.load-css('configs');
 
 a,
 img,

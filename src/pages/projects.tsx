@@ -1,14 +1,16 @@
+/**
+ * Projects are automatically loaded from `src/projects` and use the `default` exported component.
+ */
+
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import { Portfolio } from '../projects/Portfolio';
-import { LRU_Min } from '../projects/LRU_Min';
-import { MySQL2 } from '../projects/MySQL2';
-import { Poku } from '../projects/Poku';
-import { SVPS } from '../projects/SVPS';
-import { AWS_SSL_Profiles } from '../projects/AWS_SSL_Profiles';
-import { WIP } from '../projects/WIP';
+import { ProjectsProvider } from '../contexts/Projects';
+import { dynamicRequire } from '../helpers/dynamic-require';
 
 export default (): ReactNode => {
+  const context = require.context('@site/projects', false, /\.(tsx|jsx|mdx)$/);
+  const projects = dynamicRequire(context);
+
   return (
     <Layout
       title='Projetos'
@@ -18,7 +20,7 @@ export default (): ReactNode => {
         <main>
           <header>
             <h1>Projetos</h1>
-            <img src='/img/projects.svg' alt='' />
+            <img loading='lazy' src='/img/projects.svg' alt='' />
             <small>
               Aqui você vai conhecer um pouquinho da história de cada projeto
               que eu mantenho ou co-mantenho.
@@ -26,15 +28,13 @@ export default (): ReactNode => {
               <strong>OSI:</strong> Open Source Initiative.
             </small>
           </header>
-          <div className='container'>
-            <Portfolio />
-            <LRU_Min />
-            <MySQL2 />
-            <Poku />
-            <SVPS />
-            <AWS_SSL_Profiles />
-            <WIP />
-          </div>
+          <ProjectsProvider>
+            <div className='container'>
+              {projects.map((Project, i) => (
+                <Project key={`project:${i}`} />
+              ))}
+            </div>
+          </ProjectsProvider>
         </main>
       </div>
     </Layout>

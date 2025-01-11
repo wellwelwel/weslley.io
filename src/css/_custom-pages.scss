@@ -72,6 +72,7 @@
         padding: 25px;
       }
 
+      &,
       & > section {
         h2 {
           font-size: 20px;
@@ -162,17 +163,19 @@
         max-width: 480px;
         transition: box-shadow 0.5s ease;
 
-        section {
-          @include mixins.flex(column, flex-start, flex-start);
-          height: 100%;
+        &.show {
+          animation: showIn 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
+        }
+
+        &.hide {
+          animation: showOut 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
+        }
+
+        p {
           flex-grow: 1;
 
-          p {
-            flex-grow: 1;
-
-            & + * {
-              margin-top: 15px;
-            }
+          & + * {
+            margin-top: 15px;
           }
         }
 

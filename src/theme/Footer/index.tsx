@@ -7,7 +7,7 @@ const Footer = (): ReactNode => {
   return (
     <footer>
       <aside className='left'>
-        <img src='/img/osi.svg' alt='' />
+        <img loading='lazy' src='/img/osi.svg' alt='' />
         <section>
           <p>
             <strong>
@@ -15,7 +15,7 @@ const Footer = (): ReactNode => {
                 <strong>weslley.io</strong>
               </Link>
             </strong>{' '}
-            é um site{' '}
+            é um site que serve como um template{' '}
             <SafeLink to='https://github.com/wellwelwel/weslley.io'>
               <strong>open-source</strong>
             </SafeLink>{' '}

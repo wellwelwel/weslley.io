@@ -12,7 +12,7 @@ export default (): ReactNode => {
         <main>
           <header>
             <h1>Contatos</h1>
-            <img src='/img/contacts.svg' alt='' />
+            <img loading='lazy' src='/img/contacts.svg' alt='' />
           </header>
           <nav>
             <section>

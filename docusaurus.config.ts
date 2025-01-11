@@ -72,11 +72,11 @@ const config: Config = {
     [
       '@docusaurus/plugin-content-blog',
       {
-        id: 'Artigos',
+        id: 'articles',
+        path: './articles',
+        routeBasePath: 'articles',
         blogTitle: 'Artigos',
         blogSidebarTitle: 'Artigos recentes 📜',
-        routeBasePath: 'articles',
-        path: './articles',
         showReadingTime: false,
         feedOptions: {
           type: ['rss', 'atom'],
