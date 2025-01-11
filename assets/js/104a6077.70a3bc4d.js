@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[689],{528:function(s){s.exports=JSON.parse('{"blogBasePath":"/articles","blogTitle":"Artigos","authorsListPath":"/articles/authors"}')}}]);
