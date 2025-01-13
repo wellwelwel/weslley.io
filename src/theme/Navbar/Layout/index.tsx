@@ -8,8 +8,8 @@ import {
 import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import type { Props } from '@theme/Navbar/Layout';
-
-import styles from './styles.module.css';
+// @ts-ignore
+import styles from './styles.module.scss';
 import { useLocation } from '@docusaurus/router';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {

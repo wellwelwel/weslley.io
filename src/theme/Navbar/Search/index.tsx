@@ -1,8 +1,8 @@
 import React, { type ReactNode } from 'react';
 import clsx from 'clsx';
 import type { Props } from '@theme/Navbar/Search';
-
-import styles from './styles.module.css';
+// @ts-ignore
+import styles from './styles.module.scss';
 
 export default function NavbarSearch({
   children,

@@ -1,6 +1,6 @@
 # [weslley.io](https://weslley.io)
 
-🫰🏻 Yep, even my website is open-source and as a template, you can use this website and edit it according to your own needs.
+🫰🏻 Yep, even my website is open-source and, as a template, you can use this website and edit it according to your own needs.
 
 > [!IMPORTANT]
 > Please be careful not to misuse the [**AGPL-3.0** License](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
@@ -92,7 +92,7 @@ export default () => (
 
 #### Output
 
-> <img src="./.github/assets/social-sample.svg" width="48" />
+> <a href="https://www.linkedin.com/in/wellwelwel/"><img src="./.github/assets/social-sample.svg" alt="LinkedIn" title="LinkedIn" width="48" /></a>
 
 ---
 
