@@ -6,11 +6,11 @@
 
 > [!TIP]
 >
-> - Use the [**GitHub Pages**](https://pages.github.com/) to serve your website for free, since it's a **Static Site Generation** (**SSG**).
+> - Use the [**GitHub Pages**](https://pages.github.com/) to serve your website for free, since it uses **Static Site Generation** (**SSG**).
 > - Use your own colors and assets (images, icons, etc.) to make your site unique ✨
 
 > [!IMPORTANT]
-> Please be careful not to misuse the [**AGPL-3.0** License](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
+> Please be careful not to misuse the [**AGPL-3.0 License**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
 >
 > In a nutshell, to use this template, your template also needs to have your code open-source and under the same license.
 >
@@ -314,5 +314,8 @@ To create this website, it was used:
 
 ## License
 
-**weslley.io** is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).<br />
+- **weslley.io** source code is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
+- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**CC BY-NC-SA 4.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
+  - Most vectors and icons come from [**Freepik**](https://www.freepik.com/) (including premium subscription) and [**Lucide**](https://lucide.dev/).
+
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
