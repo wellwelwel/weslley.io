@@ -315,7 +315,7 @@ To create this website, it was used:
 ## License
 
 - **weslley.io** source code is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
-- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**CC BY-NC-SA 4.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
+- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**CC BY-NC-SA 4.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-docs) licensed.
   - Most vectors and icons come from [**Freepik**](https://www.freepik.com/) (including premium subscription) and [**Lucide**](https://lucide.dev/).
 
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
