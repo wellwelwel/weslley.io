@@ -19,6 +19,42 @@
 
 ---
 
+## Development
+
+Cleanly install the dependencies:
+
+```bash
+npm ci
+```
+
+Main commands:
+
+```bash
+# To watch your changes in real time:
+npm start
+
+# To preview your build:
+npm run preview
+
+# To fix automatic lint errors:
+npm run lint:fix
+
+# To check for type errors:
+npm run typecheck
+```
+
+Extra commands:
+
+```bash
+# To update all dependencies to their latest minor versions
+npm run update
+
+# To clear all develpment and build files (useful for cache errors)
+npm run clear
+```
+
+---
+
 ## 👨🏻‍🎨 How to give it your unique touch?
 
 ### `SafeLink`

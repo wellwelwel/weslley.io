@@ -40,7 +40,7 @@
     "clsx": "^2.1.1",
     "docusaurus-plugin-sass": "^0.2.6",
     "jsonc.min": "^1.1.0",
-    "lucide-react": "^0.469.0",
+    "lucide-react": "^0.471.0",
     "packages-update": "^2.0.0",
     "poku": "^2.7.1",
     "prettier": "^3.4.2",
