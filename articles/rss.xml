@@ -14,7 +14,7 @@
             <guid>https://weslley.io/articles/2024/11/18/e-mail-spoofing-prevenindo-o-envio-de-emails-atraves-do-seu-dominio/</guid>
             <pubDate>Mon, 18 Nov 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Banner]]></description>
-            <content:encoded><![CDATA[<p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-509ec720030788d28ecb4cdf15cdfb5d.png" width="1280" height="720" class="img_ev3q"></p>
+            <content:encoded><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-509ec720030788d28ecb4cdf15cdfb5d.png" width="1280" height="720" class="img_ev3q"></p></div>
 <p>Sabia que pessoas mal intencionadas podem estar usando seu domínio para enviar e-mails falsos?</p>
 <!-- -->
 <p>Essa técnica é conhecida como E-mail Spoofing e explora a falta de autenticação no envio de e-mails de um domínio, falsificando o remetente e fazendo parecer que a mensagem foi enviada por um domínio confiável.</p>
@@ -69,7 +69,7 @@
             <guid>https://weslley.io/articles/2024/03/22/tutorial-introduzindo-testes-unitarios-para-devs-iniciantes/</guid>
             <pubDate>Fri, 22 Mar 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Banner]]></description>
-            <content:encoded><![CDATA[<p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-7ac2c9b37e32ceb4564bb18ee069f67b.png" width="1280" height="720" class="img_ev3q"></p>
+            <content:encoded><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-7ac2c9b37e32ceb4564bb18ee069f67b.png" width="1280" height="720" class="img_ev3q"></p></div>
 <p>Se você é um desenvolvedor iniciante (ou não), eu quero te mostrar que testes podem sim ser simples e que a complexidade só vem conforme nossa própria necessidade.</p>
 <!-- -->
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="-motivação">💡 Motivação<a href="https://weslley.io/articles/2024/03/22/tutorial-introduzindo-testes-unitarios-para-devs-iniciantes/#-motiva%C3%A7%C3%A3o" class="hash-link" aria-label="Link direto para 💡 Motivação" title="Link direto para 💡 Motivação">​</a></h2>

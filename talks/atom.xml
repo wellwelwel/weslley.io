@@ -13,7 +13,7 @@
         <link href="https://weslley.io/talks/2024/11/23/devfest-cerrado-google-developer-groups/"/>
         <updated>2024-11-23T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
-        <content type="html"><![CDATA[<p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-0e20b343264fb7745077c69d90143e6d.png" width="1770" height="918" class="img_ev3q"></p>
+        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-0e20b343264fb7745077c69d90143e6d.png" width="1770" height="918" class="img_ev3q"></p></div>
 <p>🎙️ <strong>Palestra:</strong> Superando a síndrome do impostor e os desafios de existir no mercado através do open-source.</p>
 <!-- -->
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="-a-escolha-do-tema">💡 A escolha do tema<a href="https://weslley.io/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-a-escolha-do-tema" class="hash-link" aria-label="Link direto para 💡 A escolha do tema" title="Link direto para 💡 A escolha do tema">​</a></h2>
@@ -49,7 +49,7 @@
         <link href="https://weslley.io/talks/2024/08/30/microsoft-reactor-e-nodebr/"/>
         <updated>2024-08-30T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
-        <content type="html"><![CDATA[<p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-6ad5921b3d9af3061591063ee16d4787.jpeg" width="800" height="400" class="img_ev3q"></p>
+        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-6ad5921b3d9af3061591063ee16d4787.jpeg" width="800" height="400" class="img_ev3q"></p></div>
 <p>🎙️ <strong>Palestra:</strong> Criando um Test Runner Multi-Plataforma de Alta Performance.</p>
 <!-- -->
 <p>Com o tema "API Like a Boss", tive a oportunidade de ensinar através do <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer"><strong>Poku</strong></a>.</p>

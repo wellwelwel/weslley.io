@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[516],{9770:function(e){e.exports=JSON.parse('{"name":"docusaurus-plugin-content-blog","id":"Palestras"}')}}]);
