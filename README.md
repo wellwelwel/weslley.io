@@ -2,7 +2,12 @@
 
 [![GitHub License](https://img.shields.io/github/license/wellwelwel/weslley.io?label=License&color=45aaf2)](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE)
 
-🫰🏻 Yep, even my website is open-source and, as a template, you can use this website and edit it according to your own needs.
+🫰🏻 Yep, even my website is open-source and, as a template, you can use and edit it according to your own needs.
+
+> [!TIP]
+>
+> - Use the [**GitHub Pages**](https://pages.github.com/) to serve your website for free, since it's a **Static Site Generation** (**SSG**).
+> - Use your own colors and assets (images, icons, etc.) to make your site unique ✨
 
 > [!IMPORTANT]
 > Please be careful not to misuse the [**AGPL-3.0** License](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
@@ -10,18 +15,13 @@
 > In a nutshell, to use this template, your template also needs to have your code open-source and under the same license.
 >
 > - You are free to change absolutely everything you want, except the license.
-> - It's important to mention this repository both in your repository _(README.md)_ and website.
+> - It's important to mention this repository both in your repository and website.
 >
 > For example, a simple **footnote**:
 >
 > ```md
 > This site was built using [weslley.io](https://github.com/wellwelwel/weslley.io) template.
 > ```
-
-> [!TIP]
->
-> - Use the [**GitHub Pages**](https://pages.github.com/) to serve your website for free, since it's a **Static Site Generation** (**SSG**).
-> - Use your own colors and assets (images, icons, etc.) to make your site unique ✨
 
 ---
 
@@ -63,6 +63,27 @@ npm run clear
 
 ## 👨🏻‍🎨 How to give it your unique touch?
 
+### Headline description
+
+- Path: [`./about/headline.mdx`](./about/headline.mdx).
+
+### Projects header description
+
+- Path: [`./about/projects.mdx`](./about/projects.mdx).
+
+### About page
+
+- Path: [`./about/page.mdx`](./about/page.mdx).
+
+### Settings and Definitions
+
+- [**Docusaurus**](https://github.com/facebook/docusaurus) config file: [./docusaurus.config.ts](./docusaurus.config.ts).
+- **Theme** (Colors and Fonts): [./src/css/\_configs.scss](./src/css/_configs.scss).
+
+---
+
+## ⚛️ Components
+
 ### `SafeLink`
 
 Opens the link in a new tab with the `noopener` and `noreferrer` options.
@@ -81,15 +102,15 @@ import { SafeLink as Link } from '@site/src/components/SafeLink';
 
 ### `Social`
 
-Creates a social icon in homepage _(header and footer soon)_.
+Creates a social icon in homepage _(header and footer soon)_:
 
-> [!IMPORTANT]
->
-> - Path: `./social`.
->   - Example: `./social/<file>.{mdx,md,tsx,jsx}`.
-> - Subdirectories will be ignored.
-> - Alphabetical order matters, use `01-<name>` to easily organize your social.
->   - Example: `./social/01-linkedin.mdx`.
+> <a href="https://www.linkedin.com/in/wellwelwel/"><img src="./.github/assets/social-sample.svg" alt="LinkedIn" title="LinkedIn" width="48" /></a>
+
+- Path: `./social/`.
+  - Example: `./social/<file.{mdx,md,tsx,jsx}>`.
+- Subdirectories will be ignored.
+- Alphabetical order matters, use `01-<name>` to easily organize your social.
+  - Example: `./social/01-linkedin.mdx`.
 
 Examples:
 
@@ -127,23 +148,19 @@ export default () => (
 >
 > - You can use one file for all social by grouping them using `<></>` or a file for each one.
 
-#### Output
-
-> <a href="https://www.linkedin.com/in/wellwelwel/"><img src="./.github/assets/social-sample.svg" alt="LinkedIn" title="LinkedIn" width="48" /></a>
-
 ---
 
 ### `Card`
 
-Creates a card for the highlights section in homepage.
+Creates a card for the highlights section in homepage:
 
-> [!IMPORTANT]
->
-> - Path: `./cards`.
->   - Example: `./cards/<file>.{mdx,md,tsx,jsx}`.
-> - Subdirectories will be ignored.
-> - Alphabetical order matters, use `01-<name>` to easily organize your cards.
->   - Example: `./cards/01-poku.mdx`.
+> <a href="https://github.com/wellwelwel/poku"><img src="./.github/assets/card-sample.png" width="360" alt="Poku" /></a>
+
+- Path: `./cards/`.
+  - Example: `./cards/<file.{mdx,md,tsx,jsx}>`.
+- Subdirectories will be ignored.
+- Alphabetical order matters, use `01-<name>` to easily organize your cards.
+  - Example: `./cards/01-poku.mdx`.
 
 Examples:
 
@@ -194,23 +211,19 @@ export default () => (
 >
 > - You can use one file for all cards by grouping them using `<></>` or a file for each one.
 
-#### Output
-
-> <img src="./.github/assets/card-sample.png" width="320" />
-
 ---
 
 ### `Project`
 
-Creates a project for the `/projects` page.
+Creates a project for the `/projects` page:
 
-> [!IMPORTANT]
->
-> - Path: `./projects`.
->   - Example: `./projects/<file>.{mdx,md,tsx,jsx}`.
-> - Subdirectories will be ignored.
-> - Alphabetical order matters, use `01-<name>` to easily organize your projects.
->   - Example: `./projects/01-poku.mdx`.
+> <img src="./.github/assets/project-sample.png" width="360" />
+
+- Path: `./projects/`.
+  - Example: `./projects/<file.{mdx,md,tsx,jsx}>`.
+- Subdirectories will be ignored.
+- Alphabetical order matters, use `01-<name>` to easily organize your projects.
+  - Example: `./projects/01-poku.mdx`.
 
 Examples:
 
@@ -281,22 +294,13 @@ export default () => (
 >
 > - You can use one file for all projects by grouping them using `<></>` or a file for each one.
 
-#### Output
-
-> <img src="./.github/assets/project-sample.png" width="320" />
-
----
-
-### Settings and Definitions
-
-- [**Docusaurus**](https://github.com/facebook/docusaurus) config file: [./docusaurus.config.ts](./docusaurus.config.ts).
-- **Theme** (Colors and Fonts): [./src/css/\_configs.scss](./src/css/_configs.scss).
-
 ---
 
 ## Acknowledgements
 
-🦖 Under the hood the [**Docusaurus**](https://github.com/facebook/docusaurus) is used.
+Special thanks:
+
+- 🦖 Under the hood, [**Docusaurus**](https://github.com/facebook/docusaurus) is used.
 
 To create this website, it was used:
 
@@ -308,7 +312,7 @@ To create this website, it was used:
 
 ---
 
-## License _(reinforcement)_
+## License
 
 **weslley.io** is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).<br />
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
