@@ -128,14 +128,6 @@ table {
     @include mixins.flex(row, center, space-between);
     width: 100%;
     gap: 12.5px;
-
-    &::after {
-      content: 'Menu';
-      color: #e0c6ff;
-      font-family: var(--ifm-font-family-featured);
-      font-size: 14px;
-      font-weight: 700;
-    }
   }
 
   .navbar-sidebar {
@@ -153,11 +145,45 @@ table {
   color: #ffffff;
 }
 
+hr {
+  background-color: var(--ifm-blockquote-border-color);
+}
+
+blockquote {
+  &,
+  p {
+    font-size: 13px;
+    color: #655ebf;
+  }
+}
+
+.theme-admonition {
+  &,
+  p {
+    font-size: 13px !important;
+  }
+}
+
+#__docusaurus_skipToContent_fallback {
+  animation: fadeIn 0.25s ease-in forwards;
+}
+
 .navbar.navbar--fixed-top {
-  background-color: #683bff;
-  box-shadow: 0 5px 5px #00000025;
-  min-height: 55px;
-  height: 55px;
+  position: sticky;
+  top: 0;
+  background-color: #ffffff5d;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 5px #00000020;
+  height: auto;
+
+  &.hide {
+    pointer-events: none;
+    animation: fadeOut 0.3s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
+  }
+
+  &.v-n {
+    visibility: hidden;
+  }
 
   svg {
     color: #ffb8ea;
@@ -171,11 +197,11 @@ table {
   a {
     font-family: var(--ifm-font-family-featured);
     font-weight: 600;
-    font-size: 13.5px;
-    color: #d3d3ff;
+    font-size: 12px;
+    color: #5050a5;
 
     &:hover {
-      color: #fff;
+      color: var(--ifm-color-primary);
     }
 
     @media (max-width: 630px) {
@@ -197,6 +223,37 @@ table {
   .navbar__item.dropdown.dropdown--hoverable {
     svg {
       display: none;
+    }
+  }
+
+  .navbar__link {
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 10px;
+      bottom: 2.5px;
+      display: block;
+      width: 0;
+      height: 1px;
+      background-color: var(--ifm-color-primary-light);
+      transition: width 0.25s cubic-bezier(0.75, 0, 0.2, 0.9);
+      opacity: 0.5;
+    }
+
+    &:hover {
+      &::after {
+        width: calc(100% - 20px);
+      }
+    }
+
+    &.navbar__link--active {
+      opacity: 1;
+
+      &::after {
+        width: calc(100% - 20px);
+      }
     }
   }
 }

@@ -1,8 +1,7 @@
 @use 'mixins';
 
 #projects,
-#about,
-#contacts {
+#about {
   padding: 20px;
   padding-bottom: 10px;
 
@@ -12,6 +11,14 @@
 
   p {
     margin: 0;
+    font-size: 14px;
+  }
+
+  blockquote {
+    &,
+    p {
+      font-size: 13px;
+    }
   }
 
   &,
@@ -25,9 +32,9 @@
 
   & > main {
     position: relative;
-    gap: 45px;
+    gap: 20px;
     padding: 40px;
-    padding-top: 30px;
+    padding-top: 10px;
 
     @media (max-width: 630px) {
       justify-content: flex-start;
@@ -74,15 +81,28 @@
 
       &,
       & > section {
+        & ~ *,
+        p ~ * {
+          margin-top: 12.5px;
+        }
+
+        hr {
+          margin: 20px 0;
+        }
+
         h2 {
           font-size: 20px;
           font-weight: 600;
           color: #3f3996;
+          margin-bottom: 10px;
+
+          & ~ h2 {
+            margin-top: 20px;
+          }
         }
 
-        p,
-        & > div {
-          font-size: 14.5px;
+        & > p,
+        & > div.container {
           color: #655ebf;
 
           a {
@@ -92,14 +112,33 @@
               color: #3f3996;
             }
           }
+        }
 
-          .container {
-            overflow-x: auto;
+        .container {
+          overflow-x: auto;
+          padding: 0;
 
-            table {
-              min-width: 540px;
+          table {
+            min-width: 540px;
+
+            td,
+            th {
+              &,
+              p {
+                font-size: 12.5px;
+              }
+
+              & > * {
+                margin: 0 !important;
+                display: inline-block;
+              }
             }
           }
+        }
+
+        p,
+        & > a {
+          display: block;
         }
 
         & > img {
@@ -147,6 +186,10 @@
           margin-top: 40px;
         }
       }
+
+      + nav {
+        margin-top: 0;
+      }
     }
   }
 }
@@ -167,8 +210,10 @@
           animation: showIn 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
         }
 
-        &.hide {
-          animation: showOut 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
+        section {
+          @include mixins.flex(column, flex-start, flex-start);
+          height: 100%;
+          flex-grow: 1;
         }
 
         p {

@@ -4,28 +4,28 @@ import { Parallax } from './Parallax';
 import { SafeLink } from './SafeLink';
 
 export type CardOptions = {
-  icon: string;
   name: string;
-  description: ReactNode;
-  href: string;
+  imageSrc: string;
+  children: ReactNode;
+  url: string;
   alt?: string;
 };
 
 export const Card: FC<CardOptions> = ({
   name,
-  icon,
-  alt = name,
-  href,
-  description,
+  imageSrc,
+  alt,
+  url,
+  children,
 }) => {
   return (
     <Parallax tiltMaxAngleX={1} tiltMaxAngleY={1} perspective={1000}>
-      <SafeLink to={href}>
-        <img loading='lazy' src={`/img/${icon}.svg`} alt={alt} title={alt} />
-        <p>
+      <SafeLink to={url} title={alt}>
+        <img loading='lazy' src={imageSrc} alt={alt} />
+        <div>
           <strong>{name}</strong>
-          <span>{description}</span>
-        </p>
+          <span>{children}</span>
+        </div>
         <ExternalLink />
       </SafeLink>
     </Parallax>

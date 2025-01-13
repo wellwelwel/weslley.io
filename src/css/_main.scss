@@ -33,6 +33,10 @@ body {
     padding: 0;
   }
 
+  p {
+    margin-bottom: 0;
+  }
+
   &,
   & > main {
     display: flex;
@@ -94,7 +98,7 @@ body {
         color: #5747ff;
 
         span {
-          transition: color ease 0.75s;
+          transition: color ease 0.5s;
           animation: colorChange 5s ease-in-out infinite;
           animation-delay: calc(var(--index) * 0.2s);
           cursor: default;
@@ -102,16 +106,47 @@ body {
       }
 
       small {
+        margin-top: 7.5px;
         font-size: 13px;
-        font-weight: 300;
+        font-weight: 400;
         color: #57619e;
+        letter-spacing: 0.25px;
+
+        & > p {
+          margin: 0;
+        }
+
+        hr {
+          margin: 10px 0;
+        }
 
         a {
           border-bottom: 1px solid #cac5ff;
-          color: #57619e;
+          color: #313a70;
 
           &:hover {
             border-color: #5747ff;
+          }
+        }
+      }
+
+      nav {
+        @include mixins.flex(row, center, space-between);
+        gap: 15px;
+        margin-top: 30px;
+
+        a {
+          transition:
+            transform 0.25s ease,
+            filter 0.15s;
+
+          img {
+            height: 32px;
+          }
+
+          &:hover {
+            transform: scale(1.1);
+            filter: saturate(2);
           }
         }
       }
@@ -124,7 +159,7 @@ body {
         gap: 10px;
         margin: 0;
         padding: 0;
-        margin-top: 20px;
+        margin-top: 30px;
 
         section {
           display: flex;
@@ -234,9 +269,7 @@ body {
           }
         }
 
-        p {
-          display: flex;
-          flex-direction: column;
+        & > div {
           margin-bottom: 0 !important;
           color: #655bff;
 
@@ -246,15 +279,18 @@ body {
           }
 
           span {
-            font-size: 12.5px;
-            font-weight: 300;
-            color: #5561a5;
-            transition: color ease 0.3s;
-
-            strong {
-              color: #5561a5;
+            p {
               font-size: 12.5px;
-              font-weight: 500;
+              font-weight: 300;
+              color: #5d6cc1;
+              transition: color ease 0.3s;
+              margin-bottom: 0;
+
+              strong {
+                color: #8e98cd;
+                font-size: 12.5px;
+                font-weight: 500;
+              }
             }
           }
         }
@@ -331,16 +367,22 @@ body {
           &:hover {
             border: none;
             background-color: unset;
-            color: #2a98ff;
+            color: #5146e9;
 
             svg {
-              color: #2a98ff;
+              transform: translateX(2.5px);
+              color: #fa2c74;
             }
           }
         }
       }
     }
   }
+}
+
+.navbar-sidebar--show .navbar-sidebar {
+  height: 100vh;
+  height: 100dvh;
 }
 
 [data-theme='dark'] {

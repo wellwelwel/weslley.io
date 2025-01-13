@@ -1,16 +1,27 @@
 import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Translate from '@docusaurus/Translate';
 import Link from '@docusaurus/Link';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
-import { Card } from '../components/Card';
-import { Name } from '../components/Name';
-import { Parallax } from '../components/Parallax';
-import { SafeLink } from '../components/SafeLink';
+import {
+  ArrowRight,
+  Code,
+  MicVocal,
+  Scroll,
+  UserRoundSearch,
+} from 'lucide-react';
+import { Name } from '@site/src/components/Name';
+import { Parallax } from '@site/src/components/Parallax';
+import { dynamicRequire } from '../helpers/dynamic-require';
+import AboutResume from '@site/about/headline.mdx';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
+  const cards = dynamicRequire(
+    require.context('@site/cards', false, /\.(tsx|jsx|mdx)$/)
+  );
+  const socials = dynamicRequire(
+    require.context('@site/social', false, /\.(tsx|jsx|mdx)$/)
+  );
 
   return (
     <Layout
@@ -27,29 +38,29 @@ export default (): ReactNode => {
               <Name name={siteConfig.title} />
             </h1>
             <small>
-              Open Sourcerer | End-to-End Developer
-              <br />
-              <Translate id='home.header.mysql'>
-                MySQL2 Co-Maintainer
-              </Translate>{' '}
-              | Criador do <SafeLink to='https://poku.io/'>Poku</SafeLink> ✨
+              <AboutResume />
             </small>
+            <nav>
+              {socials.map((Social, i) => (
+                <Social key={`card:${i}`} />
+              ))}
+            </nav>
             <menu>
               <section>
                 <Link to='/projects'>
-                  Projetos <ArrowLeft />
+                  Projetos <Code />
                 </Link>
                 <Link to='/talks'>
-                  <ArrowRight />
+                  <MicVocal />
                   Palestras
                 </Link>
               </section>
               <section>
                 <Link to='/articles'>
-                  Artigos <ArrowLeft />
+                  Artigos <Scroll />
                 </Link>
                 <Link to='/about'>
-                  <ArrowRight />
+                  <UserRoundSearch />
                   Sobre
                 </Link>
               </section>
@@ -57,80 +68,15 @@ export default (): ReactNode => {
           </header>
           <nav>
             <h2>
-              <img
-                loading='lazy'
-                src='/img/social.svg'
-                alt='Ícone de Estrela'
-              />
-              Redes Sociais
-            </h2>
-            <Card
-              name='LinkedIn'
-              icon='linkedin'
-              description='Dicas de programação, conquistas e conteúdos técnicos.'
-              href='https://www.linkedin.com/in/wellwelwel/'
-            />
-            <Card
-              name='GitHub'
-              icon='github'
-              description='Aqui você encontra projetos interessantes de verdade.'
-              href='https://github.com/wellwelwel'
-            />
-            <Card
-              name='Instagram'
-              icon='instagram'
-              description={
-                <>
-                  Um show aqui, um gato ali e do nada, conteúdos sobre{' '}
-                  programação.
-                </>
-              }
-              href='https://www.instagram.com/wellwelwel/'
-            />
-            <Card
-              name='YouTube'
-              icon='youtube'
-              description={
-                <>
-                  🚧 <strong>WIP:</strong> Conteúdos educacionais e cursos
-                  totalmente gratuitos.
-                </>
-              }
-              href='https://www.youtube.com/@weslleyio'
-            />
-          </nav>
-          <nav>
-            <h2>
               <img loading='lazy' src='/img/star.svg' alt='Ícone de Estrela' />
-              Principais Projetos
+              Destaques
             </h2>
-            <Card
-              name='Poku'
-              icon='junior'
-              description={
-                <>
-                  Um <em>test runner</em> que torna testes fáceis? Temos! Que
-                  tal deixar uma <strong>estrela</strong> pro nosso porquinho
-                  brasileiro? 🇧🇷
-                </>
-              }
-              href='https://github.com/wellwelwel/poku'
-            />
-            <Card
-              name='lru.min'
-              icon='lru'
-              description='Um dos caches baseados em LRU mais performáticos de todo o eco-sistema JavaScript.'
-              href='https://www.npmjs.com/package/lru.min'
-            />
-            <Card
-              name='⚡️ MySQL2'
-              icon='mysql2'
-              description='Cliente MySQL de alta performance mais baixado do eco-sistema JavaScript (Node.js, Deno e Bun).'
-              href='https://github.com/sidorares/node-mysql2'
-            />
+            {cards.map((Card, i) => (
+              <Card key={`card:${i}`} />
+            ))}
             <small>
               <Link to='/projects'>
-                Ver todos <ArrowRight />
+                Ver mais <ArrowRight />
               </Link>
             </small>
           </nav>

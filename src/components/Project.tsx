@@ -96,48 +96,50 @@ export const Project: FC<ProjectOptions> = ({
       })()}
       data-counter={counter}
     >
-      <h2>{name}</h2>
-      {children}
-      {npm ? (
-        <p>
-          <SafeLink to={`https://www.npmjs.com/package/${npm}`}>
-            <img
-              loading={isFirstOnes ? 'eager' : 'lazy'}
-              src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
-            />
-          </SafeLink>
-        </p>
-      ) : null}
-
-      {link ? (
-        <footer>
-          <Parallax>
-            <SafeLink
-              to={
-                url ? url : `https://github.com/${organization}/${repository}`
-              }
-            >
-              {(() => {
-                if (icon) return icon;
-                if (hasRepository) return <Github />;
-                return null;
-              })()}
-
-              {hasRepository ? (
-                <p>
-                  {`${organization}/${repository}`}
-                  <br />
-                  {license ? (
-                    <>
-                      Licença: <strong>{license}</strong>
-                    </>
-                  ) : null}
-                </p>
-              ) : null}
+      <section>
+        <h2>{name}</h2>
+        {children}
+        {npm ? (
+          <p>
+            <SafeLink to={`https://www.npmjs.com/package/${npm}`}>
+              <img
+                loading={isFirstOnes ? 'eager' : 'lazy'}
+                src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
+              />
             </SafeLink>
-          </Parallax>
-        </footer>
-      ) : null}
+          </p>
+        ) : null}
+
+        {link ? (
+          <footer>
+            <Parallax>
+              <SafeLink
+                to={
+                  url ? url : `https://github.com/${organization}/${repository}`
+                }
+              >
+                {(() => {
+                  if (icon) return icon;
+                  if (hasRepository) return <Github />;
+                  return null;
+                })()}
+
+                {hasRepository ? (
+                  <p>
+                    {`${organization}/${repository}`}
+                    <br />
+                    {license ? (
+                      <>
+                        Licença: <strong>{license}</strong>
+                      </>
+                    ) : null}
+                  </p>
+                ) : null}
+              </SafeLink>
+            </Parallax>
+          </footer>
+        ) : null}
+      </section>
     </nav>
   );
 };

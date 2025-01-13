@@ -1,4 +1,5 @@
 import { themes as prismThemes } from 'prism-react-renderer';
+// import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 
@@ -19,7 +20,7 @@ const config: Config = {
     locales: ['pt-BR'],
     localeConfigs: {
       'pt-BR': {
-        label: '🇧🇷 Português (Brasil)',
+        label: '🇧🇷',
       },
     },
   },
@@ -42,22 +43,21 @@ const config: Config = {
       defaultMode: 'light',
     },
     navbar: {
+      title: 'Weslley A.',
       logo: {
         alt: "Weslley's Araújo Avatar",
         src: 'img/logo.png',
       },
       items: [
-        { to: '/projects', label: 'Projetos (OSI)', position: 'left' },
+        { to: '/projects', label: 'Projetos', position: 'left' },
         { to: '/talks', label: 'Palestras', position: 'left' },
         { to: '/articles', label: 'Artigos', position: 'left' },
         { to: '/about', label: 'Sobre', position: 'left' },
-        { to: '/contacts', label: 'Contatos', position: 'left' },
-        {
-          href: 'https://github.com/sponsors/wellwelwel',
-          position: 'right',
-          className: 'header-sponsor-link',
-          label: 'GitHub Sponsor',
-        },
+        // { type: 'search', position: 'right' },
+        // {
+        //   type: 'localeDropdown',
+        //   position: 'right',
+        // },
       ],
     },
     footer: {},
@@ -69,6 +69,16 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
   plugins: [
     'docusaurus-plugin-sass',
+    // [
+    //   '@easyops-cn/docusaurus-search-local',
+    //   {
+    //     indexDocs: false,
+    //     indexPages: true,
+
+    //     hashed: true,
+    //     language: ['pt'],
+    //   } satisfies PluginOptions,
+    // ],
     [
       '@docusaurus/plugin-content-blog',
       {
