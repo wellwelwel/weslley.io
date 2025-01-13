@@ -4,8 +4,9 @@
 
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import { ProjectsProvider } from '../contexts/Projects';
-import { dynamicRequire } from '../helpers/dynamic-require';
+import { ProjectsProvider } from '@site/src/contexts/Projects';
+import { dynamicRequire } from '@site/src/helpers/dynamic-require';
+import About from '@site/about/projects.mdx';
 
 export default (): ReactNode => {
   const context = require.context('@site/projects', false, /\.(tsx|jsx|mdx)$/);
@@ -14,7 +15,7 @@ export default (): ReactNode => {
   return (
     <Layout
       title='Projetos'
-      description='Lista com a maioria dos projetos que mantenho e co-mantenho com a iniciativa open-source.'
+      description='Lista com a maioria dos projetos que mantenho e co-mantenho através da iniciativa open-source.'
     >
       <div id='projects'>
         <main>
@@ -22,10 +23,7 @@ export default (): ReactNode => {
             <h1>Projetos</h1>
             <img loading='lazy' src='/img/projects.svg' alt='' />
             <small>
-              Aqui você vai conhecer um pouquinho da história de cada projeto
-              que eu mantenho ou co-mantenho.
-              <br />
-              <strong>OSI:</strong> Open Source Initiative.
+              <About />
             </small>
           </header>
           <ProjectsProvider>

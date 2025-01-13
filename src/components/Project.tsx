@@ -3,7 +3,7 @@ import { useInView } from 'react-intersection-observer';
 import { Github } from 'lucide-react';
 import { SafeLink } from './SafeLink';
 import { Parallax } from './Parallax';
-import { ProjectsContext } from '../contexts/Projects';
+import { ProjectsContext } from '@site/src/contexts/Projects';
 
 export type ProjectOptions = {
   name: string;

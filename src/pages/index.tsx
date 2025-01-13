@@ -11,7 +11,7 @@ import {
 } from 'lucide-react';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
-import { dynamicRequire } from '../helpers/dynamic-require';
+import { dynamicRequire } from '@site/src/helpers/dynamic-require';
 import AboutResume from '@site/about/headline.mdx';
 
 export default (): ReactNode => {
