@@ -1,5 +1,7 @@
 # [weslley.io](https://weslley.io)
 
+[![GitHub License](https://img.shields.io/github/license/wellwelwel/weslley.io?label=License&color=45aaf2)](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE)
+
 🫰🏻 Yep, even my website is open-source and, as a template, you can use this website and edit it according to your own needs.
 
 > [!IMPORTANT]
@@ -14,13 +16,6 @@
 >
 > - Use the [**GitHub Pages**](https://pages.github.com/) to serve your website for free, since it's a **Static Site Generation** (**SSG**).
 > - Use your own colors and assets (images, icons, etc.) to make your site unique ✨
-
----
-
-## License
-
-**weslley.io** is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).<br />
-Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
 
 ---
 
