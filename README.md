@@ -10,7 +10,13 @@
 > In a nutshell, to use this template, your template also needs to have your code open-source and under the same license.
 >
 > - You are free to change absolutely everything you want, except the license.
-> - You don't need to credit me in your website _(it would be cool if you did)_, but it's important to mention this repository in your public repository (REAME.md).
+> - It's important to mention this repository both in your repository _(README.md)_ and website.
+>
+> For example, a simple **footnote**:
+>
+> ```md
+> This site was built using [weslley.io](https://github.com/wellwelwel/weslley.io) template.
+> ```
 
 > [!TIP]
 >
