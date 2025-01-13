@@ -1,7 +1,8 @@
 import { themes as prismThemes } from 'prism-react-renderer';
-// import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import { websiteConfigs } from './website.configs';
 
 const config: Config = {
   title: 'Weslley Araújo',
@@ -48,17 +49,7 @@ const config: Config = {
         alt: "Weslley's Araújo Avatar",
         src: 'img/logo.png',
       },
-      items: [
-        { to: '/projects', label: 'Projetos', position: 'left' },
-        { to: '/talks', label: 'Palestras', position: 'left' },
-        { to: '/articles', label: 'Artigos', position: 'left' },
-        { to: '/about', label: 'Sobre', position: 'left' },
-        // { type: 'search', position: 'right' },
-        // {
-        //   type: 'localeDropdown',
-        //   position: 'right',
-        // },
-      ],
+      items: [],
     },
     footer: {},
     prism: {
@@ -69,25 +60,28 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
   plugins: [
     'docusaurus-plugin-sass',
-    // [
-    //   '@easyops-cn/docusaurus-search-local',
-    //   {
-    //     indexDocs: false,
-    //     indexPages: true,
-
-    //     hashed: true,
-    //     language: ['pt'],
-    //   } satisfies PluginOptions,
-    // ],
-    [
+    ...(() => {
+      if (websiteConfigs.navBarItens?.right?.search)
+        return [
+          [
+            '@easyops-cn/docusaurus-search-local',
+            {
+              indexDocs: false,
+              indexPages: true,
+              hashed: true,
+              language: ['pt'],
+            } satisfies PluginOptions,
+          ],
+        ];
+      return [];
+    })(),
+    // Blogs
+    ...(websiteConfigs.blogs?.map((blog) => [
       '@docusaurus/plugin-content-blog',
       {
-        id: 'articles',
-        path: './articles',
-        routeBasePath: 'articles',
-        blogTitle: 'Artigos',
-        blogSidebarTitle: 'Artigos recentes 📜',
-        showReadingTime: false,
+        ...blog,
+        blogSidebarCount: 'ALL',
+        showReadingTime: true,
         feedOptions: {
           type: ['rss', 'atom'],
           xslt: true,
@@ -96,29 +90,35 @@ const config: Config = {
         onInlineTags: 'throw',
         onInlineAuthors: 'throw',
         onUntruncatedBlogPosts: 'throw',
-      } satisfies Preset.Options['blog'],
-    ],
-    [
-      '@docusaurus/plugin-content-blog',
-      {
-        id: 'Palestras',
-        blogTitle: 'Palestras',
-        blogSidebarTitle: 'Palestras Recentes 🎙️',
-        routeBasePath: 'talks',
-        path: './talks',
-        blogSidebarCount: 'ALL',
-        showReadingTime: false,
-        feedOptions: {
-          type: ['rss', 'atom'],
-          xslt: true,
-        },
-        showLastUpdateTime: false,
-        onInlineTags: 'throw',
-        onInlineAuthors: 'throw',
-        onUntruncatedBlogPosts: 'throw',
-      } satisfies Preset.Options['blog'],
-    ],
+      },
+    ]) as any),
   ],
 };
+
+// Load left items
+if (websiteConfigs.navBarItens?.left) {
+  (config as any)?.themeConfig.navbar.items.push(
+    ...websiteConfigs.navBarItens.left.map((item) => ({
+      ...item,
+      position: 'left',
+    }))
+  );
+}
+
+// Load search item
+if (websiteConfigs.navBarItens?.right?.search) {
+  (config as any)?.themeConfig.navbar.items.push({
+    type: 'search',
+    position: 'right',
+  });
+}
+
+// Load locale item
+if (websiteConfigs.navBarItens?.right?.locale) {
+  (config as any)?.themeConfig.navbar.items.push({
+    type: 'localeDropdown',
+    position: 'right',
+  });
+}
 
 export default config;

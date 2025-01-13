@@ -2,7 +2,6 @@ import Link, { type Props } from '@docusaurus/Link';
 import type { FC, ReactNode } from 'react';
 
 export type SafeLinkOptions = {
-  to: string;
   children: ReactNode;
 } & Props;
 

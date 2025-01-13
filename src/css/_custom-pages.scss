@@ -214,6 +214,16 @@
           @include mixins.flex(column, flex-start, flex-start);
           height: 100%;
           flex-grow: 1;
+
+          .social {
+            @include mixins.flex(row, center, flex-start, wrap);
+            gap: 5px;
+
+            & > * {
+              padding: 0;
+              margin: 0;
+            }
+          }
         }
 
         p {
@@ -224,14 +234,64 @@
           }
         }
 
+        &.large {
+          @include mixins.flex(row, center, space-between);
+          gap: 40px;
+          min-width: 100%;
+          max-width: none;
+
+          .banner {
+            position: relative;
+            z-index: 1;
+            min-width: 256px;
+            width: 256px;
+            min-height: 256px;
+            height: 256px;
+            margin-top: 0;
+            transition: transform 0.25s ease;
+
+            a {
+              position: absolute;
+              inset: 0;
+
+              img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 10px;
+                border: 1px solid #6f65ff36;
+                filter: drop-shadow(5px 5px #6f65ff36);
+              }
+            }
+          }
+
+          &:nth-child(even) {
+            flex-direction: row-reverse;
+          }
+
+          @media (max-width: 1136px) {
+            flex-direction: column-reverse;
+            gap: 20px;
+            min-width: 310px;
+            width: 100%;
+            max-width: 480px;
+
+            .banner {
+              min-width: 100%;
+              width: 100%;
+              min-height: 310px;
+              height: 100%;
+            }
+
+            &:nth-child(even) {
+              flex-direction: column-reverse;
+            }
+          }
+        }
+
         &:hover {
           box-shadow: 0 0 25px #00000010;
         }
-      }
-
-      & > small {
-        margin-top: 20px;
-        text-align: center;
       }
     }
   }

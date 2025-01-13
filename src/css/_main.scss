@@ -96,10 +96,11 @@ body {
         font-size: 24px;
         font-weight: 700;
         color: #5747ff;
+        text-shadow: 1px 1px 2px #ffffff90;
 
         span {
           transition: color ease 0.5s;
-          animation: colorChange 5s ease-in-out infinite;
+          animation: colorChange 3.75s ease-in-out infinite;
           animation-delay: calc(var(--index) * 0.2s);
           cursor: default;
         }
@@ -111,6 +112,7 @@ body {
         font-weight: 400;
         color: #57619e;
         letter-spacing: 0.25px;
+        text-shadow: 1px 1px 2px #ffffffee;
 
         & > p {
           margin: 0;
@@ -131,8 +133,10 @@ body {
       }
 
       nav {
-        @include mixins.flex(row, center, space-between);
+        position: relative;
+        @include mixins.flex(row, center, center, wrap);
         gap: 15px;
+        width: 100%;
         margin-top: 30px;
 
         a {
@@ -140,13 +144,75 @@ body {
             transform 0.25s ease,
             filter 0.15s;
 
+          &::after {
+            content: '';
+            position: absolute;
+            top: -17.5px;
+            left: 7.5px;
+            width: 0;
+            height: 0;
+            border-left: 7.5px solid transparent;
+            border-right: 7.5px solid transparent;
+            border-top: 7.5px solid #fa2c74;
+            border-bottom: 0;
+            opacity: 0;
+            display: none;
+            pointer-events: none;
+          }
+
+          + .description {
+            position: absolute;
+            top: -150px;
+            @include mixins.flex(column, center, center);
+            gap: 10px;
+            padding: 15px;
+            height: 130px;
+            min-width: 100%;
+            border-radius: 15px;
+            border: 1px dotted #cbc7ff;
+            box-shadow: 0 0 25px #00000005;
+            font-size: 13px;
+            background-color: #e9e8fb;
+            color: #271dab;
+            transform: scale(0);
+            opacity: 0;
+            transition:
+              opacity 0.3s ease,
+              transform 0.2s cubic-bezier(0.75, -0.5, 0.2, 0.9);
+            pointer-events: none;
+
+            & > h3 {
+              @include mixins.flex(row, center, center);
+              gap: 5px;
+              margin-bottom: 0;
+              font-size: 14px;
+              font-weight: 600;
+
+              img {
+                width: 18px;
+              }
+            }
+          }
+
           img {
             height: 32px;
           }
 
           &:hover {
+            position: unset !important;
             transform: scale(1.1);
             filter: saturate(2);
+
+            &::after {
+              display: block;
+              animation: showIn 0.35s cubic-bezier(0.75, -0.5, 0.2, 0.9)
+                forwards;
+            }
+
+            + .description {
+              opacity: 0.975;
+              transform: scale(1);
+            }
           }
         }
       }
@@ -192,6 +258,7 @@ body {
 
             svg {
               width: 16px;
+              transition: color ease 0.5s;
             }
 
             &:hover {
@@ -202,6 +269,10 @@ body {
 
               span {
                 color: var(--ifm-color-main);
+              }
+
+              svg {
+                color: #278cff;
               }
             }
           }
@@ -276,6 +347,7 @@ body {
           strong {
             font-size: 15px;
             font-weight: 600;
+            transition: color ease 0.5s;
           }
 
           span {

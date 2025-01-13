@@ -17,11 +17,14 @@
 > - You are free to change absolutely everything you want, except the license.
 > - It's important to mention this repository both in your repository and website.
 >
-> For example, a simple **footnote**:
+> Just as an example, a simple footnote:
 >
 > ```md
 > This site was built using [weslley.io](https://github.com/wellwelwel/weslley.io) template.
 > ```
+
+> [!WARNING]
+> 🚧 Still developing the architecture to make the project accessible to the open-source community.
 
 ---
 
@@ -42,20 +45,28 @@ npm start
 # To preview your build:
 npm run preview
 
+```
+
+Useful commands for testing:
+
+```bash
 # To fix automatic lint errors:
 npm run lint:fix
 
-# To check for type errors:
+# To check for type errors (doesn't work with MDX files):
 npm run typecheck
+
+# To build your website:
+npm run build
 ```
 
 Extra commands:
 
 ```bash
-# To update all dependencies to their latest minor versions
+# To update all dependencies to their latest minor versions:
 npm run update
 
-# To clear all develpment and build files (useful for cache errors)
+# To clear all development and build files (useful for cache errors):
 npm run clear
 ```
 
@@ -315,7 +326,7 @@ To create this website, it was used:
 ## License
 
 - **weslley.io** source code is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
-- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**Creative Commons**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-docs) licensed.
+- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**Creative Commons**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
   - Most vectors and icons come and are adapted from [**Freepik**](https://www.freepik.com/) (including premium subscription) and [**Lucide**](https://lucide.dev/).
 
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).

@@ -10,6 +10,9 @@ export type ProjectOptions = {
   children?: ReactNode;
   license?: string;
   npm?: string;
+  githubStars?: boolean;
+  docker?: string;
+  vsMarketplaceId?: string;
   /** For **GitHub** only.
    *
    * If the link is not from a **GitHub** repository, use the `url` property instead.
@@ -27,6 +30,7 @@ export type ProjectOptions = {
    */
   url?: string;
   icon?: ReactNode;
+  image?: string;
 };
 
 /**
@@ -61,9 +65,13 @@ export const Project: FC<ProjectOptions> = ({
   license,
   organization,
   repository,
+  githubStars,
   npm,
+  docker,
+  vsMarketplaceId,
   url,
   icon,
+  image,
 }) => {
   const { getCounter } = useContext(ProjectsContext);
   const counter = getCounter(name);
@@ -90,56 +98,129 @@ export const Project: FC<ProjectOptions> = ({
   return (
     <nav
       ref={ref}
-      className={(() => {
-        if (isFirstOnes) return undefined;
-        return inView ? 'show' : 'hide';
-      })()}
+      className={String(
+        [
+          (() => {
+            if (isFirstOnes) return '';
+            return inView ? 'show' : 'hide';
+          })(),
+          (() => {
+            return image ? 'large' : '';
+          })(),
+        ]
+          .join(' ')
+          .trim()
+      )}
       data-counter={counter}
     >
       <section>
         <h2>{name}</h2>
         {children}
-        {npm ? (
-          <p>
-            <SafeLink to={`https://www.npmjs.com/package/${npm}`}>
-              <img
-                loading={isFirstOnes ? 'eager' : 'lazy'}
-                src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
-              />
-            </SafeLink>
-          </p>
+
+        {githubStars || npm || docker || vsMarketplaceId ? (
+          <div className='social'>
+            {npm ? (
+              <p>
+                <SafeLink
+                  to={`https://www.npmjs.com/package/${npm}`}
+                  title='NPM Downloads per year'
+                >
+                  <img
+                    loading={isFirstOnes ? 'eager' : 'lazy'}
+                    src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
+                    alt='NPM Downloads per year'
+                  />
+                </SafeLink>
+              </p>
+            ) : null}
+
+            {githubStars ? (
+              <p>
+                <SafeLink
+                  to={`https://github.com/${organization}/${repository}`}
+                  title='GitHub Starts'
+                >
+                  <img
+                    loading={isFirstOnes ? 'eager' : 'lazy'}
+                    src={`https://img.shields.io/github/stars/${organization}/${repository}.svg?style=flat&color=6c5ce7&label=&logo=github&logoColor=white`}
+                    alt='GitHub Starts'
+                  />
+                </SafeLink>
+              </p>
+            ) : null}
+
+            {docker ? (
+              <p>
+                <SafeLink
+                  to={`https://hub.docker.com/r/${organization}/${docker}`}
+                  title='Docker Hub Downloads'
+                >
+                  <img
+                    loading={isFirstOnes ? 'eager' : 'lazy'}
+                    src={`https://img.shields.io/docker/pulls/${organization}/${docker}.svg?color=6c5ce7&label=&logo=docker&logoColor=white`}
+                    alt='Docker Hub Downloads'
+                  />
+                </SafeLink>
+              </p>
+            ) : null}
+
+            {vsMarketplaceId ? (
+              <p>
+                <SafeLink
+                  to={`https://marketplace.visualstudio.com/items?itemName=${vsMarketplaceId}`}
+                  title='Visual Studio Marketplace Installs'
+                >
+                  <img
+                    loading={isFirstOnes ? 'eager' : 'lazy'}
+                    src={`https://img.shields.io/visual-studio-marketplace/i/${vsMarketplaceId}.svg?color=6c5ce7&logo=dailydotdev&label=&logoColor=white`}
+                    alt='Visual Studio Marketplace Installs'
+                  />
+                </SafeLink>
+              </p>
+            ) : null}
+          </div>
         ) : null}
 
         {link ? (
           <footer>
-            <Parallax>
-              <SafeLink
-                to={
-                  url ? url : `https://github.com/${organization}/${repository}`
-                }
-              >
-                {(() => {
-                  if (icon) return icon;
-                  if (hasRepository) return <Github />;
-                  return null;
-                })()}
+            <SafeLink
+              to={
+                url ? url : `https://github.com/${organization}/${repository}`
+              }
+            >
+              {(() => {
+                if (icon) return icon;
+                if (hasRepository) return <Github />;
+                return null;
+              })()}
 
-                {hasRepository ? (
-                  <p>
-                    {`${organization}/${repository}`}
-                    <br />
-                    {license ? (
-                      <>
-                        Licença: <strong>{license}</strong>
-                      </>
-                    ) : null}
-                  </p>
-                ) : null}
-              </SafeLink>
-            </Parallax>
+              {hasRepository ? (
+                <p>
+                  {`${organization}/${repository}`}
+                  <br />
+                  {license ? (
+                    <>
+                      Licença: <strong>{license}</strong>
+                    </>
+                  ) : null}
+                </p>
+              ) : null}
+            </SafeLink>
           </footer>
         ) : null}
       </section>
+      {image ? (
+        <Parallax
+          className='banner'
+          scale={1.1}
+          tiltMaxAngleX={2.5}
+          tiltMaxAngleY={2.5}
+        >
+          <SafeLink to={link}>
+            <img src={image} loading='lazy' alt={`${name} banner`} />
+          </SafeLink>
+        </Parallax>
+      ) : null}
     </nav>
   );
 };
