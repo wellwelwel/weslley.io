@@ -52,7 +52,7 @@ const config: Config = {
       title: 'Weslley A.',
       logo: {
         alt: "Weslley's Araújo Avatar",
-        src: 'img/logo.png',
+        src: 'img/avatar.png',
       },
       items: [],
     },
