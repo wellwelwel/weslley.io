@@ -254,6 +254,10 @@ body {
               border-color ease 0.5s,
               color ease 0.5s;
 
+            &:nth-child(odd) {
+              flex-direction: row-reverse;
+            }
+
             svg {
               width: 16px;
               transition: color ease 0.5s;

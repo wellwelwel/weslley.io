@@ -21,7 +21,8 @@
     "lint:fix": "prettier --write .",
     "update": "pu minor && npm i && (npm audit fix || true)",
     "postupdate": "npm run lint:fix",
-    "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts"
+    "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts",
+    "test": "npm run clear && npm run lint && npm run typecheck && npm run build"
   },
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",

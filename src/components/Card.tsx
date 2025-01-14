@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { ExternalLink } from 'lucide-react';
-import { Parallax } from './Parallax';
-import { SafeLink } from './SafeLink';
+import { Parallax } from '@site/src/components/Parallax';
+import { SafeLink } from '@site/src/components/SafeLink';
 
 export type CardOptions = {
   name: string;

@@ -1,4 +1,4 @@
-import { dynamicRequire } from './dynamic-require';
+import { dynamicRequire } from '@site/src/helpers/dynamic-require';
 
 export const socials = dynamicRequire(
   require.context('@site/content/social', false, /\.(tsx|jsx|mdx)$/)

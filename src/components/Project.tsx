@@ -1,8 +1,8 @@
 import { useContext, type FC, type ReactNode } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { Github } from 'lucide-react';
-import { SafeLink } from './SafeLink';
-import { Parallax } from './Parallax';
+import { SafeLink } from '@site/src/components/SafeLink';
+import { Parallax } from '@site/src/components/Parallax';
 import { ProjectsContext } from '@site/src/contexts/Projects';
 
 export type ProjectOptions = {

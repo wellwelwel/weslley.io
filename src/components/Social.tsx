@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import { SafeLink } from './SafeLink';
+import { SafeLink } from '@site/src/components/SafeLink';
 
 export type SocialOptions = {
   imageSrc: string;
