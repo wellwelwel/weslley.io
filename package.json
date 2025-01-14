@@ -23,7 +23,6 @@
     "postupdate": "npm run lint:fix",
     "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts"
   },
-  "dependencies": {},
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
     "@docusaurus/core": "^3.7.0",
@@ -66,7 +65,7 @@
     ]
   },
   "engines": {
-    "node": ">=22.0"
+    "node": ">=20.0"
   },
   "private": true
 }

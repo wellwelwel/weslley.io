@@ -6,8 +6,6 @@ import { websiteConfigs } from './website.configs';
 
 const config: Config = {
   title: 'Weslley Araújo',
-  tagline:
-    "Open Sourcerer | End-to-End Developer | MySQL2 Co-Maintainer | Poku's Creator",
   favicon: 'img/favicon.ico',
   baseUrl: '/',
   url: 'https://weslley.io/',
@@ -33,6 +31,12 @@ const config: Config = {
         docs: false,
         theme: {
           customCss: './src/css/custom.scss',
+        },
+        pages: {
+          admonitions: true,
+          recmaPlugins: [],
+          rehypePlugins: [],
+          remarkPlugins: [],
         },
       } satisfies Preset.Options,
     ],
