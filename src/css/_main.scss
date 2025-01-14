@@ -96,11 +96,11 @@ body {
         font-size: 24px;
         font-weight: 700;
         color: #5747ff;
-        text-shadow: 1px 1px 2px #ffffff90;
+        text-shadow: 1px 1px 2px #ffffff50;
 
         span {
           transition: color ease 0.5s;
-          animation: colorChange 3.75s ease-in-out infinite;
+          animation: colorChange 5s ease-in-out infinite;
           animation-delay: calc(var(--index) * 0.2s);
           cursor: default;
         }
@@ -112,7 +112,7 @@ body {
         font-weight: 400;
         color: #57619e;
         letter-spacing: 0.25px;
-        text-shadow: 1px 1px 2px #ffffffee;
+        text-shadow: 1px 1px 2px #ffffff50;
 
         & > p {
           margin: 0;
@@ -228,10 +228,8 @@ body {
         margin-top: 30px;
 
         section {
-          display: flex;
-          flex-direction: row;
-          align-items: center;
-          justify-content: center;
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
           gap: 10px;
           margin: 0;
           padding: 0;
@@ -242,7 +240,7 @@ body {
             align-items: center;
             justify-content: center;
             gap: 15px;
-            width: 160px;
+            min-width: 160px;
             padding: 10px 15px;
             border: 1px solid #d7dcff;
             border-radius: 15px;

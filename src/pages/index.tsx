@@ -2,26 +2,14 @@ import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
-import {
-  ArrowRight,
-  Code,
-  MicVocal,
-  Scroll,
-  UserRoundSearch,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
-import { dynamicRequire } from '@site/src/helpers/dynamic-require';
-import AboutResume from '@site/about/headline.mdx';
+import AboutResume from '@site/content/about/headline.mdx';
+import { anchors, cards, socials } from '@site/src/helpers/get-contents';
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
-  const cards = dynamicRequire(
-    require.context('@site/cards', false, /\.(tsx|jsx|mdx)$/)
-  );
-  const socials = dynamicRequire(
-    require.context('@site/social', false, /\.(tsx|jsx|mdx)$/)
-  );
 
   return (
     <Layout
@@ -47,22 +35,9 @@ export default (): ReactNode => {
             </nav>
             <menu>
               <section>
-                <Link to='/projects'>
-                  Projetos <Code />
-                </Link>
-                <Link to='/talks'>
-                  <MicVocal />
-                  Palestras
-                </Link>
-              </section>
-              <section>
-                <Link to='/articles'>
-                  Artigos <Scroll />
-                </Link>
-                <Link to='/about'>
-                  <UserRoundSearch />
-                  Sobre
-                </Link>
+                {anchors.map((Anchor, i) => (
+                  <Anchor key={`anchor:${i}`} />
+                ))}
               </section>
             </menu>
           </header>

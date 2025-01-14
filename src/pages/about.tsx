@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
-import About from '@site/about/page.mdx';
+import About from '@site/content/about/page.mdx';
 
 export default (): ReactNode => {
   return (

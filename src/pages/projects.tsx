@@ -5,13 +5,10 @@
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
 import { ProjectsProvider } from '@site/src/contexts/Projects';
-import { dynamicRequire } from '@site/src/helpers/dynamic-require';
-import About from '@site/about/projects.mdx';
+import { projects } from '@site/src/helpers/get-contents';
+import About from '@site/content/about/projects.mdx';
 
 export default (): ReactNode => {
-  const context = require.context('@site/projects', false, /\.(tsx|jsx|mdx)$/);
-  const projects = dynamicRequire(context);
-
   return (
     <Layout
       title='Projetos'

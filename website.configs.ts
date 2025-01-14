@@ -1,5 +1,3 @@
-// import type { Config } from '@docusaurus/types';
-// import type * as Theme from '@docusaurus/theme-classic';
 import type * as Preset from '@docusaurus/preset-classic';
 
 type NavbarLink = {
@@ -40,14 +38,14 @@ export const websiteConfigs: WebsiteConfigs = {
       routeBasePath: 'articles',
       blogTitle: 'Artigos',
       blogSidebarTitle: 'Artigos recentes 📜',
-      path: './articles',
+      path: './content/articles',
     },
     {
       id: 'talks',
       routeBasePath: 'talks',
       blogTitle: 'Palestras',
       blogSidebarTitle: 'Palestras Recentes 🎙️',
-      path: './talks',
+      path: './content/talks',
     },
   ],
 };

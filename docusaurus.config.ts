@@ -37,6 +37,7 @@ const config: Config = {
       } satisfies Preset.Options,
     ],
   ],
+  staticDirectories: ['./content/assets'],
   themeConfig: {
     colorMode: {
       disableSwitch: true,
