@@ -76,15 +76,15 @@ npm run clear
 
 ### Headline description
 
-- Path: [`./about/headline.mdx`](./about/headline.mdx).
+- Path: [`./content/about/headline.mdx`](./content/about/headline.mdx).
 
 ### Projects header description
 
-- Path: [`./about/projects.mdx`](./about/projects.mdx).
+- Path: [`./content/about/projects.mdx`](./content/about/projects.mdx).
 
 ### About page
 
-- Path: [`./about/page.mdx`](./about/page.mdx).
+- Path: [`./content/about/page.mdx`](./content/about/page.mdx).
 
 ### Settings and Definitions
 
@@ -117,11 +117,11 @@ Creates a social icon in homepage _(header and footer soon)_:
 
 > <a href="https://www.linkedin.com/in/wellwelwel/"><img src="./.github/assets/social-sample.svg" alt="LinkedIn" title="LinkedIn" width="48" /></a>
 
-- Path: `./social/`.
-  - Example: `./social/<file.{mdx,md,tsx,jsx}>`.
+- Path: `./content/social/`.
+  - Example: `./content/social/<file.{mdx,md,tsx,jsx}>`.
 - Subdirectories will be ignored.
 - Alphabetical order matters, use `01-<name>` to easily organize your social.
-  - Example: `./social/01-linkedin.mdx`.
+  - Example: `./content/social/01-linkedin.mdx`.
 
 Examples:
 
@@ -167,11 +167,11 @@ Creates a card for the highlights section in homepage:
 
 > <a href="https://github.com/wellwelwel/poku"><img src="./.github/assets/card-sample.png" width="360" alt="Poku" /></a>
 
-- Path: `./cards/`.
-  - Example: `./cards/<file.{mdx,md,tsx,jsx}>`.
+- Path: `./content/cards/`.
+  - Example: `./content/cards/<file.{mdx,md,tsx,jsx}>`.
 - Subdirectories will be ignored.
 - Alphabetical order matters, use `01-<name>` to easily organize your cards.
-  - Example: `./cards/01-poku.mdx`.
+  - Example: `./content/cards/01-poku.mdx`.
 
 Examples:
 
@@ -230,11 +230,11 @@ Creates a project for the `/projects` page:
 
 > <img src="./.github/assets/project-sample.png" width="360" />
 
-- Path: `./projects/`.
-  - Example: `./projects/<file.{mdx,md,tsx,jsx}>`.
+- Path: `./content/projects/`.
+  - Example: `./content/projects/<file.{mdx,md,tsx,jsx}>`.
 - Subdirectories will be ignored.
 - Alphabetical order matters, use `01-<name>` to easily organize your projects.
-  - Example: `./projects/01-poku.mdx`.
+  - Example: `./content/projects/01-poku.mdx`.
 
 Examples:
 
@@ -326,7 +326,7 @@ To create this website, it was used:
 ## License
 
 - **weslley.io** source code is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
-- **weslley.io** assets and design (for example, all the contents in [`./static/`](./static/) folder, images, etc.) are [**Creative Commons**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
+- **weslley.io** assets, layout and design (for example, all the contents in [`./content/assets`](./content/assets) and [`./.github/assets`](./.github/assets) directories, images, etc.) are [**Creative Commons**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
   - Most vectors and icons come and are adapted from [**Freepik**](https://www.freepik.com/) (including premium subscription) and [**Lucide**](https://lucide.dev/).
 
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
