@@ -91,7 +91,7 @@ const config: Config = {
               hashed: true,
               highlightSearchTermsOnTargetPage: true,
               searchResultLimits: 100,
-              language: ['pt'],
+              language: ['pt', 'en'],
             } satisfies PluginOptions,
           ],
         ];
@@ -109,6 +109,7 @@ const config: Config = {
           xslt: true,
         },
         showLastUpdateTime: true,
+        editLocalizedFiles: true,
         onInlineTags: 'throw',
         onInlineAuthors: 'throw',
         onUntruncatedBlogPosts: 'throw',

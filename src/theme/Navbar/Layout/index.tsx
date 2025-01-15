@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ComponentProps, type ReactNode } from 'react';
+import { useRef, type ComponentProps, type ReactNode } from 'react';
 import clsx from 'clsx';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import {
@@ -11,6 +11,7 @@ import type { Props } from '@theme/Navbar/Layout';
 // @ts-ignore
 import styles from './styles.module.scss';
 import { useLocation } from '@docusaurus/router';
+import useLayoutEffect from '@docusaurus/useIsomorphicLayoutEffect';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (
@@ -30,9 +31,11 @@ export default function NavbarLayout({ children }: Props): ReactNode {
   const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
   const location = useLocation();
   const isInitialLoad = useRef(true);
+  const isHome = ['/', '/en/'].includes(location.pathname);
 
-  useEffect(() => {
-    if (location.pathname === '/') return;
+  useLayoutEffect(() => {
+    console.log(location.pathname);
+    if (isHome) return;
 
     isInitialLoad.current = false;
   }, [location.hash]);
@@ -53,8 +56,8 @@ export default function NavbarLayout({ children }: Props): ReactNode {
           !isNavbarVisible && styles.navbarHidden,
         ],
         {
-          'is-home': isInitialLoad.current && location.pathname === '/',
-          show: !isInitialLoad.current || location.pathname !== '/',
+          'is-home': isInitialLoad.current && isHome,
+          show: !isInitialLoad.current || !isHome,
           'navbar--dark': style === 'dark',
           'navbar--primary': style === 'primary',
           'navbar-sidebar--show': mobileSidebar.shown,

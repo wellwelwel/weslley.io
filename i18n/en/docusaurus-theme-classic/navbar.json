@@ -1,0 +1,10 @@
+{
+  "title": {
+    "message": "Weslley A.",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Weslley's Araújo Avatar",
+    "description": "The alt text of navbar logo"
+  }
+}

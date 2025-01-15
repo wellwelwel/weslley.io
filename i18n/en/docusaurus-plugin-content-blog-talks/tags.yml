@@ -1,0 +1,25 @@
+# Countries
+br:
+  label: Brazil
+  permalink: /br
+  description: Brazil tag description
+
+# States
+sp:
+  label: SP
+  permalink: /sp
+  description: SP tag description
+go:
+  label: GO
+  permalink: /go
+  description: GO tag description
+
+# Cities
+sao-paulo:
+  label: São Paulo
+  permalink: /sao-paulo
+  description: São Paulo tag description
+goiania:
+  label: Goiânia
+  permalink: /goiania
+  description: Goiânia tag description

@@ -11,6 +11,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
 import { anchors } from '@site/src/helpers/get-contents';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 // Importa os anchors gerados dinamicamente
 
@@ -61,6 +62,9 @@ export default function NavbarContent(): ReactNode {
   const hasAnchors = anchors.length > 0;
   const [, rightItems] = splitNavbarItems(items);
   const searchBarItem = items.find((item) => item.type === 'search');
+  const { i18n } = useDocusaurusContext();
+  const { currentLocale } = i18n;
+  const Anchors = anchors(currentLocale);
 
   return (
     <NavbarContentLayout
@@ -70,7 +74,7 @@ export default function NavbarContent(): ReactNode {
             <NavbarMobileSidebarToggle />
           )}
           <NavbarLogo />
-          {anchors.map((Anchor, i) => (
+          {Anchors.map((Anchor, i) => (
             <Anchor key={`anchor:${i}`} />
           ))}
         </>

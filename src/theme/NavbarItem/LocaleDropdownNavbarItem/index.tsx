@@ -17,6 +17,8 @@ export default function LocaleDropdownNavbarItem({
   queryString = '',
   ...props
 }: Props): ReactNode {
+  if (mobile) return null;
+
   const {
     i18n: { currentLocale, locales, localeConfigs },
   } = useDocusaurusContext();

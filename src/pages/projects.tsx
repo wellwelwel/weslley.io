@@ -4,20 +4,28 @@
 
 import type { ReactNode } from 'react';
 import Layout from '@theme/Layout';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ProjectsProvider } from '@site/src/contexts/Projects';
-import { projects } from '@site/src/helpers/get-contents';
-import About from '@site/content/about/projects.mdx';
+import { MDXImports, projects } from '@site/src/helpers/get-contents';
+import { dynamicImport } from '@site/src/helpers/dynamic-require';
 
 export default (): ReactNode => {
+  const { i18n } = useDocusaurusContext();
+  const { currentLocale } = i18n;
+  const Projects = projects(currentLocale);
+  const About = dynamicImport(currentLocale, MDXImports.AboutProjects);
+  const isPtBr = currentLocale === 'pt-BR';
+  const title = isPtBr ? 'Projetos' : 'Projects';
+
   return (
     <Layout
-      title='Projetos'
+      title={title}
       description='Lista com a maioria dos projetos que mantenho e co-mantenho através da iniciativa open-source.'
     >
       <div id='projects'>
         <main>
           <header>
-            <h1>Projetos</h1>
+            <h1>{title}</h1>
             <img loading='lazy' src='/img/projects.svg' alt='' />
             <small>
               <About />
@@ -25,7 +33,7 @@ export default (): ReactNode => {
           </header>
           <ProjectsProvider>
             <div className='container'>
-              {projects.map((Project, i) => (
+              {Projects.map((Project, i) => (
                 <Project key={`project:${i}`} />
               ))}
             </div>
