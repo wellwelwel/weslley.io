@@ -311,7 +311,7 @@ export default () => (
 
 Special thanks:
 
-- 🦖 Under the hood, [**Docusaurus**](https://github.com/facebook/docusaurus) is used.
+- 🦖 Under the hood, [**Docusaurus**](https://github.com/facebook/docusaurus) is used. In other words, without it, this project wouldn't even exist.
 
 To create this website, it was used:
 

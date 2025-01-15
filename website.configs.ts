@@ -21,15 +21,9 @@ type WebsiteConfigs = {
 
 export const websiteConfigs: WebsiteConfigs = {
   navBarItens: {
-    left: [
-      { to: '/projects', label: 'Projetos' },
-      { to: '/talks', label: 'Palestras' },
-      { to: '/articles', label: 'Artigos' },
-      { to: '/about', label: 'Sobre' },
-    ],
     right: {
-      search: false,
-      locale: false,
+      search: true,
+      locale: true,
     },
   },
   blogs: [

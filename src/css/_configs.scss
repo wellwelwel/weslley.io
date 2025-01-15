@@ -18,11 +18,11 @@ $featuredFontFamily: 'Noto+Sans';
   --ifm-color-primary-light: #9f9cff;
   --ifm-color-primary-lighter: #b1afff;
   --ifm-color-primary-lightest: #b1afff;
-  --ifm-table-stripe-background: #5e30a0 !important;
-  --docusaurus-highlighted-code-line-bg: #0c0d152b;
   --background-dots-pattern-color: #444cf750;
   --ifm-blockquote-border-color: #d7d3ff;
   --background-dots-blur-intensity: 0.5px;
+  --ifm-navbar-link-color: var(--ifm-link-color);
+  --ifm-navbar-search-input-color: var(--ifm-color-main);
   --background-desktop: linear-gradient(
     90deg,
     #ece8ff 0%,
@@ -35,8 +35,6 @@ $featuredFontFamily: 'Noto+Sans';
     #e9e8fa 50%,
     #ece8ff 100%
   );
-  --ifm-table-background: transparent !important;
-  --ifm-link-hover-decoration: none;
 }
 
 ::selection {

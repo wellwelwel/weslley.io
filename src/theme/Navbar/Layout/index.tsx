@@ -53,7 +53,7 @@ export default function NavbarLayout({ children }: Props): ReactNode {
           !isNavbarVisible && styles.navbarHidden,
         ],
         {
-          'v-n': isInitialLoad.current && location.pathname === '/',
+          'is-home': isInitialLoad.current && location.pathname === '/',
           show: !isInitialLoad.current || location.pathname !== '/',
           'navbar--dark': style === 'dark',
           'navbar--primary': style === 'primary',

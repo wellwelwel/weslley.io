@@ -7,9 +7,15 @@ export type AnchorOptions = {
   icon?: ReactNode;
 } & Props;
 
-export const Anchor: FC<AnchorOptions> = ({ name, icon, to, ...props }) => {
+export const Anchor: FC<AnchorOptions> = ({
+  name,
+  icon,
+  to,
+  className,
+  ...props
+}) => {
   return (
-    <Link to={to ?? '#'} {...props}>
+    <Link to={to ?? '#'} className={className ?? 'navbar__link'} {...props}>
       {icon}
       <span>{name}</span>
     </Link>

@@ -1,8 +1,19 @@
+import os from 'node:os';
 import { themes as prismThemes } from 'prism-react-renderer';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
 import { websiteConfigs } from './website.configs';
+
+// Expose local IP to access in any local devices using the same port as in locahost.
+const interfaces = os.networkInterfaces();
+for (const name of Object.keys(interfaces)) {
+  for (const iface of interfaces[name] ?? []) {
+    if (iface.family !== 'IPv4' || iface.internal) continue;
+
+    console.log(`${name}: ${iface.address}`);
+  }
+}
 
 const config: Config = {
   title: 'Weslley Araújo',
@@ -16,10 +27,13 @@ const config: Config = {
   onDuplicateRoutes: 'throw',
   i18n: {
     defaultLocale: 'pt-BR',
-    locales: ['pt-BR'],
+    locales: ['pt-BR', 'en'],
     localeConfigs: {
       'pt-BR': {
-        label: '🇧🇷',
+        label: '🇧🇷 Português (Brasil)',
+      },
+      en: {
+        label: '🇺🇸 English (WIP)',
       },
     },
   },
@@ -44,7 +58,7 @@ const config: Config = {
   staticDirectories: ['./content/assets'],
   themeConfig: {
     colorMode: {
-      disableSwitch: true,
+      disableSwitch: false,
       respectPrefersColorScheme: false,
       defaultMode: 'light',
     },
@@ -72,8 +86,11 @@ const config: Config = {
             '@easyops-cn/docusaurus-search-local',
             {
               indexDocs: false,
+              indexBlog: false,
               indexPages: true,
               hashed: true,
+              highlightSearchTermsOnTargetPage: true,
+              searchResultLimits: 100,
               language: ['pt'],
             } satisfies PluginOptions,
           ],

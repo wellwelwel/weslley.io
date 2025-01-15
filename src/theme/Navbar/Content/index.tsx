@@ -10,11 +10,11 @@ import SearchBar from '@theme/SearchBar';
 import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarLogo from '@theme/Navbar/Logo';
 import NavbarSearch from '@theme/Navbar/Search';
-// @ts-ignore
-import styles from './styles.module.scss';
+import { anchors } from '@site/src/helpers/get-contents';
+
+// Importa os anchors gerados dinamicamente
 
 function useNavbarItems() {
-  // TODO temporary casting until ThemeConfig type is improved
   return useThemeConfig().navbar.items as NavbarItemConfig[];
 }
 
@@ -57,28 +57,28 @@ function NavbarContentLayout({
 
 export default function NavbarContent(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
-
   const items = useNavbarItems();
-  const [leftItems, rightItems] = splitNavbarItems(items);
-
+  const hasAnchors = anchors.length > 0;
+  const [, rightItems] = splitNavbarItems(items);
   const searchBarItem = items.find((item) => item.type === 'search');
 
   return (
     <NavbarContentLayout
       left={
-        // TODO stop hardcoding items?
         <>
-          {!mobileSidebar.disabled && <NavbarMobileSidebarToggle />}
+          {(!mobileSidebar.disabled || hasAnchors) && (
+            <NavbarMobileSidebarToggle />
+          )}
           <NavbarLogo />
-          <NavbarItems items={leftItems} />
+          {anchors.map((Anchor, i) => (
+            <Anchor key={`anchor:${i}`} />
+          ))}
         </>
       }
       right={
-        // TODO stop hardcoding items?
-        // Ask the user to add the respective navbar items => more flexible
         <>
           <NavbarItems items={rightItems} />
-          <NavbarColorModeToggle className={styles.colorModeToggle} />
+          <NavbarColorModeToggle />
           {!searchBarItem && (
             <NavbarSearch>
               <SearchBar />

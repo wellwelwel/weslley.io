@@ -1,0 +1,60 @@
+@use '../mixins';
+
+table {
+  thead {
+    background-color: #cacaff;
+
+    th {
+      border-color: #363663;
+    }
+
+    tr {
+      border-bottom-color: #363663;
+    }
+  }
+
+  tbody {
+    td {
+      border-color: #bfbfff;
+      font-size: 14px;
+    }
+
+    tr:nth-child(1n) {
+      background-color: #e8e8ff;
+    }
+
+    tr:nth-child(2n) {
+      background-color: #dbdbff;
+    }
+  }
+}
+
+[data-theme='dark'] {
+  table {
+    thead {
+      background-color: #09090b;
+
+      th {
+        border-color: #363663;
+      }
+
+      tr {
+        border-bottom-color: #363663;
+      }
+    }
+
+    tbody {
+      td {
+        border-color: #363663;
+      }
+
+      tr:nth-child(1n) {
+        background-color: #161627;
+      }
+
+      tr:nth-child(2n) {
+        background-color: #10101c;
+      }
+    }
+  }
+}

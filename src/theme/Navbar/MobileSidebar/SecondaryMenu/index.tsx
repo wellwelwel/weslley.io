@@ -2,6 +2,7 @@ import React, { type ComponentProps, type ReactNode } from 'react';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { useNavbarSecondaryMenu } from '@docusaurus/theme-common/internal';
 import Translate from '@docusaurus/Translate';
+import { anchors } from '@site/src/helpers/get-contents';
 
 function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
   return (
@@ -19,7 +20,10 @@ function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
 // The secondary menu slides from the right and shows contextual information
 // such as the docs sidebar
 export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
-  const isPrimaryMenuEmpty = useThemeConfig().navbar.items.length === 0;
+  const hasAnchors = anchors.length > 0;
+
+  const isPrimaryMenuEmpty =
+    useThemeConfig().navbar.items.length === 0 && !hasAnchors;
   const secondaryMenu = useNavbarSecondaryMenu();
   return (
     <>
