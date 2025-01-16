@@ -1,5 +1,7 @@
 @use 'sass:meta' as *;
 
+@include load-css('reset');
+
 body {
   min-height: calc(100vh - 55px);
   min-height: calc(100dvh - 55px);
@@ -36,6 +38,9 @@ body {
     @include load-css('markdown');
     @include load-css('table');
     @include load-css('article');
-    @include load-css('footer');
+
+    & > {
+      @include load-css('footer');
+    }
   }
 }

@@ -1,5 +1,0 @@
-@use 'sass:meta' as *;
-
-@include load-css('global/animations');
-@include load-css('custom/reset');
-@include load-css('custom/root');

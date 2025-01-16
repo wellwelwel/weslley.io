@@ -1,3 +1,4 @@
+@use 'sass:meta' as *;
 @use 'global/functions' as *;
 
 // Import the fonts you want based in their URL names (preconfigured for Google Fonts)
@@ -44,17 +45,6 @@ $featuredFontFamily: 'Noto+Sans';
 
 // Soon 🚧
 // [data-theme='dark'] {
-//   --ifm-color-primary: #7a77ff;
-//   --ifm-color-main: #6f65ff;
-//   --ifm-color-primary-dark: #5552ff;
-//   --ifm-color-primary-darker: #433fff;
-//   --ifm-color-primary-darkest: #0c07ff;
-//   --ifm-color-primary-light: #9f9cff;
-//   --ifm-color-primary-lighter: #b1afff;
-//   --ifm-color-primary-lightest: #b1afff;
-//   --ifm-table-stripe-background: #5e30a0 !important;
-//   --docusaurus-highlighted-code-line-bg: #0c0d152b;
-//   --background-dots-pattern-color: #355dff50;
 //   --background-desktop: linear-gradient(
 //     90deg,
 //     #0d0921 0%,
@@ -63,3 +53,6 @@ $featuredFontFamily: 'Noto+Sans';
 //   );
 //   --background-mobile: var(--background-desktop);
 // }
+
+@include load-css('global/animations');
+@include load-css('custom/root');

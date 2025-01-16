@@ -1,6 +1,6 @@
 @use '../global/mixins' as *;
 
-> footer {
+footer {
   position: relative;
   @include flex(row, center, center);
   width: 100%;

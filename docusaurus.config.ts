@@ -44,7 +44,7 @@ const config: Config = {
         blog: false,
         docs: false,
         theme: {
-          customCss: ['./src/css/theme.scss', './src/css/main.scss'],
+          customCss: ['./src/css/themes.scss'],
         },
         pages: {
           admonitions: true,
@@ -58,7 +58,7 @@ const config: Config = {
   staticDirectories: ['./content/assets'],
   themeConfig: {
     colorMode: {
-      disableSwitch: false,
+      disableSwitch: true,
       respectPrefersColorScheme: false,
       defaultMode: 'light',
     },
