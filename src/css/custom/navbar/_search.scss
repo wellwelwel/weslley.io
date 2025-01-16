@@ -38,6 +38,10 @@
       border-color 0.25s ease,
       width 0.25s cubic-bezier(0.75, 0, 0.2, 0.9);
 
+    @media (max-width: 630px) {
+      width: 2rem;
+    }
+
     &::placeholder {
       color: var(--ifm-navbar-search-input-color);
       opacity: 0;
@@ -76,6 +80,10 @@
     font-weight: bold;
     background-color: #6752f3;
     border-radius: 7px;
+
+    @media (max-width: 630px) {
+      display: none;
+    }
   }
 
   [class*='searchClearButton_'] {
