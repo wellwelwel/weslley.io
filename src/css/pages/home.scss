@@ -1,37 +1,12 @@
-@use 'mixins';
-
-body {
-  min-height: calc(100vh - 55px);
-  min-height: calc(100dvh - 55px);
-  min-width: 320px;
-  background-image: var(--background-desktop);
-
-  @media (max-width: 630px) {
-    background-image: var(--background-mobile);
-  }
-
-  &::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: radial-gradient(
-      var(--background-dots-pattern-color) 0.5px,
-      transparent 0.5px
-    );
-    background-size: 10px 10px;
-    z-index: -1;
-    filter: blur(var(--background-dots-blur-intensity));
-  }
-}
+@use '../global/mixins' as *;
 
 #home {
-  padding: 20px;
-  padding-bottom: 0;
+  padding: 0 20px;
   margin-bottom: 0;
+  transform: translateY(-5px);
 
   @media (max-width: 630px) {
     padding: 0;
-    transform: translateY(-15px);
   }
 
   p {
@@ -68,7 +43,7 @@ body {
     & > header {
       position: relative;
       z-index: 1;
-      @include mixins.flex(column, center, flex-start);
+      @include flex(column, center, flex-start);
       width: 100%;
       text-align: center;
 
@@ -135,7 +110,7 @@ body {
 
       nav {
         position: relative;
-        @include mixins.flex(row, center, center, wrap);
+        @include flex(row, center, center, wrap);
         gap: 15px;
         width: 100%;
         margin-top: 30px;
@@ -163,8 +138,9 @@ body {
 
           + .description {
             position: absolute;
+            z-index: 3;
             top: -150px;
-            @include mixins.flex(column, center, center);
+            @include flex(column, center, center);
             gap: 10px;
             padding: 15px;
             height: 130px;
@@ -183,7 +159,7 @@ body {
             pointer-events: none;
 
             & > h3 {
-              @include mixins.flex(row, center, center);
+              @include flex(row, center, center);
               gap: 5px;
               margin-bottom: 0;
               font-size: 14px;
@@ -460,71 +436,71 @@ body {
   height: 100dvh;
 }
 
-[data-theme='dark'] {
-  #home {
-    & > main {
-      & > header {
-        & > div {
-          border-color: #000000;
-        }
+// [data-theme='dark'] {
+//   #home {
+//     & > main {
+//       & > header {
+//         & > div {
+//           border-color: #000000;
+//         }
 
-        h1 {
-          color: #5747ff;
-        }
+//         h1 {
+//           color: #5747ff;
+//         }
 
-        small {
-          color: #57619e;
+//         small {
+//           color: #57619e;
 
-          a {
-            border-color: #5747ff;
-            color: #57619e;
+//           a {
+//             border-color: #5747ff;
+//             color: #57619e;
 
-            &:hover {
-              border-color: #dd47ff;
-            }
-          }
-        }
+//             &:hover {
+//               border-color: #dd47ff;
+//             }
+//           }
+//         }
 
-        menu {
-          section {
-            a {
-              border-color: #17103c;
-              background-color: #0000006a;
+//         menu {
+//           section {
+//             a {
+//               border-color: #17103c;
+//               background-color: #0000006a;
 
-              &:hover {
-                border-color: #32409f;
-              }
-            }
-          }
-        }
-      }
+//               &:hover {
+//                 border-color: #32409f;
+//               }
+//             }
+//           }
+//         }
+//       }
 
-      nav {
-        a {
-          border-color: #17103c;
-          background-color: #0000006a;
+//       nav {
+//         a {
+//           border-color: #17103c;
+//           background-color: #0000006a;
 
-          p {
-            strong {
-              color: #a299ff;
-            }
+//           p {
+//             strong {
+//               color: #a299ff;
+//             }
 
-            span {
-              color: #beb8ff;
-            }
-          }
+//             span {
+//               color: #beb8ff;
+//             }
+//           }
 
-          &:hover {
-            border-color: #272167;
-          }
-        }
+//           &:hover {
+//             border-color: #272167;
+//           }
+//         }
 
-        & > small {
-          a {
-            background-color: unset;
-          }
-        }
-      }
-    }
-  }
-}
+//         & > small {
+//           a {
+//             background-color: unset;
+//           }
+//         }
+//       }
+//     }
+//   }
+// }

@@ -1,4 +1,4 @@
-import { useRef, type ComponentProps, type ReactNode } from 'react';
+import { useEffect, useRef, type ComponentProps, type ReactNode } from 'react';
 import clsx from 'clsx';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import {
@@ -8,10 +8,9 @@ import {
 import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import type { Props } from '@theme/Navbar/Layout';
+import { useLocation } from '@docusaurus/router';
 // @ts-ignore
 import styles from './styles.module.scss';
-import { useLocation } from '@docusaurus/router';
-import useLayoutEffect from '@docusaurus/useIsomorphicLayoutEffect';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (
@@ -31,18 +30,53 @@ export default function NavbarLayout({ children }: Props): ReactNode {
   const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
   const location = useLocation();
   const isInitialLoad = useRef(true);
+  const navbarNode = useRef<HTMLElement | null>(null);
   const isHome = ['/', '/en/'].includes(location.pathname);
 
-  useLayoutEffect(() => {
-    console.log(location.pathname);
+  useEffect(() => {
+    if (!isHome || !navbarNode.current) return;
+
+    const doc = document.querySelector('#__docusaurus');
+    if (!doc) return;
+
+    const checkScroll = () => {
+      if (mobileSidebar.shown) return;
+      const scrollTop = doc.scrollTop;
+
+      if (scrollTop > 20) {
+        navbarNode.current?.classList.remove('is-home');
+        return;
+      }
+
+      navbarNode.current?.classList.add('is-home');
+    };
+
+    checkScroll();
+    doc.addEventListener('scroll', checkScroll);
+
+    return () => {
+      doc.removeEventListener('scroll', checkScroll);
+    };
+  }, [isHome, navbarNode.current, mobileSidebar.shown]);
+
+  useEffect(() => {
+    if (!mobileSidebar.shown) return;
+
+    navbarNode.current?.classList.remove('is-home');
+  }, [mobileSidebar.shown]);
+
+  useEffect(() => {
     if (isHome) return;
 
     isInitialLoad.current = false;
-  }, [location.hash]);
+  }, [isHome, location.hash]);
 
   return (
     <nav
-      ref={navbarRef}
+      ref={(node) => {
+        navbarRef(node);
+        navbarNode.current = node;
+      }}
       aria-label={translate({
         id: 'theme.NavBar.navAriaLabel',
         message: 'Main',

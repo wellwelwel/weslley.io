@@ -1,7 +1,6 @@
-@use 'mixins';
+@use '../global/mixins' as *;
 
-#projects,
-#about {
+%page {
   padding: 20px;
   padding-bottom: 10px;
 
@@ -44,7 +43,7 @@
     }
 
     & > header {
-      @include mixins.flex(row, flex-end, space-between, wrap);
+      @include flex(row, flex-end, space-between, wrap);
 
       h1 {
         font-family: var(--ifm-font-family-featured);
@@ -153,7 +152,7 @@
           width: max-content;
 
           a {
-            @include mixins.flex(row, center, flex-start);
+            @include flex(row, center, flex-start);
             gap: 10px;
             padding: 10px 20px;
             border-radius: 7.5px;
@@ -194,139 +193,32 @@
   }
 }
 
-#projects {
+%dark-page {
   & > main {
-    & > .container {
-      @include mixins.flex(row, stretch, center, wrap);
-      gap: 25px;
+    nav {
+      border-color: #17103c;
+      background-color: #0000006a;
 
-      nav {
-        min-width: 310px;
-        width: 100%;
-        max-width: 480px;
-        transition: box-shadow 0.5s ease;
-
-        &.show {
-          animation: showIn 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
-        }
-
-        section {
-          @include mixins.flex(column, flex-start, flex-start);
-          height: 100%;
-          flex-grow: 1;
-
-          .social {
-            @include mixins.flex(row, center, flex-start, wrap);
-            gap: 5px;
-
-            & > * {
-              padding: 0;
-              margin: 0;
-            }
-          }
-        }
-
-        p {
-          flex-grow: 1;
-
-          & + * {
-            margin-top: 15px;
-          }
-        }
-
-        &.large {
-          @include mixins.flex(row, center, space-between);
-          gap: 40px;
-          min-width: 100%;
-          max-width: none;
-
-          .banner {
-            position: relative;
-            z-index: 1;
-            min-width: 256px;
-            width: 256px;
-            min-height: 256px;
-            height: 256px;
-            margin-top: 0;
-            transition: transform 0.25s ease;
-
-            a {
-              position: absolute;
-              inset: 0;
-
-              img {
-                width: 100%;
-                height: 100%;
-                object-fit: cover;
-                border-radius: 10px;
-                border: 1px solid #6f65ff36;
-                filter: drop-shadow(5px 5px #6f65ff36);
-              }
-            }
-          }
-
-          &:nth-child(even) {
-            flex-direction: row-reverse;
-          }
-
-          @media (max-width: 1136px) {
-            flex-direction: column-reverse;
-            gap: 20px;
-            min-width: 310px;
-            width: 100%;
-            max-width: 480px;
-
-            .banner {
-              min-width: 100%;
-              width: 100%;
-              min-height: 310px;
-              height: 100%;
-            }
-
-            &:nth-child(even) {
-              flex-direction: column-reverse;
-            }
-          }
-        }
-
-        &:hover {
-          box-shadow: 0 0 25px #00000010;
-        }
+      h2 {
+        color: #7265ff;
       }
-    }
-  }
-}
 
-[data-theme='dark'] {
-  #projects,
-  #about,
-  #contacts {
-    & > main {
-      nav {
-        border-color: #17103c;
-        background-color: #0000006a;
+      p {
+        color: #beb8ff;
+      }
 
-        h2 {
-          color: #7265ff;
-        }
+      & > section {
+        & > footer {
+          a {
+            background-color: #493eea;
+            color: #847cf6;
 
-        p {
-          color: #beb8ff;
-        }
+            p {
+              color: #c1bdff;
+            }
 
-        & > section {
-          & > footer {
-            a {
-              background-color: #493eea;
-              color: #847cf6;
-
-              p {
-                color: #c1bdff;
-              }
-
-              &:hover {
-                background-color: #6f65ff;
-              }
+            &:hover {
+              background-color: #6f65ff;
             }
           }
         }

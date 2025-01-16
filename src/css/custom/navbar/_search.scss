@@ -1,7 +1,7 @@
-@use '../../mixins';
+@use '../../global/mixins' as *;
 
 [class*='navbarSearchContainer_'] {
-  @include mixins.flex(row, center, flex-start);
+  @include flex(row, center, flex-start);
   font-family: var(--ifm-font-family-base);
 
   &::before {
@@ -24,7 +24,7 @@
 
   .navbar__search-input {
     width: 95px;
-    padding-block: 20px;
+    padding-block: 17.5px;
     padding-left: 37.5px;
     border-radius: 10px;
     border: 1px solid transparent;
@@ -36,7 +36,7 @@
     color: #3524a1;
     transition:
       border-color 0.25s ease,
-      width 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9);
+      width 0.25s cubic-bezier(0.75, 0, 0.2, 0.9);
 
     &::placeholder {
       color: var(--ifm-navbar-search-input-color);
@@ -81,7 +81,7 @@
   [class*='searchClearButton_'] {
     position: relative;
     z-index: 1;
-    @include mixins.flex(row, center, flex-end);
+    @include flex(row, center, flex-end);
     color: transparent;
     cursor: pointer;
     user-select: none;

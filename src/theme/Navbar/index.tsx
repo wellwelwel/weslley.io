@@ -1,8 +1,7 @@
-import React, { memo, type ReactNode } from 'react';
+import React, { memo, useEffect, type ReactNode } from 'react';
 import NavbarLayout from '@theme/Navbar/Layout';
 import NavbarContent from '@theme/Navbar/Content';
 import { useLocation } from '@docusaurus/router';
-import useLayoutEffect from '@docusaurus/useIsomorphicLayoutEffect';
 
 const Navbar = (): ReactNode => {
   const location = useLocation();
@@ -14,7 +13,7 @@ const Navbar = (): ReactNode => {
     });
   };
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const doc = document.querySelector('#__docusaurus');
     if (!doc) return;
 

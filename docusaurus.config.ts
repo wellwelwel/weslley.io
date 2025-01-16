@@ -44,7 +44,7 @@ const config: Config = {
         blog: false,
         docs: false,
         theme: {
-          customCss: './src/css/custom.scss',
+          customCss: ['./src/css/theme.scss', './src/css/main.scss'],
         },
         pages: {
           admonitions: true,
@@ -141,6 +141,7 @@ if (websiteConfigs.navBarItens?.right?.locale) {
   (config as any)?.themeConfig.navbar.items.push({
     type: 'localeDropdown',
     position: 'right',
+    className: 'locale',
   });
 }
 

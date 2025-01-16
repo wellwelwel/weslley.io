@@ -1,4 +1,4 @@
-@use 'functions';
+@use 'global/functions' as *;
 
 // Import the fonts you want based in their URL names (preconfigured for Google Fonts)
 $baseFontFamily: 'Poppins';
@@ -7,9 +7,8 @@ $featuredFontFamily: 'Noto+Sans';
 @import url('https://fonts.googleapis.com/css2?display=swap&family=#{$baseFontFamily}:wght@300;400;500;600&family=#{$featuredFontFamily}:wght@600;700;800');
 
 :root {
-  --ifm-font-family-base: '#{functions.set-font($baseFontFamily, '+')}', serif;
-  --ifm-font-family-featured: '#{functions.set-font($featuredFontFamily, '+')}',
-    serif;
+  --ifm-font-family-base: '#{set-font($baseFontFamily, '+')}', serif;
+  --ifm-font-family-featured: '#{set-font($featuredFontFamily, '+')}', serif;
   --ifm-color-primary: #7a77ff;
   --ifm-color-main: #6f65ff;
   --ifm-color-primary-dark: #5552ff;
@@ -44,23 +43,23 @@ $featuredFontFamily: 'Noto+Sans';
 }
 
 // Soon 🚧
-[data-theme='dark'] {
-  --ifm-color-primary: #7a77ff;
-  --ifm-color-main: #6f65ff;
-  --ifm-color-primary-dark: #5552ff;
-  --ifm-color-primary-darker: #433fff;
-  --ifm-color-primary-darkest: #0c07ff;
-  --ifm-color-primary-light: #9f9cff;
-  --ifm-color-primary-lighter: #b1afff;
-  --ifm-color-primary-lightest: #b1afff;
-  --ifm-table-stripe-background: #5e30a0 !important;
-  --docusaurus-highlighted-code-line-bg: #0c0d152b;
-  --background-dots-pattern-color: #355dff50;
-  --background-desktop: linear-gradient(
-    90deg,
-    #0d0921 0%,
-    #0e0927 50%,
-    #1a1342 100%
-  );
-  --background-mobile: var(--background-desktop);
-}
+// [data-theme='dark'] {
+//   --ifm-color-primary: #7a77ff;
+//   --ifm-color-main: #6f65ff;
+//   --ifm-color-primary-dark: #5552ff;
+//   --ifm-color-primary-darker: #433fff;
+//   --ifm-color-primary-darkest: #0c07ff;
+//   --ifm-color-primary-light: #9f9cff;
+//   --ifm-color-primary-lighter: #b1afff;
+//   --ifm-color-primary-lightest: #b1afff;
+//   --ifm-table-stripe-background: #5e30a0 !important;
+//   --docusaurus-highlighted-code-line-bg: #0c0d152b;
+//   --background-dots-pattern-color: #355dff50;
+//   --background-desktop: linear-gradient(
+//     90deg,
+//     #0d0921 0%,
+//     #0e0927 50%,
+//     #1a1342 100%
+//   );
+//   --background-mobile: var(--background-desktop);
+// }

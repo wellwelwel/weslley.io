@@ -8,6 +8,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ProjectsProvider } from '@site/src/contexts/Projects';
 import { MDXImports, projects } from '@site/src/helpers/get-contents';
 import { dynamicImport } from '@site/src/helpers/dynamic-require';
+import '@site/src/css/pages/projects.scss';
 
 export default (): ReactNode => {
   const { i18n } = useDocusaurusContext();

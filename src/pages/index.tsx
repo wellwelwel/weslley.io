@@ -12,6 +12,7 @@ import {
   socials,
 } from '@site/src/helpers/get-contents';
 import { dynamicImport } from '../helpers/dynamic-require';
+import '@site/src/css/pages/home.scss';
 
 export default (): ReactNode => {
   const { siteConfig, i18n } = useDocusaurusContext();

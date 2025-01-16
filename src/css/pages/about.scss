@@ -1,0 +1,11 @@
+@use 'shared';
+
+#about {
+  @extend %page;
+}
+
+// [data-theme='dark'] {
+//   #about {
+//     @extend %dark-page;
+//   }
+// }
