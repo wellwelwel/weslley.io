@@ -13,9 +13,9 @@ import '@site/src/css/pages/projects.scss';
 export default (): ReactNode => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
+  const isPtBr = currentLocale === 'pt-BR';
   const Projects = projects(currentLocale);
   const About = dynamicImport(currentLocale, MDXImports.AboutProjects);
-  const isPtBr = currentLocale === 'pt-BR';
   const title = isPtBr ? 'Projetos' : 'Projects';
 
   return (

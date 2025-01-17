@@ -4,6 +4,7 @@ import { Github } from 'lucide-react';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { Parallax } from '@site/src/components/Parallax';
 import { ProjectsContext } from '@site/src/contexts/Projects';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export type ProjectOptions = {
   name: string;
@@ -73,7 +74,10 @@ export const Project: FC<ProjectOptions> = ({
   icon,
   image,
 }) => {
+  const { i18n } = useDocusaurusContext();
   const { getCounter } = useContext(ProjectsContext);
+  const { currentLocale } = i18n;
+  const isPtBr = currentLocale === 'pt-BR';
   const counter = getCounter(name);
   const isFirstOnes = counter <= 2;
 
@@ -200,7 +204,8 @@ export const Project: FC<ProjectOptions> = ({
                   <br />
                   {license ? (
                     <>
-                      Licença: <strong>{license}</strong>
+                      {isPtBr ? 'Licença' : 'License'}:{' '}
+                      <strong>{license}</strong>
                     </>
                   ) : null}
                 </p>
