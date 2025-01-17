@@ -3,7 +3,7 @@ import { themes as prismThemes } from 'prism-react-renderer';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
-import { websiteConfigs } from './website.configs';
+import { websiteConfigs } from './website.config';
 
 // Expose local IP to access in any local devices using the same port as in locahost.
 const interfaces = os.networkInterfaces();

@@ -89,7 +89,8 @@ npm run clear
 ### Settings and Definitions
 
 - [**Docusaurus**](https://github.com/facebook/docusaurus) config file: [./docusaurus.config.ts](./docusaurus.config.ts).
-- **Theme** (Colors and Fonts): [./src/css/\_configs.scss](./src/css/_configs.scss).
+- **Website** config file: [./website.config.ts](./website.config.ts).
+- **Theme** (colors and fonts): [./src/css/themes.scss](./src/css/themes.scss).
 
 ---
 
@@ -327,6 +328,6 @@ To create this website, it was used:
 
 - **weslley.io** source code is under the [**AGPL-3.0**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE).
 - **weslley.io** assets, layout and design (for example, all the contents in [`./content/assets`](./content/assets) and [`./.github/assets`](./.github/assets) directories, images, etc.) are [**Creative Commons**](https://github.com/wellwelwel/weslley.io/blob/main/LICENSE-assets) licensed.
-  - Most vectors and icons come and are adapted from [**Freepik**](https://www.freepik.com/) (including premium subscription) and [**Lucide**](https://lucide.dev/).
+  - Most vectors and icons come and are adapted from [**Freepik**](https://www.freepik.com/) (including personal premium subscription) and [**Lucide**](https://lucide.dev/).
 
 Copyright © 2024-present [Weslley Araújo](https://github.com/wellwelwel).
