@@ -29,12 +29,6 @@ $featuredFontFamily: 'Noto+Sans';
     #e9e8fa 50%,
     #d9ddff 100%
   );
-  --background-mobile: linear-gradient(
-    90deg,
-    #f6f5ff 0%,
-    #e9e8fa 50%,
-    #ece8ff 100%
-  );
 }
 
 ::selection {
@@ -51,7 +45,6 @@ $featuredFontFamily: 'Noto+Sans';
 //     #0e0927 50%,
 //     #1a1342 100%
 //   );
-//   --background-mobile: var(--background-desktop);
 // }
 
 @include load-css('global/animations');

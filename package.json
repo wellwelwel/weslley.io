@@ -17,6 +17,7 @@
     "swizzle": "docusaurus swizzle",
     "clear": "docusaurus clear",
     "reset": "(npm run clear || true) && rm -rf node_modules package-lock.json && npm i && npm run update",
+    "prepreview": "tsx tools/host.ts",
     "preview": "npm run build && docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",

@@ -8,10 +8,6 @@ body {
   min-width: 320px;
   background-image: var(--background-desktop);
 
-  @media (max-width: 630px) {
-    background-image: var(--background-mobile);
-  }
-
   &::before {
     content: '';
     position: fixed;
