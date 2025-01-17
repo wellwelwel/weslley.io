@@ -8,8 +8,11 @@
   },
   "scripts": {
     "docusaurus": "docusaurus",
+    "prestart": "tsx tools/host.ts",
     "start": "docusaurus start --host 0.0.0.0",
+    "prestart:en": "tsx tools/host.ts",
     "start:en": "docusaurus start --locale en",
+    "prebuild": "tsx tools/build-missing-content.ts",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "clear": "docusaurus clear",
