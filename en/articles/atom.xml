@@ -8,13 +8,13 @@
     <subtitle>Weslley Araújo Blog</subtitle>
     <icon>https://weslley.io/en/img/favicon.ico</icon>
     <entry>
-        <title type="html"><![CDATA[Prevenindo o envio de emails maliciosos através do seu domínio]]></title>
+        <title type="html"><![CDATA[Preventing malicious emails from being sent through your domain]]></title>
         <id>https://weslley.io/en/articles/2024/11/18/e-mail-spoofing-prevenindo-o-envio-de-emails-atraves-do-seu-dominio/</id>
         <link href="https://weslley.io/en/articles/2024/11/18/e-mail-spoofing-prevenindo-o-envio-de-emails-atraves-do-seu-dominio/"/>
         <updated>2024-11-18T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-306dd9f78004c89cb57b83a11ee27107.png" width="1280" height="720" class="img_ev3q"></p></div>
-<p>Sabia que pessoas mal intencionadas podem estar usando seu domínio para enviar e-mails falsos?</p>
+<p>Did you know that malicious people could be using your domain to send spoof emails?</p>
 <!-- -->
 <p>Essa técnica é conhecida como E-mail Spoofing e explora a falta de autenticação no envio de e-mails de um domínio, falsificando o remetente e fazendo parecer que a mensagem foi enviada por um domínio confiável.</p>
 <p>Tanto empresas pequenas e grandes podem ser alvos, assim como sites pessoais ou abandonados, onde o intuito pode variar desde capturar dados sensíveis e até infectar dispositivos dos usuários. Tudo isso, usando domínios válidos sem autorização.</p>
@@ -73,7 +73,7 @@
         <updated>2024-03-22T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-849b87f5ce44a63ab7614b6c13594dd7.png" width="1280" height="720" class="img_ev3q"></p></div>
-<p>Se você é um desenvolvedor iniciante (ou não), eu quero te mostrar que testes podem sim ser simples e que a complexidade só vem conforme nossa própria necessidade.</p>
+<p>If you're a beginner developer (or not), I want to show you that testing can be simple and that complexity only comes according to our own needs.</p>
 <!-- -->
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="-motivação">💡 Motivação<a href="https://weslley.io/en/articles/2024/03/22/tutorial-introduzindo-testes-unitarios-para-devs-iniciantes/#-motiva%C3%A7%C3%A3o" class="hash-link" aria-label="Direct link to 💡 Motivação" title="Direct link to 💡 Motivação">​</a></h2>
 <p>Se você é um desenvolvedor iniciante (<em>ou não</em>), eu quero te mostrar que testes podem sim ser simples e que a complexidade só vem conforme nossa própria necessidade, não do <em>tester</em>.</p>

@@ -15,7 +15,7 @@
             <pubDate>Sat, 23 Nov 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Banner]]></description>
             <content:encoded><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-a1ee8c3ea3c1707a4c9858bc316d9190.png" width="1770" height="918" class="img_ev3q"></p></div>
-<p>🎙️ <strong>Palestra:</strong> Superando a síndrome do impostor e os desafios de existir no mercado através do open-source.</p>
+<p>🎙️ <strong>Talk:</strong> Overcoming the impostor syndrome and the challenges of existing in the industry through open-source.</p>
 <!-- -->
 <h2 class="anchor anchorWithStickyNavbar_LWe7" id="-a-escolha-do-tema">💡 A escolha do tema<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-a-escolha-do-tema" class="hash-link" aria-label="Direct link to 💡 A escolha do tema" title="Direct link to 💡 A escolha do tema">​</a></h2>
 <p>Nesse momento em que muitos programadores se sentem inseguros sobre o futuro da área:</p>
@@ -41,13 +41,13 @@
             <category>Goiânia</category>
         </item>
         <item>
-            <title><![CDATA[Microsoft Reactor e NodeBR]]></title>
+            <title><![CDATA[Microsoft Reactor and NodeBR]]></title>
             <link>https://weslley.io/en/talks/2024/08/30/microsoft-reactor-e-nodebr/</link>
             <guid>https://weslley.io/en/talks/2024/08/30/microsoft-reactor-e-nodebr/</guid>
             <pubDate>Fri, 30 Aug 2024 00:00:00 GMT</pubDate>
             <description><![CDATA[Banner]]></description>
             <content:encoded><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-fa50a3d1746a854245508b5ecc02b5ec.jpeg" width="800" height="400" class="img_ev3q"></p></div>
-<p>🎙️ <strong>Palestra:</strong> Criando um Test Runner Multi-Plataforma de Alta Performance.</p>
+<p>🎙️ <strong>Talk:</strong> Creating a High-Performance Multi-Platform Test Runner.</p>
 <!-- -->
 <p>Com o tema "API Like a Boss", tive a oportunidade de ensinar através do <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer"><strong>Poku</strong></a>.</p>
 <p>O foco da palestra consistiu na importância de delegar as responsabilidades de cada problema usando recursos nativos do <strong>Node.js</strong>.</p>
