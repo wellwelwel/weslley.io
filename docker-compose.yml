@@ -1,0 +1,8 @@
+# version: '3.9'
+services:
+  app:
+    image: wellwelwel/php:8-shared-based
+    ports:
+      - '8080:80'
+    volumes:
+      - ./build:/srv/www/public_html
