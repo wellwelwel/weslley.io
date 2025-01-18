@@ -1,4 +1,4 @@
-import React, { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import Logo from '@theme/Logo';
 
 export default function NavbarLogo(): ReactNode {

@@ -1,6 +1,6 @@
+import { exit } from 'node:process';
 import Docusaurus from '@site/docusaurus.config';
 import { mirrorMissingLocaleFiles } from '@site/src/helpers/mirror-missing-locale-files';
-import { exit } from 'node:process';
 
 if (!Docusaurus.i18n) exit(0);
 

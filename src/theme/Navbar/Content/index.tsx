@@ -1,17 +1,18 @@
-import React, { type ReactNode } from 'react';
-import { useThemeConfig, ErrorCauseBoundary } from '@docusaurus/theme-common';
+import type { Props as NavbarItemConfig } from '@theme/NavbarItem';
+import type { ReactNode } from 'react';
+import { ErrorCauseBoundary, useThemeConfig } from '@docusaurus/theme-common';
 import {
   splitNavbarItems,
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal';
-import NavbarItem, { type Props as NavbarItemConfig } from '@theme/NavbarItem';
-import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
-import SearchBar from '@theme/SearchBar';
-import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
-import NavbarLogo from '@theme/Navbar/Logo';
-import NavbarSearch from '@theme/Navbar/Search';
-import { anchors } from '@site/src/helpers/get-contents';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import NavbarColorModeToggle from '@theme/Navbar/ColorModeToggle';
+import NavbarLogo from '@theme/Navbar/Logo';
+import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
+import NavbarSearch from '@theme/Navbar/Search';
+import NavbarItem from '@theme/NavbarItem';
+import SearchBar from '@theme/SearchBar';
+import { anchors } from '@site/src/helpers/get-contents';
 
 // Importa os anchors gerados dinamicamente
 

@@ -1,10 +1,10 @@
-import { dynamicRequire } from '@site/src/helpers/dynamic-require';
 import AboutResume from '@site/content/about/headline.mdx';
-import AboutResumeEn from '@site/i18n/en/content/about/headline.mdx';
 import AboutPage from '@site/content/about/page.mdx';
-import AboutPageEn from '@site/i18n/en/content/about/page.mdx';
 import AboutProjects from '@site/content/about/projects.mdx';
+import AboutResumeEn from '@site/i18n/en/content/about/headline.mdx';
+import AboutPageEn from '@site/i18n/en/content/about/page.mdx';
 import AboutProjectsEn from '@site/i18n/en/content/about/projects.mdx';
+import { dynamicRequire } from '@site/src/helpers/dynamic-require';
 
 export const socials = (locate: string) =>
   dynamicRequire(

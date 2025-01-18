@@ -1,5 +1,7 @@
-import { useEffect, useRef, type ComponentProps, type ReactNode } from 'react';
-import clsx from 'clsx';
+import type { Props } from '@theme/Navbar/Layout';
+import type { ComponentProps, ReactNode } from 'react';
+import { useEffect, useRef } from 'react';
+import { useLocation } from '@docusaurus/router';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import {
   useHideableNavbar,
@@ -7,8 +9,7 @@ import {
 } from '@docusaurus/theme-common/internal';
 import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
-import type { Props } from '@theme/Navbar/Layout';
-import { useLocation } from '@docusaurus/router';
+import clsx from 'clsx';
 // @ts-ignore
 import styles from './styles.module.scss';
 

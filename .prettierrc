@@ -14,6 +14,18 @@
   "endOfLine": "auto",
   "embeddedLanguageFormatting": "auto",
   "singleAttributePerLine": false,
+  "plugins": ["@ianvs/prettier-plugin-sort-imports"],
+  "importOrder": [
+    "<TYPES>^(node:)",
+    "<TYPES>",
+    "<TYPES>^[.]",
+    "<BUILTIN_MODULES>",
+    "^react$",
+    "^@docusaurus",
+    "<THIRD_PARTY_MODULES>",
+    "^@site",
+    "^[.]"
+  ],
   "overrides": [
     {
       "files": "*.jsonc",

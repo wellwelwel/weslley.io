@@ -1,14 +1,14 @@
 import type { ReactNode } from 'react';
+import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import Link from '@docusaurus/Link';
 import { ArrowRight } from 'lucide-react';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
 import {
-  MDXImports,
   anchors,
   cards,
+  MDXImports,
   socials,
 } from '@site/src/helpers/get-contents';
 import { dynamicImport } from '../helpers/dynamic-require';

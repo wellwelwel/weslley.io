@@ -1,5 +1,6 @@
-import Link, { type Props } from '@docusaurus/Link';
+import type { Props } from '@docusaurus/Link';
 import type { FC, ReactNode } from 'react';
+import Link from '@docusaurus/Link';
 
 export type SafeLinkOptions = {
   children: ReactNode;

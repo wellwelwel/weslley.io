@@ -1,10 +1,10 @@
-import React, { type ReactNode } from 'react';
+import type { ReactNode } from 'react';
 import {
   useLockBodyScroll,
   useNavbarMobileSidebar,
 } from '@docusaurus/theme-common/internal';
-import NavbarMobileSidebarLayout from '@theme/Navbar/MobileSidebar/Layout';
 import NavbarMobileSidebarHeader from '@theme/Navbar/MobileSidebar/Header';
+import NavbarMobileSidebarLayout from '@theme/Navbar/MobileSidebar/Layout';
 import NavbarMobileSidebarPrimaryMenu from '@theme/Navbar/MobileSidebar/PrimaryMenu';
 import NavbarMobileSidebarSecondaryMenu from '@theme/Navbar/MobileSidebar/SecondaryMenu';
 import { anchors } from '@site/src/helpers/get-contents';

@@ -1,10 +1,11 @@
-import { useContext, type FC, type ReactNode } from 'react';
-import { useInView } from 'react-intersection-observer';
-import { Github } from 'lucide-react';
-import { SafeLink } from '@site/src/components/SafeLink';
-import { Parallax } from '@site/src/components/Parallax';
-import { ProjectsContext } from '@site/src/contexts/Projects';
+import type { FC, ReactNode } from 'react';
+import { useContext } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { Github } from 'lucide-react';
+import { useInView } from 'react-intersection-observer';
+import { Parallax } from '@site/src/components/Parallax';
+import { SafeLink } from '@site/src/components/SafeLink';
+import { ProjectsContext } from '@site/src/contexts/Projects';
 
 export type ProjectOptions = {
   name: string;

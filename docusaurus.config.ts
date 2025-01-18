@@ -1,7 +1,7 @@
-import { themes as prismThemes } from 'prism-react-renderer';
-import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
-import type { Config } from '@docusaurus/types';
 import type * as Preset from '@docusaurus/preset-classic';
+import type { Config } from '@docusaurus/types';
+import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import { themes as prismThemes } from 'prism-react-renderer';
 import { websiteConfigs } from './website.config';
 
 const config: Config = {
