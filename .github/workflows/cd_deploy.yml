@@ -37,7 +37,9 @@ jobs:
         run: npm run lint
 
       - name: Building Site
-        run: npm run build
+        run: |
+          npm run build
+          rm -rf build/.htaccess
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
