@@ -118,115 +118,117 @@ export const Project: FC<ProjectOptions> = ({
       )}
       data-counter={counter}
     >
-      <section>
-        <h2>{name}</h2>
-        {children}
+      <main>
+        <section>
+          <h2>{name}</h2>
+          {children}
 
-        {githubStars || npm || docker || vsMarketplaceId ? (
-          <div className='social'>
-            {npm ? (
-              <p>
-                <SafeLink
-                  to={`https://www.npmjs.com/package/${npm}`}
-                  title='NPM Downloads per year'
-                >
-                  <img
-                    loading={isFirstOnes ? 'eager' : 'lazy'}
-                    src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
-                    alt='NPM Downloads per year'
-                  />
-                </SafeLink>
-              </p>
-            ) : null}
-
-            {githubStars ? (
-              <p>
-                <SafeLink
-                  to={`https://github.com/${organization}/${repository}`}
-                  title='GitHub Starts'
-                >
-                  <img
-                    loading={isFirstOnes ? 'eager' : 'lazy'}
-                    src={`https://img.shields.io/github/stars/${organization}/${repository}.svg?style=flat&color=6c5ce7&label=&logo=github&logoColor=white`}
-                    alt='GitHub Starts'
-                  />
-                </SafeLink>
-              </p>
-            ) : null}
-
-            {docker ? (
-              <p>
-                <SafeLink
-                  to={`https://hub.docker.com/r/${organization}/${docker}`}
-                  title='Docker Hub Downloads'
-                >
-                  <img
-                    loading={isFirstOnes ? 'eager' : 'lazy'}
-                    src={`https://img.shields.io/docker/pulls/${organization}/${docker}.svg?color=6c5ce7&label=&logo=docker&logoColor=white`}
-                    alt='Docker Hub Downloads'
-                  />
-                </SafeLink>
-              </p>
-            ) : null}
-
-            {vsMarketplaceId ? (
-              <p>
-                <SafeLink
-                  to={`https://marketplace.visualstudio.com/items?itemName=${vsMarketplaceId}`}
-                  title='Visual Studio Marketplace Installs'
-                >
-                  <img
-                    loading={isFirstOnes ? 'eager' : 'lazy'}
-                    src={`https://img.shields.io/visual-studio-marketplace/i/${vsMarketplaceId}.svg?color=6c5ce7&logo=dailydotdev&label=&logoColor=white`}
-                    alt='Visual Studio Marketplace Installs'
-                  />
-                </SafeLink>
-              </p>
-            ) : null}
-          </div>
-        ) : null}
-
-        {link ? (
-          <footer>
-            <SafeLink
-              to={
-                url ? url : `https://github.com/${organization}/${repository}`
-              }
-            >
-              {(() => {
-                if (icon) return icon;
-                if (hasRepository) return <Github />;
-                return null;
-              })()}
-
-              {hasRepository ? (
+          {githubStars || npm || docker || vsMarketplaceId ? (
+            <div className='social'>
+              {npm ? (
                 <p>
-                  {`${organization}/${repository}`}
-                  <br />
-                  {license ? (
-                    <>
-                      {isPtBr ? 'Licença' : 'License'}:{' '}
-                      <strong>{license}</strong>
-                    </>
-                  ) : null}
+                  <SafeLink
+                    to={`https://www.npmjs.com/package/${npm}`}
+                    title='NPM Downloads per year'
+                  >
+                    <img
+                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
+                      alt='NPM Downloads per year'
+                    />
+                  </SafeLink>
                 </p>
               ) : null}
+
+              {githubStars ? (
+                <p>
+                  <SafeLink
+                    to={`https://github.com/${organization}/${repository}`}
+                    title='GitHub Starts'
+                  >
+                    <img
+                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      src={`https://img.shields.io/github/stars/${organization}/${repository}.svg?style=flat&color=6c5ce7&label=&logo=github&logoColor=white`}
+                      alt='GitHub Starts'
+                    />
+                  </SafeLink>
+                </p>
+              ) : null}
+
+              {docker ? (
+                <p>
+                  <SafeLink
+                    to={`https://hub.docker.com/r/${organization}/${docker}`}
+                    title='Docker Hub Downloads'
+                  >
+                    <img
+                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      src={`https://img.shields.io/docker/pulls/${organization}/${docker}.svg?color=6c5ce7&label=&logo=docker&logoColor=white`}
+                      alt='Docker Hub Downloads'
+                    />
+                  </SafeLink>
+                </p>
+              ) : null}
+
+              {vsMarketplaceId ? (
+                <p>
+                  <SafeLink
+                    to={`https://marketplace.visualstudio.com/items?itemName=${vsMarketplaceId}`}
+                    title='Visual Studio Marketplace Installs'
+                  >
+                    <img
+                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      src={`https://img.shields.io/visual-studio-marketplace/i/${vsMarketplaceId}.svg?color=6c5ce7&logo=dailydotdev&label=&logoColor=white`}
+                      alt='Visual Studio Marketplace Installs'
+                    />
+                  </SafeLink>
+                </p>
+              ) : null}
+            </div>
+          ) : null}
+
+          {link ? (
+            <footer>
+              <SafeLink
+                to={
+                  url ? url : `https://github.com/${organization}/${repository}`
+                }
+              >
+                {(() => {
+                  if (icon) return icon;
+                  if (hasRepository) return <Github />;
+                  return null;
+                })()}
+
+                {hasRepository ? (
+                  <p>
+                    {`${organization}/${repository}`}
+                    <br />
+                    {license ? (
+                      <>
+                        {isPtBr ? 'Licença' : 'License'}:{' '}
+                        <strong>{license}</strong>
+                      </>
+                    ) : null}
+                  </p>
+                ) : null}
+              </SafeLink>
+            </footer>
+          ) : null}
+        </section>
+        {image ? (
+          <Parallax
+            className='banner'
+            scale={1.1}
+            tiltMaxAngleX={2.5}
+            tiltMaxAngleY={2.5}
+          >
+            <SafeLink to={link}>
+              <img src={image} loading='lazy' alt={`${name} banner`} />
             </SafeLink>
-          </footer>
+          </Parallax>
         ) : null}
-      </section>
-      {image ? (
-        <Parallax
-          className='banner'
-          scale={1.1}
-          tiltMaxAngleX={2.5}
-          tiltMaxAngleY={2.5}
-        >
-          <SafeLink to={link}>
-            <img src={image} loading='lazy' alt={`${name} banner`} />
-          </SafeLink>
-        </Parallax>
-      ) : null}
+      </main>
     </nav>
   );
 };

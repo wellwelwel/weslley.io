@@ -79,6 +79,7 @@
       }
 
       &,
+      & > main > section,
       & > section {
         & ~ *,
         p ~ * {
@@ -193,36 +194,36 @@
   }
 }
 
-%dark-page {
-  & > main {
-    nav {
-      border-color: #17103c;
-      background-color: #0000006a;
+// %dark-page {
+//   & > main {
+//     nav {
+//       border-color: #17103c;
+//       background-color: #0000006a;
 
-      h2 {
-        color: #7265ff;
-      }
+//       h2 {
+//         color: #7265ff;
+//       }
 
-      p {
-        color: #beb8ff;
-      }
+//       p {
+//         color: #beb8ff;
+//       }
 
-      & > section {
-        & > footer {
-          a {
-            background-color: #493eea;
-            color: #847cf6;
+//       & > section {
+//         & > footer {
+//           a {
+//             background-color: #493eea;
+//             color: #847cf6;
 
-            p {
-              color: #c1bdff;
-            }
+//             p {
+//               color: #c1bdff;
+//             }
 
-            &:hover {
-              background-color: #6f65ff;
-            }
-          }
-        }
-      }
-    }
-  }
-}
+//             &:hover {
+//               background-color: #6f65ff;
+//             }
+//           }
+//         }
+//       }
+//     }
+//   }
+// }
