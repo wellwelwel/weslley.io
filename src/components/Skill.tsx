@@ -53,6 +53,12 @@ export const skills = {
   sass: () => <Skill name='Sass' src='sass' className='lg' />,
   linux: () => <Skill name='Linux' src='linux' />,
   azureDevops: () => <Skill name='Azure DevOps' src='azuredevops' />,
+  docusaurus: () => <Skill name='Docusaurus' src='docusaurus' className='sm' />,
   mdx: () => <Skill name='MDX' src='mdx' className='sm-x' />,
+  algolia: () => <Skill name='Algolia' src='algolia' className='sm' />,
+  cloudflare: () => <Skill name='Cloudflare' src='cloudflare' className='x' />,
+  cloudflareworkers: () => (
+    <Skill name='Cloudflare Workers' src='cloudflareworkers' />
+  ),
   vscode: () => <Skill name='Visual Studio Code' src='vscode' className='sm' />,
 };

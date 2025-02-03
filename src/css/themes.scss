@@ -25,13 +25,14 @@ $featuredFontFamily: 'Noto+Sans';
   --ifm-navbar-search-input-color: var(--ifm-color-main);
   --background-desktop: linear-gradient(
     90deg,
-    #ece8ff 0%,
-    #e9e8fa 50%,
-    #d9ddff 100%
+    #9c97ff 0%,
+    #f0f1ff 50%,
+    #6d96ff 100%
   );
 }
 
-::selection {
+::selection,
+mark {
   color: #e8e7ff;
   background-color: #7977ffa4;
   text-shadow: none;

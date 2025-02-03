@@ -6,9 +6,18 @@ body {
   min-height: calc(100vh - 55px);
   min-height: calc(100dvh - 55px);
   min-width: 320px;
-  background-image: var(--background-desktop);
 
   &::before {
+    content: '';
+    position: fixed;
+    inset: -200%;
+    background-image: var(--background-desktop);
+    transform-origin: center;
+    animation: animate-bg 20s linear infinite;
+    z-index: -2;
+  }
+
+  &::after {
     content: '';
     position: fixed;
     inset: 0;

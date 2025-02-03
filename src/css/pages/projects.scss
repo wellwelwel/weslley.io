@@ -15,9 +15,7 @@
         width: 100%;
         max-width: 480px;
         padding: 0;
-        transition:
-          box-shadow 0.5s ease,
-          filter 0.25s ease-in-out;
+        transition: box-shadow 0.5s ease;
         overflow: hidden;
 
         &.show {
@@ -263,15 +261,6 @@
               }
             }
           }
-        }
-      }
-
-      &:has(nav:hover) nav:not(:hover) {
-        filter: opacity(0.75);
-        will-change: filter;
-
-        @media (max-width: 630px) {
-          filter: none;
         }
       }
     }
