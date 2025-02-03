@@ -93,6 +93,12 @@
               filter: drop-shadow(1px 1px 1px #5d5dc739);
             }
 
+            &.sm-x {
+              img {
+                height: 19px;
+              }
+            }
+
             &.sm {
               img {
                 height: 22px;
@@ -138,6 +144,10 @@
             img {
               height: 24px;
               border-radius: 3px;
+
+              &.sm-x {
+                height: 19px;
+              }
 
               &.sm {
                 height: 22px;

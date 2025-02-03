@@ -53,5 +53,6 @@ export const skills = {
   sass: () => <Skill name='Sass' src='sass' className='lg' />,
   linux: () => <Skill name='Linux' src='linux' />,
   azureDevops: () => <Skill name='Azure DevOps' src='azuredevops' />,
+  mdx: () => <Skill name='MDX' src='mdx' className='sm-x' />,
   vscode: () => <Skill name='Visual Studio Code' src='vscode' className='sm' />,
 };
