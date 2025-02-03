@@ -259,6 +259,10 @@
       &:has(nav:hover) nav:not(:hover) {
         filter: opacity(0.75);
         will-change: filter;
+
+        @media (max-width: 630px) {
+          filter: none;
+        }
       }
     }
   }
