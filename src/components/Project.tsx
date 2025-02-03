@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import { useContext } from 'react';
+import React, { useContext } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Github } from 'lucide-react';
 import { useInView } from 'react-intersection-observer';
@@ -235,7 +235,9 @@ export const Project: FC<ProjectOptions> = ({
       {currentSkills ? (
         <footer>
           {currentSkills.map((current) =>
-            skills[current](`${name}:${current}`)
+            React.cloneElement(skills[current](), {
+              key: `${name}:${current}`,
+            })
           )}
         </footer>
       ) : null}
