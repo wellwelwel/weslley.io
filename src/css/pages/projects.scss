@@ -10,10 +10,15 @@
       gap: 25px;
 
       nav {
+        @include flex(column);
         min-width: 310px;
         width: 100%;
         max-width: 480px;
-        transition: box-shadow 0.5s ease;
+        padding: 0;
+        transition:
+          box-shadow 0.5s ease,
+          filter 0.25s ease-in-out;
+        overflow: hidden;
 
         &.show {
           animation: showIn 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
@@ -21,6 +26,7 @@
 
         main {
           height: 100%;
+          padding: 25px 50px;
 
           section {
             @include flex(column, flex-start, flex-start);
@@ -44,6 +50,105 @@
 
               & + * {
                 margin-top: 15px;
+              }
+            }
+          }
+        }
+
+        & > footer {
+          position: relative;
+          z-index: 1;
+          @include flex(row, center, center, wrap);
+          gap: 12.5px 15px;
+          width: 100%;
+          margin-top: 0;
+          padding-inline: 50px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.085);
+          filter: grayscale(0.25) opacity(0.75);
+          transition: filter 0.25s ease;
+
+          &:not(.large) {
+            padding-block: 17.5px;
+          }
+
+          @media (max-width: 1136px) {
+            filter: none;
+          }
+
+          & > button {
+            @include flex(row, center, center);
+            transform: scale(0.75);
+            height: 24px;
+            background-color: unset;
+            border: none;
+            border-radius: 3px;
+            margin: 0;
+            padding: 0;
+            transition: transform 0.25s ease;
+            cursor: none;
+            overflow: hidden;
+
+            img {
+              height: 24px;
+              filter: drop-shadow(1px 1px 1px #5d5dc739);
+            }
+
+            &.sm {
+              img {
+                height: 22px;
+              }
+            }
+
+            &.lg {
+              img {
+                height: 30px;
+              }
+            }
+
+            &.x {
+              img {
+                height: 40px;
+              }
+            }
+          }
+
+          & > small {
+            position: absolute;
+            z-index: 2;
+            top: -65px;
+            @include flex(row, center, center);
+            gap: 10px;
+            min-width: 250px;
+            height: 55px;
+            padding-inline: 20px;
+            border-radius: 10px;
+            border: 1px solid #d7dcff;
+            background-color: #ffffffed;
+            font-family: var(--ifm-font-family-featured);
+            font-weight: 700;
+            color: #3f3996;
+            overflow: hidden;
+            opacity: 0;
+            transform: scale(0);
+            pointer-events: none;
+            transition:
+              opacity 0.45s cubic-bezier(0.75, -0.5, 0.2, 0.9),
+              transform 0.35s cubic-bezier(0.75, -0.5, 0.2, 0.9);
+
+            img {
+              height: 24px;
+              border-radius: 3px;
+
+              &.sm {
+                height: 22px;
+              }
+
+              &.lg {
+                height: 30px;
+              }
+
+              &.x {
+                height: 40px;
               }
             }
           }
@@ -84,6 +189,14 @@
             }
           }
 
+          & > footer {
+            padding-block: 10px;
+
+            @media (max-width: 1136px) {
+              padding-block: 17.5px;
+            }
+          }
+
           &:nth-child(even) {
             main {
               flex-direction: row-reverse;
@@ -115,9 +228,37 @@
           }
         }
 
-        &:hover {
-          box-shadow: 0 0 25px #00000010;
+        @media (max-width: 1136px) {
+          & > main,
+          & > footer {
+            padding-inline: 30px;
+          }
         }
+
+        &:hover,
+        &:focus {
+          box-shadow: 0 0 25px #00000010;
+
+          & > footer {
+            filter: none;
+
+            & > button {
+              &:hover {
+                transform: scale(1.1);
+
+                + small {
+                  opacity: 1;
+                  transform: scale(1);
+                }
+              }
+            }
+          }
+        }
+      }
+
+      &:has(nav:hover) nav:not(:hover) {
+        filter: opacity(0.75);
+        will-change: filter;
       }
     }
   }

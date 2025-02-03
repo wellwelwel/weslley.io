@@ -6,6 +6,7 @@ import { useInView } from 'react-intersection-observer';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { ProjectsContext } from '@site/src/contexts/Projects';
+import { skills } from './Skill';
 
 export type ProjectOptions = {
   name: string;
@@ -33,6 +34,7 @@ export type ProjectOptions = {
   url?: string;
   icon?: ReactNode;
   image?: string;
+  skills?: (keyof typeof skills)[];
 };
 
 /**
@@ -74,6 +76,7 @@ export const Project: FC<ProjectOptions> = ({
   url,
   icon,
   image,
+  skills: currentSkills,
 }) => {
   const { i18n } = useDocusaurusContext();
   const { getCounter } = useContext(ProjectsContext);
@@ -229,6 +232,13 @@ export const Project: FC<ProjectOptions> = ({
           </Parallax>
         ) : null}
       </main>
+      {currentSkills ? (
+        <footer>
+          {currentSkills.map((current) =>
+            skills[current](`${name}:${current}`)
+          )}
+        </footer>
+      ) : null}
     </nav>
   );
 };
