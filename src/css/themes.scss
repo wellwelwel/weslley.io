@@ -46,8 +46,7 @@ $featuredFontFamily: 'Noto Sans';
   --menu-home-icon-hover-color: #278cff;
   --menu-home-border-hover-color: #b1bcff;
   --menu-home-background-hover-color: #ffffffa3;
-  --highlights-color: #6464ca;
-  --card-title-color: #655bff;
+  --card-title-color: var(--title-color-1);
   --card-background-color: var(--menu-home-background-color);
   --card-border-color: var(--menu-home-border-color);
   --card-description-color: #5d6cc1;
@@ -59,7 +58,7 @@ $featuredFontFamily: 'Noto Sans';
   --card-description-strong-hover-color: var(--card-description-strong-color);
   --see-more-color: var(--ifm-color-main);
   --see-more-icon-color: var(--ifm-color-main);
-  --see-more-hover-color: #5146e9;
+  --see-more-hover-color: var(--title-color-1);
   --see-more-icon-hover-color: #fa2c74;
 }
 

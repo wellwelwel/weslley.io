@@ -54,10 +54,6 @@ export default (): ReactNode => {
             </menu>
           </header>
           <nav>
-            <h2>
-              <img loading='lazy' src='/img/star.svg' alt='Ícone de Estrela' />
-              {isPtBr ? 'Destaques' : 'Highlights'}
-            </h2>
             {Cards.map((Card, i) => (
               <Card key={`card:${i}`} />
             ))}
