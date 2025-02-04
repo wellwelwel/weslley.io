@@ -8,6 +8,7 @@ $featuredFontFamily: 'Noto+Sans';
 @import url('https://fonts.googleapis.com/css2?display=swap&family=#{$baseFontFamily}:wght@300;400;500;600&family=#{$featuredFontFamily}:wght@600;700;800');
 
 :root {
+  // Docusaurus
   --ifm-font-family-base: '#{set-font($baseFontFamily, '+')}', serif;
   --ifm-font-family-featured: '#{set-font($featuredFontFamily, '+')}', serif;
   --ifm-color-primary: #7a77ff;
@@ -18,17 +19,47 @@ $featuredFontFamily: 'Noto+Sans';
   --ifm-color-primary-light: #9f9cff;
   --ifm-color-primary-lighter: #b1afff;
   --ifm-color-primary-lightest: #b1afff;
-  --background-dots-pattern-color: #444cf750;
   --ifm-blockquote-border-color: #d7d3ff;
-  --background-dots-blur-intensity: 0.5px;
   --ifm-navbar-link-color: var(--ifm-link-color);
   --ifm-navbar-search-input-color: var(--ifm-color-main);
-  --background-desktop: linear-gradient(
-    90deg,
-    #9c97ff 0%,
-    #f0f1ff 50%,
-    #6d96ff 100%
-  );
+
+  // Personal
+  --background-color: #f0f1ff;
+  --background-dots-pattern-color: #444cf750;
+  --background-dots-blur-intensity: 0.5px;
+  --title-color: #5747ff;
+  --title-shadow-color: #ffffff50;
+  --headline-color: #57619e;
+  --avatar-border-color: #ecebf6;
+  --avatar-shadow-color: #00000075;
+  --social-popup-color: #271dab;
+  --social-popup-pointer-color: var(--ifm-color-primary);
+  --social-popup-background-color: #e8e9ff;
+  --social-popup-border-color: #cbc7ff;
+  --social-popup-shadow-color: #00000005;
+  --menu-home-color: var(--ifm-color-primary);
+  --menu-home-icon-color: var(--ifm-color-primary);
+  --menu-home-border-color: #d7dcff;
+  --menu-home-background-color: #ffffff6a;
+  --menu-home-hover-color: var(--ifm-color-main);
+  --menu-home-icon-hover-color: #278cff;
+  --menu-home-border-hover-color: #b1bcff;
+  --menu-home-background-hover-color: #ffffffa3;
+  --highlights-color: #7070aa;
+  --card-title-color: #655bff;
+  --card-background-color: var(--menu-home-background-color);
+  --card-border-color: var(--menu-home-border-color);
+  --card-description-color: #5d6cc1;
+  --card-description-strong-color: #8e98cd;
+  --card-title-hover-color: var(--ifm-color-main);
+  --card-background-hover-color: var(--menu-home-background-hover-color);
+  --card-border-hover-color: var(--menu-home-border-hover-color);
+  --card-description-hover-color: var(--card-description-color);
+  --card-description-strong-hover-color: var(--card-description-strong-color);
+  --see-more-color: #6f65ff;
+  --see-more-icon-color: #6f65ff;
+  --see-more-hover-color: #5146e9;
+  --see-more-icon-hover-color: #fa2c74;
 }
 
 ::selection,
@@ -38,14 +69,41 @@ mark {
   text-shadow: none;
 }
 
-// Soon 🚧
 // [data-theme='dark'] {
-//   --background-desktop: linear-gradient(
-//     90deg,
-//     #0d0921 0%,
-//     #0e0927 50%,
-//     #1a1342 100%
-//   );
+//   // Personal
+//   --background-color: #0e0927;
+//   --title-shadow-color: #00000050;
+//   --headline-color: #57619e;
+//   --avatar-border-color: #150a4a;
+//   --avatar-shadow-color: #00000075;
+//   --social-popup-color: #271dab;
+//   --social-popup-pointer-color: var(--ifm-color-primary);
+//   --social-popup-background-color: #e8e9ff;
+//   --social-popup-border-color: #cbc7ff;
+//   --social-popup-shadow-color: #00000005;
+//   --menu-home-color: var(--ifm-color-primary);
+//   --menu-home-icon-color: var(--ifm-color-primary);
+//   --menu-home-border-color: #d7dcff;
+//   --menu-home-background-color: #ffffff6a;
+//   --menu-home-hover-color: var(--ifm-color-main);
+//   --menu-home-icon-hover-color: #278cff;
+//   --menu-home-border-hover-color: #b1bcff;
+//   --menu-home-background-hover-color: #ffffffa3;
+//   --highlights-color: #7070aa;
+//   --card-title-color: #655bff;
+//   --card-background-color: var(--menu-home-background-color);
+//   --card-border-color: var(--menu-home-border-color);
+//   --card-description-color: #5d6cc1;
+//   --card-description-strong-color: #8e98cd;
+//   --card-title-hover-color: var(--ifm-color-main);
+//   --card-background-hover-color: var(--menu-home-background-hover-color);
+//   --card-border-hover-color: var(--menu-home-border-hover-color);
+//   --card-description-hover-color: var(--card-description-color);
+//   --card-description-strong-hover-color: var(--card-description-strong-color);
+//   --see-more-color: #6f65ff;
+//   --see-more-icon-color: #6f65ff;
+//   --see-more-hover-color: #5146e9;
+//   --see-more-icon-hover-color: #fa2c74;
 // }
 
 @include load-css('global/animations');

@@ -52,11 +52,11 @@
         z-index: -1;
         border-radius: 50%;
         overflow: hidden;
-        width: 90px;
-        height: 90px;
+        width: 110px;
+        height: 110px;
         margin-bottom: 10px;
-        border: 4px solid #ecebf6;
-        box-shadow: 0 0 10px #00000075;
+        border: 4.5px solid var(--avatar-border-color);
+        box-shadow: 0 0 10px var(--avatar-shadow-color);
 
         img {
           height: 100%;
@@ -69,10 +69,10 @@
       h1 {
         margin: 0 !important;
         font-family: var(--ifm-font-family-featured);
-        font-size: 24px;
-        font-weight: 700;
-        color: #5747ff;
-        text-shadow: 1px 1px 2px #ffffff50;
+        font-size: 26px;
+        font-weight: 800;
+        color: var(--title-color);
+        text-shadow: 1px 1px 2px var(--title-shadow-color);
 
         span {
           transition: color ease 0.5s;
@@ -86,25 +86,12 @@
         margin-top: 7.5px;
         font-size: 13px;
         font-weight: 400;
-        color: #57619e;
+        color: var(--headline-color);
         letter-spacing: 0.25px;
-        text-shadow: 1px 1px 2px #ffffff50;
+        text-shadow: 1px 1px 2px var(--title-shadow-color);
 
         & > p {
           margin: 0;
-        }
-
-        hr {
-          margin: 10px 0;
-        }
-
-        a {
-          border-bottom: 1px solid #cac5ff;
-          color: #313a70;
-
-          &:hover {
-            border-color: #5747ff;
-          }
         }
       }
 
@@ -129,7 +116,7 @@
             height: 0;
             border-left: 7.5px solid transparent;
             border-right: 7.5px solid transparent;
-            border-top: 7.5px solid var(--ifm-color-primary);
+            border-top: 7.5px solid var(--social-popup-pointer-color);
             border-bottom: 0;
             opacity: 0;
             display: none;
@@ -146,11 +133,11 @@
             height: 130px;
             min-width: 100%;
             border-radius: 15px;
-            border: 1px dotted #cbc7ff;
-            box-shadow: 0 0 25px #00000005;
+            border: 1px dotted var(--social-popup-border-color);
+            box-shadow: 0 0 25px var(--social-popup-shadow-color);
             font-size: 13px;
-            background-color: #e8e9ff;
-            color: #271dab;
+            background-color: var(--social-popup-background-color);
+            color: var(--social-popup-color);
             transform: scale(0);
             opacity: 0;
             transition:
@@ -219,11 +206,12 @@
             gap: 15px;
             min-width: 160px;
             padding: 10px 15px;
-            border: 1px solid #d7dcff;
+            border: 1px solid var(--menu-home-border-color);
             border-radius: 15px;
-            background-color: #ffffff6a;
+            background-color: var(--menu-home-background-color);
             font-size: 14px;
             font-weight: 600;
+            color: var(--menu-home-color);
             cursor: pointer;
             transition:
               gap ease 0.25s,
@@ -238,20 +226,21 @@
             svg {
               width: 16px;
               transition: color ease 0.5s;
+              color: var(--menu-home-icon-color);
             }
 
             &:hover {
               gap: 10px;
-              border-color: #b1bcff;
-              color: var(--ifm-color-main);
-              background-color: #ffffffa3;
+              border-color: var(--menu-home-border-hover-color);
+              color: var(--menu-home-hover-color);
+              background-color: var(--menu-home-background-hover-color);
 
               span {
-                color: var(--ifm-color-main);
+                color: var(--menu-home-hover-color);
               }
 
               svg {
-                color: #278cff;
+                color: var(--menu-home-icon-hover-color);
               }
             }
           }
@@ -278,7 +267,7 @@
         margin-bottom: 5px;
         font-size: 16px;
         font-weight: 600;
-        color: #7070aa;
+        color: var(--highlights-color);
 
         svg,
         img {
@@ -294,9 +283,9 @@
         justify-content: flex-start;
         gap: 20px;
         padding: 12px 20px;
-        border: 1px solid #d7dcff;
+        border: 1px solid var(--card-border-color);
         border-radius: 15px;
-        background-color: #ffffff6a;
+        background-color: var(--card-background-color);
         cursor: pointer;
         transition:
           background-color ease 0.25s,
@@ -321,7 +310,7 @@
 
         & > div {
           margin-bottom: 0 !important;
-          color: #655bff;
+          color: var(--card-title-color);
           transition: transform 0.15s;
 
           strong {
@@ -334,12 +323,12 @@
             p {
               font-size: 12.5px;
               font-weight: 300;
-              color: #5d6cc1;
+              color: var(--card-description-color);
               transition: color ease 0.3s;
               margin-bottom: 0;
 
               strong {
-                color: #8e98cd;
+                color: var(--card-description-strong-color);
                 font-size: 12.5px;
                 font-weight: 500;
               }
@@ -358,9 +347,9 @@
         }
 
         &:hover {
-          border-color: #b1bcff;
-          color: var(--ifm-color-main);
-          background-color: #ffffffa3;
+          border-color: var(--card-border-hover-color);
+          color: var(--card-title-hover-color);
+          background-color: var(--card-background-hover-color);
 
           & > div {
             transform: scale(0.997);
@@ -412,22 +401,23 @@
           background-color: unset;
           text-align: right;
           font-weight: 500;
-          color: #6f65ff;
+          color: var(--see-more-color);
 
           svg {
             position: static;
             width: 16px;
             height: 16px;
+            color: var(--see-more-icon-color);
           }
 
           &:hover {
             border: none;
             background-color: unset;
-            color: #5146e9;
+            color: var(--see-more-hover-color);
 
             svg {
               transform: translateX(2.5px);
-              color: #fa2c74;
+              color: var(--see-more-icon-hover-color);
             }
           }
         }

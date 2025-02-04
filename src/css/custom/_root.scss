@@ -6,18 +6,10 @@ body {
   min-height: calc(100vh - 55px);
   min-height: calc(100dvh - 55px);
   min-width: 320px;
+  background-color: var(--background-color);
+  transition: background-color 0.25s ease;
 
   &::before {
-    content: '';
-    position: fixed;
-    inset: -200%;
-    background-image: var(--background-desktop);
-    transform-origin: center;
-    animation: animate-bg 20s linear infinite;
-    z-index: -2;
-  }
-
-  &::after {
     content: '';
     position: fixed;
     inset: 0;
@@ -26,7 +18,6 @@ body {
       transparent 0.5px
     );
     background-size: 10px 10px;
-    z-index: -1;
     filter: blur(var(--background-dots-blur-intensity));
   }
 

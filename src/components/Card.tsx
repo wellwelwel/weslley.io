@@ -19,7 +19,7 @@ export const Card: FC<CardOptions> = ({
   children,
 }) => {
   return (
-    <Parallax tiltMaxAngleX={0} tiltMaxAngleY={1}>
+    <Parallax tiltMaxAngleX={0} tiltMaxAngleY={0.25}>
       <SafeLink to={url} title={alt}>
         <img loading='lazy' src={imageSrc} alt={alt} />
         <div>
