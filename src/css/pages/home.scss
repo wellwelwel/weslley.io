@@ -71,7 +71,7 @@
         font-family: var(--ifm-font-family-featured);
         font-size: 26px;
         font-weight: 800;
-        color: var(--title-color);
+        color: var(--title-color-1);
         text-shadow: 1px 1px 2px var(--title-shadow-color);
 
         span {
@@ -435,13 +435,6 @@
 //   #home {
 //     & > main {
 //       & > header {
-//         & > div {
-//           border-color: #000000;
-//         }
-
-//         h1 {
-//           color: #5747ff;
-//         }
 
 //         small {
 //           color: #57619e;

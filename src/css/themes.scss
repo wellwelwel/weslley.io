@@ -1,16 +1,16 @@
 @use 'sass:meta' as *;
 @use 'global/functions' as *;
 
-// Import the fonts you want based in their URL names (preconfigured for Google Fonts)
+// Import the fonts you want based in their names (preconfigured for Google Fonts)
 $baseFontFamily: 'Poppins';
-$featuredFontFamily: 'Noto+Sans';
+$featuredFontFamily: 'Noto Sans';
 
-@import url('https://fonts.googleapis.com/css2?display=swap&family=#{$baseFontFamily}:wght@300;400;500;600&family=#{$featuredFontFamily}:wght@600;700;800');
+@import url('https://fonts.googleapis.com/css2?display=swap&family=#{set-font($baseFontFamily)}:wght@300;400;500;600&family=#{set-font($featuredFontFamily)}:wght@600;700;800');
 
 :root {
   // Docusaurus
-  --ifm-font-family-base: '#{set-font($baseFontFamily, '+')}', serif;
-  --ifm-font-family-featured: '#{set-font($featuredFontFamily, '+')}', serif;
+  --ifm-font-family-base: '#{$baseFontFamily}', serif;
+  --ifm-font-family-featured: '#{$featuredFontFamily}', serif;
   --ifm-color-primary: #7a77ff;
   --ifm-color-main: #6f65ff;
   --ifm-color-primary-dark: #5552ff;
@@ -27,7 +27,8 @@ $featuredFontFamily: 'Noto+Sans';
   --background-color: #f0f1ff;
   --background-dots-pattern-color: #444cf750;
   --background-dots-blur-intensity: 0.5px;
-  --title-color: #5747ff;
+  --title-color-1: #5747ff;
+  --title-color-2: #278cff;
   --title-shadow-color: #ffffff50;
   --headline-color: #57619e;
   --avatar-border-color: #ecebf6;
@@ -45,7 +46,7 @@ $featuredFontFamily: 'Noto+Sans';
   --menu-home-icon-hover-color: #278cff;
   --menu-home-border-hover-color: #b1bcff;
   --menu-home-background-hover-color: #ffffffa3;
-  --highlights-color: #7070aa;
+  --highlights-color: #6464ca;
   --card-title-color: #655bff;
   --card-background-color: var(--menu-home-background-color);
   --card-border-color: var(--menu-home-border-color);
@@ -56,8 +57,8 @@ $featuredFontFamily: 'Noto+Sans';
   --card-border-hover-color: var(--menu-home-border-hover-color);
   --card-description-hover-color: var(--card-description-color);
   --card-description-strong-hover-color: var(--card-description-strong-color);
-  --see-more-color: #6f65ff;
-  --see-more-icon-color: #6f65ff;
+  --see-more-color: var(--ifm-color-main);
+  --see-more-icon-color: var(--ifm-color-main);
   --see-more-hover-color: #5146e9;
   --see-more-icon-hover-color: #fa2c74;
 }
@@ -76,34 +77,6 @@ mark {
 //   --headline-color: #57619e;
 //   --avatar-border-color: #150a4a;
 //   --avatar-shadow-color: #00000075;
-//   --social-popup-color: #271dab;
-//   --social-popup-pointer-color: var(--ifm-color-primary);
-//   --social-popup-background-color: #e8e9ff;
-//   --social-popup-border-color: #cbc7ff;
-//   --social-popup-shadow-color: #00000005;
-//   --menu-home-color: var(--ifm-color-primary);
-//   --menu-home-icon-color: var(--ifm-color-primary);
-//   --menu-home-border-color: #d7dcff;
-//   --menu-home-background-color: #ffffff6a;
-//   --menu-home-hover-color: var(--ifm-color-main);
-//   --menu-home-icon-hover-color: #278cff;
-//   --menu-home-border-hover-color: #b1bcff;
-//   --menu-home-background-hover-color: #ffffffa3;
-//   --highlights-color: #7070aa;
-//   --card-title-color: #655bff;
-//   --card-background-color: var(--menu-home-background-color);
-//   --card-border-color: var(--menu-home-border-color);
-//   --card-description-color: #5d6cc1;
-//   --card-description-strong-color: #8e98cd;
-//   --card-title-hover-color: var(--ifm-color-main);
-//   --card-background-hover-color: var(--menu-home-background-hover-color);
-//   --card-border-hover-color: var(--menu-home-border-hover-color);
-//   --card-description-hover-color: var(--card-description-color);
-//   --card-description-strong-hover-color: var(--card-description-strong-color);
-//   --see-more-color: #6f65ff;
-//   --see-more-icon-color: #6f65ff;
-//   --see-more-hover-color: #5146e9;
-//   --see-more-icon-hover-color: #fa2c74;
 // }
 
 @include load-css('global/animations');

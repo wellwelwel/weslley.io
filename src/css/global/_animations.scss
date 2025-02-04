@@ -1,14 +1,14 @@
 @keyframes colorChange {
   0% {
-    color: #5747ff;
+    color: var(--title-color-1);
   }
 
   50% {
-    color: #278cff;
+    color: var(--title-color-2);
   }
 
   100% {
-    color: #5747ff;
+    color: var(--title-color-1);
   }
 }
 
