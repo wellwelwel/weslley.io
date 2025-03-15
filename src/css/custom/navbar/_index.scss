@@ -93,6 +93,10 @@
       }
     }
 
+    &.menu__link {
+      justify-content: flex-start;
+    }
+
     @media (max-width: 630px) {
       height: auto;
       font-size: 15px;
