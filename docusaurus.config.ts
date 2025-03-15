@@ -80,6 +80,7 @@ const config: Config = {
               hashed: true,
               highlightSearchTermsOnTargetPage: true,
               searchResultLimits: 100,
+              ignoreFiles: /(articles|talks)\/(authors|tags)/,
               language: ['pt', 'en'],
             } satisfies PluginOptions,
           ],
