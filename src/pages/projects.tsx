@@ -21,7 +21,7 @@ export default (): ReactNode => {
   return (
     <Layout
       title={title}
-      description='Lista com a maioria dos projetos que mantenho e co-mantenho através da iniciativa open-source.'
+      description='Lista com a maioria dos projetos que mantenho e co-mantenho através da iniciativa open source.'
     >
       <div id='projects'>
         <main>
