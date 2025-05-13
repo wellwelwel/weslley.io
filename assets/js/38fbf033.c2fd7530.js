@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[4898],{6084:function(e){e.exports=JSON.parse('{"metadata":{"permalink":"/talks","page":1,"postsPerPage":10,"totalPages":1,"totalCount":3,"blogDescription":"Blog","blogTitle":"Palestras"}}')}}]);
