@@ -13,6 +13,10 @@ go:
   label: GO
   permalink: /go
   description: GO tag description
+pr:
+  label: PR
+  permalink: /pr
+  description: PR tag description
 
 # Cities
 sao-paulo:
@@ -23,3 +27,7 @@ goiania:
   label: Goiânia
   permalink: /goiania
   description: Goiânia tag description
+curitiba:
+  label: Curitiba
+  permalink: /curitiba
+  description: Curitiba tag description
