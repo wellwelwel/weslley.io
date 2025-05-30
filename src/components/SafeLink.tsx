@@ -8,7 +8,7 @@ export type SafeLinkOptions = {
 
 /** Use for external links only */
 export const SafeLink: FC<SafeLinkOptions> = ({ children, to, ...props }) => (
-  <Link target='_blank' rel='noopener noreferrer' to={to} {...props}>
+  <Link target='_blank' rel='noopener' to={to} {...props}>
     {children}
   </Link>
 );
