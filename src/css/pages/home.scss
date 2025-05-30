@@ -264,7 +264,7 @@
         align-items: center;
         justify-content: flex-start;
         gap: 20px;
-        padding: 12px 20px;
+        padding: 15px 20px;
         border: 1px solid var(--card-border-color);
         border-radius: 15px;
         background-color: var(--card-background-color);
@@ -296,7 +296,7 @@
           transition: transform 0.15s;
 
           strong {
-            font-size: 15px;
+            font-size: 14px;
             font-weight: 600;
             transition: color ease 0.5s;
           }
@@ -307,6 +307,7 @@
               font-weight: 300;
               color: var(--card-description-color);
               transition: color ease 0.3s;
+              margin-top: 2.5px;
               margin-bottom: 0;
 
               strong {
