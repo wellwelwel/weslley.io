@@ -30,7 +30,7 @@
     "test": "npm run clear && npm run lint && npm run typecheck && npm run build"
   },
   "devDependencies": {
-    "@biomejs/biome": "^1.9.4",
+    "@biomejs/biome": "^2.0.6",
     "@docusaurus/core": "^3.8.1",
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/preset-classic": "3.8.1",
@@ -39,7 +39,7 @@
     "@easyops-cn/docusaurus-search-local": "^0.51.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
     "@mdx-js/react": "^3.1.0",
-    "@types/node": "^22.16.0",
+    "@types/node": "^24.0.10",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/webpack-env": "^1.18.8",
