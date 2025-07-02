@@ -13,6 +13,7 @@ export default function NavbarColorModeToggle({ className }: Props): ReactNode {
 
   return (
     <ColorModeToggle
+      respectPrefersColorScheme={false}
       className={className}
       value={colorMode}
       onChange={setColorMode}
