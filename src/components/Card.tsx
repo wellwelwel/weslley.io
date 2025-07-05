@@ -131,7 +131,10 @@ export const TalkCard: FC<TalkCardOptions> = ({
                   {time && (
                     <div className='group'>
                       <Clock />
-                      <time dateTime={time}>{time}h</time>
+                      <time dateTime={time}>
+                        {time}
+                        {`${isPtBr ? 'h' : ''}`}
+                      </time>
                     </div>
                   )}
                 </>
