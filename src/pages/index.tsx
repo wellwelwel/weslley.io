@@ -29,7 +29,7 @@ export default (): ReactNode => {
       <div id='home'>
         <main>
           <header>
-            <Parallax scale={1.1} tiltMaxAngleX={7.5} tiltMaxAngleY={7.5}>
+            <Parallax scale={1.1} tiltMaxAngleX={5} tiltMaxAngleY={5}>
               <img
                 className='secondary'
                 loading='lazy'
