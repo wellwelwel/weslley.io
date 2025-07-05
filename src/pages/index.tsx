@@ -1,8 +1,6 @@
 import type { ReactNode } from 'react';
-import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import { ArrowRight } from 'lucide-react';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
 import {
@@ -31,8 +29,19 @@ export default (): ReactNode => {
       <div id='home'>
         <main>
           <header>
-            <Parallax scale={1.1} tiltMaxAngleX={15} tiltMaxAngleY={15}>
-              <img loading='eager' src='/img/avatar.png' alt='Avatar' />
+            <Parallax scale={1.1} tiltMaxAngleX={7.5} tiltMaxAngleY={7.5}>
+              <img
+                className='secondary'
+                loading='lazy'
+                src='/img/1738374865030.jpeg'
+                alt='Photo'
+              />
+              <img
+                className='main'
+                loading='eager'
+                src='/img/avatar.png'
+                alt='Avatar'
+              />
             </Parallax>
             <h1>
               <Name name={siteConfig.title} /> {!isPtBr && '🇧🇷'}
@@ -57,11 +66,6 @@ export default (): ReactNode => {
             {Cards.map((Card, i) => (
               <Card key={`card:${i}`} />
             ))}
-            <small>
-              <Link to='/projects'>
-                {isPtBr ? 'Ver mais' : 'See more'} <ArrowRight />
-              </Link>
-            </small>
           </nav>
         </main>
       </div>
