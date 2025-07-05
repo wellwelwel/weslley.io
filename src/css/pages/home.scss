@@ -109,6 +109,26 @@
         & > p {
           margin: 0;
         }
+
+        a {
+          position: relative;
+          color: var(--headline-color);
+
+          &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            display: inline-block;
+            width: 100%;
+            border-bottom: 2px dotted var(--headline-color);
+            opacity: 0.15;
+          }
+
+          &:hover {
+            color: var(--ifm-link-color);
+          }
+        }
       }
 
       nav {
