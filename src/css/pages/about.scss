@@ -1,7 +1,24 @@
+@use '../global/mixins' as *;
 @use 'shared';
 
-#about {
+#about,
+#mediakit {
   @extend %page;
+
+  .img-bio {
+    @include flex(row, center);
+    gap: 15px;
+
+    @media (max-width: 630px) {
+      flex-direction: column;
+      gap: 25px;
+    }
+
+    img {
+      border-radius: 10px;
+      box-shadow: 2.5px 2.5px 5px #22213d56;
+    }
+  }
 }
 
 // [data-theme='dark'] {

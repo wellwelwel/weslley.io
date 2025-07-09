@@ -256,6 +256,10 @@
               border-color ease 0.5s,
               color ease 0.5s;
 
+            &.lg {
+              grid-column: span 2;
+            }
+
             &:nth-child(odd) {
               flex-direction: row-reverse;
             }
