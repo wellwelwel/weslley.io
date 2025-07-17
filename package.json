@@ -30,16 +30,16 @@
     "test": "npm run clear && npm run lint && npm run typecheck && npm run build"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.0.6",
+    "@biomejs/biome": "^2.1.1",
     "@docusaurus/core": "^3.8.1",
     "@docusaurus/module-type-aliases": "3.8.1",
     "@docusaurus/preset-classic": "3.8.1",
     "@docusaurus/tsconfig": "3.8.1",
     "@docusaurus/types": "3.8.1",
     "@easyops-cn/docusaurus-search-local": "^0.51.1",
-    "@ianvs/prettier-plugin-sort-imports": "^4.4.2",
+    "@ianvs/prettier-plugin-sort-imports": "^4.5.1",
     "@mdx-js/react": "^3.1.0",
-    "@types/node": "^24.0.10",
+    "@types/node": "^24.0.13",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",
     "@types/webpack-env": "^1.18.8",
@@ -54,7 +54,7 @@
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-intersection-observer": "^9.16.0",
-    "react-parallax-tilt": "^1.7.299",
+    "react-parallax-tilt": "^1.7.300",
     "sass": "^1.89.2",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
