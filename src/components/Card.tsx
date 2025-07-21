@@ -85,8 +85,6 @@ export const TalkCard: FC<TalkCardOptions> = ({
       })()
     : undefined;
 
-  console.log({ time, datetime, date });
-
   const isPast = Boolean(datetime && new Date() > new Date(datetime));
 
   const LinkContent = () => (
