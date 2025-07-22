@@ -13,7 +13,7 @@
         <link href="https://weslley.io/en/talks/2025/07/19/codecon-summit/"/>
         <updated>2025-07-19T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
-        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-a99c59464f256b907ca1bf5777dd4878.png" width="800" height="400" class="img_ev3q"></p></div>
+        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-6779dcd2c34ae182be91b85bbb524a41.jpeg" width="1182" height="665" class="img_ev3q"></p></div>
 <p>📹 <strong>Talk:</strong> Creating a Test Runner: What happens behind the tests?</p>
 <p>There's a lot of talk about testing, but what's it like to create a test runner from scratch?<br>
 More than that: how do you test a test runner?</p>
