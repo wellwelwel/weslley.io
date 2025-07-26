@@ -15,16 +15,14 @@
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-6779dcd2c34ae182be91b85bbb524a41.jpeg" width="1182" height="665" class="img_ev3q"></p></div>
 <p>📹 <strong>Talk:</strong> Creating a Test Runner: What happens behind the tests?</p>
-<p>There's a lot of talk about testing, but what's it like to create a test runner from scratch?<br>
-More than that: how do you test a test runner?</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>There's a lot of talk about testing, but what's it like to create a test runner from scratch?<br>
+More than that: how do you test a test runner?</p></div></div>
 <!-- -->
-<p>Nessa palestra, eu desmonto o Poku, o único <em>test runner</em> brasileiro para <strong>JavaScript</strong> e <strong>TypeScript</strong>, que desafia mais de 12 anos da história da linguagem, ao trazer a sintaxe nativa do <strong>JavaScript</strong> para os testes.</p>
-<p>Você vai aprender sobre o poder dos subprocessos, isolamento e as vantagens de trabalhar com concorrência. Tudo isso, usando somente recursos nativos da linguagem.</p>
-<p>Calma, sintaxe nativa?</p>
-<p>Você vai conhecer a história dos testes para <strong>JavaScript</strong> e o motivo do por que testes não seguem o fluxo natural da linguagem, enquanto descobre os bastidores dos <em>test runners</em> mais populares da linguagem.</p>
-<p>Esse é o tipo de aprendizado que, independentemente de qual <em>tester</em> você usa, vai mudar a maneira como você vê os testes de verdade.</p>
-<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p><strong>Data da Palestra:</strong> 19 de julho de 2025.<br>
-<strong>Local:</strong> Viasoft Experience, Curitiba - PR.</p><p>Programação completa do evento: <a href="https://codecon.dev/summit/programacao" target="_blank" rel="noopener noreferrer">codecon.dev/summit/programacao</a>.</p></div></div>]]></content>
+<p>In this talk, I break down Poku, the only Brazilian <em>test runner</em> for <strong>JavaScript</strong> and <strong>TypeScript</strong>, which challenges more than 14 years of language history by bringing native <strong>JavaScript</strong> syntax to tests.</p>
+<p>You'll learn about the power of subprocesses, isolation, and the advantages of working with concurrency—all using only native language features.</p>
+<p>Wait, native syntax?</p>
+<p>You'll discover the history of testing in <strong>JavaScript</strong> and why tests don't follow the natural flow of the language, while uncovering the inner workings of the most popular <em>test runners</em>.</p>
+<p>This is the kind of insight that, regardless of which <em>tester</em> you use, will change the way you truly see testing.</p>]]></content>
         <author>
             <name>Weslley Araújo</name>
             <uri>/</uri>
@@ -34,6 +32,33 @@ More than that: how do you test a test runner?</p>
         <category label="Curitiba" term="Curitiba"/>
     </entry>
     <entry>
+        <title type="html"><![CDATA[Winx Day (Luciano dii Souza — O Primo Dev)]]></title>
+        <id>https://weslley.io/en/talks/2025/06/14/winx-day/</id>
+        <link href="https://weslley.io/en/talks/2025/06/14/winx-day/"/>
+        <updated>2025-06-14T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Banner]]></summary>
+        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-a75f8162870aff60e51a280cf223328a.png" width="2529" height="1280" class="img_ev3q"></p></div>
+<p>🎙️ <strong>Talk:</strong> Overcoming impostor syndrome and the challenges of existing in the market through open source.</p>
+<div class="theme-admonition theme-admonition-info admonition_xJq3 alert alert--info"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M7 2.3c3.14 0 5.7 2.56 5.7 5.7s-2.56 5.7-5.7 5.7A5.71 5.71 0 0 1 1.3 8c0-3.14 2.56-5.7 5.7-5.7zM7 1C3.14 1 0 4.14 0 8s3.14 7 7 7 7-3.14 7-7-3.14-7-7-7zm1 3H6v5h2V4zm0 6H6v2h2v-2z"></path></svg></span>info</div><div class="admonitionContent_BuS1"><p>An online event organized by <a href="https://www.linkedin.com/in/lucianodiisouza/" target="_blank" rel="noopener noreferrer"><strong>Luciano dii Souza</strong></a>, with a relaxed approach and held through the <a href="https://discord.gg/wyrRdpGKmj" target="_blank" rel="noopener noreferrer"><strong>Discord</strong></a> community for developers, aiming to share experiences and knowledge, especially for those who are just starting in the field.</p></div></div>
+<!-- -->
+<p>At this moment when many developers feel insecure about the future of the field:</p>
+<ul>
+<li>Is my level sufficient?</li>
+<li>Should I give up if I can't get a job in my field?</li>
+<li>How do I gain experience if the market doesn't give me opportunities?</li>
+<li>After all, will Artificial Intelligence replace developers or not?</li>
+</ul>
+<p>Bringing up sensitive topics like insecurity, inferiority complex, and self-sabotage, with a light at the end of the tunnel through open source initiatives, was quite challenging but very interesting.</p>
+<p>This is a talk where I expose the insecurities during my journey, speaking in a tone close to what would be a heartfelt confession.</p>
+<p>The intention is to connect with those participating, evolve toward learning, and perhaps inspire through my story, sharing the human side that social networks and "LinkedIn titles" don't show.</p>]]></content>
+        <author>
+            <name>Weslley Araújo</name>
+            <uri>/</uri>
+        </author>
+        <category label="Brazil" term="Brazil"/>
+        <category label="Online" term="Online"/>
+    </entry>
+    <entry>
         <title type="html"><![CDATA[GitHub Brasil — Open Source Friday]]></title>
         <id>https://weslley.io/en/talks/2025/03/14/github-brasil/</id>
         <link href="https://weslley.io/en/talks/2025/03/14/github-brasil/"/>
@@ -41,19 +66,18 @@ More than that: how do you test a test runner?</p>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-a48d5f733d462862eccf84257523f329.png" width="800" height="400" class="img_ev3q"></p></div>
 <p>📹 <strong>Live:</strong> Meeting <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer"><strong>Poku</strong></a>.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>In a conversation that was both technical and casual, I had the honor of kicking off the very first edition of <strong>Open Source Friday</strong> by <a href="https://www.linkedin.com/company/github-brazil" target="_blank" rel="noopener noreferrer"><strong>GitHub Brasil</strong></a>, hosted by <a href="https://www.linkedin.com/in/pachicodes/" target="_blank" rel="noopener noreferrer"><strong>Pachi Parra</strong></a>.</p></div></div>
 <!-- -->
-<p>Em um bate papo tanto técnico, como casual, tive a honra de estrear a primeira edição do <strong>Open Source Friday</strong> da <a href="https://www.linkedin.com/company/github-brazil" target="_blank" rel="noopener noreferrer"><strong>GitHub Brasil</strong></a>, apresentado pela <a href="https://www.linkedin.com/in/pachicodes/" target="_blank" rel="noopener noreferrer"><strong>Pachi Parra</strong></a>.</p>
-<p>Ao longo da live, pude contar um pouquinho sobre mim, a importância do <em>open source</em>, motivações, desafios e planos futuros para o <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer">Poku</a>, além de contar dicas maravilhosas para quem quer contribuir pela primeira vez, especialmente para quem se sente inseguro.</p>
-<p>Em 1 hora de live, teve desde conversas, microfone baixo <em>vs.</em> alto até demais, explicações sobre sistemas de módulos e a diferença de comportamentos entre <strong>Node.js</strong>, <strong>Bun</strong> e <strong>Deno</strong>.</p>
-<p>Teve até <em>live coding</em> mostrando na prática por que outros <em>test runners</em> não são compatíveis em totalidade com todos os executores de <strong>JavaScript</strong> no <em>backend</em> e como o <strong>Poku</strong> desafia mais de 12 anos de história da linguagem ao trazer o fluxo natural do <strong>JavaScript</strong> para os testes.</p>
-<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p><a href="https://www.linkedin.com/events/7305618122546294807/comments/" target="_blank" rel="noopener noreferrer">Você pode reprisar a live no LinkedIn oficial da <strong>GitHub Brasil</strong> 🐷</a></p></div></div>]]></content>
+<p>During the live session, I was able to share a bit about myself, the importance of open source, motivations, challenges, and future plans for <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer">Poku</a>, as well as give some great tips for those who want to contribute for the first time, especially for those who feel insecure.</p>
+<p>In one hour of live streaming, there were conversations, low vs. too-high microphone volume, explanations about module systems, and the differences in behavior between <strong>Node.js</strong>, <strong>Bun</strong>, and <strong>Deno</strong>.</p>
+<p>There was even live coding, demonstrating in practice why other test runners are not fully compatible with all JavaScript backends and how <strong>Poku</strong> challenges more than 12 years of language history by bringing JavaScript's natural flow to testing.</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p><a href="https://www.linkedin.com/events/7305618122546294807/comments/" target="_blank" rel="noopener noreferrer">You can replay the live session on the official <strong>GitHub Brasil</strong> LinkedIn 🐷</a></p></div></div>]]></content>
         <author>
             <name>Weslley Araújo</name>
             <uri>/</uri>
         </author>
         <category label="Brazil" term="Brazil"/>
-        <category label="SP" term="SP"/>
-        <category label="São Paulo" term="São Paulo"/>
+        <category label="Online" term="Online"/>
     </entry>
     <entry>
         <title type="html"><![CDATA[DevFest Cerrado (Google Developer Groups — GDG)]]></title>
@@ -63,26 +87,25 @@ More than that: how do you test a test runner?</p>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-a1ee8c3ea3c1707a4c9858bc316d9190.png" width="1770" height="918" class="img_ev3q"></p></div>
 <p>🎙️ <strong>Talk:</strong> Overcoming the impostor syndrome and the challenges of existing in the industry through open-source.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>At a time when many developers feel insecure about the future of the field, bringing up sensitive topics like insecurity, inferiority complex, and self-sabotage, with a light at the end of the tunnel through open source initiatives, was quite challenging but very interesting:</p></div></div>
 <!-- -->
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-a-escolha-do-tema">💡 A escolha do tema<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-a-escolha-do-tema" class="hash-link" aria-label="Direct link to 💡 A escolha do tema" title="Direct link to 💡 A escolha do tema">​</a></h2>
-<p>Nesse momento em que muitos programadores se sentem inseguros sobre o futuro da área:</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-choosing-the-topic">💡 Choosing the topic<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-choosing-the-topic" class="hash-link" aria-label="Direct link to 💡 Choosing the topic" title="Direct link to 💡 Choosing the topic">​</a></h2>
 <ul>
-<li>Será que o meu nível é suficiente?</li>
-<li>Eu devo desistir se não conseguir um emprego na minha área?</li>
-<li>Como adquirir experiências se o mercado não me dá oportunidades?</li>
+<li>Is my skill level enough?</li>
+<li>Should I give up if I can't get a job in my area?</li>
+<li>How can I gain experience if the market doesn't give me opportunities?</li>
 </ul>
-<p>Trazer tópicos sensíveis como insegurança, complexo de inferioridade e autossabotagem, com uma luz no fim do túnel através da iniciativa open source, foi bem desafiador, mas muito interessante.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-o-desenvolvimento">🧑🏻‍🔬 O desenvolvimento<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-o-desenvolvimento" class="hash-link" aria-label="Direct link to 🧑🏻‍🔬 O desenvolvimento" title="Direct link to 🧑🏻‍🔬 O desenvolvimento">​</a></h2>
-<p>Eu poderia facilmente explicar o que é síndrome do impostor e ir direto para a “solução”, mas optei pelo caminho mais difícil:</p>
-<p>— Expor minhas fraquezas durante minha trajetória, conversando em um tom próximo ao que seria um desabafo.</p>
-<p>O intuito era me conectar com quem estivesse ali, evoluir para aprendizado e, quem sabe, inspirar através da minha história, compartilhando o lado humano que as redes sociais e os "títulos de LinkedIn" não mostram.</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-os-desafios">👻 Os desafios<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-os-desafios" class="hash-link" aria-label="Direct link to 👻 Os desafios" title="Direct link to 👻 Os desafios">​</a></h2>
-<p>Falar sobre nossas falhas e inseguranças para pessoas que nem nos conhecem é mais complicado do que parece, as pessoas gostam de ouvir alguém que elas possam admirar.</p>
-<p>Mas os comentários e o carinho das pessoas que vieram falar comigo no final, me mostraram que a ideia de me conectar com quem estava ali não só deu certo, mas que realmente serviu de inspiração para algumas pessoas e isso me deixou muito feliz ✨</p>
-<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-a-palestra">🎤 A palestra<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-a-palestra" class="hash-link" aria-label="Direct link to 🎤 A palestra" title="Direct link to 🎤 A palestra">​</a></h2>
-<p>Fiquei pensativo se as pessoas se interessariam por esse tema, mas aos poucos a sala foi ficando cheia e uma pessoa até sentou no chão no comecinho.</p>
-<p>Originalmente, a apresentação tinha alguns estudos complementares, incluindo telas práticas com contribuições open source reais, mas precisei adaptar algumas coisas pra caber no formato e tempo do evento.</p>
-<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>Spoiler (GIF) do slide utilizado na palestra:</p><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/slide-09dbb9138eaf0d15bc94e1d2181eb252.gif" width="640" height="360" class="img_ev3q"></p></div></div>]]></content>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-the-development">🧑🏻‍🔬 The development<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-the-development" class="hash-link" aria-label="Direct link to 🧑🏻‍🔬 The development" title="Direct link to 🧑🏻‍🔬 The development">​</a></h2>
+<p>I could have easily explained what impostor syndrome is and gone straight to the “solution,” but I chose the harder path:</p>
+<p>— Exposing my weaknesses throughout my journey, speaking in a tone close to a heartfelt confession.</p>
+<p>The goal was to connect with those present, evolve into learning, and maybe inspire through my story, sharing the human side that social media and "LinkedIn titles" don't show.</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-the-challenges">👻 The challenges<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-the-challenges" class="hash-link" aria-label="Direct link to 👻 The challenges" title="Direct link to 👻 The challenges">​</a></h2>
+<p>Talking about our flaws and insecurities to people who don't even know us is more complicated than it seems; people like to listen to someone they can admire.</p>
+<p>But the comments and affection from people who came to talk to me at the end showed me that the idea of connecting with those present not only worked but truly inspired some people, and that made me very happy ✨</p>
+<h2 class="anchor anchorWithStickyNavbar_LWe7" id="-the-talk">🎤 The talk<a href="https://weslley.io/en/talks/2024/11/23/devfest-cerrado-google-developer-groups/#-the-talk" class="hash-link" aria-label="Direct link to 🎤 The talk" title="Direct link to 🎤 The talk">​</a></h2>
+<p>I wondered if people would be interested in this topic, but gradually the room filled up and someone even sat on the floor at the very beginning.</p>
+<p>Originally, the presentation included some additional studies, including practical screens with real open source contributions, but I had to adapt some things to fit the event's format and time.</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p>Spoiler (GIF) of the slide used in the talk:</p><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/slide-09dbb9138eaf0d15bc94e1d2181eb252.gif" width="640" height="360" class="img_ev3q"></p></div></div>]]></content>
         <author>
             <name>Weslley Araújo</name>
             <uri>/</uri>
@@ -99,11 +122,11 @@ More than that: how do you test a test runner?</p>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/en/assets/images/banner-fa50a3d1746a854245508b5ecc02b5ec.jpeg" width="800" height="400" class="img_ev3q"></p></div>
 <p>🎙️ <strong>Talk:</strong> Creating a High-Performance Multi-Platform Test Runner.</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>note</div><div class="admonitionContent_BuS1"><p>The focus of the talk was on the importance of delegating each problem's responsibilities using native <strong>Node.js</strong> features.</p></div></div>
 <!-- -->
-<p>Com o tema "API Like a Boss", tive a oportunidade de ensinar através do <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer"><strong>Poku</strong></a>.</p>
-<p>O foco da palestra consistiu na importância de delegar as responsabilidades de cada problema usando recursos nativos do <strong>Node.js</strong>.</p>
-<p>Ao invés de apenas falar do Poku em si, também usei o Poku como uma analogia, ensinando sobre sub-processos e diferenças entre <strong>Node.js</strong>, <strong>Bun</strong> e <strong>Deno</strong>.</p>
-<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p><a href="https://drive.google.com/file/d/16XxIt_pov5aBidGjIwC4V_riYq3PMlrB/view" target="_blank" rel="noopener noreferrer">Veja o slide utilizado na palestra 🐷</a></p></div></div>]]></content>
+<p>With the theme "API Like a Boss", I had the opportunity to teach using <a href="https://github.com/wellwelwel/poku" target="_blank" rel="noopener noreferrer"><strong>Poku</strong></a>.</p>
+<p>Instead of just talking about Poku itself, I also used Poku as an analogy, teaching about subprocesses and the differences between <strong>Node.js</strong>, <strong>Bun</strong>, and <strong>Deno</strong>.</p>
+<div class="theme-admonition theme-admonition-tip admonition_xJq3 alert alert--success"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 12 16"><path fill-rule="evenodd" d="M6.5 0C3.48 0 1 2.19 1 5c0 .92.55 2.25 1 3 1.34 2.25 1.78 2.78 2 4v1h5v-1c.22-1.22.66-1.75 2-4 .45-.75 1-2.08 1-3 0-2.81-2.48-5-5.5-5zm3.64 7.48c-.25.44-.47.8-.67 1.11-.86 1.41-1.25 2.06-1.45 3.23-.02.05-.02.11-.02.17H5c0-.06 0-.13-.02-.17-.2-1.17-.59-1.83-1.45-3.23-.2-.31-.42-.67-.67-1.11C2.44 6.78 2 5.65 2 5c0-2.2 2.02-4 4.5-4 1.22 0 2.36.42 3.22 1.19C10.55 2.94 11 3.94 11 5c0 .66-.44 1.78-.86 2.48zM4 14h5c-.23 1.14-1.3 2-2.5 2s-2.27-.86-2.5-2z"></path></svg></span>tip</div><div class="admonitionContent_BuS1"><p><a href="https://drive.google.com/file/d/16XxIt_pov5aBidGjIwC4V_riYq3PMlrB/view" target="_blank" rel="noopener noreferrer">See the slides used in the talk 🐷</a></p></div></div>]]></content>
         <author>
             <name>Weslley Araújo</name>
             <uri>/</uri>
@@ -111,5 +134,6 @@ More than that: how do you test a test runner?</p>
         <category label="Brazil" term="Brazil"/>
         <category label="SP" term="SP"/>
         <category label="São Paulo" term="São Paulo"/>
+        <category label="Online" term="Online"/>
     </entry>
 </feed>
