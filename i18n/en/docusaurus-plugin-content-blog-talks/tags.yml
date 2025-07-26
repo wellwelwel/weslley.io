@@ -18,6 +18,12 @@ pr:
   permalink: /pr
   description: PR tag description
 
+# Remote
+online:
+  label: Online
+  permalink: /online
+  description: Online tag description
+
 # Cities
 sao-paulo:
   label: São Paulo
