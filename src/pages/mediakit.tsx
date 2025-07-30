@@ -15,7 +15,7 @@ export default (): ReactNode => {
       <div id='mediakit'>
         <main>
           <header>
-            <h1>Media Kit</h1>
+            <h1>Let's Collab! 🤘🏻</h1>
             <img loading='lazy' src='/img/mediakit.svg' alt='' />
           </header>
           <nav>
