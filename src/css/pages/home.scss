@@ -490,6 +490,11 @@
             .groups {
               @include flex(row, center);
               gap: 10px;
+
+              & + .groups,
+              & + .group {
+                margin-top: 0.25rem;
+              }
             }
 
             .group {
@@ -504,11 +509,17 @@
 
               a,
               time,
+              span,
+              strong,
               address {
                 font-size: 12px;
                 font-weight: 500;
                 font-style: normal;
                 color: var(--card-footer-color);
+              }
+
+              strong {
+                font-weight: 600;
               }
 
               a {
@@ -525,6 +536,12 @@
                   color: var(--card-footer-color);
                   opacity: 0.5;
                 }
+              }
+            }
+
+            & > .group {
+              & + .group {
+                margin-top: 0.25rem;
               }
             }
           }

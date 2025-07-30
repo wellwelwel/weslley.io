@@ -1,11 +1,15 @@
 import type { FC, ReactNode } from 'react';
+import { useEffect, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {
+  Box,
   CalendarDays,
   Clock,
   ExternalLink,
   MapPin,
+  Rocket,
+  Star,
   TicketPercent,
 } from 'lucide-react';
 import { Parallax } from '@site/src/components/Parallax';
@@ -17,6 +21,8 @@ export type CardOptions = {
   children: ReactNode;
   url: string;
   alt?: string;
+  npm?: string;
+  repo?: string;
 };
 
 export type TalkCardOptions = CardOptions & {
@@ -33,11 +39,36 @@ export const Card: FC<CardOptions> = ({
   imageSrc,
   alt,
   url,
+  repo,
   children,
 }) => {
+  const [stats, setStats] = useState<{
+    downloads?: string;
+    stars?: string;
+    repositoryDependents?: string;
+  }>({});
+
+  useEffect(() => {
+    if (!repo) return;
+
+    fetch(`https://awesomeyou.io/assets/json/projects/${repo}.json`)
+      .then((response) => response.json())
+      .then(({ stats }) => {
+        setStats({
+          downloads: stats.npm.label,
+          stars: stats.stars.label,
+          repositoryDependents: stats.repositoryDependents.label,
+        });
+      });
+  }, [repo]);
+
   return (
     <Parallax tiltMaxAngleX={0} tiltMaxAngleY={0.25}>
-      <SafeLink to={url} title={alt}>
+      <SafeLink
+        to={url}
+        title={alt}
+        className={repo ? 'has-footer' : undefined}
+      >
         <img loading='lazy' src={imageSrc} alt={alt} />
         <div>
           <header>{name}</header>
@@ -45,6 +76,32 @@ export const Card: FC<CardOptions> = ({
         </div>
         <ExternalLink />
       </SafeLink>
+      {repo && (
+        <footer>
+          <img loading='lazy' src={imageSrc} alt={alt} />
+          <div className='group'>
+            <Rocket />
+            <span>
+              <strong>{stats?.downloads}</strong>{' '}
+              {stats?.downloads?.includes('milh') ? 'de' : ''} downloads mensais
+            </span>
+          </div>
+          <div className='group'>
+            <Box />
+            <span>
+              <strong>{stats?.repositoryDependents}</strong>{' '}
+              {stats?.repositoryDependents?.includes('milh') ? 'de' : ''}{' '}
+              repositórios públicos dependentes
+            </span>
+          </div>
+          <div className='group'>
+            <Star />
+            <span>
+              <strong>{stats?.stars}</strong> estrelas
+            </span>
+          </div>
+        </footer>
+      )}
     </Parallax>
   );
 };
