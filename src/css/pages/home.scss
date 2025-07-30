@@ -520,6 +520,8 @@
 
               strong {
                 font-weight: 600;
+                color: var(--ifm-link-color);
+                filter: brightness(0.875);
               }
 
               a {
