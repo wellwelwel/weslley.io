@@ -327,6 +327,32 @@
       & > div {
         width: 100%;
 
+        &.badge {
+          padding: 0;
+          margin-bottom: 0.25rem;
+
+          span {
+            @include flex(row, center);
+            gap: 0.25rem;
+            width: fit-content;
+            padding: 0.55rem 1rem;
+            border-radius: 0.75rem;
+            border: 0.1rem solid #d5d2f1;
+            background-color: #eae7ffaa;
+            font-size: 0.7rem;
+            font-weight: 500;
+            color: #7e71ec;
+
+            &::before {
+              content: '•';
+              font-size: 1.4rem;
+              font-weight: 600;
+              line-height: 0;
+              color: #f15cff;
+            }
+          }
+        }
+
         &.past {
           filter: grayscale(0.5) opacity(0.5);
         }
