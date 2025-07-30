@@ -343,6 +343,11 @@
             font-weight: 500;
             color: #7e71ec;
 
+            @media (max-width: 820px) {
+              gap: 0.4rem;
+              line-height: 1.75;
+            }
+
             &::before {
               content: '•';
               font-size: 1.4rem;
