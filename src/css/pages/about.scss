@@ -24,6 +24,10 @@
     & > main {
       & > header {
         flex-wrap: nowrap;
+
+        img {
+          height: 96px;
+        }
       }
     }
   }

@@ -12,7 +12,8 @@ blockquote {
 
 .theme-admonition {
   &,
-  p {
+  p,
+  li {
     font-size: 13px !important;
   }
 
