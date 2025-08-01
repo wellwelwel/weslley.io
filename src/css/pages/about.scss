@@ -19,6 +19,14 @@
       box-shadow: 2.5px 2.5px 5px #22213d56;
     }
   }
+
+  &#mediakit {
+    & > main {
+      & > header {
+        flex-wrap: nowrap;
+      }
+    }
+  }
 }
 
 // [data-theme='dark'] {
