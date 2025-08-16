@@ -1,27 +1,29 @@
-import { HeartHandshake, Pin, Star } from 'lucide-react';
+import { HeartHandshake, Pin, Star, Video } from 'lucide-react';
 import { Card, TalkCard } from '@site/src/components/Card';
+
+## <Video /> Recent Videos
+
+<div className='badge'>
+  <span>Educational Content - Podcasts</span>
+</div>
+
+<TalkCard
+  name='FIAP DECODE'
+  imageSrc='/img/fiap.png'
+  url='https://youtu.be/XdEsRjPllZs'
+>
+
+**#95:** AI Chef, Reddit searches, and changes at Microsoft.
+
+With **André David**, **Bruno Germano** and **Weslley Araújo**.
+
+</TalkCard>
 
 ## <Pin /> Upcoming Events
 
 <div className='badge'>
   <span>Talks - Workshops - Panels</span>
 </div>
-
-<TalkCard
-  name='DevConverge LATAM & Oracle: SPRINT SP'
-  imageSrc='/img/dcl.png'
-  url='https://www.linkedin.com/company/java-dev-converge-latam/'
-  date='2025-08-09T17:20'
-  location='Rua Dr. José Áureo Bustamante, 455 - São Paulo, SP'
-  coupon={{
-    code: 'Free',
-    url: 'https://www.sympla.com.br/evento/devconverge-latam---sprint-sp/3026669',
-  }}
->
-
-🐬 I'll speak about the intersection between invention (human) and generation (AI), and also share the impact of fixing 4 vulnerabilities in a critical open source ecosystem project.
-
-</TalkCard>
 
 <TalkCard
   name='EACH-USP: SSI'
@@ -61,6 +63,22 @@ Is your system really safe?
 >
 
 🔐 I'll speak at **TDC São Paulo 2025**, alongside **Larissa Azevedo**, on security, compliance, and resilience in Web applications through test coverage.
+
+</TalkCard>
+
+<TalkCard
+  name='DevConverge LATAM & Oracle: SPRINT SP'
+  imageSrc='/img/dcl.png'
+  url='https://www.linkedin.com/company/java-dev-converge-latam/'
+  date='2025-08-09T17:20'
+  location='Rua Dr. José Áureo Bustamante, 455 - São Paulo, SP'
+  coupon={{
+    code: 'Free',
+    url: 'https://www.sympla.com.br/evento/devconverge-latam---sprint-sp/3026669',
+  }}
+>
+
+🐬 I'll speak about the intersection between invention (human) and generation (AI), and also share the impact of fixing 4 vulnerabilities in a critical open source ecosystem project.
 
 </TalkCard>
 
