@@ -19,7 +19,7 @@ const Badge = ({ badge }: { badge: string }) => (
   />
 );
 
-export const Credly = ({ badges }: { badges: string[] }) => {
+const CredlyContainer = ({ badges }: { badges: string[] }) => {
   const SCRIPT_ATTR = 'data-credly-loader';
   const SCRIPT_SELECTOR = `script[${SCRIPT_ATTR}="true"]`;
   const SCRIPT_SRC = 'https://cdn.credly.com/assets/utilities/embed.js';
@@ -56,3 +56,7 @@ export const Credly = ({ badges }: { badges: string[] }) => {
     </div>
   );
 };
+
+export const Credly = () => (
+  <CredlyContainer badges={['36aeaad9-6187-47a2-8107-d52a90a565d4']} />
+);

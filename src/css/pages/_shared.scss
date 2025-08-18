@@ -109,6 +109,18 @@
           }
         }
 
+        h3 {
+          font-family: var(--ifm-font-family-featured);
+          font-size: 17px;
+          font-weight: 800;
+          color: #3f3996;
+          margin-bottom: 10px;
+
+          & ~ h3 {
+            margin-top: 20px;
+          }
+        }
+
         & > p,
         & > ul,
         & > div.container {
