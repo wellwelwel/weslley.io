@@ -1,11 +1,10 @@
 import type { FC, ReactNode } from 'react';
-import React, { useContext } from 'react';
+import { cloneElement, useRef } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Github } from 'lucide-react';
-import { useInView } from 'react-intersection-observer';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
-import { ProjectsContext } from '@site/src/contexts/Projects';
+import { useScroll } from '@site/src/hooks/useScroll';
 import { skills } from './Skill';
 
 export type ProjectOptions = {
@@ -78,19 +77,16 @@ export const Project: FC<ProjectOptions> = ({
   image,
   skills: currentSkills,
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const { i18n } = useDocusaurusContext();
-  const { getCounter } = useContext(ProjectsContext);
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
-  const counter = getCounter(name);
-  const isFirstOnes = counter <= 2;
 
-  const { ref, inView } = isFirstOnes
-    ? {}
-    : useInView({
-        threshold: 0,
-        triggerOnce: true,
-      });
+  useScroll(ref, (isVisible, target) => {
+    if (!isVisible) return;
+
+    target.classList.add('show');
+  });
 
   const hasURL = typeof url === 'string';
   const hasRepository =
@@ -104,23 +100,7 @@ export const Project: FC<ProjectOptions> = ({
   })();
 
   return (
-    <nav
-      ref={ref}
-      className={String(
-        [
-          (() => {
-            if (isFirstOnes) return '';
-            return inView ? 'show' : 'hide';
-          })(),
-          (() => {
-            return image ? 'large' : '';
-          })(),
-        ]
-          .join(' ')
-          .trim()
-      )}
-      data-counter={counter}
-    >
+    <nav ref={ref} className={image ? 'large' : undefined}>
       <main>
         <section>
           <h2>{name}</h2>
@@ -135,7 +115,7 @@ export const Project: FC<ProjectOptions> = ({
                     title='NPM Downloads per year'
                   >
                     <img
-                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      loading='lazy'
                       src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
                       alt='NPM Downloads per year'
                     />
@@ -150,7 +130,7 @@ export const Project: FC<ProjectOptions> = ({
                     title='GitHub Starts'
                   >
                     <img
-                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      loading='lazy'
                       src={`https://img.shields.io/github/stars/${organization}/${repository}.svg?style=flat&color=6c5ce7&label=&logo=github&logoColor=white`}
                       alt='GitHub Starts'
                     />
@@ -165,7 +145,7 @@ export const Project: FC<ProjectOptions> = ({
                     title='Docker Hub Downloads'
                   >
                     <img
-                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      loading='lazy'
                       src={`https://img.shields.io/docker/pulls/${organization}/${docker}.svg?color=6c5ce7&label=&logo=docker&logoColor=white`}
                       alt='Docker Hub Downloads'
                     />
@@ -180,7 +160,7 @@ export const Project: FC<ProjectOptions> = ({
                     title='Visual Studio Marketplace Installs'
                   >
                     <img
-                      loading={isFirstOnes ? 'eager' : 'lazy'}
+                      loading='lazy'
                       src={`https://img.shields.io/visual-studio-marketplace/i/${vsMarketplaceId}.svg?color=6c5ce7&logo=dailydotdev&label=&logoColor=white`}
                       alt='Visual Studio Marketplace Installs'
                     />
@@ -235,7 +215,7 @@ export const Project: FC<ProjectOptions> = ({
       {currentSkills ? (
         <footer>
           {currentSkills.map((current) =>
-            React.cloneElement(skills[current](), {
+            cloneElement(skills[current](), {
               key: `${name}:${current}`,
             })
           )}

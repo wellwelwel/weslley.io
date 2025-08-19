@@ -52,7 +52,6 @@
     "prism-react-renderer": "^2.4.1",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
-    "react-intersection-observer": "^9.16.0",
     "react-parallax-tilt": "^1.7.304",
     "sass": "^1.90.0",
     "tsx": "^4.20.4",

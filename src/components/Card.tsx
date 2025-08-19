@@ -1,5 +1,5 @@
 import type { FC, ReactNode } from 'react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import {
@@ -12,8 +12,8 @@ import {
   Star,
   TicketPercent,
 } from 'lucide-react';
-import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
+import { useScroll } from '@site/src/hooks/useScroll';
 
 export type CardOptions = {
   name: string;
@@ -42,12 +42,20 @@ export const Card: FC<CardOptions> = ({
   url,
   repo,
   children,
+  ...props
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const [stats, setStats] = useState<{
     downloads?: string;
     stars?: string;
     repositoryDependents?: string;
   }>({});
+
+  useScroll(ref, (isVisible, target) => {
+    if (!isVisible) return;
+
+    target.classList.add('show');
+  });
 
   useEffect(() => {
     if (!repo) return;
@@ -64,7 +72,7 @@ export const Card: FC<CardOptions> = ({
   }, [repo]);
 
   return (
-    <Parallax tiltMaxAngleX={0} tiltMaxAngleY={0.25}>
+    <div ref={ref} {...props}>
       <SafeLink
         to={url}
         title={alt}
@@ -103,7 +111,7 @@ export const Card: FC<CardOptions> = ({
           </div>
         </footer>
       )}
-    </Parallax>
+    </div>
   );
 };
 
@@ -118,6 +126,7 @@ export const TalkCard: FC<TalkCardOptions> = ({
   coupon,
   className,
 }) => {
+  const ref = useRef<HTMLDivElement>(null);
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
@@ -157,8 +166,15 @@ export const TalkCard: FC<TalkCardOptions> = ({
     </>
   );
 
+  useScroll(ref, (isVisible, target) => {
+    if (!isVisible) return;
+
+    target.classList.add('show');
+  });
+
   return (
     <div
+      ref={ref}
       className={(() => {
         const classes: string[] = [];
 

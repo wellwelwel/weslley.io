@@ -17,9 +17,10 @@
         padding: 0;
         transition: box-shadow 0.5s ease;
         overflow: hidden;
+        opacity: 0;
 
         &.show {
-          animation: showIn 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
+          animation: up 0.25s cubic-bezier(0.75, -0.5, 0.2, 0.9) forwards;
         }
 
         main {
