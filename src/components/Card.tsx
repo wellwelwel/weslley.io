@@ -23,6 +23,7 @@ export type CardOptions = {
   alt?: string;
   npm?: string;
   repo?: string;
+  className?: string;
 };
 
 export type TalkCardOptions = CardOptions & {
@@ -115,6 +116,7 @@ export const TalkCard: FC<TalkCardOptions> = ({
   date: datetime,
   location,
   coupon,
+  className,
 }) => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
@@ -156,7 +158,16 @@ export const TalkCard: FC<TalkCardOptions> = ({
   );
 
   return (
-    <div className={isPast ? 'past' : undefined}>
+    <div
+      className={(() => {
+        const classes: string[] = [];
+
+        if (isPast) classes.push('past');
+        if (className) classes.push(className);
+
+        return classes.join(' ');
+      })()}
+    >
       {url.startsWith('http') ? (
         <SafeLink
           to={url}
