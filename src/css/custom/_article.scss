@@ -16,6 +16,13 @@
       border-bottom: 1px solid #d7d6ff;
       margin-bottom: 20px;
 
+      & > h1 {
+        font-family: var(--ifm-font-family-featured);
+        font-size: 24px;
+        font-weight: 800;
+        color: #4c44e6;
+      }
+
       & > h2 {
         &,
         & > a {
@@ -36,6 +43,21 @@
       img {
         border-radius: 10px;
         box-shadow: 2.5px 2.5px 5px #22213d56;
+      }
+
+      & > h2 {
+        font-size: 24px;
+        font-weight: 800;
+      }
+
+      & > h3 {
+        font-size: 20px;
+        font-weight: 800;
+      }
+
+      & > h4 {
+        font-size: 16px;
+        font-weight: 800;
       }
     }
 
