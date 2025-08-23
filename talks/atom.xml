@@ -2,11 +2,32 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://weslley.io/talks/</id>
     <title>Weslley Araújo Blog</title>
-    <updated>2025-08-09T00:00:00.000Z</updated>
+    <updated>2025-08-21T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://weslley.io/talks/"/>
     <subtitle>Weslley Araújo Blog</subtitle>
     <icon>https://weslley.io/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Semana de Sistemas de Informação (EACH-USP)]]></title>
+        <id>https://weslley.io/talks/2025/08/21/each-usp/</id>
+        <link href="https://weslley.io/talks/2025/08/21/each-usp/"/>
+        <updated>2025-08-21T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Banner]]></summary>
+        <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-acf3b135bfbff6970224a0d032fab95e.jpeg" width="2225" height="1232" class="img_ev3q"></p></div>
+<p>🎙️ <strong>Keynote:</strong> GitHub além do Código: superando o mercado através do open source</p>
+<div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>nota</div><div class="admonitionContent_BuS1"><p>Palestrar em uma universidade (<a href="https://www5.each.usp.br/" target="_blank" rel="noopener"><strong>USP</strong></a>), por si só já é especial, mas encerrar o dia de evento tornou tudo ainda mais especial ✨</p><p>O <a href="https://www.semanadesi.com/" target="_blank" rel="noopener"><strong>SSI</strong></a> é um evento organizado pelos próprios alunos da universidade e tive o prazer de ser convidado para ensinar através do open source, usando o <strong>GitHub</strong> como ferramenta de estudo.</p></div></div>
+<!-- -->
+<p>Com foco em como se destacar em um mercado cada vez mais competitivo, mostro como o open source pode avançar sua evolução técnica, permitindo alcançar conquistas inimagináveis que refletem diretamente na carreira profissional.</p>
+<p>Em um mercado cada vez mais competitivo, o open source não é só sobre código — é uma ponte direta para crescimento técnico, visibilidade global e oportunidades reais na carreira.</p>
+<p>Com exemplos visuais, humanos e reais, quero te inspirar e trazer uma visão cada vez mais otimista de si em um mundo cada vez mais intimidador, especialmente com a chegada das inteligências artificiais, usando o open source estrategicamente para construir credibilidade e confiança no mercado.</p>]]></content>
+        <author>
+            <name>Weslley Araújo</name>
+            <uri>/</uri>
+        </author>
+        <category label="Brasil" term="Brasil"/>
+        <category label="SP" term="SP"/>
+        <category label="São Paulo" term="São Paulo"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[DevConverge LATAM & Oracle — SPRINT SP]]></title>
         <id>https://weslley.io/talks/2025/08/09/oracle/</id>
@@ -14,7 +35,7 @@
         <updated>2025-08-09T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-8823b07c121b1485ba902bb2e305d13f.jpeg" width="1182" height="665" class="img_ev3q"></p></div>
-<p>📹 <strong>Palestra:</strong> Inventando o Novo: o ponto de encontro entre criatividade humana e geração assistida por IA</p>
+<p>🎙️ <strong>Palestra:</strong> Inventando o Novo: o ponto de encontro entre criatividade humana e geração assistida por IA</p>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>nota</div><div class="admonitionContent_BuS1"><p>Melhorar performance em um sistema legado faz parte da rotina. Inventar algoritmos e uma nova arquitetura inédita é completamente diferente.</p></div></div>
 <!-- -->
 <p>Nesta palestra, eu compartilho os bastidores por trás da reconstrução de uma biblioteca crítica do ecossistema open source, o <strong>MySQL2</strong>, para processar bilhões de requisições <strong>MySQL</strong> de forma eficiente.</p>
@@ -35,7 +56,7 @@
         <updated>2025-07-19T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-6779dcd2c34ae182be91b85bbb524a41.jpeg" width="1182" height="665" class="img_ev3q"></p></div>
-<p>📹 <strong>Palestra:</strong> Criando um Test Runner: O que acontece por trás dos testes?</p>
+<p>🎙️ <strong>Palestra:</strong> Criando um Test Runner: O que acontece por trás dos testes?</p>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>nota</div><div class="admonitionContent_BuS1"><p>Muito se discute sobre testes, mas como é criar um test runner do zero?<br>
 Mais que isso: como se testa um <em>test runner</em>?</p></div></div>
 <!-- -->
@@ -59,7 +80,7 @@ Mais que isso: como se testa um <em>test runner</em>?</p></div></div>
         <updated>2025-06-14T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Banner]]></summary>
         <content type="html"><![CDATA[<div><p><img decoding="async" loading="lazy" alt="Banner" src="https://weslley.io/assets/images/banner-a75f8162870aff60e51a280cf223328a.png" width="2529" height="1280" class="img_ev3q"></p></div>
-<p>🎙️ <strong>Palestra:</strong> Superando a síndrome do impostor e os desafios de existir no mercado através do open source.</p>
+<p>📹 <strong>Palestra:</strong> Superando a síndrome do impostor e os desafios de existir no mercado através do open source.</p>
 <div class="theme-admonition theme-admonition-note admonition_xJq3 alert alert--secondary"><div class="admonitionHeading_Gvgb"><span class="admonitionIcon_Rf37"><svg viewBox="0 0 14 16"><path fill-rule="evenodd" d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"></path></svg></span>nota</div><div class="admonitionContent_BuS1"><p>Um evento online organizado pelo <a href="https://www.linkedin.com/in/lucianodiisouza/" target="_blank" rel="noopener noreferrer"><strong>Luciano dii Souza</strong></a>, com uma abordagem descontraída e realizado através da comunidade do <a href="https://discord.gg/wyrRdpGKmj" target="_blank" rel="noopener noreferrer"><strong>Discord</strong></a> para a comunidade de desenvolvedores, com o objetivo de compartilhar experiências e conhecimentos, especialmente para quem está iniciando na área.</p></div></div>
 <!-- -->
 <p>Nesse momento em que muitos programadores se sentem inseguros sobre o futuro da área:</p>
