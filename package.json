@@ -30,17 +30,17 @@
     "test": "npm run clear && npm run lint && npm run typecheck && npm run build"
   },
   "devDependencies": {
-    "@docusaurus/core": "^3.8.1",
-    "@docusaurus/module-type-aliases": "3.8.1",
-    "@docusaurus/preset-classic": "3.8.1",
-    "@docusaurus/tsconfig": "3.8.1",
-    "@docusaurus/types": "3.8.1",
+    "@docusaurus/core": "^3.9.1",
+    "@docusaurus/module-type-aliases": "3.9.1",
+    "@docusaurus/preset-classic": "3.9.1",
+    "@docusaurus/tsconfig": "3.9.1",
+    "@docusaurus/types": "3.9.1",
     "@easyops-cn/docusaurus-search-local": "^0.52.1",
     "@ianvs/prettier-plugin-sort-imports": "^4.7.0",
     "@mdx-js/react": "^3.1.1",
-    "@types/node": "^24.5.2",
-    "@types/react": "^19.1.13",
-    "@types/react-dom": "^19.1.9",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
     "@types/webpack-env": "^1.18.8",
     "clsx": "^2.1.1",
     "docusaurus-plugin-sass": "^0.2.6",
@@ -50,12 +50,12 @@
     "poku": "^3.0.2",
     "prettier": "^3.6.2",
     "prism-react-renderer": "^2.4.1",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
     "react-parallax-tilt": "^1.7.309",
-    "sass": "^1.93.1",
-    "tsx": "^4.20.5",
-    "typescript": "^5.9.2"
+    "sass": "^1.93.2",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3"
   },
   "browserslist": {
     "production": [
