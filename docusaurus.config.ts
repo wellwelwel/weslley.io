@@ -10,8 +10,12 @@ const config: Config = {
   baseUrl: '/',
   url: 'https://weslley.io/',
   trailingSlash: true,
+  markdown: {
+    hooks: {
+      onBrokenMarkdownLinks: 'throw',
+    },
+  },
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'throw',
   onBrokenAnchors: 'throw',
   onDuplicateRoutes: 'throw',
   i18n: {
