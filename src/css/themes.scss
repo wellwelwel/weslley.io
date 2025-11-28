@@ -82,4 +82,5 @@ mark {
 // }
 
 @include load-css('global/animations');
+@include load-css('global/slide');
 @include load-css('custom/root');

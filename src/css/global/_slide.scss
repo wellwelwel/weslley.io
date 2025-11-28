@@ -1,0 +1,128 @@
+@use './mixins' as *;
+
+.slide-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  overflow: hidden;
+  border-radius: 15px;
+  border: 1px solid var(--card-border-color);
+  opacity: 1 !important;
+  aspect-ratio: 16 / 9;
+
+  .slide-track {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  .slide {
+    position: relative;
+    scroll-snap-align: start;
+    flex: 0 0 100%;
+    @include flex(row, center, center);
+    width: 100%;
+    height: 100%;
+    margin: 0;
+
+    picture {
+      width: 100%;
+      height: 100%;
+      display: flex;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        user-select: none;
+        -webkit-user-drag: none;
+      }
+    }
+
+    .slide-caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      margin: 0;
+      padding: 16px 20px;
+      font-weight: bold;
+      text-shadow: 0 2px 4px rgb(0, 0, 0);
+      color: white;
+      font-size: 14px;
+      line-height: 1.5;
+      background: linear-gradient(
+        to top,
+        rgba(0, 0, 0, 0.8) 0%,
+        rgba(0, 0, 0, 0.6) 50%,
+        rgba(0, 0, 0, 0) 100%
+      );
+      backdrop-filter: blur(0.5px);
+
+      .slide-engagement {
+        font-size: 11px;
+        font-weight: 400;
+      }
+
+      @media (max-width: 768px) {
+        font-size: 12px;
+
+        .slide-engagement {
+          font-size: 9px;
+        }
+      }
+    }
+  }
+
+  .slide-nav-button {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.25);
+    color: white;
+    border: none;
+    padding: 8px 16px;
+    padding-bottom: 10px;
+    font-size: 24px;
+    cursor: pointer;
+    border-radius: 15px;
+    transition: background-color 0.3s ease;
+    z-index: 10;
+    line-height: 1;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.7);
+    }
+
+    &:active {
+      transform: translateY(-50%) scale(0.95);
+    }
+
+    &.slide-nav-prev {
+      left: 12px;
+    }
+
+    &.slide-nav-next {
+      right: 12px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 20px;
+
+      &.slide-nav-prev {
+        left: 8px;
+      }
+
+      &.slide-nav-next {
+        right: 8px;
+      }
+    }
+  }
+}
