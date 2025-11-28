@@ -60,15 +60,21 @@ export const Card: FC<CardOptions> = ({
   useEffect(() => {
     if (!repo) return;
 
-    fetch(`https://awesomeyou.io/assets/json/projects/${repo}.json`)
+    const controller = new AbortController();
+
+    fetch(`https://awesomeyou.io/assets/json/projects/${repo}.json`, {
+      signal: controller.signal,
+    })
       .then((response) => response.json())
       .then(({ stats }) => {
         setStats({
-          downloads: stats.npm.label,
+          downloads: stats.npm.value ? stats.npm.label : undefined,
           stars: stats.stars.label,
           repositoryDependents: stats.repositoryDependents.label,
         });
       });
+
+    return () => controller.abort();
   }, [repo]);
 
   return (
@@ -88,13 +94,16 @@ export const Card: FC<CardOptions> = ({
       {repo && (
         <footer>
           <img loading='lazy' src={imageSrc} alt={alt} />
-          <div className='group'>
-            <Rocket />
-            <span>
-              <strong>{stats?.downloads}</strong>{' '}
-              {stats?.downloads?.includes('milh') ? 'de' : ''} downloads mensais
-            </span>
-          </div>
+          {stats?.downloads && (
+            <div className='group'>
+              <Rocket />
+              <span>
+                <strong>{stats.downloads}</strong>{' '}
+                {stats.downloads?.includes('milh') ? 'de' : ''} downloads
+                mensais
+              </span>
+            </div>
+          )}
           <div className='group'>
             <Box />
             <span>
