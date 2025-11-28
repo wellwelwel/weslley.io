@@ -116,6 +116,7 @@ export const Project: FC<ProjectOptions> = ({
                   >
                     <img
                       loading='lazy'
+                      decoding='async'
                       src={`https://img.shields.io/npm/dy/${npm}.svg?color=6c5ce7&label=&logo=npm&logoColor=white`}
                       alt='NPM Downloads per year'
                     />
@@ -131,6 +132,7 @@ export const Project: FC<ProjectOptions> = ({
                   >
                     <img
                       loading='lazy'
+                      decoding='async'
                       src={`https://img.shields.io/github/stars/${organization}/${repository}.svg?style=flat&color=6c5ce7&label=&logo=github&logoColor=white`}
                       alt='GitHub Starts'
                     />
@@ -146,6 +148,7 @@ export const Project: FC<ProjectOptions> = ({
                   >
                     <img
                       loading='lazy'
+                      decoding='async'
                       src={`https://img.shields.io/docker/pulls/${organization}/${docker}.svg?color=6c5ce7&label=&logo=docker&logoColor=white`}
                       alt='Docker Hub Downloads'
                     />
@@ -161,6 +164,7 @@ export const Project: FC<ProjectOptions> = ({
                   >
                     <img
                       loading='lazy'
+                      decoding='async'
                       src={`https://img.shields.io/visual-studio-marketplace/i/${vsMarketplaceId}.svg?color=6c5ce7&logo=dailydotdev&label=&logoColor=white`}
                       alt='Visual Studio Marketplace Installs'
                     />
@@ -207,7 +211,12 @@ export const Project: FC<ProjectOptions> = ({
             tiltMaxAngleY={2.5}
           >
             <SafeLink to={link}>
-              <img src={image} loading='lazy' alt={`${name} banner`} />
+              <img
+                src={image}
+                loading='lazy'
+                decoding='async'
+                alt={`${name} banner`}
+              />
             </SafeLink>
           </Parallax>
         ) : null}

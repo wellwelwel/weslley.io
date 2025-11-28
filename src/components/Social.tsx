@@ -16,12 +16,13 @@ export const Social: FC<SocialOptions> = ({
 }) => (
   <>
     <SafeLink to={url}>
-      <img loading='lazy' src={imageSrc} alt={name} />
+      <img loading='lazy' decoding='async' src={imageSrc} alt={name} />
     </SafeLink>
     {name && description ? (
       <span className='description'>
         <h3>
-          <img loading='lazy' src={imageSrc} alt={name} /> {name}
+          <img loading='lazy' decoding='async' src={imageSrc} alt={name} />{' '}
+          {name}
         </h3>
         {description}
       </span>

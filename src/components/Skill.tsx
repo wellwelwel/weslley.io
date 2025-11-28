@@ -11,11 +11,17 @@ const Skill: FC<SkillOptions> = ({ name, src, alt = name, className }) => {
   return (
     <>
       <button className={className} data-name={name}>
-        <img loading='lazy' src={`/img/skills/${src}.svg`} alt={alt} />
+        <img
+          loading='lazy'
+          decoding='async'
+          src={`/img/skills/${src}.svg`}
+          alt={alt}
+        />
       </button>
       <small>
         <img
           loading='lazy'
+          decoding='async'
           src={`/img/skills/${src}.svg`}
           className={className}
           alt={alt}

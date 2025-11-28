@@ -84,7 +84,7 @@ export const Card: FC<CardOptions> = ({
         title={alt}
         className={repo ? 'has-footer' : undefined}
       >
-        <img loading='lazy' src={imageSrc} alt={alt} />
+        <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
         <div>
           <header>{name}</header>
           <main>{children}</main>
@@ -93,7 +93,7 @@ export const Card: FC<CardOptions> = ({
       </SafeLink>
       {repo && (
         <footer>
-          <img loading='lazy' src={imageSrc} alt={alt} />
+          <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
           {stats?.downloads && (
             <div className='group'>
               <Rocket />
@@ -166,7 +166,7 @@ export const TalkCard: FC<TalkCardOptions> = ({
 
   const LinkContent = () => (
     <>
-      <img loading='lazy' src={imageSrc} alt={alt} />
+      <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
       <div>
         <header>{name}</header>
         <main>{children}</main>
@@ -212,7 +212,7 @@ export const TalkCard: FC<TalkCardOptions> = ({
       )}
       {hasFooter && (
         <footer>
-          <img loading='lazy' src={imageSrc} alt={alt} />
+          <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
           {(datetime || coupon) && (
             <div className='groups'>
               {datetime && (

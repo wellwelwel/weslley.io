@@ -26,7 +26,12 @@ export default (): ReactNode => {
         <main>
           <header>
             <h1>{title}</h1>
-            <img loading='lazy' src='/img/projects.svg' alt='' />
+            <img
+              loading='lazy'
+              decoding='async'
+              src='/img/projects.svg'
+              alt=''
+            />
             <small>
               <About />
             </small>

@@ -104,6 +104,7 @@ export const Slide: FC<SlideOptions> = ({
                 src={image.src}
                 alt={image.event || `Slide ${index + 1}`}
                 loading={index === 0 ? 'eager' : 'lazy'}
+                decoding='async'
               />
             </picture>
             {image.event && (

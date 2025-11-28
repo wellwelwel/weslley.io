@@ -33,6 +33,7 @@ export default (): ReactNode => {
               <img
                 className='secondary'
                 loading='lazy'
+                decoding='async'
                 src='/img/1738374865030.jpeg'
                 alt='Photo'
               />
