@@ -52,7 +52,7 @@ export const mirrorMissingLocaleFiles = async (
           'content/articles': `i18n/${locale}/docusaurus-plugin-content-blog-articles`,
           'content/talks': `i18n/${locale}/docusaurus-plugin-content-blog-talks`,
         }
-      : {}
+      : Object.create(null)
   );
 
   const localeMapping = locales.get(locale)!;

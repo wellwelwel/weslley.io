@@ -49,7 +49,7 @@ export const Card: FC<CardOptions> = ({
     downloads?: string;
     stars?: string;
     repositoryDependents?: string;
-  }>({});
+  }>(Object.create(null));
 
   useScroll(ref, (isVisible, target) => {
     if (!isVisible) return;

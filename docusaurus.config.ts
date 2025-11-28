@@ -63,7 +63,7 @@ const config: Config = {
       },
       items: [],
     },
-    footer: {},
+    footer: Object.create(null),
     prism: {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
