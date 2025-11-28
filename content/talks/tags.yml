@@ -23,6 +23,10 @@ pr:
   label: PR
   permalink: /pr
   description: PR tag description
+al:
+  label: AL
+  permalink: /al
+  description: AL tag description
 
 # Cities
 sao-paulo:
@@ -37,3 +41,7 @@ curitiba:
   label: Curitiba
   permalink: /curitiba
   description: Curitiba tag description
+maceio:
+  label: Maceió
+  permalink: /maceio
+  description: Maceió tag description
