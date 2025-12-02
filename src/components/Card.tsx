@@ -7,6 +7,7 @@ import {
   CalendarDays,
   Clock,
   ExternalLink,
+  GraduationCap,
   MapPin,
   Rocket,
   Star,
@@ -29,6 +30,7 @@ export type CardOptions = {
 export type TalkCardOptions = CardOptions & {
   date?: string;
   location?: string;
+  material?: string;
   coupon?: {
     code?: string;
     url?: string;
@@ -132,6 +134,7 @@ export const TalkCard: FC<TalkCardOptions> = ({
   children,
   date: datetime,
   location,
+  material,
   coupon,
   className,
 }) => {
@@ -241,6 +244,15 @@ export const TalkCard: FC<TalkCardOptions> = ({
                   </SafeLink>
                 </div>
               )}
+            </div>
+          )}
+          {material && (
+            <div className='group'>
+              <GraduationCap />
+              <SafeLink to={material}>
+                {isPtBr ? 'Material de Estudo' : 'Study Material'}
+                <ExternalLink />
+              </SafeLink>
             </div>
           )}
           {location && (
