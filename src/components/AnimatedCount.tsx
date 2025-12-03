@@ -11,7 +11,7 @@ type AnimatedCountProps = {
 export const AnimatedCount: FC<AnimatedCountProps> = ({
   value,
   locale = 'pt-BR',
-  duration = 400,
+  duration = 500,
 }) => {
   const ref = useRef<HTMLSpanElement>(null);
   const prevValue = useRef<number>(0);
