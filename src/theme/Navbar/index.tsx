@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import React, { memo, useEffect } from 'react';
+import { memo, useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
 import NavbarContent from '@theme/Navbar/Content';
 import NavbarLayout from '@theme/Navbar/Layout';

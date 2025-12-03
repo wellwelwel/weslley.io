@@ -32,7 +32,7 @@ const setLabel = (value: number): string => {
     : value.toLocaleString('pt-BR');
 };
 
-const useStats = () => {
+export const useStats = () => {
   const [stats, setStats] = useState<MediaKitStats>();
 
   useEffect(() => {

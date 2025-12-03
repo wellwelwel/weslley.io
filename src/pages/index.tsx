@@ -1,15 +1,18 @@
 import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import { ArrowBigDownDash } from 'lucide-react';
+import { AnimatedCount } from '@site/src/components/AnimatedCount';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
+import { useStats } from '@site/src/components/Stats';
+import { dynamicImport } from '@site/src/helpers/dynamic-require';
 import {
   anchors,
   cards,
   MDXImports,
   socials,
 } from '@site/src/helpers/get-contents';
-import { dynamicImport } from '../helpers/dynamic-require';
 import '@site/src/css/pages/home.scss';
 
 export default (): ReactNode => {
@@ -19,6 +22,7 @@ export default (): ReactNode => {
   const Anchors = anchors(currentLocale);
   const Socials = socials(currentLocale);
   const Cards = cards(currentLocale);
+  const stats = useStats();
   const AboutResume = dynamicImport(currentLocale, MDXImports.AboutResume);
 
   return (
@@ -64,6 +68,27 @@ export default (): ReactNode => {
             </menu>
           </header>
           <nav>
+            <h2>
+              <ArrowBigDownDash /> Downloads
+            </h2>
+            <div className='badge'>
+              <span>
+                {isPtBr
+                  ? 'Quantidade de vezes que meus projetos foram baixados'
+                  : 'Times my projects have been downloaded'}
+              </span>
+            </div>
+            <div className='show counter'>
+              <img src='/img/plus.svg' alt='Plus' />{' '}
+              {isPtBr ? 'Mais de' : 'More than'}{' '}
+              <span>
+                <AnimatedCount
+                  value={stats?.downloadsPerYear.value ?? 0}
+                  locale={currentLocale}
+                />
+              </span>
+              /{isPtBr ? 'ano' : 'year'} ✨
+            </div>
             {Cards.map((Card, i) => (
               <Card key={`card:${i}`} />
             ))}

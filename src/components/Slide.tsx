@@ -90,7 +90,7 @@ export const Slide: FC<SlideOptions> = ({
   };
 
   return (
-    <div className='slide-container'>
+    <div className='slide-container show'>
       <div
         ref={containerRef}
         className='slide-track'
