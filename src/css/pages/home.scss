@@ -340,20 +340,52 @@
         &.counter {
           margin-top: -7.5px;
           font-family: var(--ifm-font-family-featured);
-          font-weight: 500;
-          font-size: 18px;
+          font-weight: 600;
+          font-size: 16px;
           color: var(--title-color-1);
 
           img {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             margin-right: 2px;
-            transform: translateY(2px);
+            transform: translateY(1.5px);
           }
 
           span {
-            font-weight: 900;
+            font-weight: 800;
             font-size: 24px;
+          }
+
+          .animated-count {
+            font-variant-numeric: tabular-nums;
+            display: inline-flex;
+
+            &__separator {
+              display: inline-block;
+              text-align: center;
+              transform: translateY(-7.5px);
+            }
+
+            &__digit {
+              display: inline-block;
+              height: 1em;
+              overflow: hidden;
+              line-height: 1em;
+              text-align: center;
+            }
+
+            &__strip {
+              display: flex;
+              flex-direction: column;
+              will-change: transform;
+            }
+
+            &__number {
+              height: 1em;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            }
           }
         }
 

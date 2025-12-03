@@ -73,21 +73,24 @@ export default (): ReactNode => {
             </h2>
             <div className='badge'>
               <span>
-                {isPtBr
-                  ? 'Vezes que meus projetos open source foram baixados'
-                  : 'Times my open-source projects have been downloaded'}
+                {isPtBr ? (
+                  <>
+                    Projetos <em>open source</em> autorais
+                  </>
+                ) : (
+                  <>Authored open-source projects</>
+                )}
               </span>
             </div>
             <div className='show counter'>
-              <img src='/img/plus.svg' alt='Plus' />{' '}
-              {isPtBr ? 'Mais de' : 'More than'}{' '}
+              <img src='/img/rocket.svg' alt='Plus' />{' '}
               <span>
                 <AnimatedCount
                   value={stats?.downloadsPerYear.value ?? 0}
                   locale={currentLocale}
                 />
-              </span>
-              /{isPtBr ? 'ano' : 'year'} ✨
+              </span>{' '}
+              {isPtBr ? 'nos últimos 365 dias' : 'in the last 365 days'} ✨
             </div>
             {Cards.map((Card, i) => (
               <Card key={`card:${i}`} />

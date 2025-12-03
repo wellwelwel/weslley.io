@@ -8,45 +8,60 @@ type AnimatedCountProps = {
   duration?: number;
 };
 
+const NUMBERS = Array.from({ length: 10 }, (_, i) => i);
+
+const Digit: FC<{ char: string; index: number; duration: number }> = ({
+  char,
+  index,
+  duration,
+}) => {
+  const stripRef = useRef<HTMLDivElement>(null);
+  const isNumber = !isNaN(parseInt(char, 10));
+
+  useEffect(() => {
+    if (!isNumber || !stripRef.current) return;
+
+    const target = parseInt(char, 10);
+    const delay = index * 50;
+
+    animate(stripRef.current, {
+      translateY: `-${target * 10}%`,
+      duration,
+      ease: 'out(1)',
+      delay,
+    });
+  }, [char, index, duration, isNumber]);
+
+  if (!isNumber) {
+    return <span className='animated-count__separator'>{char}</span>;
+  }
+
+  return (
+    <span className='animated-count__digit'>
+      <div ref={stripRef} className='animated-count__strip'>
+        {NUMBERS.map((n) => (
+          <span key={n} className='animated-count__number'>
+            {n}
+          </span>
+        ))}
+      </div>
+    </span>
+  );
+};
+
 export const AnimatedCount: FC<AnimatedCountProps> = ({
   value,
   locale = 'pt-BR',
   duration = 500,
 }) => {
-  const ref = useRef<HTMLSpanElement>(null);
-  const prevValue = useRef<number>(0);
+  const valueStr = value.toLocaleString(locale);
+  const chars = valueStr.split('');
 
-  useEffect(() => {
-    if (ref.current && value !== prevValue.current) {
-      const obj = { count: prevValue.current };
-
-      animate(obj, {
-        count: value,
-        round: 1,
-        ease: 'out(3)',
-        duration,
-        onUpdate: () => {
-          if (!ref.current) return;
-
-          ref.current.textContent = Math.round(obj.count).toLocaleString(
-            locale
-          );
-        },
-        onComplete: () => {
-          if (ref.current) {
-            ref.current.textContent = value
-              ? Intl.NumberFormat(locale, {
-                  notation: 'compact',
-                  compactDisplay: 'long',
-                }).format(value)
-              : '0';
-          }
-        },
-      });
-
-      prevValue.current = value;
-    }
-  }, [value, locale, duration]);
-
-  return <span ref={ref}>{value.toLocaleString(locale)}</span>;
+  return (
+    <span className='animated-count'>
+      {chars.map((char, i) => (
+        <Digit key={`${i}`} char={char} index={i} duration={duration} />
+      ))}
+    </span>
+  );
 };
