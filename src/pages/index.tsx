@@ -74,8 +74,8 @@ export default (): ReactNode => {
             <div className='badge'>
               <span>
                 {isPtBr
-                  ? 'Quantidade de vezes que meus projetos foram baixados'
-                  : 'Times my projects have been downloaded'}
+                  ? 'Vezes que meus projetos open source foram baixados'
+                  : 'Times my open-source projects have been downloaded'}
               </span>
             </div>
             <div className='show counter'>
