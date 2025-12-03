@@ -325,7 +325,7 @@
         }
 
         & ~ h2 {
-          margin-top: 25px;
+          margin-top: 17.5px;
         }
       }
 
@@ -338,6 +338,7 @@
         }
 
         &.counter {
+          margin-top: -7.5px;
           font-family: var(--ifm-font-family-featured);
           font-weight: 500;
           font-size: 18px;
