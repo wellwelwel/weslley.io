@@ -38,6 +38,7 @@ export const useStats = () => {
   useEffect(() => {
     fetch(base)
       .then((res) => res.json())
+      .catch(() => {})
       .then(setStats);
   }, []);
 
