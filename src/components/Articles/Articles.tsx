@@ -1,5 +1,6 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
 import { useEffect, useState } from 'react';
+import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import { ArticlesOptions } from '@site/src/helpers/get-social';
@@ -60,6 +61,22 @@ export const Articles = ({ route }: ArticlesOptions) => {
 
   return (
     <Layout title={translations.title[route]}>
+      <Head>
+        {route === 'talks' && (
+          <>
+            <meta
+              property='og:image'
+              content={'/img/slide/codecon-001.jpg'}
+              data-rh='true'
+            />
+            <meta
+              property='twitter:image'
+              content={'/img/slide/codecon-001.jpg'}
+              data-rh='true'
+            />
+          </>
+        )}
+      </Head>
       <div id='articles'>
         <header>
           <h1>{translations.title[route]}</h1>
