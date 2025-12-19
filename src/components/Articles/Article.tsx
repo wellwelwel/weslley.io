@@ -28,6 +28,20 @@ export const Article: FC<{
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
 
+  const translations = {
+    views: currentLocale === 'en' ? 'Views' : 'Visualizações',
+    minute: currentLocale === 'en' ? 'minute' : 'minuto',
+    minutes: currentLocale === 'en' ? 'minutes' : 'minutos',
+    readingTime: currentLocale === 'en' ? 'reading time' : 'de leitura',
+    lastUpdate:
+      currentLocale === 'en' ? 'Last updated on' : 'Última atualização em',
+    simulatedDev:
+      currentLocale === 'en'
+        ? '(Simulated during development)'
+        : '(Simulado durante o desenvolvimento)',
+    tags: currentLocale === 'en' ? 'Tags' : 'Tags',
+  };
+
   useScroll(
     ref,
     (isVisible, target) => {
@@ -112,10 +126,11 @@ export const Article: FC<{
         <div className='card__footer'>
           {viewMode === 'card' && showViewsCounter && (
             <div>
-              Visualizações: {article.slug ? viewCounts[article.slug] : '-'}
+              {translations.views}:{' '}
+              {article.slug ? viewCounts[article.slug] : '-'}
             </div>
           )}
-          <div className='margin-bottom--sm'>
+          <div>
             <time dateTime={article.date}>
               {new Date(article.date).toLocaleDateString(currentLocale, {
                 year: 'numeric',
@@ -126,38 +141,44 @@ export const Article: FC<{
             {' · '}
             <span>
               {article.readingTime}{' '}
-              {article.readingTime === 1 ? 'minuto' : 'minutos'} de leitura
+              {article.readingTime === 1
+                ? translations.minute
+                : translations.minutes}{' '}
+              {translations.readingTime}
             </span>
-            {viewMode === 'card' && (
-              <div>
-                {article.lastModified &&
-                  article.lastModified !== article.date && (
-                    <>
-                      <span title='Última modificação'>
-                        Última atualização em{' '}
-                        <strong>
-                          {new Date(article.lastModified).toLocaleDateString(
-                            currentLocale,
-                            {
-                              year: 'numeric',
-                              month: 'long',
-                              day: 'numeric',
-                            }
-                          )}
-                        </strong>
-                      </span>
-                    </>
-                  )}
-                {isDevelopment && (
-                  <em> (Simulado durante o desenvolvimento)</em>
-                )}
-              </div>
-            )}
           </div>
 
-          {article.tags.length > 0 && (
+          {viewMode === 'card' && (
             <div>
-              <strong>Tags:</strong>{' '}
+              {article.lastModified &&
+                article.lastModified !== article.date && (
+                  <span
+                    title={
+                      currentLocale === 'en'
+                        ? 'Last modification'
+                        : 'Última modificação'
+                    }
+                  >
+                    {translations.lastUpdate}{' '}
+                    <strong>
+                      {new Date(article.lastModified).toLocaleDateString(
+                        currentLocale,
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }
+                      )}
+                    </strong>
+                  </span>
+                )}
+              {isDevelopment && <em> {translations.simulatedDev}</em>}
+            </div>
+          )}
+
+          {article.tags.length > 0 && (
+            <div className='margin-top--sm'>
+              <strong>{translations.tags}:</strong>{' '}
               {article.tags.map((tag, index) => (
                 <span key={tag}>
                   {index > 0 && ' '}

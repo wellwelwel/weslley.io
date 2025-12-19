@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { useCallback, useEffect, useState } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Info } from 'lucide-react';
 import styles from './styles.module.scss';
 
@@ -11,9 +12,16 @@ type ModalProps = {
 
 export const Modal = ({ trigger, title, children }: ModalProps) => {
   const [isOpen, setIsOpen] = useState(false);
-
+  const { i18n } = useDocusaurusContext();
   const open = useCallback(() => setIsOpen(true), []);
   const close = useCallback(() => setIsOpen(false), []);
+  const currentLocale = i18n.currentLocale;
+
+  const translations = {
+    clickToSeeMore:
+      currentLocale === 'en' ? 'Click to see more' : 'Clique para ver mais',
+    closeModal: currentLocale === 'en' ? 'Close modal' : 'Fechar modal',
+  };
 
   useEffect(() => {
     if (!isOpen) return;
@@ -39,7 +47,7 @@ export const Modal = ({ trigger, title, children }: ModalProps) => {
         className={styles.trigger}
         aria-haspopup='dialog'
         aria-expanded={isOpen}
-        title={'Clique para ver mais'}
+        title={translations.clickToSeeMore}
       >
         {trigger}
         <span className={styles.icon} aria-hidden='true'>
@@ -69,7 +77,7 @@ export const Modal = ({ trigger, title, children }: ModalProps) => {
                 type='button'
                 onClick={close}
                 className={styles.close}
-                aria-label='Close modal'
+                aria-label={translations.closeModal}
               >
                 ✕
               </button>

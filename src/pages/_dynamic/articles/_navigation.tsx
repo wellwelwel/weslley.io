@@ -1,5 +1,6 @@
 import type { ArticleNavigation } from '../../../@types/article';
 import Link from '@docusaurus/Link';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MarkdownWithAdmonitions } from '@site/src/components/Articles/Articles';
 
 type ArticleNavigationProps = {
@@ -15,13 +16,21 @@ export const Navigation = ({
 }: ArticleNavigationProps) => {
   if (!previous && !next) return null;
 
+  const { i18n } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
+
+  const translations = {
+    previous: currentLocale === 'en' ? '← Previous' : '← Anterior',
+    next: currentLocale === 'en' ? 'Next →' : 'Próximo →',
+  };
+
   return (
     <>
       <hr />
       <nav className='article-navigation'>
         {previous ? (
           <Link to={`/${route}/${previous.slug}`}>
-            <div className='nav-label'>← Anterior</div>
+            <div className='nav-label'>{translations.previous}</div>
             {previous.social && (
               <div className='nav-image'>
                 <img
@@ -50,7 +59,7 @@ export const Navigation = ({
 
         {next ? (
           <Link to={`/${route}/${next.slug}`}>
-            <div className='nav-label next'>Próximo →</div>
+            <div className='nav-label next'>{translations.next}</div>
             {next.social && (
               <div className='nav-image'>
                 <img

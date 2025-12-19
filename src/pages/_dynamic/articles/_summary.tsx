@@ -1,5 +1,6 @@
 import type { SummaryItem } from '../../../@types/article';
 import { useContext, useEffect, useMemo, useState } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import GithubSlugger from 'github-slugger';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
@@ -34,6 +35,8 @@ const filterVisibleHeadings = (items: SummaryItem[]): SummaryItem[] => {
 export const Summary = ({ items }: { items: SummaryItem[] }) => {
   const context = useContext(SideContext);
   const [visibleItems, setVisibleItems] = useState<SummaryItem[]>(items);
+  const { i18n } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
 
   const activeId = context?.activeId ?? null;
 
@@ -78,7 +81,7 @@ export const Summary = ({ items }: { items: SummaryItem[] }) => {
   return (
     <details>
       <summary>
-        <strong>Sumário</strong>
+        <strong>{currentLocale === 'en' ? 'Summary' : 'Sumário'}</strong>
       </summary>
 
       <ReactMarkdown remarkPlugins={[remarkGfm]}>{markdown}</ReactMarkdown>

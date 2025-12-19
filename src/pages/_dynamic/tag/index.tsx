@@ -30,6 +30,35 @@ export default ({ data }: TagPageProps) => {
   const imageMap: Record<string, string> = Object.create(null);
   const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
 
+  const translations = {
+    tag: currentLocale === 'en' ? 'Tag' : 'Tag',
+    articlesRelatedToTag: (tag: string) =>
+      currentLocale === 'en'
+        ? `Articles related to tag ${tag}`
+        : `Artigos relacionados à tag ${tag}`,
+    article: currentLocale === 'en' ? 'article' : 'artigo',
+    articles: currentLocale === 'en' ? 'articles' : 'artigos',
+    found: currentLocale === 'en' ? 'found' : 'encontrado',
+    foundPlural: currentLocale === 'en' ? 'found' : 'encontrados',
+    views: currentLocale === 'en' ? 'Views' : 'Visualizações',
+    minute: currentLocale === 'en' ? 'minute' : 'minuto',
+    minutes: currentLocale === 'en' ? 'minutes' : 'minutos',
+    readingTime: currentLocale === 'en' ? 'reading time' : 'de leitura',
+    lastModification:
+      currentLocale === 'en' ? 'Last modification' : 'Última modificação',
+    lastUpdate:
+      currentLocale === 'en' ? 'Last updated on' : 'Última atualização em',
+    simulatedDev:
+      currentLocale === 'en'
+        ? '(Simulated during development)'
+        : '(Simulado durante o desenvolvimento)',
+    tags: currentLocale === 'en' ? 'Tags' : 'Tags',
+    noArticles:
+      currentLocale === 'en'
+        ? 'No articles found.'
+        : 'Nenhum artigo encontrado.',
+  };
+
   if (imagesContext) {
     imagesContext.keys().forEach((key: string) => {
       if (key.includes(`/${currentLocale}/${route}/`))
@@ -70,15 +99,22 @@ export default ({ data }: TagPageProps) => {
         <meta name='robots' content='noindex, nofollow' />
       </Head>
       <Layout
-        title={`Tag: ${tag}`}
-        description={`Artigos relacionados à tag ${tag}`}
+        title={`${translations.tag}: ${tag}`}
+        description={translations.articlesRelatedToTag(tag)}
       >
         <div id='articles'>
           <header>
-            <h1>Tag: {tag}</h1>
+            <h1>
+              {translations.tag}: {tag}
+            </h1>
             <p>
-              {articles.length} {articles.length === 1 ? 'artigo' : 'artigos'}{' '}
-              {articles.length === 1 ? 'encontrado' : 'encontrados'}
+              {articles.length}{' '}
+              {articles.length === 1
+                ? translations.article
+                : translations.articles}{' '}
+              {articles.length === 1
+                ? translations.found
+                : translations.foundPlural}
             </p>
           </header>
 
@@ -127,7 +163,7 @@ export default ({ data }: TagPageProps) => {
                   <div className='card__footer'>
                     {showViewsCounter && (
                       <div>
-                        Visualizações:{' '}
+                        {translations.views}:{' '}
                         {article.slug ? viewCounts[article.slug] : '-'}
                       </div>
                     )}
@@ -145,14 +181,16 @@ export default ({ data }: TagPageProps) => {
                       {' · '}
                       <span>
                         {article.readingTime}{' '}
-                        {article.readingTime === 1 ? 'minuto' : 'minutos'} de
-                        leitura
+                        {article.readingTime === 1
+                          ? translations.minute
+                          : translations.minutes}{' '}
+                        {translations.readingTime}
                       </span>
                       <div>
                         {article.lastModified &&
                           article.lastModified !== article.date && (
-                            <span title='Última modificação'>
-                              Última atualização em{' '}
+                            <span title={translations.lastModification}>
+                              {translations.lastUpdate}{' '}
                               <strong>
                                 {new Date(
                                   article.lastModified
@@ -164,15 +202,13 @@ export default ({ data }: TagPageProps) => {
                               </strong>
                             </span>
                           )}
-                        {isDevelopment && (
-                          <em> (Simulado durante o desenvolvimento)</em>
-                        )}
+                        {isDevelopment && <em> {translations.simulatedDev}</em>}
                       </div>
                     </div>
 
                     {article.tags.length > 0 && (
                       <div>
-                        <strong>Tags:</strong>{' '}
+                        <strong>{translations.tags}:</strong>{' '}
                         {article.tags.map((tagName, index) => (
                           <span key={tagName}>
                             {index > 0 && ' '}
@@ -190,7 +226,7 @@ export default ({ data }: TagPageProps) => {
 
             {articles.length === 0 && (
               <div className='empty-state'>
-                <p>Nenhum artigo encontrado.</p>
+                <p>{translations.noArticles}</p>
               </div>
             )}
           </section>

@@ -7,20 +7,29 @@ import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
 import '@site/src/css/pages/articles.scss';
 
-const title = {
-  articles: 'Artigos 📜',
-  talks: 'Palestras 🎙️',
-} as const;
-
 export type ViewMode = 'card' | 'list';
 
 export const Articles = ({ route }: ArticlesOptions) => {
-  const { globalData, siteConfig } = useDocusaurusContext();
+  const { globalData, siteConfig, i18n } = useDocusaurusContext();
   const [viewCounts, setViewCounts] = useState<Record<string, string>>(
     Object.create(null)
   );
   const [viewMode, setViewMode] = useState<ViewMode>('card');
+  const currentLocale = i18n.currentLocale;
   const API = siteConfig.customFields?.COUNTTY_URL;
+
+  const translations = {
+    title: {
+      articles: currentLocale === 'en' ? 'Articles 📜' : 'Artigos 📜',
+      talks: currentLocale === 'en' ? 'Talks 🎙️' : 'Palestras 🎙️',
+    },
+    cardView: currentLocale === 'en' ? 'Card view' : 'Visualização em cards',
+    listView: currentLocale === 'en' ? 'List view' : 'Visualização em lista',
+    noArticles:
+      currentLocale === 'en'
+        ? 'No articles found.'
+        : 'Nenhum artigo encontrado.',
+  };
   const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const articles =
     (globalData[`mount-${route}`] as { default: ProcessedArticle[] })
@@ -53,17 +62,17 @@ export const Articles = ({ route }: ArticlesOptions) => {
   }, [articles, showViewsCounter, API]);
 
   return (
-    <Layout title={title[route]}>
+    <Layout title={translations.title[route]}>
       <div id='articles'>
         <header>
-          <h1>{title[route]}</h1>
+          <h1>{translations.title[route]}</h1>
           <div className='view-toggle'>
             <button
               type='button'
               className={viewMode === 'card' ? 'active' : ''}
               onClick={() => setViewMode('card')}
-              aria-label='Visualização em cards'
-              title='Visualização em cards'
+              aria-label={translations.cardView}
+              title={translations.cardView}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -84,8 +93,8 @@ export const Articles = ({ route }: ArticlesOptions) => {
               type='button'
               className={viewMode === 'list' ? 'active' : ''}
               onClick={() => setViewMode('list')}
-              aria-label='Visualização em lista'
-              title='Visualização em lista'
+              aria-label={translations.listView}
+              title={translations.listView}
             >
               <svg
                 xmlns='http://www.w3.org/2000/svg'
@@ -123,7 +132,7 @@ export const Articles = ({ route }: ArticlesOptions) => {
 
           {articles.length === 0 && (
             <div className='empty-state'>
-              <p>Nenhum artigo encontrado.</p>
+              <p>{translations.noArticles}</p>
             </div>
           )}
         </section>

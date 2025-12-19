@@ -39,8 +39,25 @@ export default ({
   const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const socialBanner = social ? `${siteConfig.url}${social}` : undefined;
   const articleUrl = `${siteConfig.url}/article/${slug}`;
-  const authorName = authorsData?.[0]?.name ?? 'Autor';
   const { currentLocale } = i18n;
+  const authorName =
+    authorsData?.[0]?.name ?? (currentLocale === 'en' ? 'Author' : 'Autor');
+
+  const translations = {
+    views: currentLocale === 'en' ? 'Views' : 'Visualizações',
+    minute: currentLocale === 'en' ? 'minute' : 'minuto',
+    minutes: currentLocale === 'en' ? 'minutes' : 'minutos',
+    readingTime: currentLocale === 'en' ? 'reading time' : 'de leitura',
+    lastUpdate:
+      currentLocale === 'en' ? 'Last updated on' : 'Última atualização em',
+    lastModification:
+      currentLocale === 'en' ? 'Last modification' : 'Última modificação',
+    simulatedDev:
+      currentLocale === 'en'
+        ? '(Simulated during development)'
+        : '(Simulado durante o desenvolvimento)',
+    tags: currentLocale === 'en' ? 'Tags' : 'Tags',
+  };
 
   return (
     <Layout title={title} description={description ?? undefined}>
@@ -70,7 +87,7 @@ export default ({
             {showViewsCounter && (
               <div className='views-counter'>
                 <img
-                  src={`${API}/badge?slug=${slug}&label=Visualizações&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
+                  src={`${API}/badge?slug=${slug}&label=${encodeURIComponent(translations.views)}&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
                 />
               </div>
             )}
@@ -85,13 +102,14 @@ export default ({
               </time>
               {' · '}
               <span>
-                {readingTime} {readingTime === 1 ? 'minuto' : 'minutos'} de
-                leitura
+                {readingTime}{' '}
+                {readingTime === 1 ? translations.minute : translations.minutes}{' '}
+                {translations.readingTime}
               </span>
               <div>
                 {lastModified && lastModified !== date && (
-                  <span title='Última modificação'>
-                    Última atualização em{' '}
+                  <span title={translations.lastModification}>
+                    {translations.lastUpdate}{' '}
                     <strong>
                       {new Date(lastModified).toLocaleDateString(
                         currentLocale,
@@ -104,9 +122,7 @@ export default ({
                     </strong>
                   </span>
                 )}
-                {isDevelopment && (
-                  <em> (Simulado durante o desenvolvimento)</em>
-                )}
+                {isDevelopment && <em> {translations.simulatedDev}</em>}
               </div>
             </div>
 
@@ -203,7 +219,7 @@ export default ({
 
             {tags.length > 0 && (
               <div className='tags'>
-                <strong>Tags:</strong>{' '}
+                <strong>{translations.tags}:</strong>{' '}
                 {tags.map((tag: string, index: number) => (
                   <span key={tag}>
                     {index > 0 && ' '}

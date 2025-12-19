@@ -10,6 +10,21 @@ export const Tags = ({ route }: ArticlesOptions) => {
   const articles =
     (globalData[`mount-${route}`] as { default: ProcessedArticle[] })
       ?.default || [];
+  const currentLocale = i18n.currentLocale;
+
+  const translations = {
+    title: currentLocale === 'en' ? 'Tags' : 'Tags',
+    description:
+      currentLocale === 'en' ? 'All blog tags' : 'Todas as tags do blog',
+    subtitle:
+      currentLocale === 'en'
+        ? 'All tags used in blog articles.'
+        : 'Todas as tags utilizadas nos artigos do blog.',
+    article: currentLocale === 'en' ? 'article' : 'artigo',
+    articles: currentLocale === 'en' ? 'articles' : 'artigos',
+    noTags:
+      currentLocale === 'en' ? 'No tags found.' : 'Nenhuma tag encontrada.',
+  };
 
   const tagCounts: Record<string, number> = Object.create(null);
 
@@ -17,15 +32,15 @@ export const Tags = ({ route }: ArticlesOptions) => {
     for (const tag of article.tags) tagCounts[tag] = (tagCounts[tag] || 0) + 1;
 
   const sortedTags = Object.entries(tagCounts).sort(([tagA], [tagB]) =>
-    tagA.localeCompare(tagB, i18n.currentLocale)
+    tagA.localeCompare(tagB, currentLocale)
   );
 
   return (
-    <Layout title='Tags' description='Todas as tags do blog'>
+    <Layout title={translations.title} description={translations.description}>
       <div id='articles'>
         <header>
-          <h1>Tags</h1>
-          <p>Todas as tags utilizadas nos artigos do blog.</p>
+          <h1>{translations.title}</h1>
+          <p>{translations.subtitle}</p>
         </header>
 
         <section className='row'>
@@ -35,7 +50,8 @@ export const Tags = ({ route }: ArticlesOptions) => {
                 <div className='card__body'>
                   <h3>{tag}</h3>
                   <p>
-                    {count} {count === 1 ? 'artigo' : 'artigos'}
+                    {count}{' '}
+                    {count === 1 ? translations.article : translations.articles}
                   </p>
                 </div>
               </Link>
@@ -44,7 +60,7 @@ export const Tags = ({ route }: ArticlesOptions) => {
 
           {sortedTags.length === 0 && (
             <div className='empty-state'>
-              <p>Nenhuma tag encontrada.</p>
+              <p>{translations.noTags}</p>
             </div>
           )}
         </section>

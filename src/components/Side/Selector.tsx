@@ -1,9 +1,10 @@
 import type { SideConfig } from '../../@types/side';
 import { useContext, useEffect, useMemo } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { CassetteTape, Pen } from 'lucide-react';
 import { getSideLabel } from '../../helpers/get-side-label';
 import { SideContext } from './context';
-import styles from './styles.module.css';
+import styles from './styles.module.scss';
 
 interface SideSelectorProps {
   sides: SideConfig[];
@@ -11,6 +12,16 @@ interface SideSelectorProps {
 
 export const SideSelector = ({ sides }: SideSelectorProps) => {
   const context = useContext(SideContext);
+  const { i18n } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
+
+  const translations = {
+    chooseArticleSide:
+      currentLocale === 'en'
+        ? 'Choose the article side'
+        : 'Escolha o lado do artigo',
+    side: currentLocale === 'en' ? 'Side' : 'Side',
+  };
 
   if (!context) return null;
   if (!sides || sides.length === 0) return null;
@@ -34,7 +45,7 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
   return (
     <div className={styles.selector}>
       <div className={styles.header}>
-        <Pen /> Escolha o lado do artigo
+        <Pen /> {translations.chooseArticleSide}
       </div>
 
       <div className={styles.options}>
@@ -49,7 +60,8 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
               aria-pressed={currentId === side.id}
             >
               <span className={styles.side}>
-                Side {sideLabel} <CassetteTape width={16} height={16} />
+                {translations.side} {sideLabel}{' '}
+                <CassetteTape width={16} height={16} />
               </span>
               <span className={styles.label}>{side.label}</span>
               {side.description && (

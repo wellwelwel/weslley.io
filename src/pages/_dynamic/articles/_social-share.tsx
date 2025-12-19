@@ -1,3 +1,4 @@
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Link } from 'lucide-react';
 
 type SocialShareProps = {
@@ -6,23 +7,47 @@ type SocialShareProps = {
   author: string;
 };
 
-const shareText = (title: string, author: string) =>
-  `"${title}" por ${author}:`;
+const shareText = (title: string, author: string, locale: string) =>
+  locale === 'en' ? `"${title}" by ${author}:` : `"${title}" por ${author}:`;
 
-const copyToClipboard = async (text: string) => {
+const copyToClipboard = async (text: string, locale: string) => {
   await navigator.clipboard.writeText(text);
-  alert('Link copiado para a área de transferência!');
+  const message =
+    locale === 'en'
+      ? 'Link copied to clipboard!'
+      : 'Link copiado para a área de transferência!';
+  alert(message);
 };
 
 export const SocialShare = ({ url, title, author }: SocialShareProps) => {
+  const { i18n } = useDocusaurusContext();
+  const currentLocale = i18n.currentLocale;
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
-  const encodedText = encodeURIComponent(shareText(title, author));
+  const encodedText = encodeURIComponent(
+    shareText(title, author, currentLocale)
+  );
+
+  const translations = {
+    shareLinkedIn:
+      currentLocale === 'en' ? 'Share on LinkedIn' : 'Compartilhar no LinkedIn',
+    shareX: currentLocale === 'en' ? 'Share on X' : 'Compartilhar no X',
+    shareThreads:
+      currentLocale === 'en' ? 'Share on Threads' : 'Compartilhar no Threads',
+    shareWhatsApp:
+      currentLocale === 'en' ? 'Share on WhatsApp' : 'Compartilhar no WhatsApp',
+    shareReddit:
+      currentLocale === 'en' ? 'Share on Reddit' : 'Compartilhar no Reddit',
+    shareFacebook:
+      currentLocale === 'en' ? 'Share on Facebook' : 'Compartilhar no Facebook',
+    copyLink: currentLocale === 'en' ? 'Copy link' : 'Copiar link',
+    share: currentLocale === 'en' ? 'Share' : 'Compartilhe',
+  };
 
   const links = [
     {
       name: 'LinkedIn',
-      ariaLabel: 'Compartilhar no LinkedIn',
+      ariaLabel: translations.shareLinkedIn,
       href: `https://www.linkedin.com/shareArticle?mini=true&url=${encodedUrl}&title=${encodedTitle}&summary=${encodedText}`,
       icon: (
         <svg viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'>
@@ -32,7 +57,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
     },
     {
       name: 'X',
-      ariaLabel: 'Compartilhar no X',
+      ariaLabel: translations.shareX,
       href: `https://twitter.com/intent/tweet?text=${encodedText}%20${encodedUrl}`,
       icon: (
         <svg viewBox='0 0 1226.37 1226.37' xmlns='http://www.w3.org/2000/svg'>
@@ -42,7 +67,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
     },
     {
       name: 'Threads',
-      ariaLabel: 'Compartilhar no Threads',
+      ariaLabel: translations.shareThreads,
       href: `https://threads.net/intent/post?text=${encodedText}%20${encodedUrl}`,
       icon: (
         <svg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'>
@@ -52,7 +77,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
     },
     {
       name: 'WhatsApp',
-      ariaLabel: 'Compartilhar no WhatsApp',
+      ariaLabel: translations.shareWhatsApp,
       href: `https://api.whatsapp.com/send?text=${encodedText}%20${encodedUrl}`,
       icon: (
         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
@@ -66,8 +91,8 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
     },
     {
       name: 'Reddit',
-      ariaLabel: 'Compartilhar no Reddit',
-      href: `https://www.reddit.com/submit?url=${encodedUrl}&title="${encodedTitle}"%20por%20${encodeURIComponent(author)}`,
+      ariaLabel: translations.shareReddit,
+      href: `https://www.reddit.com/submit?url=${encodedUrl}&title="${encodedTitle}"%20${currentLocale === 'en' ? 'by' : 'por'}%20${encodeURIComponent(author)}`,
       icon: (
         <svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'>
           <path d='M28.543 15.774a2.953 2.953 0 0 0-2.951-2.949 2.882 2.882 0 0 0-1.9.713 14.075 14.075 0 0 0-6.85-2.044l1.38-4.349 3.768.884a2.452 2.452 0 1 0 .24-1.176l-4.274-1a.6.6 0 0 0-.709.4l-1.659 5.224a14.314 14.314 0 0 0-7.316 2.029 2.908 2.908 0 0 0-1.872-.681 2.942 2.942 0 0 0-1.618 5.4 5.109 5.109 0 0 0-.062.765c0 4.158 5.037 7.541 11.229 7.541s11.22-3.383 11.22-7.541a5.2 5.2 0 0 0-.053-.706 2.963 2.963 0 0 0 1.427-2.51zm-18.008 1.88a1.753 1.753 0 0 1 1.73-1.74 1.73 1.73 0 0 1 1.709 1.74 1.709 1.709 0 0 1-1.709 1.711 1.733 1.733 0 0 1-1.73-1.711zm9.565 4.968a5.573 5.573 0 0 1-4.081 1.272h-.032a5.576 5.576 0 0 1-4.087-1.272.6.6 0 0 1 .844-.854 4.5 4.5 0 0 0 3.238.927h.032a4.5 4.5 0 0 0 3.237-.927.6.6 0 1 1 .844.854zm-.331-3.256a1.726 1.726 0 1 1 1.709-1.712 1.717 1.717 0 0 1-1.712 1.712z' />
@@ -76,7 +101,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
     },
     {
       name: 'Facebook',
-      ariaLabel: 'Compartilhar no Facebook',
+      ariaLabel: translations.shareFacebook,
       href: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
       icon: (
         <svg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'>
@@ -88,14 +113,14 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
 
   const copyLink = {
     name: 'Copy Link',
-    ariaLabel: 'Copiar link',
-    onClick: () => copyToClipboard(url),
+    ariaLabel: translations.copyLink,
+    onClick: () => copyToClipboard(url, currentLocale),
   };
 
   return (
     <div className='social-share'>
       <h4>
-        Compartilhe{' '}
+        {translations.share}{' '}
         <svg
           viewBox='0 0 24 24'
           height='20'
