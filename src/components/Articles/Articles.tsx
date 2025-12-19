@@ -5,6 +5,7 @@ import Layout from '@theme/Layout';
 import { ArticlesOptions } from '@site/src/helpers/get-social';
 import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
+import '@site/src/css/pages/articles.scss';
 
 const title = {
   articles: 'Artigos 📜',
@@ -50,10 +51,12 @@ export const Articles = ({ route }: ArticlesOptions) => {
 
   return (
     <Layout title={title[route]}>
-      <main className='container margin-vert--lg' style={{ width: 'unset' }}>
-        <h1>{title[route]}</h1>
+      <div id='articles'>
+        <header>
+          <h1>{title[route]}</h1>
+        </header>
 
-        <div>
+        <section>
           {articles.map((article) => (
             <Article
               key={article.slug}
@@ -63,10 +66,14 @@ export const Articles = ({ route }: ArticlesOptions) => {
               showViewsCounter={showViewsCounter}
             />
           ))}
-        </div>
 
-        {articles.length === 0 && <p>Nenhum artigo encontrado.</p>}
-      </main>
+          {articles.length === 0 && (
+            <div className='empty-state'>
+              <p>Nenhum artigo encontrado.</p>
+            </div>
+          )}
+        </section>
+      </div>
     </Layout>
   );
 };

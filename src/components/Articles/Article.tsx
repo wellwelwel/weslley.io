@@ -12,6 +12,7 @@ import {
 import { useScroll } from '@site/src/hooks/useScroll';
 import { isDevelopment } from '@site/tools/environment';
 import { MarkdownWithAdmonitions } from './Admonition';
+import '@site/src/css/pages/_article-item.scss';
 
 export const Article: FC<{
   article: ProcessedArticle;
@@ -39,20 +40,15 @@ export const Article: FC<{
   }
 
   return (
-    <div ref={ref} className='margin-bottom--lg hide'>
-      <article className='card' style={{ maxWidth: '780px' }}>
+    <div ref={ref} className='article-item'>
+      <article className='card'>
         <div className='card__body'>
           {getSocialImage({ article, route, currentLocale, imageMap }) && (
             <Link to={`/${route}/${article.slug}`}>
               <Parallax
                 tiltMaxAngleX={0}
                 perspective={1920}
-                style={{
-                  backgroundColor: '#f0f0f0',
-                  borderRadius: '8px',
-                  marginBottom: '1rem',
-                  overflow: 'hidden',
-                }}
+                className='parallax-container'
               >
                 <img
                   src={
@@ -66,11 +62,6 @@ export const Article: FC<{
                   alt={article.title}
                   loading='lazy'
                   decoding='async'
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    objectFit: 'cover',
-                  }}
                 />
               </Parallax>
             </Link>
@@ -81,7 +72,7 @@ export const Article: FC<{
           </h2>
 
           {article.description && (
-            <div style={{ color: '#666' }}>
+            <div>
               <MarkdownWithAdmonitions content={article.description} />
             </div>
           )}
@@ -125,12 +116,7 @@ export const Article: FC<{
                     </span>
                   </>
                 )}
-              {isDevelopment && (
-                <em style={{ fontSize: '0.85em', opacity: 0.7 }}>
-                  {' '}
-                  (Simulado durante o desenvolvimento)
-                </em>
-              )}
+              {isDevelopment && <em> (Simulado durante o desenvolvimento)</em>}
             </div>
           </div>
 

@@ -1,0 +1,121 @@
+@use 'sass:meta' as *;
+@use '../global/mixins' as *;
+
+#articles {
+  @include flex(column, center);
+  padding: 40px 20px;
+  width: 100%;
+
+  @media (max-width: 630px) {
+    padding: 20px 10px;
+  }
+
+  & > header {
+    width: 100%;
+    max-width: 780px;
+    margin-bottom: 30px;
+
+    h1 {
+      margin-bottom: 10px;
+      font-family: var(--ifm-font-family-featured);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--title-color-1);
+      text-shadow: 1px 1px 2px var(--title-shadow-color);
+
+      @media (max-width: 630px) {
+        font-size: 28px;
+      }
+    }
+  }
+
+  & > section {
+    @include flex(column, center);
+    gap: 20px;
+    width: 100%;
+    max-width: 780px;
+
+    @include load-css('article-item');
+
+    .empty-state {
+      padding: 40px 20px;
+      text-align: center;
+      font-size: 16px;
+      color: var(--headline-color);
+    }
+
+    &.row {
+      @include flex(row, stretch, flex-start, wrap);
+      gap: 20px;
+
+      .col {
+        flex: 0 0 calc(25% - 15px);
+        max-width: calc(25% - 15px);
+
+        @media (max-width: 996px) {
+          flex: 0 0 calc(33.333% - 14px);
+          max-width: calc(33.333% - 14px);
+        }
+
+        @media (max-width: 768px) {
+          flex: 0 0 calc(50% - 10px);
+          max-width: calc(50% - 10px);
+        }
+
+        @media (max-width: 480px) {
+          flex: 0 0 100%;
+          max-width: 100%;
+        }
+
+        a.card {
+          display: block;
+          text-decoration: none;
+          height: 100%;
+          border: 1px solid var(--card-border-color);
+          border-radius: 8px;
+          background-color: var(--card-background-color);
+          transition:
+            border-color ease 0.3s,
+            transform ease 0.2s;
+
+          &:hover {
+            border-color: var(--card-border-hover-color);
+            transform: translateY(-2px);
+          }
+
+          .card__body {
+            padding: 20px;
+
+            h3 {
+              margin-bottom: 8px;
+              font-size: 18px;
+              font-weight: 600;
+              color: var(--card-title-color);
+            }
+
+            p {
+              margin: 0;
+              font-size: 14px;
+              color: var(--card-description-color);
+              opacity: 0.8;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@include load-css('article-navigation');
+
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

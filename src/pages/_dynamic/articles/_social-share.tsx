@@ -93,25 +93,13 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
   };
 
   return (
-    <div
-      className='social-share'
-      style={{
-        marginTop: '3rem',
-      }}
-    >
-      <h4
-        style={{
-          marginBottom: '1.5rem',
-          fontSize: '1.25rem',
-          fontWeight: 'bold',
-        }}
-      >
+    <div className='social-share'>
+      <h4>
         Compartilhe{' '}
         <svg
           viewBox='0 0 24 24'
           height='20'
           width='20'
-          style={{ marginLeft: 7.5 }}
           xmlns='http://www.w3.org/2000/svg'
         >
           <path
@@ -122,13 +110,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
           <path d='m6.75 15.987c-.056 0-.111-.007-.166-.02-.339-.079-.584-.369-.584-.717v-1.5c0-5.376 4.374-9.75 9.75-9.75h.25v-3.25c0-.306.186-.581.47-.695.283-.114.608-.045.82.175l6.5 6.75c.28.291.28.75 0 1.041l-6.5 6.75c-.212.22-.539.29-.82.175-.284-.115-.47-.39-.47-.696v-3.25h-1.188c-3.146 0-5.973 1.748-7.379 4.561-.129.26-.4.426-.683.426zm9-10.487c-4.2 0-7.677 3.155-8.186 7.22 1.815-2.027 4.424-3.22 7.248-3.22h1.938c.414 0 .75.336.75.75v2.14l4.709-4.89-4.709-4.89v2.14c0 .414-.336.75-.75.75z' />
         </svg>
       </h4>
-      <div
-        style={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          gap: '0.75rem',
-        }}
-      >
+      <div className='share-buttons'>
         {links.map(({ name, ariaLabel, href, icon }) => (
           <a
             key={name}
@@ -137,37 +119,8 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
             rel='noopener noreferrer nofollow external'
             aria-label={ariaLabel}
             title={ariaLabel}
-            style={{
-              display: 'inline-flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '44px',
-              height: '44px',
-              borderRadius: '50%',
-              backgroundColor: 'var(--ifm-color-emphasis-200)',
-              transition: 'all 0.2s ease',
-              textDecoration: 'none',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.backgroundColor =
-                'var(--ifm-color-emphasis-300)';
-              e.currentTarget.style.transform = 'translateY(-2px)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.backgroundColor =
-                'var(--ifm-color-emphasis-200)';
-              e.currentTarget.style.transform = 'translateY(0)';
-            }}
           >
-            <div
-              style={{
-                width: '24px',
-                height: '24px',
-                fill: 'var(--ifm-font-color-base)',
-              }}
-            >
-              {icon}
-            </div>
+            <div className='icon-wrapper'>{icon}</div>
           </a>
         ))}
         <button
@@ -175,36 +128,8 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
           onClick={copyLink.onClick}
           aria-label={copyLink.ariaLabel}
           title={copyLink.ariaLabel}
-          style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: '44px',
-            height: '44px',
-            borderRadius: '50%',
-            backgroundColor: 'var(--ifm-color-emphasis-200)',
-            transition: 'all 0.2s ease',
-            border: 'none',
-            cursor: 'pointer',
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor =
-              'var(--ifm-color-emphasis-300)';
-            e.currentTarget.style.transform = 'translateY(-2px)';
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor =
-              'var(--ifm-color-emphasis-200)';
-            e.currentTarget.style.transform = 'translateY(0)';
-          }}
         >
-          <div
-            style={{
-              width: '24px',
-              height: '24px',
-              fill: 'var(--ifm-font-color-base)',
-            }}
-          >
+          <div className='icon-wrapper'>
             <Link />
           </div>
         </button>

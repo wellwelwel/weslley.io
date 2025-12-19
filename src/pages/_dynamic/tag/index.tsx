@@ -11,6 +11,7 @@ import {
   getSocialImage,
 } from '@site/src/helpers/get-social';
 import { isDevelopment } from '../../../../tools/environment';
+import '@site/src/css/pages/_article-item.scss';
 
 type TagPageProps = {
   data: {
@@ -71,19 +72,18 @@ export default ({ data }: TagPageProps) => {
         title={`Tag: ${tag}`}
         description={`Artigos relacionados à tag ${tag}`}
       >
-        <main
-          className='container margin-vert--lg'
-          style={{ maxWidth: '780px' }}
-        >
-          <h1>Tag: {tag}</h1>
-          <p>
-            {articles.length} {articles.length === 1 ? 'artigo' : 'artigos'}{' '}
-            {articles.length === 1 ? 'encontrado' : 'encontrados'}
-          </p>
+        <div id='articles'>
+          <header>
+            <h1>Tag: {tag}</h1>
+            <p>
+              {articles.length} {articles.length === 1 ? 'artigo' : 'artigos'}{' '}
+              {articles.length === 1 ? 'encontrado' : 'encontrados'}
+            </p>
+          </header>
 
-          <div className='row'>
+          <section>
             {articles.map((article) => (
-              <div key={article.slug} className='col col--12 margin-bottom--lg'>
+              <div key={article.slug} className='article-item show'>
                 <article className='card'>
                   <div className='card__body'>
                     {getSocialImage({
@@ -92,14 +92,7 @@ export default ({ data }: TagPageProps) => {
                       currentLocale,
                       imageMap,
                     }) && (
-                      <div
-                        style={{
-                          backgroundColor: '#f0f0f0',
-                          borderRadius: '8px',
-                          marginBottom: '1rem',
-                          overflow: 'hidden',
-                        }}
-                      >
+                      <Link to={`/${route}/${article.slug}`}>
                         <img
                           src={
                             getSocialImage({
@@ -111,13 +104,8 @@ export default ({ data }: TagPageProps) => {
                           }
                           alt={article.title}
                           loading='lazy'
-                          style={{
-                            width: '100%',
-                            height: '100%',
-                            objectFit: 'cover',
-                          }}
                         />
-                      </div>
+                      </Link>
                     )}
 
                     <h2>
@@ -127,7 +115,7 @@ export default ({ data }: TagPageProps) => {
                     </h2>
 
                     {article.description && (
-                      <div style={{ color: '#666' }}>
+                      <div>
                         <MarkdownWithAdmonitions
                           content={article.description}
                         />
@@ -140,7 +128,7 @@ export default ({ data }: TagPageProps) => {
                       Visualizações:{' '}
                       {article.slug ? viewCounts[article.slug] : '-'}
                     </div>
-                    <div className='margin-bottom--sm'>
+                    <div>
                       <time dateTime={article.date}>
                         {new Date(article.date).toLocaleDateString(
                           currentLocale,
@@ -160,163 +148,24 @@ export default ({ data }: TagPageProps) => {
                       <div>
                         {article.lastModified &&
                           article.lastModified !== article.date && (
-                            <>
-                              <span title='Última modificação'>
-                                Última atualização em{' '}
-                                <strong>
-                                  {new Date(
-                                    article.lastModified
-                                  ).toLocaleDateString(currentLocale, {
-                                    year: 'numeric',
-                                    month: 'long',
-                                    day: 'numeric',
-                                  })}
-                                </strong>
-                              </span>
-                            </>
+                            <span title='Última modificação'>
+                              Última atualização em{' '}
+                              <strong>
+                                {new Date(
+                                  article.lastModified
+                                ).toLocaleDateString(currentLocale, {
+                                  year: 'numeric',
+                                  month: 'long',
+                                  day: 'numeric',
+                                })}
+                              </strong>
+                            </span>
                           )}
                         {isDevelopment && (
-                          <em style={{ fontSize: '0.85em', opacity: 0.7 }}>
-                            {' '}
-                            (Simulado durante o desenvolvimento)
-                          </em>
+                          <em> (Simulado durante o desenvolvimento)</em>
                         )}
                       </div>
                     </div>
-
-                    {article.authorsData && article.authorsData.length > 0 && (
-                      <div className='margin-bottom--sm'>
-                        {article.authorsData.map(
-                          ({ image_url, name, socials, title, url }) => (
-                            <div
-                              key={name}
-                              style={{
-                                display: 'flex',
-                                alignItems: 'center',
-                                gap: '0.75rem',
-                                marginBottom: '0.75rem',
-                              }}
-                            >
-                              <img
-                                src={image_url}
-                                alt={name}
-                                loading='lazy'
-                                style={{
-                                  width: '48px',
-                                  height: '48px',
-                                  borderRadius: '50%',
-                                  flexShrink: 0,
-                                }}
-                              />
-                              <div style={{ flex: 1 }}>
-                                <div style={{ marginBottom: '0.125rem' }}>
-                                  <a
-                                    href={url}
-                                    target='_blank'
-                                    rel='noopener noreferrer'
-                                    style={{
-                                      fontSize: '0.95rem',
-                                      fontWeight: 'bold',
-                                      textDecoration: 'none',
-                                    }}
-                                  >
-                                    {name}
-                                  </a>
-                                </div>
-                                <div
-                                  style={{
-                                    fontSize: '0.8rem',
-                                    marginBottom: '0.25rem',
-                                    opacity: 0.85,
-                                  }}
-                                >
-                                  {title}
-                                </div>
-                                <div
-                                  style={{
-                                    display: 'flex',
-                                    gap: '0.375rem',
-                                  }}
-                                >
-                                  {socials.linkedin && (
-                                    <a
-                                      href={`https://linkedin.com/in/${socials.linkedin}`}
-                                      target='_blank'
-                                      rel='noopener noreferrer'
-                                      title='LinkedIn'
-                                    >
-                                      <img
-                                        src='/img/linkedin.svg'
-                                        alt='LinkedIn'
-                                        loading='lazy'
-                                        style={{
-                                          width: '18px',
-                                          height: '18px',
-                                        }}
-                                      />
-                                    </a>
-                                  )}
-                                  {socials.github && (
-                                    <a
-                                      href={`https://github.com/${socials.github}`}
-                                      target='_blank'
-                                      rel='noopener noreferrer'
-                                      title='GitHub'
-                                    >
-                                      <img
-                                        src='/img/github.svg'
-                                        alt='GitHub'
-                                        loading='lazy'
-                                        style={{
-                                          width: '18px',
-                                          height: '18px',
-                                        }}
-                                      />
-                                    </a>
-                                  )}
-                                  {socials.instagram && (
-                                    <a
-                                      href={`https://instagram.com/${socials.instagram}`}
-                                      target='_blank'
-                                      rel='noopener noreferrer'
-                                      title='Instagram'
-                                    >
-                                      <img
-                                        src='/img/instagram.svg'
-                                        alt='Instagram'
-                                        loading='lazy'
-                                        style={{
-                                          width: '18px',
-                                          height: '18px',
-                                        }}
-                                      />
-                                    </a>
-                                  )}
-                                  {socials.youtube && (
-                                    <a
-                                      href={`https://youtube.com/@${socials.youtube}`}
-                                      target='_blank'
-                                      rel='noopener noreferrer'
-                                      title='YouTube'
-                                    >
-                                      <img
-                                        src='/img/youtube.svg'
-                                        alt='YouTube'
-                                        loading='lazy'
-                                        style={{
-                                          width: '18px',
-                                          height: '18px',
-                                        }}
-                                      />
-                                    </a>
-                                  )}
-                                </div>
-                              </div>
-                            </div>
-                          )
-                        )}
-                      </div>
-                    )}
 
                     {article.tags.length > 0 && (
                       <div>
@@ -335,10 +184,14 @@ export default ({ data }: TagPageProps) => {
                 </article>
               </div>
             ))}
-          </div>
 
-          {articles.length === 0 && <p>Nenhum artigo encontrado.</p>}
-        </main>
+            {articles.length === 0 && (
+              <div className='empty-state'>
+                <p>Nenhum artigo encontrado.</p>
+              </div>
+            )}
+          </section>
+        </div>
       </Layout>
     </>
   );

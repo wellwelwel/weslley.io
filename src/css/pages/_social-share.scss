@@ -1,0 +1,54 @@
+@use '../global/mixins' as *;
+
+.social-share {
+  margin-top: 48px;
+
+  h4 {
+    @include flex(row, center, flex-start);
+    margin-bottom: 24px;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--card-title-color);
+
+    svg {
+      margin-left: 7.5px;
+    }
+  }
+
+  .share-buttons {
+    @include flex(row, center, flex-start, wrap);
+    gap: 12px;
+
+    a,
+    button {
+      @include flex(row, center, center);
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background-color: var(--ifm-color-emphasis-200);
+      transition:
+        background-color ease 0.2s,
+        transform ease 0.2s;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background-color: var(--ifm-color-emphasis-300);
+        transform: translateY(-2px);
+      }
+
+      .icon-wrapper {
+        @include flex(row, center, center);
+        width: 24px;
+        height: 24px;
+        fill: var(--ifm-font-color-base);
+
+        svg {
+          width: 100%;
+          height: 100%;
+        }
+      }
+    }
+  }
+}

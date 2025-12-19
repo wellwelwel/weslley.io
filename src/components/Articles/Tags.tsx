@@ -1,8 +1,9 @@
+import type { ArticlesOptions } from '@site/src/helpers/get-social';
 import type { ProcessedArticle } from '../../@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import { ArticlesOptions } from './Article';
+import '@site/src/css/pages/articles.scss';
 
 export const Tags = ({ route }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();
@@ -21,35 +22,33 @@ export const Tags = ({ route }: ArticlesOptions) => {
 
   return (
     <Layout title='Tags' description='Todas as tags do blog'>
-      <main className='container margin-vert--lg'>
-        <h1>Tags</h1>
-        <p>Todas as tags utilizadas nos artigos do blog.</p>
+      <div id='articles'>
+        <header>
+          <h1>Tags</h1>
+          <p>Todas as tags utilizadas nos artigos do blog.</p>
+        </header>
 
-        <div className='row'>
+        <section className='row'>
           {sortedTags.map(([tag, count]) => (
-            <div key={tag} className='col col--3 margin-bottom--md'>
-              <Link
-                to={`/${route}/tag/${tag.toLowerCase()}`}
-                className='card'
-                style={{
-                  display: 'block',
-                  textDecoration: 'none',
-                  height: '100%',
-                }}
-              >
+            <div key={tag} className='col'>
+              <Link to={`/${route}/tag/${tag.toLowerCase()}`} className='card'>
                 <div className='card__body'>
-                  <h3 style={{ marginBottom: '0.5rem' }}>{tag}</h3>
-                  <p style={{ margin: 0, opacity: 0.8 }}>
+                  <h3>{tag}</h3>
+                  <p>
                     {count} {count === 1 ? 'artigo' : 'artigos'}
                   </p>
                 </div>
               </Link>
             </div>
           ))}
-        </div>
 
-        {sortedTags.length === 0 && <p>Nenhuma tag encontrada.</p>}
-      </main>
+          {sortedTags.length === 0 && (
+            <div className='empty-state'>
+              <p>Nenhuma tag encontrada.</p>
+            </div>
+          )}
+        </section>
+      </div>
     </Layout>
   );
 };

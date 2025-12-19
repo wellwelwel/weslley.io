@@ -11,6 +11,7 @@ import { Navigation } from './_navigation';
 import { Reactions } from './_reactions';
 import { SocialShare } from './_social-share';
 import { Summary } from './_summary';
+import '@site/src/css/pages/article-page.scss';
 
 export default ({
   data,
@@ -63,20 +64,13 @@ export default ({
           <meta name='twitter:description' content={description} />
         )}
       </Head>
-      <main className='container margin-vert--lg' style={{ width: 'unset' }}>
-        <article
-          style={{
-            padding: 30,
-            borderRadius: '15px',
-            backgroundColor: '#fff',
-            maxWidth: '1080px',
-          }}
-        >
+      <div id='article-page'>
+        <article>
           <header>
             <h1>{title}</h1>
 
             {showViewsCounter && (
-              <div className='margin-bottom--sm'>
+              <div className='views-counter'>
                 <img
                   src={`${API}/badge?slug=${slug}&label=Visualizações&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
                   loading='lazy'
@@ -85,7 +79,7 @@ export default ({
               </div>
             )}
 
-            <div className='margin-bottom--md'>
+            <div className='metadata'>
               <time dateTime={date}>
                 {new Date(date).toLocaleDateString(currentLocale, {
                   year: 'numeric',
@@ -100,98 +94,50 @@ export default ({
               </span>
               <div>
                 {lastModified && lastModified !== date && (
-                  <>
-                    <span title='Última modificação'>
-                      Última atualização em{' '}
-                      <strong>
-                        {new Date(lastModified).toLocaleDateString(
-                          currentLocale,
-                          {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          }
-                        )}
-                      </strong>
-                    </span>
-                  </>
+                  <span title='Última modificação'>
+                    Última atualização em{' '}
+                    <strong>
+                      {new Date(lastModified).toLocaleDateString(
+                        currentLocale,
+                        {
+                          year: 'numeric',
+                          month: 'long',
+                          day: 'numeric',
+                        }
+                      )}
+                    </strong>
+                  </span>
                 )}
                 {isDevelopment && (
-                  <em style={{ fontSize: '0.85em', opacity: 0.7 }}>
-                    {' '}
-                    (Simulado durante o desenvolvimento)
-                  </em>
+                  <em> (Simulado durante o desenvolvimento)</em>
                 )}
               </div>
             </div>
 
-            <div
-              style={{
-                transform: 'scale(0.75)',
-                transformOrigin: 'left',
-                marginTop: '-40px',
-                marginBottom: '-15px',
-              }}
-            >
+            <div className='social-share-wrapper'>
               <SocialShare url={articleUrl} title={title} author={authorName} />
             </div>
 
             <hr />
 
             {authorsData && authorsData.length > 0 && (
-              <div className='margin-bottom--md'>
+              <div className='authors'>
                 {authorsData.map(({ image_url, name, socials, title, url }) => (
-                  <div
-                    key={name}
-                    style={{
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '1rem',
-                      marginBottom: '1rem',
-                    }}
-                  >
+                  <div key={name} className='author'>
                     <img
                       src={image_url}
                       alt={name}
                       loading='lazy'
                       decoding='async'
-                      style={{
-                        width: '80px',
-                        height: '80px',
-                        borderRadius: '50%',
-                        flexShrink: 0,
-                      }}
                     />
-                    <div style={{ flex: 1 }}>
-                      <div style={{ marginBottom: '0.25rem' }}>
-                        <a
-                          href={url}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          style={{
-                            fontSize: '1.25rem',
-                            fontWeight: 'bold',
-                            textDecoration: 'none',
-                          }}
-                        >
+                    <div className='author-info'>
+                      <div className='author-name'>
+                        <a href={url} target='_blank' rel='noopener noreferrer'>
                           {name}
                         </a>
                       </div>
-                      <div
-                        style={{
-                          fontSize: '0.9rem',
-                          marginBottom: '0.5rem',
-                          opacity: 0.9,
-                        }}
-                      >
-                        {title}
-                      </div>
-                      <div
-                        style={{
-                          display: 'flex',
-                          gap: '0.5rem',
-                        }}
-                      >
+                      <div className='author-title'>{title}</div>
+                      <div className='author-socials'>
                         {socials.linkedin && (
                           <a
                             href={`https://linkedin.com/in/${socials.linkedin}`}
@@ -204,7 +150,6 @@ export default ({
                               src='/img/linkedin.svg'
                               loading='lazy'
                               decoding='async'
-                              style={{ width: '24px', height: '24px' }}
                             />
                           </a>
                         )}
@@ -220,7 +165,6 @@ export default ({
                               alt='GitHub'
                               loading='lazy'
                               decoding='async'
-                              style={{ width: '24px', height: '24px' }}
                             />
                           </a>
                         )}
@@ -236,7 +180,6 @@ export default ({
                               alt='Instagram'
                               loading='lazy'
                               decoding='async'
-                              style={{ width: '24px', height: '24px' }}
                             />
                           </a>
                         )}
@@ -252,7 +195,6 @@ export default ({
                               alt='YouTube'
                               loading='lazy'
                               decoding='async'
-                              style={{ width: '24px', height: '24px' }}
                             />
                           </a>
                         )}
@@ -264,7 +206,7 @@ export default ({
             )}
 
             {tags.length > 0 && (
-              <div className='margin-bottom--md'>
+              <div className='tags'>
                 <strong>Tags:</strong>{' '}
                 {tags.map((tag: string, index: number) => (
                   <span key={tag}>
@@ -284,15 +226,9 @@ export default ({
             <Parallax
               tiltMaxAngleX={0}
               perspective={1920}
-              className='margin-bottom--md'
+              className='article-image'
             >
-              <img
-                src={social}
-                alt={title}
-                loading='lazy'
-                decoding='async'
-                style={{ width: '100%' }}
-              />
+              <img src={social} alt={title} loading='lazy' decoding='async' />
             </Parallax>
           )}
 
@@ -330,7 +266,7 @@ export default ({
             }
           />
         </article>
-      </main>
+      </div>
     </Layout>
   );
 };
