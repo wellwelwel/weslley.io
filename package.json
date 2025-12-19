@@ -12,11 +12,12 @@
     "start": "docusaurus start --host 0.0.0.0",
     "prestart:en": "tsx tools/host.ts",
     "start:en": "docusaurus start --locale en",
-    "prebuild": "tsx tools/build-missing-content.ts",
+    "prebuild": "npm run i18n:sync",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
     "clear": "docusaurus clear",
     "reset": "(npm run clear || true) && rm -rf node_modules package-lock.json && npm i && npm run update",
+    "i18n:sync": "tsx tools/sync-i18n-articles.ts",
     "prepreview": "tsx tools/host.ts",
     "preview": "npm run build && docusaurus serve --host 0.0.0.0",
     "write-translations": "docusaurus write-translations",
@@ -26,7 +27,7 @@
     "lint:fix": "prettier --write .",
     "update": "pu minor && npm i && (npm audit fix || true) && npm run lint:fix",
     "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts",
-    "test": "npm run clear && npm run lint && npm run typecheck && npm run build"
+    "test": "npm run clear && npm run lint && npm run typecheck && poku -r=compact ./test/ && npm run build"
   },
   "devDependencies": {
     "@docusaurus/core": "^3.9.2",
@@ -44,18 +45,21 @@
     "animejs": "^4.2.2",
     "clsx": "^2.1.1",
     "docusaurus-plugin-sass": "^0.2.6",
+    "github-slugger": "^2.0.0",
     "jsonc.min": "^1.1.0",
     "lucide-react": "^0.561.0",
     "packages-update": "^2.0.0",
-    "poku": "^3.0.2",
+    "poku": "^3.0.3-canary.86e2832e",
     "prettier": "^3.7.4",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "react-markdown": "^10.1.0",
     "react-parallax-tilt": "^1.7.315",
     "sass": "^1.96.0",
     "tsx": "^4.21.0",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "^2.8.2"
   },
   "browserslist": {
     "production": [
@@ -72,5 +76,8 @@
   "engines": {
     "node": ">=20.0"
   },
-  "private": true
+  "private": true,
+  "dependencies": {
+    "remark-directive-rehype": "^0.4.2"
+  }
 }

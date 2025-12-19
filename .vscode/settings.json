@@ -11,5 +11,8 @@
   },
   "[markdown]": {
     "files.trimTrailingWhitespace": false
+  },
+  "[mdx]": {
+    "files.trimTrailingWhitespace": false
   }
 }
