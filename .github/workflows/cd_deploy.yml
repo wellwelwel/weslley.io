@@ -40,6 +40,9 @@ jobs:
 
       - name: Building Site
         run: npm run build
+        with:
+          COUNTTY_URL: ${{ secrets.COUNTTY_URL }}
+          COUNTTY_TOKEN: ${{ secrets.COUNTTY_TOKEN }}
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
