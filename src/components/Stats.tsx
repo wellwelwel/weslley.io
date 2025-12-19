@@ -39,7 +39,7 @@ export const useStats = () => {
     fetch(base)
       .then((res) => res.json())
       .catch(() => {})
-      .then(setStats);
+      .then((data: unknown) => setStats(data as MediaKitStats));
   }, []);
 
   return stats;

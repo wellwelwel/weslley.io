@@ -1,5 +1,6 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
 import type { FC } from 'react';
+import type { ViewMode } from './Articles';
 import { useRef } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -19,18 +20,26 @@ export const Article: FC<{
   route: ArticlesOptions['route'];
   viewCounts: Record<string, string>;
   showViewsCounter: boolean;
-}> = ({ article, route, viewCounts, showViewsCounter }) => {
+  viewMode?: ViewMode;
+}> = ({ article, route, viewCounts, showViewsCounter, viewMode = 'card' }) => {
   const { i18n } = useDocusaurusContext();
   const ref = useRef<HTMLDivElement>(null);
   const imageMap: Record<string, string> = Object.create(null);
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
 
-  useScroll(ref, (isVisible, target) => {
-    if (!isVisible) return;
+  useScroll(
+    ref,
+    (isVisible, target) => {
+      if (!isVisible) return;
 
-    target.classList.add('show');
-  });
+      target.classList.add('show');
+    },
+    {
+      deps: [viewMode],
+      onReset: (target) => target.classList.remove('show'),
+    }
+  );
 
   if (imagesContext) {
     imagesContext.keys().forEach((key) => {
@@ -40,16 +49,15 @@ export const Article: FC<{
   }
 
   return (
-    <div ref={ref} className='article-item'>
+    <div
+      ref={ref}
+      className={`article-item ${viewMode === 'list' ? 'list-mode' : ''}`}
+    >
       <article className='card'>
         <div className='card__body'>
           {getSocialImage({ article, route, currentLocale, imageMap }) && (
             <Link to={`/${route}/${article.slug}`}>
-              <Parallax
-                tiltMaxAngleX={0}
-                perspective={1920}
-                className='parallax-container'
-              >
+              {viewMode === 'list' ? (
                 <img
                   src={
                     getSocialImage({
@@ -62,24 +70,47 @@ export const Article: FC<{
                   alt={article.title}
                   loading='lazy'
                   decoding='async'
+                  className='list-thumbnail'
                 />
-              </Parallax>
+              ) : (
+                <Parallax
+                  tiltMaxAngleX={0}
+                  perspective={1920}
+                  className='parallax-container'
+                >
+                  <img
+                    src={
+                      getSocialImage({
+                        article,
+                        route,
+                        currentLocale,
+                        imageMap,
+                      }) ?? undefined
+                    }
+                    alt={article.title}
+                    loading='lazy'
+                    decoding='async'
+                  />
+                </Parallax>
+              )}
             </Link>
           )}
 
-          <h2>
-            <Link to={`/${route}/${article.slug}`}>{article.title}</Link>
-          </h2>
+          <div className='content-wrapper'>
+            <h2>
+              <Link to={`/${route}/${article.slug}`}>{article.title}</Link>
+            </h2>
 
-          {article.description && (
-            <div>
-              <MarkdownWithAdmonitions content={article.description} />
-            </div>
-          )}
+            {viewMode === 'card' && article.description && (
+              <div>
+                <MarkdownWithAdmonitions content={article.description} />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className='card__footer'>
-          {showViewsCounter && (
+          {viewMode === 'card' && showViewsCounter && (
             <div>
               Visualizações: {article.slug ? viewCounts[article.slug] : '-'}
             </div>
@@ -97,27 +128,31 @@ export const Article: FC<{
               {article.readingTime}{' '}
               {article.readingTime === 1 ? 'minuto' : 'minutos'} de leitura
             </span>
-            <div>
-              {article.lastModified &&
-                article.lastModified !== article.date && (
-                  <>
-                    <span title='Última modificação'>
-                      Última atualização em{' '}
-                      <strong>
-                        {new Date(article.lastModified).toLocaleDateString(
-                          currentLocale,
-                          {
-                            year: 'numeric',
-                            month: 'long',
-                            day: 'numeric',
-                          }
-                        )}
-                      </strong>
-                    </span>
-                  </>
+            {viewMode === 'card' && (
+              <div>
+                {article.lastModified &&
+                  article.lastModified !== article.date && (
+                    <>
+                      <span title='Última modificação'>
+                        Última atualização em{' '}
+                        <strong>
+                          {new Date(article.lastModified).toLocaleDateString(
+                            currentLocale,
+                            {
+                              year: 'numeric',
+                              month: 'long',
+                              day: 'numeric',
+                            }
+                          )}
+                        </strong>
+                      </span>
+                    </>
+                  )}
+                {isDevelopment && (
+                  <em> (Simulado durante o desenvolvimento)</em>
                 )}
-              {isDevelopment && <em> (Simulado durante o desenvolvimento)</em>}
-            </div>
+              </div>
+            )}
           </div>
 
           {article.tags.length > 0 && (

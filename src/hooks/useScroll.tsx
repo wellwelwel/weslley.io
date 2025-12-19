@@ -9,6 +9,8 @@ import { useEffect } from 'react';
 type Options = {
   eject?: boolean;
   threshold?: number;
+  deps?: unknown[];
+  onReset?: (target: HTMLElement) => void;
 };
 
 export function useScroll(
@@ -16,11 +18,18 @@ export function useScroll(
   cb: (isVisible: boolean, target: HTMLElement) => void,
   options?: Options
 ) {
+  const {
+    threshold = 0.1,
+    eject = true,
+    deps = [],
+    onReset,
+  } = options ?? Object.create(null);
+
   useEffect(() => {
     const target = ref.current;
     if (!target) return;
 
-    const { threshold = 0.1, eject = true } = options ?? Object.create(null);
+    onReset?.(target);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -36,5 +45,5 @@ export function useScroll(
     return () => {
       observer.disconnect();
     };
-  }, [ref]);
+  }, [ref, ...deps]);
 }

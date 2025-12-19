@@ -7,12 +7,13 @@
   width: 100%;
 
   @media (max-width: 630px) {
-    padding: 20px 10px;
+    padding: 20px;
   }
 
   & > header {
+    @include flex(row, center, space-between);
     width: 100%;
-    max-width: 780px;
+    max-width: 770px;
     margin-bottom: 30px;
 
     h1 {
@@ -27,15 +28,57 @@
         font-size: 28px;
       }
     }
+
+    .view-toggle {
+      @include flex(row, center);
+      gap: 8px;
+
+      button {
+        @include flex(row, center, center);
+        width: 40px;
+        height: 40px;
+        padding: 0;
+        border: 1px solid var(--card-border-color);
+        border-radius: 8px;
+        background-color: var(--card-background-color);
+        color: var(--card-description-color);
+        cursor: pointer;
+        transition:
+          background-color ease 0.25s,
+          border-color ease 0.25s,
+          color ease 0.25s;
+
+        &:hover {
+          border-color: var(--card-border-hover-color);
+          background-color: var(--card-background-hover-color);
+          color: var(--card-title-color);
+        }
+
+        &.active {
+          border-color: var(--ifm-color-primary);
+          background-color: var(--ifm-color-primary);
+          color: #fff;
+        }
+
+        svg {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
   }
 
   & > section {
     @include flex(column, center);
     gap: 20px;
     width: 100%;
-    max-width: 780px;
+    max-width: 770px;
 
     @include load-css('article-item');
+
+    &.list-view {
+      gap: 12px;
+    }
 
     .empty-state {
       padding: 40px 20px;
