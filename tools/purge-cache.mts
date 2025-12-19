@@ -23,9 +23,15 @@ try {
 
   if (!response.ok) {
     const error = await response.json();
-    throw new Error(
-      `Failed to purge cache: ${error.errors?.[0]?.message || response.statusText}`
-    );
+    const errorMessage =
+      typeof error === 'object' &&
+      error !== null &&
+      'errors' in error &&
+      Array.isArray(error.errors) &&
+      error.errors[0]?.message
+        ? error.errors[0].message
+        : response.statusText;
+    throw new Error(`Failed to purge cache: ${errorMessage}`);
   }
 
   await response.json();

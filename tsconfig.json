@@ -25,7 +25,9 @@
     "noEmit": true,
     "noEmitOnError": true,
     "paths": {
-      "@site/*": ["./*"]
+      "@site/*": ["./*"],
+      "@Modal": ["./src/components/Modal"],
+      "@Side": ["./src/components/Side"]
     }
   },
   "exclude": ["static", ".docusaurus", "build"],

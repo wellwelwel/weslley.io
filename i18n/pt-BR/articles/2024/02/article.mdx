@@ -1,0 +1,135 @@
+---
+title: Prevenindo o envio de emails maliciosos através do seu domínio
+slug: prevenindo-o-envio-de-emails-maliciosos-atraves-do-seu-dominio
+date: 2024-06-10
+authors: ['Weslley Araújo']
+tags: [Segurança, DNS, Email, SPF, DKIM, DMARC, MX]
+social: ./banner.png
+sides:
+  - id: developer
+    label: Sou um Desenvolvedor
+    description: Aprenda como configurar seu domínio de forma segura contra E-mail Spoofing.
+  - id: user
+    label: Sou um Usuário de E-mails
+    description: Aprenda como se proteger contra e-mails falsos vindos de remetentes "reais".
+---
+
+Sabia que pessoas mal intencionadas podem estar usando seu domínio para enviar e-mails falsos?
+
+{/* truncate */}
+
+import { Side } from '@Side';
+
+<Side id="developer">
+
+Essa técnica é conhecida como E-mail Spoofing e explora a falta de autenticação no envio de e-mails de um domínio, falsificando o remetente e fazendo parecer que a mensagem foi enviada por um domínio confiável.
+
+Tanto empresas pequenas e grandes podem ser alvos, assim como sites pessoais ou abandonados, onde o intuito pode variar desde capturar dados sensíveis e até infectar dispositivos dos usuários. Tudo isso, usando domínios válidos sem autorização.
+
+Os motivos podem variar, mas vou citar alguns super comuns que tornam essa vulnerabilidade possível:
+
+- Falta de conhecimento ou até mesmo negligência.
+- O provedor do domínio exige um plano pago à parte para e-mails que o usuário não está disposto a adquirir.
+
+<hr />
+
+## Possíveis impactos negativos 👾
+
+- Perda de credibilidade.
+- Bloqueio por provedores de e-mail (onde até mesmo seus e-mails válidos podem ser afetados ao serem entregues como spam ou nem mesmo chegarem ao destinatário).
+- Perda do domínio (denúncias, medidas legais ou até mesmo pela reputação muito prejudicada).
+
+<hr />
+
+## Como se proteger? 🤝
+
+Nesse artigo, vou abordar tópicos como SPF, DKIM e DMARC para proteger seu domínio e evitar que pessoas maliciosas consigam acesso não autorizado ao seu domínio.
+
+### DNS
+
+O **DNS** é onde você configura os registros relacionados ao seu domínio, como subdomínios, redirecionamentos, envio e recebimento de e-mails, entre outros.
+
+Ao comprar um domínio, é comum usuários se preocuparem especialmente com o IP da hospedagem. Aqui é onde mora um dos problemas, pois ao notar que o domínio já está funcionando, o usuário pode considerar que o trabalho já está completo.
+
+Dito isso, vamos conhecer os principais registros relacionados ao e-mail:
+
+### MX (Mail Exchange)
+
+O registro **MX** é o responsável por você receber os e-mails, direcionando-os do seu domínio para o servidor responsável por recebê-los (**Google Workspace**, **Zoho**, etc.).
+
+Sem ele, os e-mails que te enviarem nunca chegarão até você.
+
+### SPF
+
+O registro **SPF** é uma forma de dizer quais servidores estão autorizados a enviar e-mails em nome do seu domínio, ajudando a evitar que pessoas mal intencionadas usem seu domínio.
+
+Ele é especialmente importante contra o E-mail Spoofing, sendo geralmente reforçado pelo parâmetro `~all`.
+
+#### Dica:
+
+Enquanto a maioria dos servidores de e-mail sugerem `~all` devido à flexibilidade, se seu domínio já foi vítima de **E-mail Spoofing** ou você quer reforçar ainda mais sua segurança, você pode usar `-all` para eliminar a possibilidade de aceitação por baixa prioridade de forma estrita, mas note que isso implica na complexidade das configurações do **DNS**, exigindo atualizações manuais sempre que novos serviços de e-mail forem integrados ao seu domínio.
+
+### DKIM
+
+O registro **DKIM** adiciona uma assinatura digital aos e-mails enviados pelo seu domínio, permitindo que o servidor que recebe o seu e-mail verifique se a mensagem foi realmente enviada por você e não foi alterada no caminho, sendo uma ferramenta complementar essencial ao **SPF**.
+
+Isso ajuda a proteger tanto a reputação do seu domínio quanto os destinatários, além de indiretamente evitar que seus e-mails sejam entregues como spam.
+
+### DMARC
+
+O registro **DMARC** permite que você defina como os servidores de e-mail devem tratar mensagens que falharem na validação do SPF e do DKIM, fornecendo relatórios detalhados sobre tentativas indevidas usando seu domínio, permitindo monitorar possíveis abusos.
+
+<hr />
+
+## Soluções e alternativas gratuitas 🌟
+
+Se seu provedor não possui um servidor de e-mails ou você não pretende usar um plano pago para isso, você pode usar gratuitamente o DNS com o roteamento de e-mails da Cloudflare, redirecionando os e-mails do seu domínio para outro e-mail (por exemplo, um e-mail pessoal do Gmail).
+
+O Zoho também pode ser uma boa alternativa, não sendo necessário redirecionar seus e-mails e oferecendo um dashboard próprio para os e-mails do seu domínio, mas ele possui limitações de recurso em sua versão gratuita.
+
+— Curtiu aprender um pouco mais sobre segurança? 🔐
+
+:::note
+Esse artigo não possui nenhum tipo de patrocínio e essas são sugestões que uso tanto pessoalmente, como profissionalmente 🙋🏻
+:::
+
+:::info
+Esse artigo foi postado icialmente no [LinkedIn](https://www.linkedin.com/pulse/e-mail-spoofing-prevenindo-o-envio-de-emails-atrav%25C3%25A9s-do-ara%25C3%25BAjo-ff2xc/).
+:::
+
+</Side>
+
+<Side id="user">
+
+Já recebeu e-mails falsos vindos de contas reais? Vem entender a importância de configurar o DNS do seu site e como se proteger tanto como usuário, como desenvolvedor 📨🎣
+
+Constantemente recebo e-mails maliciosos e os que mais me chamam atenção, são os que vêm de domínios válidos de empresas reais (e sérias).
+
+## Mas como alguém pode usar um domínio sem autorização? 🤨
+
+Essa técnica é conhecida como "E-mail Spoofing" e é abordada com mais detalhes no artigo, enquanto essa publicação é focada em nos protegermos como usuários.
+
+🧑🏻‍🔬 Vamos lá:
+
+Um e-mail em especial me deixou curioso, pois o domínio que foi usado é de uma das 10 maiores empresas do país. Decidi abrir em um ambiente controlado e, só para lembrar, aba anônima de navegador não é ambiente controlado 🧙🏻‍♂️
+
+Imaginei que seria "apenas" uma página de login falsa, mas foram feitos vários redirecionamentos e pedidos de permissões no navegador, para só então chegar na tela de login 🎣
+
+Esses redirecionamentos podem ser usados, por exemplo, para roubar cookies ou acessar permissões de câmera e microfone sem o nosso consentimento.
+
+O fato do e-mail vir de um domínio que nós confiamos, pode nos induzir desde a clicar, aceitar permissões (que navegadores podem inclusive já ter como ativadas por padrão) e até a inserir nossas credenciais em um site falso.
+
+## Como se previnir como usuário? 🔐
+
+- Suspeite de e-mails que oferecem algo que você não solicitou, independente do remetente.
+- Verifique se o domínio faz sentido com o que foi recebido, por exemplo, ao receber cobranças de uma empresa, mas o domínio veio de outra (mesmo que real).
+- Prefira usar o computador ao invés do celular para abrir links, onde você pode passar o mouse por cima do link sem clicar e verificar se o destino realmente leva para o site que você espera.
+- O link começa com o site esperado, mas possui um @? Cuidado, isso pode ser outra técnica chamada URL Obfuscation, que consiste em mascarar o verdadeiro destino do link.
+- Tem algum arquivo anexo nesse e-mail? Jamais baixe ou abra, por mais curioso que o e-mail te deixe.
+- Na dúvida, entre em contato com os canais oficiais da empresa (e não os que constam no e-mail).
+
+Quando o domínio de uma empresa é usado para esses fins, é interessante notar que a empresa também é uma vítima, mas isso não significa que ela está isenta de responsabilidade. O que nos leva ao próximo tópico:
+
+— Curtiu aprender um pouco mais sobre segurança? 🔐
+
+</Side>

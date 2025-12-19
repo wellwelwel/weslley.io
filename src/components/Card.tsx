@@ -68,7 +68,8 @@ export const Card: FC<CardOptions> = ({
       signal: controller.signal,
     })
       .then((response) => response.json())
-      .then(({ stats }) => {
+      .then((data: unknown) => {
+        const { stats } = data as { stats: any };
         setStats({
           downloads: stats.npm.value ? stats.npm.label : undefined,
           stars: stats.stars.label,

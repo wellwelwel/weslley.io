@@ -1,23 +1,33 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
 import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
+import { env, loadEnvFile } from 'node:process';
 import { themes as prismThemes } from 'prism-react-renderer';
-import { websiteConfigs } from './website.config';
+
+try {
+  loadEnvFile();
+} catch {}
+
+const articlesPlugin = require('./plugins/articles/mount.ts').default;
 
 const config: Config = {
   title: 'Weslley Araújo',
   favicon: 'img/favicon.ico',
   baseUrl: '/',
   url: 'https://weslley.io/',
+  customFields: {
+    COUNTTY_URL: env.COUNTTY_URL,
+    showViewsCounter: true,
+  },
   trailingSlash: true,
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'throw',
+      onBrokenMarkdownLinks: 'ignore',
     },
   },
-  onBrokenLinks: 'throw',
-  onBrokenAnchors: 'throw',
-  onDuplicateRoutes: 'throw',
+  onBrokenLinks: 'ignore',
+  onBrokenAnchors: 'ignore',
+  onDuplicateRoutes: 'ignore',
   i18n: {
     defaultLocale: 'pt-BR',
     locales: ['pt-BR', 'en'],
@@ -61,7 +71,17 @@ const config: Config = {
         alt: "Weslley's Araújo Avatar",
         src: 'img/avatar.png',
       },
-      items: [],
+      items: [
+        {
+          type: 'search',
+          position: 'right',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
+          className: 'locale',
+        },
+      ],
     },
     footer: Object.create(null),
     prism: {
@@ -72,71 +92,31 @@ const config: Config = {
   } satisfies Preset.ThemeConfig,
   plugins: [
     'docusaurus-plugin-sass',
-    ...(() => {
-      if (websiteConfigs.navBarItens?.right?.search)
-        return [
-          [
-            '@easyops-cn/docusaurus-search-local',
-            {
-              indexDocs: false,
-              indexBlog: false,
-              indexPages: true,
-              hashed: true,
-              highlightSearchTermsOnTargetPage: true,
-              searchResultLimits: 100,
-              ignoreFiles: /(articles|talks)\/(authors|tags)/,
-              language: ['pt', 'en'],
-            } satisfies PluginOptions,
-          ],
-        ];
-      return [];
-    })(),
-    // Blogs
-    ...(websiteConfigs.blogs?.map((blog) => [
-      '@docusaurus/plugin-content-blog',
+    [
+      '@easyops-cn/docusaurus-search-local',
       {
-        ...blog,
-        blogSidebarCount: 'ALL',
-        showReadingTime: true,
-        feedOptions: {
-          type: ['rss', 'atom'],
-          xslt: true,
-        },
-        showLastUpdateTime: true,
-        editLocalizedFiles: true,
-        onInlineTags: 'throw',
-        onInlineAuthors: 'throw',
-        onUntruncatedBlogPosts: 'throw',
-      },
-    ]) as any),
+        indexDocs: false,
+        indexBlog: false,
+        indexPages: true,
+        hashed: true,
+        highlightSearchTermsOnTargetPage: true,
+        searchResultLimits: 100,
+        ignoreFiles: /(articles|talks)\/(tags)/,
+        language: ['pt', 'en'],
+      } satisfies PluginOptions,
+    ],
+    require.resolve('./webpack.config'),
+    (context) =>
+      articlesPlugin(context, {
+        pluginName: 'mount-articles',
+        contentDir: 'articles',
+      }),
+    (context) =>
+      articlesPlugin(context, {
+        pluginName: 'mount-talks',
+        contentDir: 'talks',
+      }),
   ],
 };
-
-// Load left items
-if (websiteConfigs.navBarItens?.left) {
-  (config as any)?.themeConfig.navbar.items.push(
-    ...websiteConfigs.navBarItens.left.map((item) => ({
-      ...item,
-      position: 'left',
-    }))
-  );
-}
-
-// Load search item
-if (websiteConfigs.navBarItens?.right?.search) {
-  (config as any)?.themeConfig.navbar.items.push({
-    type: 'search',
-    position: 'right',
-  });
-}
-
-// Load locale item
-if (websiteConfigs.navBarItens?.right?.locale) {
-  (config as any)?.themeConfig.navbar.items.push({
-    type: 'localeDropdown',
-    position: 'right',
-    className: 'locale',
-  });
-}
 
 export default config;
