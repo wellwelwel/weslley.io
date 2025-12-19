@@ -37,6 +37,7 @@ export default ({ data }: TagPageProps) => {
         ? `Articles related to tag ${tag}`
         : `Artigos relacionados à tag ${tag}`,
     article: currentLocale === 'en' ? 'article' : 'artigo',
+    date: currentLocale === 'en' ? 'Date' : 'Data',
     articles: currentLocale === 'en' ? 'articles' : 'artigos',
     found: currentLocale === 'en' ? 'found' : 'encontrado',
     foundPlural: currentLocale === 'en' ? 'found' : 'encontrados',
@@ -163,12 +164,14 @@ export default ({ data }: TagPageProps) => {
                   <div className='card__footer'>
                     {showViewsCounter && (
                       <div>
-                        {translations.views}:{' '}
+                        <strong>{translations.views}:</strong>{' '}
                         {article.slug ? viewCounts[article.slug] : '-'}
                       </div>
                     )}
+
                     <div>
                       <time dateTime={article.date}>
+                        <strong>{translations.date}:</strong>{' '}
                         {new Date(article.date).toLocaleDateString(
                           currentLocale,
                           {
@@ -186,28 +189,34 @@ export default ({ data }: TagPageProps) => {
                           : translations.minutes}{' '}
                         {translations.readingTime}
                       </span>
-                      <div>
-                        {article.lastModified &&
-                          article.lastModified !== article.date && (
-                            <span title={translations.lastModification}>
-                              {translations.lastUpdate}{' '}
-                              <strong>
-                                {new Date(
-                                  article.lastModified
-                                ).toLocaleDateString(currentLocale, {
-                                  year: 'numeric',
-                                  month: 'long',
-                                  day: 'numeric',
-                                })}
-                              </strong>
-                            </span>
-                          )}
-                        {isDevelopment && <em> {translations.simulatedDev}</em>}
-                      </div>
+                    </div>
+
+                    <div>
+                      {article.lastModified &&
+                        article.lastModified !== article.date && (
+                          <span
+                            title={
+                              currentLocale === 'en'
+                                ? 'Last modification'
+                                : 'Última modificação'
+                            }
+                          >
+                            <strong>{translations.lastUpdate}</strong>{' '}
+                            {new Date(article.lastModified).toLocaleDateString(
+                              currentLocale,
+                              {
+                                year: 'numeric',
+                                month: 'long',
+                                day: 'numeric',
+                              }
+                            )}
+                          </span>
+                        )}
+                      {isDevelopment && <em> {translations.simulatedDev}</em>}
                     </div>
 
                     {article.tags.length > 0 && (
-                      <div>
+                      <div className='margin-top--sm'>
                         <strong>{translations.tags}:</strong>{' '}
                         {article.tags.map((tagName, index) => (
                           <span key={tagName}>

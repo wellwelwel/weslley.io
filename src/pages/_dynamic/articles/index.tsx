@@ -1,5 +1,6 @@
 import type { ArticlePageProps } from '../../../@types/article';
 import Head from '@docusaurus/Head';
+import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import MDXContent from '@theme/MDXContent';
@@ -223,9 +224,9 @@ export default ({
                 {tags.map((tag: string, index: number) => (
                   <span key={tag}>
                     {index > 0 && ' '}
-                    <a href={`/${route}/tag/${tag.toLowerCase()}`}>
+                    <Link to={`/${route}/tag/${tag.toLowerCase()}`}>
                       <code>{tag}</code>
-                    </a>
+                    </Link>
                   </span>
                 ))}
               </div>

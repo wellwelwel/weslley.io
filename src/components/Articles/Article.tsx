@@ -30,11 +30,12 @@ export const Article: FC<{
 
   const translations = {
     views: currentLocale === 'en' ? 'Views' : 'Visualizações',
+    date: currentLocale === 'en' ? 'Date' : 'Data',
     minute: currentLocale === 'en' ? 'minute' : 'minuto',
     minutes: currentLocale === 'en' ? 'minutes' : 'minutos',
     readingTime: currentLocale === 'en' ? 'reading time' : 'de leitura',
     lastUpdate:
-      currentLocale === 'en' ? 'Last updated on' : 'Última atualização em',
+      currentLocale === 'en' ? 'Last updated:' : 'Última atualização:',
     simulatedDev:
       currentLocale === 'en'
         ? '(Simulated during development)'
@@ -126,12 +127,14 @@ export const Article: FC<{
         <div className='card__footer'>
           {viewMode === 'card' && showViewsCounter && (
             <div>
-              {translations.views}:{' '}
+              <strong>{translations.views}:</strong>{' '}
               {article.slug ? viewCounts[article.slug] : '-'}
             </div>
           )}
+
           <div>
             <time dateTime={article.date}>
+              <strong>{translations.date}:</strong>{' '}
               {new Date(article.date).toLocaleDateString(currentLocale, {
                 year: 'numeric',
                 month: 'long',
@@ -159,17 +162,15 @@ export const Article: FC<{
                         : 'Última modificação'
                     }
                   >
-                    {translations.lastUpdate}{' '}
-                    <strong>
-                      {new Date(article.lastModified).toLocaleDateString(
-                        currentLocale,
-                        {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        }
-                      )}
-                    </strong>
+                    <strong>{translations.lastUpdate}</strong>{' '}
+                    {new Date(article.lastModified).toLocaleDateString(
+                      currentLocale,
+                      {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                      }
+                    )}
                   </span>
                 )}
               {isDevelopment && <em> {translations.simulatedDev}</em>}
@@ -177,7 +178,7 @@ export const Article: FC<{
           )}
 
           {article.tags.length > 0 && (
-            <div className='margin-top--sm'>
+            <div className={viewMode === 'card' ? 'margin-top--sm' : undefined}>
               <strong>{translations.tags}:</strong>{' '}
               {article.tags.map((tag, index) => (
                 <span key={tag}>
