@@ -9,9 +9,9 @@
   "scripts": {
     "docusaurus": "docusaurus",
     "prestart": "tsx tools/host.ts",
-    "start": "docusaurus start --host 0.0.0.0",
-    "prestart:en": "tsx tools/host.ts",
-    "start:en": "docusaurus start --locale en",
+    "start": "npm run i18n:sync && concurrently \"npm run start:website\" \"npm run start:server\"",
+    "start:website": "docusaurus start --host 0.0.0.0",
+    "start:server": "wrangler dev --ip 0.0.0.0",
     "prebuild": "npm run i18n:sync",
     "build": "docusaurus build",
     "swizzle": "docusaurus swizzle",
@@ -19,7 +19,8 @@
     "reset": "(npm run clear || true) && rm -rf node_modules package-lock.json && npm i && npm run update",
     "i18n:sync": "tsx tools/sync-i18n-articles.ts",
     "prepreview": "tsx tools/host.ts",
-    "preview": "npm run build && docusaurus serve --host 0.0.0.0",
+    "serve": "npm run build && docusaurus serve --host 0.0.0.0",
+    "preview": "concurrently \"npm run serve\" \"npm run start:server\"",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
     "typecheck": "tsc",
@@ -27,9 +28,19 @@
     "lint:fix": "prettier --write .",
     "update": "pu minor && npm i && (npm audit fix || true) && npm run lint:fix",
     "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts",
-    "test": "npm run clear && npm run lint && npm run typecheck && poku -r=compact ./test/ && npm run build"
+    "test": "npm run clear && npm run lint && npm run typecheck && poku -r=compact ./test/ && npm run build",
+    "countty:secret": "wrangler secret put COUNTTY_TOKEN",
+    "countty:create": "countty create",
+    "countty:views": "countty views",
+    "countty:peek": "countty peek",
+    "countty:backup": "countty backup",
+    "countty:list": "countty list"
+  },
+  "dependencies": {
+    "countty": "^2.1.1"
   },
   "devDependencies": {
+    "@cloudflare/workers-types": "^4.20251219.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
@@ -44,6 +55,7 @@
     "@types/webpack-env": "^1.18.8",
     "animejs": "^4.2.2",
     "clsx": "^2.1.1",
+    "concurrently": "^9.2.1",
     "docusaurus-plugin-sass": "^0.2.6",
     "github-slugger": "^2.0.0",
     "jsonc.min": "^1.1.0",
@@ -56,9 +68,11 @@
     "react-dom": "^19.2.3",
     "react-markdown": "^10.1.0",
     "react-parallax-tilt": "^1.7.315",
+    "remark-directive-rehype": "^0.4.2",
     "sass": "^1.96.0",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
+    "wrangler": "^4.56.0",
     "yaml": "^2.8.2"
   },
   "browserslist": {
@@ -76,8 +90,5 @@
   "engines": {
     "node": ">=20.0"
   },
-  "private": true,
-  "dependencies": {
-    "remark-directive-rehype": "^0.4.2"
-  }
+  "private": true
 }

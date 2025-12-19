@@ -1,0 +1,25 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "blog",
+  "main": "src/server/index.ts",
+  "compatibility_date": "2025-10-11",
+  "send_metrics": false,
+  "compatibility_flags": ["nodejs_compat"],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "countty",
+        "class_name": "Countty"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["Countty"]
+    }
+  ],
+  "dev": {
+    "port": 3001
+  }
+}

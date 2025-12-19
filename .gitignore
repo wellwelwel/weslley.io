@@ -1,6 +1,10 @@
-/node_modules
+/.wrangler
+/backups
 /build
-.docusaurus
-.cache-loader
+/node_modules
+/.docusaurus
+/.cache-loader
 .DS_Store
 .env
+t.ts
+t.mts

@@ -15,7 +15,7 @@ const config: Config = {
   url: 'https://weslley.io/',
   customFields: {
     COUNTTY_URL: env.COUNTTY_URL,
-    showViewsCounter: false,
+    showViewsCounter: true,
   },
   trailingSlash: true,
   markdown: {
