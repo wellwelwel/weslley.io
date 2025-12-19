@@ -8,7 +8,6 @@ import { isDevelopment } from '../../../../tools/environment';
 import { SideProvider } from '../../../components/Side/context';
 import { SideSelector } from '../../../components/Side/Selector';
 import { Navigation } from './_navigation';
-import { Reactions } from './_reactions';
 import { SocialShare } from './_social-share';
 import { Summary } from './_summary';
 import '@site/src/css/pages/article-page.scss';
@@ -37,7 +36,6 @@ export default ({
   } = data;
   const { siteConfig, i18n } = useDocusaurusContext();
   const API = siteConfig.customFields?.COUNTTY_URL as string | undefined;
-  const apiUrl = typeof API === 'string' ? API : undefined;
   const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const socialBanner = social ? `${siteConfig.url}${social}` : undefined;
   const articleUrl = `${siteConfig.url}/article/${slug}`;
@@ -248,8 +246,6 @@ export default ({
             </MDXContent>
           </SideProvider>
 
-          <hr />
-          <Reactions slug={slug} API={apiUrl} />
           <hr />
 
           <SocialShare url={articleUrl} title={title} author={authorName} />
