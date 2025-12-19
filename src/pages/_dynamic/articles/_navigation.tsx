@@ -2,6 +2,7 @@ import type { ArticleNavigation } from '../../../@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MarkdownWithAdmonitions } from '@site/src/components/Articles/Articles';
+import { stripLinks } from '@site/src/helpers/strip-links';
 
 type ArticleNavigationProps = {
   previous?: ArticleNavigation;
@@ -46,7 +47,9 @@ export const Navigation = ({
               {previous.description && (
                 <div className='nav-description'>
                   <div className='description-text'>
-                    <MarkdownWithAdmonitions content={previous.description} />
+                    <MarkdownWithAdmonitions
+                      content={stripLinks(previous.description)}
+                    />
                   </div>
                   <div className='description-fade' />
                 </div>
@@ -75,7 +78,9 @@ export const Navigation = ({
               {next.description && (
                 <div className='nav-description'>
                   <div className='description-text next'>
-                    <MarkdownWithAdmonitions content={next.description} />
+                    <MarkdownWithAdmonitions
+                      content={stripLinks(next.description)}
+                    />
                   </div>
                   <div className='description-fade' />
                 </div>

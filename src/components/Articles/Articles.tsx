@@ -19,8 +19,8 @@ export const Articles = ({ route }: ArticlesOptions) => {
 
   const translations = {
     title: {
-      articles: currentLocale === 'en' ? 'Articles 📜' : 'Artigos 📜',
-      talks: currentLocale === 'en' ? 'Talks 🎙️' : 'Palestras 🎙️',
+      articles: currentLocale === 'en' ? '📜 Articles' : '📜 Artigos',
+      talks: currentLocale === 'en' ? '🎙️ Talks' : '🎙️ Palestras',
     },
     noArticles:
       currentLocale === 'en'
