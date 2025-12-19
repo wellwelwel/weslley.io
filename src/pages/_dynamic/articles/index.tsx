@@ -127,12 +127,6 @@ export default ({
               </div>
             </div>
 
-            <div className='social-share-wrapper'>
-              <SocialShare url={articleUrl} title={title} author={authorName} />
-            </div>
-
-            <hr />
-
             {authorsData && authorsData.length > 0 && (
               <div className='authors'>
                 {authorsData.map(({ image_url, name, socials, title, url }) => (
@@ -217,6 +211,8 @@ export default ({
                 ))}
               </div>
             )}
+
+            <hr />
 
             {tags.length > 0 && (
               <div className='tags'>

@@ -1,11 +1,9 @@
 @use '../global/mixins' as *;
 
 .social-share {
-  margin-top: 48px;
-
   h4 {
     @include flex(row, center, flex-start);
-    margin-bottom: 24px;
+    margin-bottom: 20px;
     font-size: 20px;
     font-weight: 700;
     color: var(--card-title-color);

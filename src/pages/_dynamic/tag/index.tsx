@@ -104,6 +104,7 @@ export default ({ data }: TagPageProps) => {
             {articles.length === 1
               ? translations.found
               : translations.foundPlural}
+            .
           </small>
 
           <section className={isListView ? 'list-view' : ''}>

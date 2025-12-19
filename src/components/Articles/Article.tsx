@@ -1,6 +1,6 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
+import type { ViewMode } from '@site/src/hooks/useViewMode';
 import type { FC } from 'react';
-import type { ViewMode } from './Articles';
 import { useRef } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -184,7 +184,7 @@ export const Article: FC<{
                 <span key={tag}>
                   {index > 0 && ' '}
                   <Link to={`/${route}/tag/${tag.toLowerCase()}`}>
-                    <code>{tag}</code>
+                    <code className='tag'>{tag}</code>
                   </Link>
                 </span>
               ))}

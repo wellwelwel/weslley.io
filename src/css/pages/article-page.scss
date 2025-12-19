@@ -39,7 +39,7 @@
       }
 
       .views-counter {
-        margin-bottom: 10px;
+        margin-bottom: 5px;
 
         img {
           max-width: 200px;
@@ -48,8 +48,8 @@
 
       .metadata {
         @include flex(row, center, flex-start, wrap);
-        gap: 5px;
-        margin-bottom: 15px;
+        gap: 0 7.5px;
+        margin-bottom: 10px;
         font-size: 14px;
         color: var(--card-footer-color);
 
@@ -63,7 +63,6 @@
 
         div {
           width: 100%;
-          margin-top: 5px;
 
           strong {
             font-weight: 600;
@@ -77,37 +76,17 @@
         }
       }
 
-      .social-share-wrapper {
-        transform: scale(0.75);
-        transform-origin: left;
-        margin-top: -40px;
-        margin-bottom: -15px;
-
-        @media (max-width: 630px) {
-          transform: scale(0.65);
-          margin-top: -45px;
-          margin-bottom: -20px;
-        }
-      }
-
       .authors {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
 
         .author {
           @include flex(row, center);
-          gap: 15px;
-          margin-bottom: 15px;
-
-          @media (max-width: 630px) {
-            flex-direction: column;
-            align-items: flex-start;
-            gap: 10px;
-          }
+          gap: 10px;
 
           img {
             border-radius: 50%;
-            width: 80px;
-            height: 80px;
+            width: 60px;
+            height: 60px;
             flex-shrink: 0;
             border: 2px solid var(--avatar-border-color);
           }
@@ -116,11 +95,12 @@
             flex: 1;
 
             .author-name {
-              margin-bottom: 5px;
+              padding: 0;
+              margin-bottom: -5px;
 
               a {
-                font-size: 20px;
-                font-weight: 700;
+                font-size: 14px;
+                font-weight: 800;
                 text-decoration: none;
                 color: var(--card-title-color);
                 transition: color ease 0.3s;
@@ -132,8 +112,9 @@
             }
 
             .author-title {
-              font-size: 14px;
-              margin-bottom: 8px;
+              font-size: 12px;
+              font-weight: 500;
+              margin-bottom: 2px;
               color: var(--card-description-color);
             }
 
@@ -149,8 +130,8 @@
                 }
 
                 img {
-                  width: 24px;
-                  height: 24px;
+                  width: 18px;
+                  height: 18px;
                   border: none;
                   border-radius: 0;
                 }
@@ -173,15 +154,20 @@
           text-decoration: none;
 
           code {
-            padding: 2px 8px;
-            border-radius: 4px;
+            padding: 2.5px 8px;
+            border-radius: 6px;
+            border: 1px solid #dde6ff;
             background-color: var(--ifm-code-background);
+            font-family: var(--ifm-font-family-base);
             font-size: 12px;
             color: var(--ifm-color-primary);
-            transition: opacity ease 0.2s;
+            transition:
+              0.25s background-color,
+              0.35s color;
 
             &:hover {
-              opacity: 0.8;
+              background-color: var(--ifm-color-primary);
+              color: #fff;
             }
           }
         }
