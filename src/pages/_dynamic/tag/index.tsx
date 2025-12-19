@@ -28,6 +28,7 @@ export default ({ data }: TagPageProps) => {
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
   const imageMap: Record<string, string> = Object.create(null);
+  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
 
   if (imagesContext) {
     imagesContext.keys().forEach((key: string) => {
@@ -44,7 +45,7 @@ export default ({ data }: TagPageProps) => {
     const controller = new AbortController();
 
     for (const article of articles) {
-      if (!article.slug) continue;
+      if (!article.slug || !showViewsCounter) continue;
 
       const slug = article.slug;
 
@@ -124,10 +125,12 @@ export default ({ data }: TagPageProps) => {
                   </div>
 
                   <div className='card__footer'>
-                    <div>
-                      Visualizações:{' '}
-                      {article.slug ? viewCounts[article.slug] : '-'}
-                    </div>
+                    {showViewsCounter && (
+                      <div>
+                        Visualizações:{' '}
+                        {article.slug ? viewCounts[article.slug] : '-'}
+                      </div>
+                    )}
                     <div>
                       <time dateTime={article.date}>
                         {new Date(article.date).toLocaleDateString(
