@@ -40,7 +40,7 @@ jobs:
 
       - name: Building Site
         run: npm run build
-        with:
+        env:
           COUNTTY_URL: ${{ secrets.COUNTTY_URL }}
           COUNTTY_TOKEN: ${{ secrets.COUNTTY_TOKEN }}
 
