@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "blog",
+  "name": "weslley.io",
   "main": "src/server/index.ts",
   "compatibility_date": "2025-10-11",
   "send_metrics": false,
