@@ -10,13 +10,46 @@ type SocialShareProps = {
 const shareText = (title: string, author: string, locale: string) =>
   locale === 'en' ? `"${title}" by ${author}:` : `"${title}" por ${author}:`;
 
+const fallbackCopyToClipboard = (text: string): boolean => {
+  const textArea = document.createElement('textarea');
+  textArea.value = text;
+  textArea.style.position = 'fixed';
+  textArea.style.left = '-999999px';
+  textArea.style.top = '-999999px';
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+
+  try {
+    const successful = document.execCommand('copy');
+    document.body.removeChild(textArea);
+    return successful;
+  } catch {
+    document.body.removeChild(textArea);
+    return false;
+  }
+};
+
 const copyToClipboard = async (text: string, locale: string) => {
-  await navigator.clipboard.writeText(text);
-  const message =
+  const successMessage =
     locale === 'en'
       ? 'Link copied to clipboard!'
       : 'Link copiado para a área de transferência!';
-  alert(message);
+  const errorMessage =
+    locale === 'en'
+      ? 'Failed to copy link. Please try again.'
+      : 'Falha ao copiar link. Por favor, tente novamente.';
+
+  if (navigator.clipboard?.writeText) {
+    try {
+      await navigator.clipboard.writeText(text);
+      alert(successMessage);
+      return;
+    } catch {}
+  }
+
+  const success = fallbackCopyToClipboard(text);
+  alert(success ? successMessage : errorMessage);
 };
 
 export const SocialShare = ({ url, title, author }: SocialShareProps) => {

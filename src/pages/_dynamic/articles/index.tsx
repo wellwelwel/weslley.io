@@ -39,7 +39,7 @@ export default ({
   const API = siteConfig.customFields?.COUNTTY_URL as string | undefined;
   const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const socialBanner = social ? `${siteConfig.url}${social}` : undefined;
-  const articleUrl = `${siteConfig.url}/article/${slug}`;
+  const articleUrl = `${siteConfig.url}/${route}/${slug}`;
   const { currentLocale } = i18n;
   const authorName =
     authorsData?.[0]?.name ?? (currentLocale === 'en' ? 'Author' : 'Autor');
