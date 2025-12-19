@@ -45,8 +45,6 @@ export const findArticles = async (
       if (config.customFields?.showViewsCounter) {
         execAsync(`countty create "${slug}"`).catch(() => {});
         execAsync(`countty create "${slug}:like"`).catch(() => {});
-        execAsync(`countty create "${slug}:love"`).catch(() => {});
-        execAsync(`countty create "${slug}:insightful"`).catch(() => {});
       }
 
       const socialPath: string | undefined = data.social

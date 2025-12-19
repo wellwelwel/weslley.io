@@ -30,9 +30,11 @@
         margin-bottom: 15px;
 
         .parallax-container {
+          @include flex(row, center, center);
           background-color: #f0f0f0;
           border-radius: 8px;
           margin-bottom: 15px;
+          box-shadow: 0 0 2.5px #00000050;
           overflow: hidden;
         }
 
@@ -87,7 +89,7 @@
 
     .card__footer {
       @include flex(column);
-      gap: 10px;
+      gap: 0;
       padding: 15px 20px;
       border-top: 1px solid var(--card-border-color);
       background-color: var(--card-footer-background-color);
@@ -96,7 +98,7 @@
 
       & > div {
         @include flex(row, center, flex-start, wrap);
-        gap: 10px;
+        gap: 0 7.5px;
 
         time {
           font-weight: 500;
