@@ -23,114 +23,114 @@ import { Side } from '@Side';
 
 <Side id="developer">
 
-Essa técnica é conhecida como E-mail Spoofing e explora a falta de autenticação no envio de e-mails de um domínio, falsificando o remetente e fazendo parecer que a mensagem foi enviada por um domínio confiável.
+This technique is known as Email Spoofing and exploits the lack of authentication when sending emails from a domain, forging the sender so messages appear to come from a trusted domain.
 
-Tanto empresas pequenas e grandes podem ser alvos, assim como sites pessoais ou abandonados, onde o intuito pode variar desde capturar dados sensíveis e até infectar dispositivos dos usuários. Tudo isso, usando domínios válidos sem autorização.
+Both small and large companies can be targeted, as well as personal or abandoned sites. The intent can range from harvesting sensitive data to infecting users' devices — all using valid domains without authorization.
 
-Os motivos podem variar, mas vou citar alguns super comuns que tornam essa vulnerabilidade possível:
+Reasons vary, but here are some very common causes that make this vulnerability possible:
 
-- Falta de conhecimento ou até mesmo negligência.
-- O provedor do domínio exige um plano pago à parte para e-mails que o usuário não está disposto a adquirir.
-
-<hr />
-
-## Possíveis impactos negativos 👾
-
-- Perda de credibilidade.
-- Bloqueio por provedores de e-mail (onde até mesmo seus e-mails válidos podem ser afetados ao serem entregues como spam ou nem mesmo chegarem ao destinatário).
-- Perda do domínio (denúncias, medidas legais ou até mesmo pela reputação muito prejudicada).
+- Lack of knowledge or outright negligence.
+- The domain provider requires a separate paid plan for email that the user isn't willing to buy.
 
 <hr />
 
-## Como se proteger? 🤝
+## Possible Negative Impacts 👾
 
-Nesse artigo, vou abordar tópicos como SPF, DKIM e DMARC para proteger seu domínio e evitar que pessoas maliciosas consigam acesso não autorizado ao seu domínio.
+- Loss of credibility.
+- Blocking by email providers (where even your legitimate messages may be marked as spam or never reach recipients).
+- Loss of the domain (complaints, legal actions, or severe reputation damage).
+
+<hr />
+
+## How to Protect Yourself? 🤝
+
+In this article I'll cover SPF, DKIM, and DMARC to protect your domain and help prevent malicious actors from sending unauthorized messages on your behalf.
 
 ### DNS
 
-O **DNS** é onde você configura os registros relacionados ao seu domínio, como subdomínios, redirecionamentos, envio e recebimento de e-mails, entre outros.
+DNS is where you configure records related to your domain, such as subdomains, redirects, and email sending and receiving.
 
-Ao comprar um domínio, é comum usuários se preocuparem especialmente com o IP da hospedagem. Aqui é onde mora um dos problemas, pois ao notar que o domínio já está funcionando, o usuário pode considerar que o trabalho já está completo.
+When buying a domain, users often focus on the hosting IP. That's where a common problem lives: once the domain appears to be working, the user may assume the job is done.
 
-Dito isso, vamos conhecer os principais registros relacionados ao e-mail:
+With that said, let's review the main email-related records:
 
 ### MX (Mail Exchange)
 
-O registro **MX** é o responsável por você receber os e-mails, direcionando-os do seu domínio para o servidor responsável por recebê-los (**Google Workspace**, **Zoho**, etc.).
+The **MX** record is responsible for receiving emails, directing messages for your domain to the server that handles incoming mail (for example, **Google Workspace**, **Zoho**).
 
-Sem ele, os e-mails que te enviarem nunca chegarão até você.
+Without it, emails sent to you will never reach your inbox.
 
 ### SPF
 
-O registro **SPF** é uma forma de dizer quais servidores estão autorizados a enviar e-mails em nome do seu domínio, ajudando a evitar que pessoas mal intencionadas usem seu domínio.
+The **SPF** record specifies which servers are authorized to send emails on behalf of your domain, helping to prevent malicious actors from using your domain.
 
-Ele é especialmente importante contra o E-mail Spoofing, sendo geralmente reforçado pelo parâmetro `~all`.
+It's especially important against Email Spoofing and is commonly ended with the `~all` mechanism.
 
-#### Dica:
+#### Tip:
 
-Enquanto a maioria dos servidores de e-mail sugerem `~all` devido à flexibilidade, se seu domínio já foi vítima de **E-mail Spoofing** ou você quer reforçar ainda mais sua segurança, você pode usar `-all` para eliminar a possibilidade de aceitação por baixa prioridade de forma estrita, mas note que isso implica na complexidade das configurações do **DNS**, exigindo atualizações manuais sempre que novos serviços de e-mail forem integrados ao seu domínio.
+While most mail servers recommend `~all` for flexibility, if your domain has been a victim of Email Spoofing or you want stricter protection, you can use `-all` to strictly reject unauthorized senders. Note this increases DNS configuration complexity and requires manual updates whenever you add new email services.
 
 ### DKIM
 
-O registro **DKIM** adiciona uma assinatura digital aos e-mails enviados pelo seu domínio, permitindo que o servidor que recebe o seu e-mail verifique se a mensagem foi realmente enviada por você e não foi alterada no caminho, sendo uma ferramenta complementar essencial ao **SPF**.
+The **DKIM** record adds a digital signature to emails sent from your domain, allowing the receiving server to verify the message truly came from you and wasn't tampered with in transit. It's an essential complement to **SPF**.
 
-Isso ajuda a proteger tanto a reputação do seu domínio quanto os destinatários, além de indiretamente evitar que seus e-mails sejam entregues como spam.
+This helps protect your domain's reputation and the recipients, and it can indirectly reduce the chance of your emails being flagged as spam.
 
 ### DMARC
 
-O registro **DMARC** permite que você defina como os servidores de e-mail devem tratar mensagens que falharem na validação do SPF e do DKIM, fornecendo relatórios detalhados sobre tentativas indevidas usando seu domínio, permitindo monitorar possíveis abusos.
+The **DMARC** record lets you define how mail servers should handle messages that fail SPF or DKIM checks, and it provides detailed reports about unauthorized attempts to use your domain, enabling you to monitor abuse.
 
 <hr />
 
-## Soluções e alternativas gratuitas 🌟
+## Free Solutions and Alternatives 🌟
 
-Se seu provedor não possui um servidor de e-mails ou você não pretende usar um plano pago para isso, você pode usar gratuitamente o DNS com o roteamento de e-mails da Cloudflare, redirecionando os e-mails do seu domínio para outro e-mail (por exemplo, um e-mail pessoal do Gmail).
+If your provider doesn't offer email hosting or you don't want to pay for a plan, you can use Cloudflare's free Email Routing to forward your domain's emails to another address (for example, a personal Gmail).
 
-O Zoho também pode ser uma boa alternativa, não sendo necessário redirecionar seus e-mails e oferecendo um dashboard próprio para os e-mails do seu domínio, mas ele possui limitações de recurso em sua versão gratuita.
+Zoho can also be a good alternative — it lets you host your domain's email with a dedicated dashboard without forwarding, though the free tier has some limitations.
 
-— Curtiu aprender um pouco mais sobre segurança? 🔐
+— Enjoyed learning a bit more about security? 🔐
 
 :::note
-Esse artigo não possui nenhum tipo de patrocínio e essas são sugestões que uso tanto pessoalmente, como profissionalmente 🙋🏻
+This article is not sponsored; these are suggestions I use both personally and professionally 🙋🏻
 :::
 
 :::info
-Esse artigo foi postado icialmente no [LinkedIn](https://www.linkedin.com/pulse/e-mail-spoofing-prevenindo-o-envio-de-emails-atrav%25C3%25A9s-do-ara%25C3%25BAjo-ff2xc/).
+This article was originally posted on [LinkedIn](https://www.linkedin.com/pulse/e-mail-spoofing-prevenindo-o-envio-de-emails-atrav%25C3%25A9s-do-ara%25C3%25BAjo-ff2xc/).
 :::
 
 </Side>
 
 <Side id="user">
 
-Já recebeu e-mails falsos vindos de contas reais? Vem entender a importância de configurar o DNS do seu site e como se proteger tanto como usuário, como desenvolvedor 📨🎣
+Have you ever received fake emails that appear to come from real accounts? Learn why configuring your site's DNS matters and how to protect yourself both as a user and as a developer 📨🎣
 
-Constantemente recebo e-mails maliciosos e os que mais me chamam atenção, são os que vêm de domínios válidos de empresas reais (e sérias).
+I constantly receive malicious emails, and the ones that stand out most are those coming from valid domains of real (and reputable) companies.
 
-## Mas como alguém pode usar um domínio sem autorização? 🤨
+## But how can someone use a domain without authorization? 🤨
 
-Essa técnica é conhecida como "E-mail Spoofing" e é abordada com mais detalhes no artigo, enquanto essa publicação é focada em nos protegermos como usuários.
+This technique is known as "Email Spoofing" and is covered in more detail in the article; this post focuses on how we can protect ourselves as users.
 
-🧑🏻‍🔬 Vamos lá:
+🧑🏻‍🔬 Let's go:
 
-Um e-mail em especial me deixou curioso, pois o domínio que foi usado é de uma das 10 maiores empresas do país. Decidi abrir em um ambiente controlado e, só para lembrar, aba anônima de navegador não é ambiente controlado 🧙🏻‍♂️
+One email in particular caught my attention because the domain used belonged to one of the country's top 10 companies. I opened it in a controlled environment — and as a reminder, an incognito browser tab is not a controlled environment 🧙🏻‍♂️
 
-Imaginei que seria "apenas" uma página de login falsa, mas foram feitos vários redirecionamentos e pedidos de permissões no navegador, para só então chegar na tela de login 🎣
+I thought it would be "just" a fake login page, but there were multiple redirects and permission prompts in the browser before reaching the login screen 🎣
 
-Esses redirecionamentos podem ser usados, por exemplo, para roubar cookies ou acessar permissões de câmera e microfone sem o nosso consentimento.
+These redirects can be used to steal cookies or request camera and microphone permissions without our consent.
 
-O fato do e-mail vir de um domínio que nós confiamos, pode nos induzir desde a clicar, aceitar permissões (que navegadores podem inclusive já ter como ativadas por padrão) e até a inserir nossas credenciais em um site falso.
+Because the email appears to come from a domain we trust, it can lead us to click links, accept permissions (which browsers may have enabled by default), or even enter credentials on a fake site.
 
-## Como se previnir como usuário? 🔐
+## How to protect yourself as a user? 🔐
 
-- Suspeite de e-mails que oferecem algo que você não solicitou, independente do remetente.
-- Verifique se o domínio faz sentido com o que foi recebido, por exemplo, ao receber cobranças de uma empresa, mas o domínio veio de outra (mesmo que real).
-- Prefira usar o computador ao invés do celular para abrir links, onde você pode passar o mouse por cima do link sem clicar e verificar se o destino realmente leva para o site que você espera.
-- O link começa com o site esperado, mas possui um @? Cuidado, isso pode ser outra técnica chamada URL Obfuscation, que consiste em mascarar o verdadeiro destino do link.
-- Tem algum arquivo anexo nesse e-mail? Jamais baixe ou abra, por mais curioso que o e-mail te deixe.
-- Na dúvida, entre em contato com os canais oficiais da empresa (e não os que constam no e-mail).
+- Be suspicious of emails offering something you didn't request, regardless of the sender.
+- Check whether the domain makes sense for the message — for example, if you receive a bill supposedly from a company but the domain comes from elsewhere (even if it's real).
+- Prefer using a computer instead of a phone to open links, so you can hover over the link to see the real destination before clicking.
+- Does the link start with the expected site but include an @? Be careful — this can be URL obfuscation, which hides the real destination.
+- Is there an attachment in the email? Never download or open it, no matter how curious the message makes you.
+- If in doubt, contact the company's official channels (not the ones listed in the email).
 
-Quando o domínio de uma empresa é usado para esses fins, é interessante notar que a empresa também é uma vítima, mas isso não significa que ela está isenta de responsabilidade. O que nos leva ao próximo tópico:
+When a company's domain is used for these purposes, it's worth noting the company is also a victim — but that doesn't mean it's free from responsibility. That brings us to the next topic:
 
-— Curtiu aprender um pouco mais sobre segurança? 🔐
+— Enjoyed learning a bit more about security? 🔐
 
 </Side>

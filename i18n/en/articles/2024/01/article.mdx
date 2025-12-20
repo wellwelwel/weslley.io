@@ -7,7 +7,7 @@ tags: [Tests, Unit Tests, Node.js]
 social: ./banner.png
 ---
 
-If you're a beginner developer (_or not_), I want to show you that testing can be simple and that complexity only comes according to our own needs.
+If you're a beginner developer (_or not_), I want to show you that testing can be simple and that complexity only comes according to our needs.
 
 {/* truncate */}
 
@@ -15,63 +15,63 @@ import { Modal } from '@Modal';
 
 <hr />
 
-## 🧑🏻‍🎓 Introdução ao Mundo dos Testes
+## 🧑🏻‍🎓 Introduction to the World of Testing
 
-Imagine um sistema onde vários usuários tiveram a conta invadida porque criaram senhas como "`1234`" e o sistema permitia, mesmo tendo uma validação para isso, mas sem garantia nenhuma que essa função estava realmente funcionando 🥲
+Imagine a system where several users had their accounts compromised because they created passwords like "`1234`" and the system allowed it, even though there was validation for that — but with no guarantee the function was actually working 🥲
 
-Isso facilmente seria evitado se existissem testes garantindo que a função que valida a senha funcionasse como deveria sempre que uma modificação é feita no sistema, concorda? 🔐
+This could easily be avoided if there were tests ensuring the password validation function worked as it should whenever a change is made to the system, right? 🔐
 
-Mas quando um dev iniciante procura por **testes automatizados**, isso pode parecer (_ou até **ser**_) complexo:
+But when a beginner developer looks for **automated testing**, it can seem (_or even **be**_) complex:
 
-- Os _**testers**_ podem exigir configurações de ambiente (especialmente quando se trata de **ESM** e **TypeScript**)
-- Podem mudar o comportamento do ambiente de desenvolvimento
-- Podem exigir que você adapte seu código para funcionar com eles
-- E até que você tenha um conhecimento previamente aprofundado sobre eles (documentação) para simplesmente iniciar
+- _**Testers**_ may require environment configurations (especially around **ESM** and **TypeScript**)
+- They can change the behavior of your development environment
+- They may require you to adapt your code to work with them
+- And they may demand prior, in-depth knowledge (documentation) just to get started
 
 <hr />
 
-## 📚 Escolhendo o _Tester_
+## 📚 Choosing the _Tester_
 
-Atualmente, existem muitos testers, alguns focados em boas práticas, outros focados na produtividade, performance e por aí vai.
+There are many testers today — some focused on best practices, others on productivity, performance, and so on.
 
-Alguns dos mais populares:
+Some of the most popular:
 
 <ul>
   <li>
     <Modal trigger="Jest" title={<><img src="/img/jest.svg" alt="Jest icon" /> Jest</>}>
-      **Jest** é um framework de testes JavaScript mantido pelo **Meta** (Facebook), com foco em oferecer uma solução **completa e integrada**.
+      **Jest** is a JavaScript testing framework maintained by **Meta** (Facebook), focused on providing a **complete and integrated** solution.
 
-      Possui recursos integrados como **mocking automático**, **cobertura de código** e **snapshot testing**, sendo especialmente popular em projetos **React**.
+      It includes built-in features like **automatic mocking**, **code coverage**, and **snapshot testing**, and is especially popular in **React** projects.
 
-      Por ser uma solução all-in-one, pode exigir **configurações complexas** para projetos modernos (especialmente **ESM** e **TypeScript**), além de ter **performance inferior** comparado a alternativas mais modernas.
+      Being an all-in-one solution, it can require **complex configurations** for modern projects (especially **ESM** and **TypeScript**), and may have **lower performance** compared to newer alternatives.
     </Modal>
 
   </li>
   <li>
     <Modal trigger="Mocha" title="Mocha">
-      **Mocha** é um test runner **minimalista e flexível** para Node.js, focado em **simplicidade** e **extensibilidade**.
+      **Mocha** is a **minimalist and flexible** test runner for Node.js, focused on **simplicity** and **extensibility**.
 
-      Diferente do Jest, o Mocha não inclui biblioteca de asserções ou mocking, permitindo que você escolha suas próprias ferramentas (geralmente usado com **Chai** para asserções e **Sinon** para mocks).
+      Unlike Jest, Mocha doesn't include assertion or mocking libraries, letting you choose your own tools (commonly used with **Chai** for assertions and **Sinon** for mocks).
 
-      É ideal para quem prefere **controle total** sobre o ambiente de testes, mas exige mais configuração manual.
+      It's ideal for those who prefer **full control** over the test environment, but it requires more manual configuration.
     </Modal>
 
   </li>
   <li>
     <Modal trigger="Vitest" title="Vitest">
-      **Vitest** é um test runner **moderno**, desenvolvido pela mesma equipe do **Vite**.
+      **Vitest** is a **modern** test runner developed by the same team behind **Vite**.
 
-      Possui API **compatível com Jest**, facilitando migração, e oferece suporte nativo para **ESM**, **TypeScript** e **HMR** (Hot Module Replacement).
+      It provides a **Jest-compatible** API that eases migration and offers native support for **ESM**, **TypeScript**, and **HMR** (Hot Module Replacement).
 
-      Por estar acoplado ao **Vite**, pode não ser ideal para todos os projetos, especialmente aqueles que não usam bundlers ou preferem outras ferramentas de build, tendo **foco maior em frontend** (embora funcione em backend), e **não oferece suporte para CommonJS (CJS)**.
+      Because it's coupled with **Vite**, it may not be ideal for all projects — especially those that don't use bundlers or prefer other build tools. It has a **strong frontend focus** (though it works on the backend) and **doesn't support CommonJS (CJS)**.
     </Modal>
 
   </li>
 </ul>
 
-Para esse tutorial, vamos usar um _tester_ que eu criei ([**Poku**](https://github.com/wellwelwel/poku)), devido sua simplicidade, mas você pode usar qualquer um 🚀
+For this tutorial, we'll use a tester I created ([**Poku**](https://github.com/wellwelwel/poku)) because of its simplicity, but you can use any tester you prefer 🚀
 
-### 📦 Instalando nosso **_Tester_**
+### 📦 Installing our **_Tester_**
 
 ```bash
 npm i -D poku
@@ -79,136 +79,136 @@ npm i -D poku
 
 <hr />
 
-## 🧪 Por que "Unitários"?
+## 🧪 Why "Unit"?
 
-Ao desenvolvermos nossos códigos, é comum dividirmos tarefas pequenas em funções menores, então exportamos essas funções para usá-las em vários lugares no nosso código, certo?
+When we develop code, it's common to split small tasks into smaller functions and export those functions to be used in multiple places.
 
-Criar os **testes unitários** garante que essas _"funções unitárias"_ sempre funcionem como esperado 🧙🏻
+Creating **unit tests** ensures those _"unit functions"_ always behave as expected 🧙🏻
 
 <hr />
 
-## 📋 Criando um Projeto Simples
+## 📋 Creating a Simple Project
 
-Vamos elaborar um projeto bem simples, onde iremos apenas validar uma senha.
-Nosso projeto precisa validar se a senha passada:
+Let's build a very simple project where we'll only validate a password.
+Our project needs to check that the provided password:
 
-- ✅ É uma string
-- ✅ Possui ao menos oito caractéres
-- ✅ Possui ao menos uma letra maiúscula
-- ✅ Possui ao menos uma letra minúscula
-- ✅ Possui ao menos um número
+- ✅ Is a string
+- ✅ Has at least eight characters
+- ✅ Contains at least one uppercase letter
+- ✅ Contains at least one lowercase letter
+- ✅ Contains at least one number
 
-Se a senha for válida, devemos retornar `true`, caso contrário, `false`.
+If the password is valid, we should return `true`; otherwise, `false`.
 
-Para isso, iremos criar o arquivo:
+To implement this, create the file:
 
 - **src/validations.mjs**
 
 ```ts
 export const validatePassword = (password) => {
-  // Verifica se a senha é uma string
+  // Checks if the password is a string
   if (typeof password !== 'string') return false;
 
-  // Verifica se a senha possui 8 caractéres ou mais
+  // Checks if the password has 8 characters or more
   if (password.trim().length < 8) return false;
 
-  // Verifica se a senha possui ao menos uma letra maiúscula
+  // Checks if the password has at least one uppercase letter
   if (!/[A-Z]/.test(password)) return false;
 
-  // Verifica se a senha possui ao menos uma letra minúscula
+  // Checks if the password has at least one lowercase letter
   if (!/[a-z]/.test(password)) return false;
 
-  // Verifica se a senha possui ao menos um número
+  // Checks if the password has at least one number
   if (!/[0-9]/.test(password)) return false;
 
-  // Retorna verdadeiro se todas as validações acima passarem
+  // Returns true if all validations above pass
   return true;
 };
 ```
 
-> Visando manter o exemplo simples, não vamos ir muito além disso 🧙🏻
+> To keep the example simple, we won't go much further than this 🧙🏻
 
-- Não use essa função para códigos reais, o intuito é ser simples para focar no apredizado 🧑🏻‍🎓
-- Você pode trocar de **src/validations.mjs** para **src/validations.js** usando o `"type": "module"` no seu arquivo **package.json** 🧙🏻
-
-<hr />
-
-## 🧑🏻‍🔬 Entendendo os Testes
-
-Teoricamente, nossa função do projeto já funciona, esse é o momento que a gente começa fazer vários `console.log`, certo? **Nada disso** 😂
-
-Vamos tornar o que seriam esses _"console logs"_, em testes automatizados que sempre serão executados quando o projeto passar por uma alteração 🚀
-
-Como? Usando asserções 👇🏻
+- Don't use this function in production; it's intentionally simple to focus on learning 🧑🏻‍🎓
+- You can change from **src/validations.mjs** to **src/validations.js** by adding `"type": "module"` to your **package.json** 🧙🏻
 
 <hr />
 
-### ☑️ O que são Asserções?
+## 🧑🏻‍🔬 Understanding Tests
 
-Nos testes, **asserções** são usadas para garantir que um resultado é realmente o que a gente espera.
+Theoretically, our function already works — this is usually when people start sprinkling `console.log` calls around, right? **Don't do that** 😂
 
-Cada _tester_ pode ter uma forma diferente de fazer isso, mas o final costuma ser o mesmo:
+Let's turn those ad-hoc `console.log`s into automated tests that will run whenever the project changes 🚀
 
-- Se nossa verificação (asserção) não for exatamente como o esperado, o teste irá disparar um erro nessa asserção.
+How? Using assertions 👇🏻
 
-#### 📝 Exemplo:
+<hr />
 
-Imagine que `1 + 1` precisa retornar `2`, mas retornou `"11"`.
+### ☑️ What Are Assertions?
 
-Quando chegar na asserção que espera o resultado `2`, ela irá disparar um erro no teste dizendo que esperava `2` (número), mas recebeu `"11"` (_string_):
+In tests, **assertions** are used to ensure a result is exactly what we expect.
+
+Each tester may provide a different API, but the idea is the same:
+
+- If our check (assertion) does not match the expectation, the test fails with an error.
+
+#### 📝 Example:
+
+Imagine `1 + 1` should return `2`, but it returned `"11"`.
+
+When reaching the assertion that expects `2`, the test will fail and show that it expected `2` (a number) but received `"11"` (a string):
 
 ```js
 import { assert } from 'poku';
 
-assert.strictEqual('1' + '1', 2, '1+1 deve retornar 2');
+assert.strictEqual('1' + '1', 2, '1+1 should return 2');
 ```
 
 <img
   loading='lazy'
   width='474'
-  alt='Erro de asserção'
+  alt='Assertion error'
   src='https://github.com/wellwelwel/poku/assets/46850407/f1dc1e18-7f9b-4ccb-880c-b0845464925f'
 />
 
 - `actual`:
-  - _"11"_ — É o retorno dinâmico (_soft code_) da nossa função ou variável
+  - _"11"_ — the dynamic return (soft code) from our function or variable
 - `expected`:
-  - _2_ — é o valor bruto (_hard code_) que deve ser retornado pelo `actual`
+  - _2_ — the hard-coded value (hard code) that `actual` should match
 
-> Tanto o [**Poku**](https://github.com/wellwelwel/poku) como o próprio **Node.js** possuem o método `assert` com a forma de uso exatamente iguais 🧙🏻
+> Both [**Poku**](https://github.com/wellwelwel/poku) and **Node.js** provide an `assert` API with similar usage 🧙🏻
 >
-> Quanto ao funcionamento, o [**Poku**](https://github.com/wellwelwel/poku) oferece uma forma simples e inteligente de executar múltiplos arquivos e descreve todas as asserções que passaram ou não no terminal 🐷
+> Functionally, [**Poku**](https://github.com/wellwelwel/poku) offers a simple and smart way to run multiple files and prints a clear report of passed and failed assertions in the terminal 🐷
 
-#### 📝 Corrigindo nosso exemplo:
+#### 📝 Fixing Our Example:
 
 ```js
 import { assert } from 'poku';
 
-assert.strictEqual(1 + 1, 2, '1+1 deve retornar 2');
+assert.strictEqual(1 + 1, 2, '1+1 should return 2');
 ```
 
 <img
   loading='lazy'
   width='474'
-  alt='Asserção com sucesso'
+  alt='Successful assertion'
   src='https://github.com/wellwelwel/poku/assets/46850407/430a72eb-8d34-45f4-abc7-2f2f92e3dd8e'
 />
 
 <hr />
 
-## 🧪 Criando os Testes
+## 🧪 Creating the Tests
 
-> Finalmente a parte boa 🎉
+> Finally — the fun part 🎉
 
-Para isso, vamos usar a criatividade e gerar:
+We'll be a bit creative and generate:
 
-- ❌ Várias senhas inválidas para simular o comportamento tanto de usuários usuais, como de usuários mal intencionados
-  - Nas senhas inválidas, nós esperamos (`expected`) que o resultado (`actual`) seja `false`.
-- ✅ Senhas válidas para garantir que nossa função entende que a senha deve ser válida quando passar por todos os critérios
-  - Nas senhas válidas, nós esperamos (`expected`) que o resultado (`actual`) seja `true`.
-- 📝 Nada de comentários no teste, vamos descrever o que é cada um na própria asserção (`message`)
+- ❌ Several invalid passwords to simulate both typical users and malicious attempts
+  - For invalid passwords we expect (`expected`) the result (`actual`) to be `false`.
+- ✅ Valid passwords to make sure our function recognizes valid inputs when all criteria are met
+  - For valid passwords we expect (`expected`) the result (`actual`) to be `true`.
+- 📝 No extra comments in the test — we'll describe each case directly in the assertion message
 
-Vamos criar nosso arquivo de teste:
+Create the test file:
 
 - **test/password.test.mjs**
 
@@ -219,90 +219,90 @@ import { validatePassword } from '../src/validations.mjs';
 assert.strictEqual(
   validatePassword(),
   false,
-  'Valida se a senha não for passada'
+  'Validates if the password is not provided'
 );
 
 assert.strictEqual(
   validatePassword(12345678),
   false,
-  'Valida se a senha não for uma string'
+  'Validates if the password is not a string'
 );
 
 assert.strictEqual(
   validatePassword(''),
   false,
-  'Valida se a senha for uma string vazia'
+  'Validates if the password is an empty string'
 );
 
 assert.strictEqual(
   validatePassword('abcd1234'),
   false,
-  'Valida se a senha não possuir ao menos uma letra maiúscula'
+  'Validates if the password does not have at least one uppercase letter'
 );
 
 assert.strictEqual(
   validatePassword('1234EFGH'),
   false,
-  'Valida se a senha não possuir ao menos uma letra minúscula'
+  'Validates if the password does not have at least one lowercase letter'
 );
 
 assert.strictEqual(
   validatePassword('abcdEFGH'),
   false,
-  'Valida se a senha não possuir ao menos um número'
+  'Validates if the password does not have at least one number'
 );
 
 assert.strictEqual(
   validatePassword('abcdEF12'),
   true,
-  'Valida se a senha for válida'
+  'Validates if the password is valid'
 );
 ```
 
-- Você pode trocar de **test/password.test.mjs** para **test/password.test.js** usando o `"type": "module"` no seu arquivo **package.json** 🧙🏻
+- You can switch from **test/password.test.mjs** to **test/password.test.js** by setting `"type": "module"` in your **package.json** 🧙🏻
 
 <hr />
 
-## 🔬 Verificando se os Testes Passaram
+## 🔬 Checking If the Tests Passed
 
 ```bash
 npx poku
 ```
 
-- Ao executar o comando `npx poku`, por padrão, o _tester_ irá procurar por todos os arquivos com a extenção `*.test.*` ou `*.spec.*` no diretório em que o comando foi executado 🧙🏻
+- When you run `npx poku`, by default the tester will look for files with the `*.test.*` or `*.spec.*` extension in the current directory 🧙🏻
 
-E finalmente, nosso resultado:
+And finally, the result:
 
 <img
   loading='lazy'
   width='522'
-  alt='Exemplo de Sucesso com o Poku'
+  alt='Success Example with Poku'
   src='https://github.com/wellwelwel/poku/assets/46850407/f06105a3-f956-473f-b456-26c1e27d80db'
 />
 
-- A primeira saída mostra em qual diretório o [**Poku**](https://github.com/wellwelwel/poku) está procurando por testes
-- A segunda saída mostra o arquivo que está sendo testado no momento
-  - Dentro de cada arquivo de teste, ele irá mostrar todas as asserções que possuírem uma mensagem
-  - Ao finalizar, seja com sucesso ou erro, ele irá mostrar o comando que ele executou para o arquivo testado:
+- The first line shows the directory where [**Poku**](https://github.com/wellwelwel/poku) is searching for tests
+- The second line shows the file currently being tested
+  - Inside each test file it lists all assertions that include a message
+  - When finished (success or failure), it shows the command it ran for that file:
     - `node test/password.test.mjs`
-- Quando todos os arquivos de testes terminarem, ele irá mostrar um resumo de quantos arquivos passaram e/ou falharam
-- No final, o código de saída será:
-  - ✅ `0` para sucesso
-  - ❌ `1` para falha
+- When all test files finish, it shows a summary of how many files passed and/or failed
+- The exit code will be:
+  - ✅ `0` for success
+  - ❌ `1` for failure
 
 <hr />
 
-## 💭 Conclusão
+## 💭 Conclusion
 
-Com os **testes unitários** que criamos, nós garantimos não só que nossa função funcione como deveria, como inclusive prevemos como nosso projeto reage em situações atípicas antes que elas aconteçam 🔐
+With the **unit tests** we created, we ensure not only that our function behaves as expected, but also that we can anticipate how our project reacts in unusual situations before they occur 🔐
 
-> Espero ter te provado que **testes** podem sim (!) ser **simples** 🧑🏻‍🎓
+> I hope I've shown that **tests** can indeed be **simple** 🧑🏻‍🎓
 
 <hr />
 
-- Essa foi minha primeira "aula" em formato de _blog_. Feedbacks são sempre bem vindos 🩵
-- Muitos termos são explicados repetidamente em momentos diferentes, isso é uma escolha didática, mas podem falar caso tenha ficado cansativo 🧑🏻‍🎓
+- This was my first "lesson" in blog format. Feedback is always welcome 🩵
+- Many terms are explained multiple times by choice for didactic purposes — let me know if it felt repetitive 🧑🏻‍🎓
 
 :::info
-Esse artigo foi postado icialmente no [TabNews](https://www.tabnews.com.br/wellwelwel/tutorial-introduzindo-testes-unitarios-para-devs-iniciantes-js).
+This article was initially posted on [TabNews](https://www.tabnews.com.br/wellwelwel/tutorial-introduzindo-testes-unitarios-para-devs-iniciantes-js).
 :::
