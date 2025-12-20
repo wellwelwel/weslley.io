@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Admonition from '@theme/Admonition';
 import Layout from '@theme/Layout';
-import MediaKit from '@site/content/about/mediakit.mdx';
+import MediaKit from '@site/i18n/pt-BR/about/mediakit.mdx';
 
 export default (): ReactNode => {
   const { i18n } = useDocusaurusContext();
