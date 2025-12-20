@@ -27,6 +27,9 @@ export const Article: FC<{
   const imageMap: Record<string, string> = Object.create(null);
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
+  const datetime = article.date.includes('T')
+    ? article.date
+    : `${article.date}T00:00`;
 
   const translations = {
     views: currentLocale === 'en' ? 'Views' : 'Visualizações',
@@ -133,9 +136,9 @@ export const Article: FC<{
           )}
 
           <div>
-            <time dateTime={article.date}>
+            <time dateTime={datetime}>
               <strong>{translations.date}:</strong>{' '}
-              {new Date(article.date).toLocaleDateString(currentLocale, {
+              {new Date(datetime).toLocaleDateString(currentLocale, {
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric',
