@@ -1,5 +1,6 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Link } from 'lucide-react';
+import { toast } from 'sonner';
 
 type SocialShareProps = {
   url: string;
@@ -9,6 +10,12 @@ type SocialShareProps = {
 
 const shareText = (title: string, author: string, locale: string) =>
   locale === 'en' ? `"${title}" by ${author}:` : `"${title}" por ${author}:`;
+
+const alert = (message: string) => {
+  toast.info(message, {
+    duration: 2000,
+  });
+};
 
 const fallbackCopyToClipboard = (text: string): boolean => {
   const textArea = document.createElement('textarea');
