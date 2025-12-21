@@ -67,6 +67,16 @@ export const Slide: FC<SlideOptions> = ({
     clearTimer,
   ]);
 
+  const getCurrentIndexFromScroll = useCallback(() => {
+    const container = containerRef.current;
+    if (!container) return 0;
+
+    const slideWidth = container.offsetWidth;
+    if (slideWidth === 0) return 0;
+
+    return Math.round(container.scrollLeft / slideWidth);
+  }, []);
+
   const goToSlide = useCallback(
     (index: number) => {
       clearTimer();
@@ -76,12 +86,14 @@ export const Slide: FC<SlideOptions> = ({
   );
 
   const nextSlide = useCallback(() => {
-    goToSlide((currentIndex + 1) % images.length);
-  }, [currentIndex, images.length, goToSlide]);
+    const realIndex = getCurrentIndexFromScroll();
+    goToSlide((realIndex + 1) % images.length);
+  }, [images.length, goToSlide, getCurrentIndexFromScroll]);
 
   const prevSlide = useCallback(() => {
-    goToSlide((currentIndex - 1 + images.length) % images.length);
-  }, [currentIndex, images.length, goToSlide]);
+    const realIndex = getCurrentIndexFromScroll();
+    goToSlide((realIndex - 1 + images.length) % images.length);
+  }, [images.length, goToSlide, getCurrentIndexFromScroll]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -98,7 +110,7 @@ export const Slide: FC<SlideOptions> = ({
       },
       {
         root: container,
-        threshold: 0.5,
+        threshold: 0.1,
       }
     );
 
@@ -119,15 +131,14 @@ export const Slide: FC<SlideOptions> = ({
   const handleTouchEnd = useCallback(() => setIsPaused(false), []);
 
   return (
-    <div className='slide-container show'>
-      <div
-        ref={containerRef}
-        className='slide-track'
-        onMouseEnter={handleMouseEnter}
-        onMouseLeave={handleMouseLeave}
-        onTouchStart={handleTouchStart}
-        onTouchEnd={handleTouchEnd}
-      >
+    <div
+      className='slide-container show'
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      onTouchStart={handleTouchStart}
+      onTouchEnd={handleTouchEnd}
+    >
+      <div ref={containerRef} className='slide-track'>
         {images.map((image, index) => (
           <figure key={index} className='slide' data-index={index}>
             <picture>
