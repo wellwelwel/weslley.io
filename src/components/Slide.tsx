@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export type SlideOptions = {
@@ -20,12 +20,20 @@ export const Slide: FC<SlideOptions> = ({
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [currentIndex, setCurrentIndex] = useState(0);
-  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
 
-  const scrollToSlide = (index: number) => {
+  const clearTimer = useCallback(() => {
+    if (timerRef.current) {
+      clearTimeout(timerRef.current);
+      timerRef.current = null;
+    }
+  }, []);
+
+  const scrollToSlide = useCallback((index: number) => {
     const container = containerRef.current;
     if (!container) return;
 
@@ -34,17 +42,46 @@ export const Slide: FC<SlideOptions> = ({
       left: slideWidth * index,
       behavior: 'smooth',
     });
-  };
+  }, []);
 
-  const nextSlide = () => {
-    const nextIndex = (currentIndex + 1) % images.length;
-    scrollToSlide(nextIndex);
-  };
+  const scheduleNext = useCallback(() => {
+    if (!autoPlay || isPaused) return;
 
-  const prevSlide = () => {
-    const prevIndex = (currentIndex - 1 + images.length) % images.length;
-    scrollToSlide(prevIndex);
-  };
+    clearTimer();
+
+    timerRef.current = setTimeout(() => {
+      setCurrentIndex((prev) => {
+        const nextIndex = (prev + 1) % images.length;
+
+        scrollToSlide(nextIndex);
+
+        return nextIndex;
+      });
+    }, autoPlayInterval);
+  }, [
+    autoPlay,
+    autoPlayInterval,
+    isPaused,
+    images.length,
+    scrollToSlide,
+    clearTimer,
+  ]);
+
+  const goToSlide = useCallback(
+    (index: number) => {
+      clearTimer();
+      scrollToSlide(index);
+    },
+    [scrollToSlide, clearTimer]
+  );
+
+  const nextSlide = useCallback(() => {
+    goToSlide((currentIndex + 1) % images.length);
+  }, [currentIndex, images.length, goToSlide]);
+
+  const prevSlide = useCallback(() => {
+    goToSlide((currentIndex - 1 + images.length) % images.length);
+  }, [currentIndex, images.length, goToSlide]);
 
   useEffect(() => {
     const container = containerRef.current;
@@ -52,12 +89,12 @@ export const Slide: FC<SlideOptions> = ({
 
     const observer = new IntersectionObserver(
       (entries) => {
-        entries.forEach((entry) => {
+        for (const entry of entries) {
           if (entry.isIntersecting) {
             const index = Number(entry.target.getAttribute('data-index'));
             setCurrentIndex(index);
           }
-        });
+        }
       },
       {
         root: container,
@@ -68,34 +105,28 @@ export const Slide: FC<SlideOptions> = ({
     const slides = container.querySelectorAll('[data-index]');
     slides.forEach((slide) => observer.observe(slide));
 
-    return () => {
-      slides.forEach((slide) => observer.unobserve(slide));
-    };
+    return () => observer.disconnect();
   }, [images.length]);
 
   useEffect(() => {
-    if (!autoPlay) return;
+    scheduleNext();
+    return clearTimer;
+  }, [currentIndex, scheduleNext, clearTimer]);
 
-    autoPlayRef.current = setInterval(() => {
-      nextSlide();
-    }, autoPlayInterval);
-
-    return () => {
-      if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-    };
-  }, [autoPlay, autoPlayInterval, currentIndex]);
-
-  const handleUserInteraction = () => {
-    if (autoPlayRef.current) clearInterval(autoPlayRef.current);
-  };
+  const handleMouseEnter = useCallback(() => setIsPaused(true), []);
+  const handleMouseLeave = useCallback(() => setIsPaused(false), []);
+  const handleTouchStart = useCallback(() => setIsPaused(true), []);
+  const handleTouchEnd = useCallback(() => setIsPaused(false), []);
 
   return (
     <div className='slide-container show'>
       <div
         ref={containerRef}
         className='slide-track'
-        onMouseEnter={handleUserInteraction}
-        onTouchStart={handleUserInteraction}
+        onMouseEnter={handleMouseEnter}
+        onMouseLeave={handleMouseLeave}
+        onTouchStart={handleTouchStart}
+        onTouchEnd={handleTouchEnd}
       >
         {images.map((image, index) => (
           <figure key={index} className='slide' data-index={index}>
@@ -104,7 +135,7 @@ export const Slide: FC<SlideOptions> = ({
                 src={image.src}
                 alt={image.event || `Slide ${index + 1}`}
                 loading={index === 0 ? 'eager' : 'lazy'}
-                decoding='async'
+                decoding={index === 0 ? 'sync' : 'async'}
               />
             </picture>
             {image.event && (
