@@ -17,6 +17,10 @@ export const Articles = ({ route }: ArticlesOptions) => {
   const { viewMode, ViewToggle, isListView } = useViewMode();
   const currentLocale = i18n.currentLocale;
   const API = siteConfig.customFields?.COUNTTY_URL;
+  const socialBanner =
+    route === 'talks'
+      ? '/img/slide/codecon-002.jpg'
+      : '/img/slide/roga-002.jpg';
 
   const translations = {
     title: {
@@ -62,20 +66,8 @@ export const Articles = ({ route }: ArticlesOptions) => {
   return (
     <Layout title={translations.title[route]}>
       <Head>
-        {route === 'talks' && (
-          <>
-            <meta
-              property='og:image'
-              content={'/img/slide/codecon-001.jpg'}
-              data-rh='true'
-            />
-            <meta
-              property='twitter:image'
-              content={'/img/slide/codecon-001.jpg'}
-              data-rh='true'
-            />
-          </>
-        )}
+        <meta property='og:image' content={socialBanner} data-rh='true' />
+        <meta property='twitter:image' content={socialBanner} data-rh='true' />
       </Head>
       <div id='articles'>
         <header>
