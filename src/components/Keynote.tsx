@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MonitorPlay } from 'lucide-react';
 import '../css/custom/_moments.scss';
 import '../css/custom/_keynote.scss';
@@ -9,6 +10,9 @@ export type KeynoteProps = {
 };
 
 export const Keynote: FC<KeynoteProps> = ({ slides }) => {
+  const { i18n } = useDocusaurusContext();
+  const { currentLocale } = i18n;
+  const isPtBr = currentLocale === 'pt-BR';
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const dialogTitleId = useId();
@@ -65,7 +69,9 @@ export const Keynote: FC<KeynoteProps> = ({ slides }) => {
         aria-label={`Iniciar apresentação com ${slides.length} ${slides.length === 1 ? 'slide' : 'slides'}`}
       >
         <MonitorPlay className='keynote__startIcon' size={24} />
-        <span className='keynote__startTitle'>Iniciar Apresentação</span>
+        <span className='keynote__startTitle'>
+          {isPtBr ? 'Iniciar Apresentação' : 'Start Presentation'}
+        </span>
         <span className='keynote__startCount'>
           {slides.length} {slides.length === 1 ? 'slide' : 'slides'}
         </span>
