@@ -55,6 +55,7 @@ export const findArticles = async (
 
       articles.push({
         title: data.title,
+        order: data.order,
         slug: encodeURIComponent(slug),
         date: data.date,
         authors: data.authors || [],

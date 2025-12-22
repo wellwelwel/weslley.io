@@ -70,6 +70,11 @@ export const Article: FC<{
     <div
       ref={ref}
       className={`article-item ${viewMode === 'list' ? 'list-mode' : ''}`}
+      style={
+        typeof article.order === 'number'
+          ? ({ order: article.order } satisfies React.CSSProperties)
+          : undefined
+      }
     >
       <article className='card'>
         <div className='card__body'>

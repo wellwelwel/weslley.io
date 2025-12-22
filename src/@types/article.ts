@@ -48,6 +48,7 @@ export type ProcessedArticle = ArticleFrontMatter & {
   authorsData: Author[];
   previousArticle?: ArticleNavigation;
   nextArticle?: ArticleNavigation;
+  order?: number;
 };
 
 export type ArticlePageProps = {
