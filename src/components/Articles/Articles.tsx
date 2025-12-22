@@ -9,7 +9,7 @@ import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
 import '@site/src/css/pages/articles.scss';
 
-export const Articles = ({ route, children }: ArticlesOptions) => {
+export const Articles = ({ route, description, children }: ArticlesOptions) => {
   const { globalData, siteConfig, i18n } = useDocusaurusContext();
   const [viewCounts, setViewCounts] = useState<Record<string, string>>(
     Object.create(null)
@@ -68,6 +68,12 @@ export const Articles = ({ route, children }: ArticlesOptions) => {
       <Head>
         <meta property='og:image' content={socialBanner} data-rh='true' />
         <meta property='twitter:image' content={socialBanner} data-rh='true' />
+        {description && (
+          <>
+            <meta name='description' content={description} data-rh='true' />
+            <meta name='og:description' content={description} data-rh='true' />
+          </>
+        )}
       </Head>
       <div id='articles'>
         <header>

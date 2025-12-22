@@ -3,6 +3,7 @@ import type { ProcessedArticle } from '../@types/article';
 
 export type ArticlesOptions = {
   route: keyof typeof regex;
+  description?: string;
   children?: ReactNode;
 };
 

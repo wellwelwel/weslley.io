@@ -94,12 +94,15 @@ export default () => {
   );
 
   return (
-    <Articles route='talks'>
+    <Articles
+      route='talks'
+      description='Como autor e mantenedor de projetos críticos no ecossistema open source, somando mais de 200 milhões de downloads por ano, levo ao palco experiências reais de sistemas usados em escala global.'
+    >
       <header>
         <small>
           <p>
             Como autor e mantenedor de projetos críticos no ecossistema{' '}
-            <em>open source</em>, que somam mais de{' '}
+            <em>open source</em>, somando mais de{' '}
             <strong>200 milhões de downloads</strong> por ano, levo ao palco
             experiências reais de sistemas usados em escala global.
           </p>
