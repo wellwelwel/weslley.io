@@ -39,10 +39,21 @@ jobs:
         run: npm run lint
 
       - name: Building Site
-        run: npm run build
+        run: |
+          npm run build:server
+          npm run build
         env:
           COUNTTY_URL: ${{ secrets.COUNTTY_URL }}
           COUNTTY_TOKEN: ${{ secrets.COUNTTY_TOKEN }}
+
+      - name: Deploy — Server
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./server
+          publish_branch: 'server'
+          allow_empty_commit: false
+          enable_jekyll: true
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4

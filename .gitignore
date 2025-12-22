@@ -1,9 +1,10 @@
+/.cache-loader
+/.docusaurus
 /.wrangler
 /backups
 /build
 /node_modules
-/.docusaurus
-/.cache-loader
+/server
 .DS_Store
 .env
 t.ts

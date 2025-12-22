@@ -1,8 +1,11 @@
 {
-  "$schema": "node_modules/wrangler/config-schema.json",
   "name": "weslley-io",
   "main": "src/server/index.ts",
   "compatibility_date": "2025-12-17",
+  "no_bundle": true,
+  "send_metrics": false,
+  "preview_urls": false,
+  "routes": [{ "pattern": "api.weslley.io", "custom_domain": true }],
   "compatibility_flags": ["nodejs_compat"],
   "durable_objects": {
     "bindings": [
@@ -18,7 +21,7 @@
       "new_sqlite_classes": ["Countty"]
     }
   ],
-  "dev": {
-    "port": 3001
+  "vars": {
+    "ENVIRONMENT": "production"
   }
 }

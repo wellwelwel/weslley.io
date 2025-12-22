@@ -1,0 +1,30 @@
+import commonjs from '@rollup/plugin-commonjs';
+import json from '@rollup/plugin-json';
+import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+import { defineConfig } from 'rollup';
+
+export default defineConfig({
+  input: 'src/server/index.ts',
+  output: {
+    file: 'server/index.js',
+    format: 'esm',
+  },
+  external: ['cloudflare:workers', /^node:/],
+  plugins: [
+    resolve(),
+    commonjs(),
+    json({ compact: true }),
+    typescript({
+      tsconfig: './tsconfig.json',
+      exclude: ['**/*.tsx', 'node_modules'],
+    }),
+    terser({
+      format: {
+        comments: false,
+        source_map: false,
+      },
+    }),
+  ],
+});
