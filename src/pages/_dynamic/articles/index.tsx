@@ -4,9 +4,9 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import MDXContent from '@theme/MDXContent';
-import removeMd from 'remove-markdown';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
+import { stripMarkdown } from '@site/src/helpers/strip-markdown';
 import { isDevelopment } from '../../../../tools/environment';
 import { SideProvider } from '../../../components/Side/context';
 import { SideSelector } from '../../../components/Side/Selector';
@@ -14,21 +14,6 @@ import { Navigation } from './_navigation';
 import { SocialShare } from './_social-share';
 import { Summary } from './_summary';
 import '@site/src/css/pages/article-page.scss';
-
-export const markdownToPlain = (md: string): string => {
-  const stripped = removeMd(md, {
-    gfm: true,
-    useImgAltText: false,
-  });
-
-  return stripped
-    .replace(/:::(.+)?/g, '')
-    .replace(/\r\n?/g, '\n')
-    .split('\n')
-    .map((line) => line.trim())
-    .filter((line) => line.length > 0)
-    .join('\n');
-};
 
 export default ({
   data,
@@ -58,10 +43,11 @@ export default ({
   const socialBanner = social ? `${siteConfig.url}${social}` : undefined;
   const articleUrl = `${siteConfig.url}/${route}/${slug}`;
   const { currentLocale } = i18n;
+  const datetime = date.includes('T') ? date : `${date}T00:00`;
   const authorName =
     authorsData?.[0]?.name ?? (currentLocale === 'en' ? 'Author' : 'Autor');
   const normalizedDescription = description
-    ? markdownToPlain(description)
+    ? stripMarkdown(description)
     : undefined;
 
   const translations = {
@@ -114,8 +100,8 @@ export default ({
             )}
 
             <div className='metadata'>
-              <time dateTime={date}>
-                {new Date(date).toLocaleDateString(currentLocale, {
+              <time dateTime={datetime}>
+                {new Date(datetime).toLocaleDateString(currentLocale, {
                   year: 'numeric',
                   month: 'long',
                   day: 'numeric',
