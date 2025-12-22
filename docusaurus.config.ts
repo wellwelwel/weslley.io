@@ -22,12 +22,12 @@ const config: Config = {
   trailingSlash: true,
   markdown: {
     hooks: {
-      onBrokenMarkdownLinks: 'ignore',
+      onBrokenMarkdownLinks: 'throw',
     },
   },
-  onBrokenLinks: 'ignore',
-  onBrokenAnchors: 'ignore',
-  onDuplicateRoutes: 'ignore',
+  onBrokenLinks: 'throw',
+  onBrokenAnchors: 'throw',
+  onDuplicateRoutes: 'throw',
   i18n: {
     defaultLocale: 'pt-BR',
     locales: ['pt-BR', 'en'],
