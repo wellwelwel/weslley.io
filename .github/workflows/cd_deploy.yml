@@ -38,6 +38,9 @@ jobs:
       - name: Checking Lint
         run: npm run lint
 
+      - name: Testing
+        run: npm test
+
       - name: Building Site
         run: |
           npm run build:server
