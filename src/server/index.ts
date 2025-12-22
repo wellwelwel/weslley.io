@@ -3,7 +3,14 @@
 import type { CounttyRouter, Env } from 'countty';
 import { createCountty } from 'countty';
 
-const { Countty, createContext } = createCountty({ cacheMs: 1000 });
+const { Countty, createContext } = createCountty({
+  cacheMs: 1000,
+  rateLimit: {
+    maxRequests: 100,
+    windowMs: 10000,
+    blockDurationMs: 10000,
+  },
+});
 
 const Worker: ExportedHandler<Env> = {
   async fetch(request, env) {
