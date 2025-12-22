@@ -9,7 +9,7 @@ import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
 import '@site/src/css/pages/articles.scss';
 
-export const Articles = ({ route }: ArticlesOptions) => {
+export const Articles = ({ route, children }: ArticlesOptions) => {
   const { globalData, siteConfig, i18n } = useDocusaurusContext();
   const [viewCounts, setViewCounts] = useState<Record<string, string>>(
     Object.create(null)
@@ -24,8 +24,8 @@ export const Articles = ({ route }: ArticlesOptions) => {
 
   const translations = {
     title: {
-      articles: currentLocale === 'en' ? '📜 Articles' : '📜 Artigos',
-      talks: currentLocale === 'en' ? '🎙️ Talks' : '🎙️ Palestras',
+      articles: currentLocale === 'en' ? 'Articles' : 'Artigos',
+      talks: currentLocale === 'en' ? 'Talks' : 'Palestras',
     },
     noArticles:
       currentLocale === 'en'
@@ -74,6 +74,8 @@ export const Articles = ({ route }: ArticlesOptions) => {
           <h1>{translations.title[route]}</h1>
           <ViewToggle />
         </header>
+
+        {children ?? null}
 
         <section className={isListView ? 'list-view' : ''}>
           {articles.map((article) => (

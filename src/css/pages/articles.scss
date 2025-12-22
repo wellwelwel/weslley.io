@@ -3,7 +3,7 @@
 
 #articles {
   @include flex(column, center);
-  padding: 40px 20px;
+  padding: 30px 20px;
   width: 100%;
 
   @media (max-width: 630px) {
@@ -13,16 +13,19 @@
   & > header {
     @include flex(row, center, space-between);
     width: 100%;
-    max-width: 770px;
+    max-width: 1020px;
     margin-bottom: 30px;
 
     h1 {
+      padding-bottom: 2.5px;
+      padding-right: 2.5px;
       margin-bottom: 10px;
       font-family: var(--ifm-font-family-featured);
       font-size: 32px;
       font-weight: 800;
-      color: var(--title-color-1);
+      color: #423d8f;
       text-shadow: 1px 1px 2px var(--title-shadow-color);
+      border-bottom: 5px solid #9b94fa;
 
       @media (max-width: 630px) {
         font-size: 28px;
@@ -69,7 +72,7 @@
 
     & + small {
       width: 100%;
-      max-width: 770px;
+      max-width: 1020px;
       font-size: 14px;
       margin-bottom: 15px;
     }
@@ -79,7 +82,7 @@
     @include flex(column, center);
     gap: 20px;
     width: 100%;
-    max-width: 770px;
+    max-width: 1020px;
 
     @include load-css('article-item');
 
@@ -156,6 +159,7 @@
   }
 }
 
+@include load-css('places');
 @include load-css('article-navigation');
 
 @keyframes fadeInUp {

@@ -17,7 +17,6 @@ export default (): ReactNode => {
         <main>
           <header>
             <h1>{isPtBr ? 'Sobre' : 'About'}</h1>
-            <img loading='lazy' decoding='async' src='/img/about.svg' alt='' />
           </header>
           <nav>
             <About />

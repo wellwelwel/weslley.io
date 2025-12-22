@@ -16,12 +16,6 @@ export default (): ReactNode => {
         <main>
           <header>
             <h1>Let's Collab 🤘🏻</h1>
-            <img
-              loading='lazy'
-              decoding='async'
-              src='/img/mediakit.svg'
-              alt=''
-            />
           </header>
           <nav>
             {!isPtBr && (

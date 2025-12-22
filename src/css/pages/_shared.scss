@@ -53,6 +53,8 @@
       @include flex(row, flex-end, space-between, wrap);
 
       h1 {
+        padding-bottom: 2.5px;
+        padding-right: 2.5px;
         font-family: var(--ifm-font-family-featured);
         color: #423d8f;
         border-bottom: 5px solid #9b94fa;

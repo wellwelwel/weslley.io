@@ -1,7 +1,9 @@
-import { ProcessedArticle } from '../@types/article';
+import type { ReactNode } from 'react';
+import type { ProcessedArticle } from '../@types/article';
 
 export type ArticlesOptions = {
   route: keyof typeof regex;
+  children?: ReactNode;
 };
 
 const regex = {
