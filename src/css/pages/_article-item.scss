@@ -67,6 +67,10 @@
 
       .content-wrapper {
         width: 100%;
+
+        .theme-admonition:last-child {
+          margin-bottom: 0;
+        }
       }
 
       a {

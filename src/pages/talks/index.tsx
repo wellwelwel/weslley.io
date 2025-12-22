@@ -58,7 +58,7 @@ export default () => {
       translateY: 2.5,
     },
     {
-      name: 'Universidade de São Paulo (USP)',
+      name: 'Universidade de São Paulo',
       src: '/img/talk-places/usp.png',
       url: 'https://www5.usp.br/',
       width: 75,
@@ -72,7 +72,7 @@ export default () => {
       translateY: 2.5,
     },
     {
-      name: 'The Developer Conference (TDC)',
+      name: 'The Developer Conference',
       src: '/img/talk-places/tdc.png',
       url: 'https://thedevconf.com/',
       width: 160,

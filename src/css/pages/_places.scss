@@ -16,7 +16,12 @@
   height: 125px;
   padding-top: 40px;
   margin-top: -25px;
+  margin-bottom: -17.5px;
   overflow: hidden;
+
+  @media (max-width: 630px) {
+    padding-top: 20px;
+  }
 
   .places-track {
     @include flex(row, center, flex-start);
@@ -62,6 +67,10 @@
       transition:
         top 0.15s,
         opacity 0.2s ease-in;
+
+      @media (max-width: 630px) {
+        display: none;
+      }
     }
 
     &:hover {
