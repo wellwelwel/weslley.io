@@ -1,0 +1,115 @@
+.keynote {
+  --moments-gap: 12px;
+  --moments-radius: 10px;
+  --moments-overlay: rgb(0, 0, 0, 0.75);
+  --moments-surface: rgba(0, 0, 0, 0.75);
+  --moments-border: rgba(0, 0, 0, 0.15);
+  --moments-text: rgba(255, 255, 255, 0.925);
+  --moments-muted: rgba(255, 255, 255, 0.75);
+  --keynote-radius: 10px;
+  --keynote-border: rgba(255, 255, 255, 0.14);
+
+  &--empty {
+    padding: 16px;
+    border: 1px solid var(--keynote-border);
+    border-radius: var(--keynote-radius);
+    background: rgba(0, 0, 0, 0.03);
+    color: rgba(0, 0, 0, 0.7);
+  }
+
+  &__startButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    width: 100%;
+    padding: 20px 24px;
+    border: 1px solid var(--keynote-border);
+    border-radius: var(--keynote-radius);
+    background: linear-gradient(
+      135deg,
+      var(--title-color-1) 0%,
+      var(--title-color-2) 100%
+    );
+    color: rgba(255, 255, 255, 0.92);
+    text-shadow: 1px 1px 2.5px rgba(28, 8, 94, 0.75);
+    cursor: pointer;
+    font-family: var(--ifm-font-family-featured);
+    font-size: 16px;
+    font-weight: 600;
+    transition: all 180ms ease;
+    outline: none;
+    position: relative;
+    overflow: hidden;
+
+    svg {
+      filter: drop-shadow(1px 1px 2.5px rgba(28, 8, 94, 0.75));
+    }
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        135deg,
+        rgba(255, 255, 255, 0.1) 0%,
+        rgba(255, 255, 255, 0) 100%
+      );
+      opacity: 0;
+      transition: opacity 180ms ease;
+    }
+
+    &:hover::before {
+      opacity: 1;
+    }
+
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 2.5px 5px rgba(60, 0, 255, 0.15);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+    }
+
+    @media (max-width: 520px) {
+      padding: 16px 20px;
+      font-size: 15px;
+      gap: 10px;
+    }
+  }
+
+  &__startIcon {
+    flex-shrink: 0;
+    z-index: 1;
+  }
+
+  &__startTitle {
+    flex-grow: 1;
+    text-align: left;
+    z-index: 1;
+  }
+
+  &__startCount {
+    flex-shrink: 0;
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.25);
+    font-size: 14px;
+    font-weight: 600;
+    z-index: 1;
+
+    @media (max-width: 520px) {
+      font-size: 13px;
+      padding: 3px 10px;
+    }
+  }
+
+  .moments__topBar {
+    background-color: rgba(0, 0, 0, 0.75) !important;
+  }
+}

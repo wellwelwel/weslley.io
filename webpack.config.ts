@@ -10,6 +10,8 @@ export default () => {
             '@site': resolve(__dirname),
             '@Modal': resolve(__dirname, 'src/components/Modal'),
             '@Side': resolve(__dirname, 'src/components/Side'),
+            '@Moments': resolve(__dirname, 'src/components/Moments'),
+            '@Keynote': resolve(__dirname, 'src/components/Keynote'),
           },
         },
       };

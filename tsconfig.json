@@ -27,7 +27,9 @@
     "paths": {
       "@site/*": ["./*"],
       "@Modal": ["./src/components/Modal"],
-      "@Side": ["./src/components/Side"]
+      "@Side": ["./src/components/Side"],
+      "@Moments": ["./src/components/Moments"],
+      "@Keynote": ["./src/components/Keynote"]
     }
   },
   "exclude": ["static", ".docusaurus", "build"],
