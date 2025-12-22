@@ -4,6 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import MDXContent from '@theme/MDXContent';
+import removeMd from 'remove-markdown';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { isDevelopment } from '../../../../tools/environment';
@@ -13,6 +14,21 @@ import { Navigation } from './_navigation';
 import { SocialShare } from './_social-share';
 import { Summary } from './_summary';
 import '@site/src/css/pages/article-page.scss';
+
+export const markdownToPlain = (md: string): string => {
+  const stripped = removeMd(md, {
+    gfm: true,
+    useImgAltText: false,
+  });
+
+  return stripped
+    .replace(/:::(.+)?/g, '')
+    .replace(/\r\n?/g, '\n')
+    .split('\n')
+    .map((line) => line.trim())
+    .filter((line) => line.length > 0)
+    .join('\n');
+};
 
 export default ({
   data,
@@ -44,6 +60,9 @@ export default ({
   const { currentLocale } = i18n;
   const authorName =
     authorsData?.[0]?.name ?? (currentLocale === 'en' ? 'Author' : 'Autor');
+  const normalizedDescription = description
+    ? markdownToPlain(description)
+    : undefined;
 
   const translations = {
     views: currentLocale === 'en' ? 'Views' : 'Visualizações',
@@ -62,13 +81,9 @@ export default ({
   };
 
   return (
-    <Layout title={title} description={description ?? undefined}>
+    <Layout title={title} description={normalizedDescription ?? undefined}>
       <Head>
         <meta property='og:title' content={title} />
-        {description && <meta property='description' content={description} />}
-        {description && (
-          <meta property='og:description' content={description} />
-        )}
         <meta property='og:type' content='article' />
         {socialBanner && <meta property='og:image' content={socialBanner} />}
         {socialBanner && <meta property='og:image:alt' content={title} />}
@@ -78,8 +93,8 @@ export default ({
         {socialBanner && <meta name='twitter:image' content={socialBanner} />}
         {socialBanner && <meta name='twitter:image:alt' content={title} />}
         <meta name='twitter:title' content={title} />
-        {description && (
-          <meta name='twitter:description' content={description} />
+        {normalizedDescription && (
+          <meta name='twitter:description' content={normalizedDescription} />
         )}
       </Head>
       <div id='article-page'>
