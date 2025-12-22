@@ -65,6 +65,7 @@ export default ({
     <Layout title={title} description={description ?? undefined}>
       <Head>
         <meta property='og:title' content={title} />
+        {description && <meta property='description' content={description} />}
         {description && (
           <meta property='og:description' content={description} />
         )}

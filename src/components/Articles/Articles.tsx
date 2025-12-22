@@ -69,10 +69,10 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
         <meta property='og:image' content={socialBanner} data-rh='true' />
         <meta property='twitter:image' content={socialBanner} data-rh='true' />
         {description && (
-          <>
-            <meta name='description' content={description} data-rh='true' />
-            <meta name='og:description' content={description} data-rh='true' />
-          </>
+          <meta name='description' content={description} data-rh='true' />
+        )}
+        {description && (
+          <meta name='og:description' content={description} data-rh='true' />
         )}
       </Head>
       <div id='articles'>
