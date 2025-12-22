@@ -5,6 +5,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import MDXContent from '@theme/MDXContent';
 import { Parallax } from '@site/src/components/Parallax';
+import { SafeLink } from '@site/src/components/SafeLink';
 import { isDevelopment } from '../../../../tools/environment';
 import { SideProvider } from '../../../components/Side/context';
 import { SideSelector } from '../../../components/Side/Selector';
@@ -86,11 +87,14 @@ export default ({
             <h1>{title}</h1>
 
             {showViewsCounter && (
-              <div className='views-counter'>
+              <SafeLink
+                to='https://github.com/wellwelwel/countty'
+                className='views-counter'
+              >
                 <img
                   src={`${API}/badge?slug=${slug}&label=${encodeURIComponent(translations.views)}&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
                 />
-              </div>
+              </SafeLink>
             )}
 
             <div className='metadata'>
