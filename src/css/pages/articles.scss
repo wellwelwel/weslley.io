@@ -32,6 +32,67 @@
       }
     }
 
+    small {
+      @include flex(column, flex-start, flex-start);
+      gap: 15px;
+      min-width: 100%;
+      font-weight: 400;
+      font-size: 14px;
+      color: #625da4;
+
+      p {
+        margin: 0;
+      }
+
+      .group {
+        @include flex(row, flex-start, flex-start);
+        gap: 10px;
+
+        @media (max-width: 630px) {
+          flex-direction: column;
+          align-items: stretch;
+          width: 100%;
+        }
+
+        @include load-css('featured-button');
+
+        a {
+          @include flex(row, center, center);
+          gap: 10px;
+          padding: 10px 20px;
+          border-radius: 10px;
+          font-family: var(--ifm-font-family-base);
+          font-size: 14px;
+          font-weight: 600;
+          cursor: pointer;
+
+          @media (max-width: 630px) {
+            flex-direction: row-reverse;
+            justify-content: flex-end;
+          }
+
+          &.common {
+            border: 2px solid var(--card-border-color);
+            background-color: var(--card-background-color);
+            color: var(--ifm-color-primary);
+            transition:
+              background-color ease 0.25s,
+              border-color ease 0.5s,
+              color ease 0.5s;
+
+            img,
+            svg {
+              width: 18px;
+            }
+
+            &:hover {
+              border-color: var(--ifm-color-primary);
+            }
+          }
+        }
+      }
+    }
+
     .view-toggle {
       @include flex(row, center);
       gap: 8px;

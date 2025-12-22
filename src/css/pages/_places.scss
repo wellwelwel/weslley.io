@@ -13,15 +13,8 @@
   display: block;
   width: 100%;
   max-width: 1020px;
-  height: 125px;
-  padding-top: 40px;
-  margin-top: -25px;
-  margin-bottom: -17.5px;
+  margin-top: 5px;
   overflow: hidden;
-
-  @media (max-width: 630px) {
-    padding-top: 20px;
-  }
 
   .places-track {
     @include flex(row, center, flex-start);
@@ -51,39 +44,12 @@
       transition: filter 0.25s;
     }
 
-    span {
-      position: absolute;
-      z-index: 1;
-      top: 0;
-      left: 0;
-      opacity: 0;
-      border-bottom: 4px solid var(--ifm-color-primary-dark);
-      font-size: 13px;
-      pointer-events: none;
-      cursor: help;
-      white-space: pre;
-      text-align: left;
-      color: var(--ifm-color-primary-dark);
-      transition:
-        top 0.15s,
-        opacity 0.2s ease-in;
-
-      @media (max-width: 630px) {
-        display: none;
-      }
-    }
-
     &:hover {
       transform: scale(0.95);
 
       img {
         filter: contrast(1) grayscale(0) sepia(0) hue-rotate(0deg) saturate(1)
           drop-shadow(1px 1px 2.5px #fff);
-      }
-
-      span {
-        opacity: 1;
-        top: -35px;
       }
     }
   }
@@ -94,6 +60,7 @@
     max-width: 1020px;
     font-size: 14px;
     font-weight: 500;
+    margin-top: 10px;
     margin-bottom: 25px;
     color: #9094ff;
   }

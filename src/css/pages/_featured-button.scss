@@ -1,0 +1,57 @@
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) https://awesomeyou.io and contributors. All rights reserved.
+ *  Licensed under the GNU Affero General Public License v3.0. See https://github.com/wellwelwel/awesomeyou/blob/main/LICENSE for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+@use '../global/mixins' as *;
+
+$color-glow: #adc0ff90;
+$color-text: #dfeafa;
+
+.cta {
+  border: 2px solid #ffffff36;
+  color: $color-text;
+  text-shadow: 1px 1px 1px #1b2842a5;
+  background:
+    linear-gradient(90deg, #3a40e7, #6017ae) border-box,
+    #1d1d20 padding-box;
+  background-clip: border-box, padding-box;
+  background-position: 0 0;
+  box-shadow:
+    0 0 7.5px $color-glow,
+    0 0 7.5px $color-glow;
+  transition:
+    border-color 0.25s cubic-bezier(0.75, -1.5, 0.2, 0.9),
+    gap 0.25s cubic-bezier(0.75, -1.5, 0.2, 0.9);
+
+  .btn-content {
+    transition: transform 0.25s cubic-bezier(0.75, -1.5, 0.2, 0.9);
+  }
+
+  &:hover,
+  &:focus {
+    gap: 12.5px;
+    border-color: #7583ff4d;
+
+    .btn-content {
+      transform: scale(0.995);
+    }
+  }
+
+  .btn-content {
+    .text {
+      line-height: 1;
+    }
+  }
+
+  .btn-dropdown {
+    @include flex(row, center, center);
+
+    img,
+    svg {
+      width: 18px;
+      filter: drop-shadow(1px 1px 1px #1b4229a5);
+      transition: transform 0.25s cubic-bezier(0.75, -0.75, 0.2, 0.9);
+    }
+  }
+}

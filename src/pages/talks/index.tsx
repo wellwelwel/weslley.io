@@ -1,3 +1,4 @@
+import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ChevronDown } from 'lucide-react';
 import { Articles } from '@site/src/components/Articles/Articles';
@@ -22,7 +23,6 @@ const Place = ({ name, src, url, width, translateY }: Places) => (
         transform: translateY ? `translateY(${translateY}px)` : undefined,
       }}
     />
-    <span>{name}</span>
   </SafeLink>
 );
 
@@ -95,6 +95,30 @@ export default () => {
 
   return (
     <Articles route='talks'>
+      <header>
+        <small>
+          <p>
+            Como autor e mantenedor de projetos críticos no ecossistema{' '}
+            <em>open source</em>, que somam mais de{' '}
+            <strong>200 milhões de downloads</strong> por ano, levo ao palco
+            experiências reais de sistemas usados em escala global.
+          </p>
+          <div className='group'>
+            <SafeLink
+              className='cta'
+              to='https://www.linkedin.com/in/wellwelwel/'
+            >
+              <span className='btn-content'>Me chame para o seu evento</span>
+              <span className='btn-dropdown'>
+                <img src='/img/linkedin2.svg' />
+              </span>
+            </SafeLink>
+            <Link className='common' to='/mediakit'>
+              Ver Media Kit <img src='/img/rock.svg' />
+            </Link>
+          </div>
+        </small>
+      </header>
       <div className='places'>
         <div className='places-track'>
           <PlaceSet suffix='a' />
