@@ -1,3 +1,4 @@
+import { useMemo } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ChevronDown } from 'lucide-react';
@@ -30,6 +31,33 @@ export default () => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
+  const translations = useMemo(
+    () => ({
+      description: isPtBr
+        ? 'Como autor e mantenedor de projetos críticos no ecossistema open source, somando mais de 200 milhões de downloads por ano, levo ao palco experiências reais de sistemas usados em escala global.'
+        : 'As the author and maintainer of critical projects in the open source ecosystem, with more than 200 million downloads a year, I bring to the stage real experiences of software used on a global scale.',
+      header: isPtBr ? (
+        <p>
+          Como autor e mantenedor de projetos críticos no ecossistema{' '}
+          <em>open source</em>, somando mais de{' '}
+          <strong>200 milhões de downloads</strong> por ano, levo ao palco
+          experiências reais de sistemas usados em escala global.
+        </p>
+      ) : (
+        <p>
+          As the author and maintainer of critical projects in the{' '}
+          <em>open source</em> ecosystem, with more than{' '}
+          <strong>200 million downloads</strong> a year, I bring to the stage
+          real experiences of software used on a global scale.
+        </p>
+      ),
+      cta: isPtBr ? 'Me chame para o seu evento' : 'Call me for your event',
+      mediakit: isPtBr ? 'Ver Media Kit' : 'See Media Kit',
+    }),
+
+    [isPtBr]
+  );
+
   const places: Places[] = [
     {
       name: 'GitHub',
@@ -94,30 +122,22 @@ export default () => {
   );
 
   return (
-    <Articles
-      route='talks'
-      description='Como autor e mantenedor de projetos críticos no ecossistema open source, somando mais de 200 milhões de downloads por ano, levo ao palco experiências reais de sistemas usados em escala global.'
-    >
+    <Articles route='talks' description={translations.description}>
       <header>
         <small>
-          <p>
-            Como autor e mantenedor de projetos críticos no ecossistema{' '}
-            <em>open source</em>, somando mais de{' '}
-            <strong>200 milhões de downloads</strong> por ano, levo ao palco
-            experiências reais de sistemas usados em escala global.
-          </p>
+          {translations.header}
           <div className='group'>
             <SafeLink
               className='cta'
               to='https://www.linkedin.com/in/wellwelwel/'
             >
-              <span className='btn-content'>Me chame para o seu evento</span>
+              <span className='btn-content'>{translations.cta}</span>
               <span className='btn-dropdown'>
                 <img src='/img/linkedin2.svg' />
               </span>
             </SafeLink>
             <Link className='common' to='/mediakit'>
-              Ver Media Kit <img src='/img/rock.svg' />
+              {translations.mediakit} <img src='/img/rock.svg' />
             </Link>
           </div>
         </small>
