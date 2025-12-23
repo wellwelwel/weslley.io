@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 
 export type SlideOptions = {
@@ -13,7 +13,7 @@ export type SlideOptions = {
   autoPlayInterval?: number;
 };
 
-export const Slide: FC<SlideOptions> = ({
+const SlideBase: FC<SlideOptions> = ({
   images,
   autoPlay = true,
   autoPlayInterval = 5000,
@@ -201,3 +201,5 @@ export const Slide: FC<SlideOptions> = ({
     </div>
   );
 };
+
+export const Slide = memo(SlideBase);

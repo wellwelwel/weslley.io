@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useId, useMemo, useRef, useState } from 'react';
 import '../css/custom/_moments.scss';
 
 export type MomentOptions = {
@@ -11,7 +11,7 @@ export type MomentsProps = {
   moments: MomentOptions[];
 };
 
-export const Moments: FC<MomentsProps> = ({ moments }) => {
+const MomentsBase: FC<MomentsProps> = ({ moments }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState<number>(0);
   const dialogTitleId = useId();
@@ -161,3 +161,5 @@ export const Moments: FC<MomentsProps> = ({ moments }) => {
     </div>
   );
 };
+
+export const Moments = memo(MomentsBase);

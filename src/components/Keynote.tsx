@@ -1,5 +1,5 @@
 import type { FC } from 'react';
-import { useEffect, useId, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useId, useMemo, useRef, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MonitorPlay } from 'lucide-react';
 import '../css/custom/_moments.scss';
@@ -9,7 +9,7 @@ export type KeynoteProps = {
   slides: string[];
 };
 
-export const Keynote: FC<KeynoteProps> = ({ slides }) => {
+const KeynoteBase: FC<KeynoteProps> = ({ slides }) => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
@@ -154,3 +154,5 @@ export const Keynote: FC<KeynoteProps> = ({ slides }) => {
     </div>
   );
 };
+
+export const Keynote = memo(KeynoteBase);
