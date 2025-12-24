@@ -1,7 +1,7 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
 import type { ViewMode } from '@site/src/hooks/useViewMode';
 import type { FC } from 'react';
-import { useRef } from 'react';
+import { useRef, useState } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Parallax } from '@site/src/components/Parallax';
@@ -18,15 +18,18 @@ import '@site/src/css/pages/_article-item.scss';
 export const Article: FC<{
   article: ProcessedArticle;
   route: ArticlesOptions['route'];
-  viewCounts: Record<string, string>;
-  showViewsCounter: boolean;
   viewMode?: ViewMode;
-}> = ({ article, route, viewCounts, showViewsCounter, viewMode = 'card' }) => {
-  const { i18n } = useDocusaurusContext();
+}> = ({ article, route, viewMode = 'card' }) => {
+  const { i18n, siteConfig } = useDocusaurusContext();
   const ref = useRef<HTMLDivElement>(null);
+  const [viewCounts, setViewCounts] = useState<Record<string, string>>(
+    Object.create(null)
+  );
   const imageMap: Record<string, string> = Object.create(null);
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
+  const API = siteConfig.customFields?.COUNTTY_URL;
+  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const datetime = article.date.includes('T')
     ? article.date
     : `${article.date}T00:00`;
@@ -52,10 +55,26 @@ export const Article: FC<{
       if (!isVisible) return;
 
       target.classList.add('show');
+
+      if (showViewsCounter && article.slug && API) {
+        fetch(`${API}/peek?slug=${article.slug}`)
+          .then((res) => res.json())
+          .then((data) => {
+            const typedData = data as { label: string };
+
+            setViewCounts((prev) => ({
+              ...prev,
+              [article.slug!]: typedData.label,
+            }));
+          })
+          .catch(() => {});
+      }
     },
     {
-      deps: [viewMode],
-      onReset: (target) => target.classList.remove('show'),
+      deps: [viewMode, showViewsCounter, article.slug, API],
+      onReset: (target) => {
+        target.classList.remove('show');
+      },
     }
   );
 

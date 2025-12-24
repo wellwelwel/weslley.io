@@ -1,5 +1,4 @@
 import type { ProcessedArticle } from '../../../@types/article';
-import { useEffect, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -21,12 +20,10 @@ type TagPageProps = {
 
 export default ({ data }: TagPageProps) => {
   const { route, tag, articles } = data;
-  const { siteConfig, i18n } = useDocusaurusContext();
-  const API = siteConfig.customFields?.COUNTTY_URL;
+  const { i18n } = useDocusaurusContext();
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
   const imageMap: Record<string, string> = Object.create(null);
-  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const { viewMode, ViewToggle, isListView } = useViewMode();
 
   const translations = {
@@ -51,33 +48,6 @@ export default ({ data }: TagPageProps) => {
         imageMap[key] = imagesContext(key).default;
     });
   }
-
-  const [viewCounts, setViewCounts] = useState<Record<string, string>>(
-    Object.create(null)
-  );
-
-  useEffect(() => {
-    const controller = new AbortController();
-
-    for (const article of articles) {
-      if (!article.slug || !showViewsCounter) continue;
-
-      const slug = article.slug;
-
-      fetch(`${API}/peek?slug=${slug}`, {
-        signal: controller.signal,
-      })
-        .then((res) => res.json())
-        .then((data) => {
-          const typedData = data as { label: string };
-
-          setViewCounts((prev) => ({ ...prev, [slug]: typedData.label }));
-        })
-        .catch(() => {});
-    }
-
-    return () => controller.abort();
-  }, [articles, API]);
 
   return (
     <>
@@ -113,8 +83,6 @@ export default ({ data }: TagPageProps) => {
                 key={article.slug}
                 article={article}
                 route={route}
-                viewCounts={viewCounts}
-                showViewsCounter={showViewsCounter}
                 viewMode={viewMode}
               />
             ))}

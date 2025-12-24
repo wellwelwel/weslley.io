@@ -1,5 +1,4 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
-import { useEffect, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -10,13 +9,10 @@ import { Article } from './Article';
 import '@site/src/css/pages/articles.scss';
 
 export const Articles = ({ route, description, children }: ArticlesOptions) => {
-  const { globalData, siteConfig, i18n } = useDocusaurusContext();
-  const [viewCounts, setViewCounts] = useState<Record<string, string>>(
-    Object.create(null)
-  );
+  const { globalData, i18n } = useDocusaurusContext();
   const { viewMode, ViewToggle, isListView } = useViewMode();
   const currentLocale = i18n.currentLocale;
-  const API = siteConfig.customFields?.COUNTTY_URL;
+
   const socialBanner =
     route === 'talks'
       ? '/img/slide/codecon-002.jpg'
@@ -32,36 +28,10 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
         ? 'No articles found.'
         : 'Nenhum artigo encontrado.',
   };
-  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
+
   const articles =
     (globalData[`mount-${route}`] as { default: ProcessedArticle[] })
       ?.default || [];
-
-  useEffect(() => {
-    if (!showViewsCounter) return;
-
-    const controller = new AbortController();
-
-    articles.forEach((article) => {
-      if (!article.slug) return;
-
-      const slug = article.slug;
-
-      API &&
-        fetch(`${API}/peek?slug=${slug}`, {
-          signal: controller.signal,
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            const typedData = data as { label: string };
-
-            setViewCounts((prev) => ({ ...prev, [slug]: typedData.label }));
-          })
-          .catch(() => {});
-    });
-
-    return () => controller.abort();
-  }, [articles, showViewsCounter, API]);
 
   return (
     <Layout title={translations.title[route]}>
@@ -89,8 +59,6 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
               key={article.slug}
               article={article}
               route={route}
-              viewCounts={viewCounts}
-              showViewsCounter={showViewsCounter}
               viewMode={viewMode}
             />
           ))}
