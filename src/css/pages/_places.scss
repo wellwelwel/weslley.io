@@ -39,8 +39,7 @@
     flex-shrink: 0;
 
     img {
-      filter: contrast(0) grayscale(1) sepia(1) hue-rotate(200deg) saturate(2.5)
-        drop-shadow(1px 1px 5px #fff);
+      filter: contrast(0.1) sepia(1) hue-rotate(200deg) saturate(3);
       transition: filter 0.25s;
     }
 
@@ -48,8 +47,7 @@
       transform: scale(0.95);
 
       img {
-        filter: contrast(1) grayscale(0) sepia(0) hue-rotate(0deg) saturate(1)
-          drop-shadow(1px 1px 2.5px #fff);
+        filter: contrast(1) sepia(0) hue-rotate(0deg) saturate(1);
       }
     }
   }
