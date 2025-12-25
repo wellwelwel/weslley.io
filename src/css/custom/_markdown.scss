@@ -17,6 +17,10 @@ blockquote {
     font-size: 13px !important;
   }
 
+  a {
+    color: inherit;
+  }
+
   &.alert--success {
     --ifm-alert-background-color: #ecebff;
     --ifm-alert-border-color: #8a7fff;

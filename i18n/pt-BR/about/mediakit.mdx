@@ -1,7 +1,8 @@
+import Link from '@docusaurus/Link';
 import Admonition from '@theme/Admonition';
 import { UserSearch } from 'lucide-react';
 import { Credly } from '@site/src/components/Credly';
-import { SafeLink as Link } from '@site/src/components/SafeLink';
+import { SafeLink } from '@site/src/components/SafeLink';
 import { Stats } from '@site/src/components/Stats';
 
 <div className='img-bio'>
@@ -10,7 +11,7 @@ import { Stats } from '@site/src/components/Stats';
 
 ## 📌 Weslley Araújo
 
-> Open Sourcerer, <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</Link>, mantenedor do <Link to="https://sidorares.github.io/node-mysql2/">**MySQL2**</Link> e criador do test runner <Link to="https://poku.io/">**Poku**</Link>.<br />
+> Open Sourcerer, <SafeLink to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</SafeLink>, mantenedor do <SafeLink to="https://sidorares.github.io/node-mysql2/">**MySQL2**</SafeLink> e criador do test runner <SafeLink to="https://poku.io/">**Poku**</SafeLink>.<br />
 > Impacta **milhões** de desenvolvedores e projetos globalmente através do **open source**.
 >
 > 🗺️ São Paulo, SP — Brasil
@@ -22,13 +23,13 @@ import { Stats } from '@site/src/components/Stats';
 
 ## <UserSearch /> Sobre
 
-Weslley Araújo é um desenvolvedor independente com mais de 10 anos de experiência, mantenedor do <Link to="https://sidorares.github.io/node-mysql2/">**MySQL2**</Link> — o cliente **MySQL** mais usado do ecossistema **JavaScript** — e criador do <Link to="https://poku.io/">**Poku**</Link>, um test runner de alta performance que desafia a própria linguagem de programação.
+Weslley Araújo é um desenvolvedor independente com mais de 10 anos de experiência, mantenedor do <SafeLink to="https://sidorares.github.io/node-mysql2/">**MySQL2**</SafeLink> — o cliente **MySQL** mais usado do ecossistema **JavaScript** — e criador do <SafeLink to="https://poku.io/">**Poku**</SafeLink>, um test runner de alta performance que desafia a própria linguagem de programação.
 
-Reconhecido como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</Link>, Weslley é especializado em <ins>desenvolver para desenvolvedores</ins>, criando e mantendo projetos críticos no ecossistema **JavaScript**, impactando ativamente milhões de projetos e desenvolvedores globalmente através do **Open Source**.
+Reconhecido como <SafeLink to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</SafeLink>, Weslley é especializado em <ins><Link to="/projects">desenvolver para desenvolvedores</Link></ins>, criando e mantendo projetos críticos no ecossistema **JavaScript**, impactando ativamente milhões de projetos e desenvolvedores globalmente através do **Open Source**.
 
 <Admonition type='tip' title='' icon=''>
 
-> 🇧🇷 Além disso, ele <ins>compartilha seu conhecimento</ins> através de palestras, painéis e workshops por todo o país.
+> 🇧🇷 Além disso, ele <ins><Link to='/talks'>compartilha seu conhecimento</Link></ins> através de palestras, painéis e workshops por todo o país.
 
 </Admonition>
 
@@ -132,9 +133,9 @@ Weslley já palestrou em eventos dos mais diversos públicos e tamanhos, incluin
       <tr>
         <td>
           <img src='/img/snyk.svg' alt='Snyk' width={16} height={16} />
-          <Link to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591085'>
+          <SafeLink to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591085'>
             Remote Code Execution (RCE)
-          </Link>
+          </SafeLink>
         </td>
         <td>Critical **(9.8)**</td>
         <td>11.509.199 (**11,5 milhões** de instalações)</td>
@@ -142,9 +143,9 @@ Weslley já palestrou em eventos dos mais diversos públicos e tamanhos, incluin
       <tr>
         <td>
           <img src='/img/snyk.svg' alt='Snyk' width={16} height={16} />
-          <Link to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6861580'>
+          <SafeLink to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6861580'>
             Prototype Pollution
-          </Link>
+          </SafeLink>
         </td>
         <td>High **(8.2)**</td>
         <td>11.207.924 (**11,2 milhões** de instalações)</td>
@@ -152,9 +153,9 @@ Weslley já palestrou em eventos dos mais diversos públicos e tamanhos, incluin
       <tr>
         <td>
           <img src='/img/snyk.svg' alt='Snyk' width={16} height={16} />
-          <Link to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591084'>
+          <SafeLink to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591084'>
             Prototype Poisoning
-          </Link>
+          </SafeLink>
         </td>
         <td>Medium **(6.5)**</td>
         <td>10.543.754 (**10,5 milhões** de instalações)</td>
@@ -162,9 +163,9 @@ Weslley já palestrou em eventos dos mais diversos públicos e tamanhos, incluin
       <tr>
         <td>
           <img src='/img/snyk.svg' alt='Snyk' width={16} height={16} />
-          <Link to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591300'>
+          <SafeLink to='https://security.snyk.io/vuln/SNYK-JS-MYSQL2-6591300'>
             Use of Web Browser Cache Containing Sensitive Information
-          </Link>
+          </SafeLink>
         </td>
         <td>Medium **(6.5)**</td>
         <td>11.153.226 (**11,1 milhões** de instalações)</td>
@@ -177,7 +178,7 @@ Weslley já palestrou em eventos dos mais diversos públicos e tamanhos, incluin
 
 ## 🏆 Microsoft MVP
 
-Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</Link>, Weslley é reconhecido por sua contribuição significativa para a comunidade de desenvolvedores, incluindo palestras, artigos, conteúdos educacionais e, especialmente, através de suas contribuições no ecossistema open source:
+Como <SafeLink to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a22d-1f0579e3aae7">**Microsoft MVP**</SafeLink>, Weslley é reconhecido por sua contribuição significativa para a comunidade de desenvolvedores, incluindo palestras, artigos, conteúdos educacionais e, especialmente, através de suas contribuições no ecossistema open source:
 
 - 🔐 Corrigiu vulnerabilidades críticas em um projeto usado por milhões de desenvolvedores.
 - 🔧 Inclui compatibilidade para **TypeScript** em diversos projetos open source terceiros.
@@ -197,7 +198,7 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
   - Implementação rigorosamente eficiente, altamente e ~estupidamente~ performática para cacheamento em memória baseado no algoritmo **Least Recently Used** para **JavaScript**.
   - Frequentemente usado em protocolos de Inteligência Artificial como o **MCP** devido sua alta taxa de compatibilidade.
 - [🐬 **MySQL2 (Mantenedor):**](https://sidorares.github.io/node-mysql2/)
-  - O cliente **MySQL** mais performático e baixado para **Node.js**, **Bun**, **Deno** e **Cloudflare Workers**, utilizado por <Link to='https://github.com/sidorares/node-mysql2/network/dependents'>mais de 1 milhão de projetos públicos</Link> no **GitHub**.
+  - O cliente **MySQL** mais performático e baixado para **Node.js**, **Bun**, **Deno** e **Cloudflare Workers**, utilizado por <SafeLink to='https://github.com/sidorares/node-mysql2/network/dependents'>mais de 1 milhão de projetos públicos</SafeLink> no **GitHub**.
 
 ---
 
@@ -226,28 +227,32 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
     <tbody>
       <tr>
         <td>
-          <Link to='https://youtu.be/XdEsRjPllZs'>DECODE FIAP</Link>
+          <SafeLink to='https://youtu.be/XdEsRjPllZs'>DECODE FIAP</SafeLink>
         </td>
         <td>
-          <Link to='https://www.youtube.com/@FiapBrasil'>FIAP</Link>
+          <SafeLink to='https://www.youtube.com/@FiapBrasil'>FIAP</SafeLink>
         </td>
         <td>
-          <Link to='https://www.linkedin.com/in/andrefdavid/'>André David</Link>
+          <SafeLink to='https://www.linkedin.com/in/andrefdavid/'>
+            André David
+          </SafeLink>
         </td>
         <td>Chef de IA, buscas no Reddit e mudanças na Microsoft</td>
         <td>15/08/25</td>
       </tr>
       <tr>
         <td>
-          <Link to='https://youtu.be/rdtgG6AAuIA'>Papinho Tech</Link>
+          <SafeLink to='https://youtu.be/rdtgG6AAuIA'>Papinho Tech</SafeLink>
         </td>
         <td>
-          <Link to='https://www.youtube.com/@oguscaetano'>Gustavo Caetano</Link>
-        </td>
-        <td>
-          <Link to='https://www.linkedin.com/in/oguscaetano/'>
+          <SafeLink to='https://www.youtube.com/@oguscaetano'>
             Gustavo Caetano
-          </Link>
+          </SafeLink>
+        </td>
+        <td>
+          <SafeLink to='https://www.linkedin.com/in/oguscaetano/'>
+            Gustavo Caetano
+          </SafeLink>
         </td>
         <td>O poder do Open Source | Tema Livre</td>
         <td>09/07/25</td>
@@ -273,9 +278,9 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
     <tbody>
       <tr>
         <td>
-          <Link to='https://www.youtube.com/watch?v=_WTl3AJWMYI'>
+          <SafeLink to='https://www.youtube.com/watch?v=_WTl3AJWMYI'>
             Redescrobrindo o Open Source
-          </Link>
+          </SafeLink>
         </td>
         <td>**Microsoft Reactor**, **NodeBR** e **Awesome You**</td>
         <td>Idealizador e Organizador</td>
@@ -294,7 +299,9 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
     <tbody>
       <tr>
         <td>
-          <Link to='https://www.linkedin.com/in/wellwelwel/'>LinkedIn</Link>
+          <SafeLink to='https://www.linkedin.com/in/wellwelwel/'>
+            LinkedIn
+          </SafeLink>
         </td>
         <td>
           <img src='/img/linkedin.svg' alt='LinkedIn' width={16} height={16} />{' '}
@@ -303,7 +310,9 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
       </tr>
       <tr>
         <td>
-          <Link to='https://www.instagram.com/wellwelwel/'>Instagram</Link>
+          <SafeLink to='https://www.instagram.com/wellwelwel/'>
+            Instagram
+          </SafeLink>
         </td>
         <td>
           <img
@@ -317,7 +326,7 @@ Como <Link to="https://mvp.microsoft.com/en-US/mvp/profile/92f04098-519f-40f7-a2
       </tr>
       <tr>
         <td>
-          <Link to='https://github.com/wellwelwel'>GitHub</Link>
+          <SafeLink to='https://github.com/wellwelwel'>GitHub</SafeLink>
         </td>
         <td>
           <img src='/img/github.svg' alt='GitHub' width={16} height={16} />{' '}
