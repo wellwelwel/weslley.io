@@ -27,7 +27,7 @@
     "typecheck": "tsc",
     "lint": "prettier --check .",
     "lint:fix": "prettier --write .",
-    "update": "pu minor && npm i && (npm audit fix || true) && npm run lint:fix",
+    "update": "pu && npm i && (npm audit fix || true) && npm run lint:fix",
     "purge": "tsx --env-file-if-exists=.env tools/purge-cache.mts",
     "test": "poku -r=compact ./test",
     "test:ci": "npm run clear && npm run lint && npm run typecheck && npm test && npm run build:server && npm run build",
@@ -42,7 +42,7 @@
     "countty": "^2.1.1"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20251221.0",
+    "@cloudflare/workers-types": "^4.20251225.0",
     "@docusaurus/core": "^3.9.2",
     "@docusaurus/module-type-aliases": "3.9.2",
     "@docusaurus/preset-classic": "3.9.2",
@@ -82,7 +82,7 @@
     "sonner": "^2.0.7",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
-    "wrangler": "^4.56.0",
+    "wrangler": "^4.54.0",
     "yaml": "^2.8.2"
   },
   "browserslist": {
