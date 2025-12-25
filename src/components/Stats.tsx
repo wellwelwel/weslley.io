@@ -17,19 +17,45 @@ type MediaKitStats = {
 
 const base = 'https://wellwelwel.github.io/wellwelwel/stats.json';
 
-const setLabel = (value: number): string => {
+export const setLabel = (
+  value: number,
+  locale: 'en' | 'pt-BR' = 'pt-BR',
+  fractionDigits: number = 1
+): string => {
+  const suffixes = {
+    'pt-BR': {
+      billion: ' bilhões',
+      million: ' milhões',
+      thousand: ' mil',
+      decimal: ',',
+    },
+    en: {
+      billion: ' billion',
+      million: ' million',
+      thousand: ' thousand',
+      decimal: '.',
+    },
+  };
+
+  const localeSuffixes = suffixes[locale];
+
   const thresholds = [
-    { limit: 1_000_000_000, suffix: ' bilhões', divisor: 1_000_000_000 },
-    { limit: 1_000_000, suffix: ' milhões', divisor: 1_000_000 },
-    { limit: 1_000, suffix: ' mil', divisor: 1_000 },
+    {
+      limit: 1_000_000_000,
+      suffix: localeSuffixes.billion,
+      divisor: 1_000_000_000,
+    },
+    { limit: 1_000_000, suffix: localeSuffixes.million, divisor: 1_000_000 },
+    { limit: 1_000, suffix: localeSuffixes.thousand, divisor: 1_000 },
   ];
 
   const threshold = thresholds.find((t) => value >= t.limit);
 
   return threshold
-    ? (value / threshold.divisor).toFixed(1).replace('.', ',') +
-        threshold.suffix
-    : value.toLocaleString('pt-BR');
+    ? (value / threshold.divisor)
+        .toFixed(fractionDigits)
+        .replace('.', localeSuffixes.decimal) + threshold.suffix
+    : value.toLocaleString(locale);
 };
 
 export const useStats = () => {

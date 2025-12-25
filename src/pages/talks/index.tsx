@@ -4,6 +4,7 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ChevronDown } from 'lucide-react';
 import { Articles } from '@site/src/components/Articles/Articles';
 import { SafeLink } from '@site/src/components/SafeLink';
+import { setLabel, useStats } from '@site/src/components/Stats';
 
 type Places = {
   name: string;
@@ -31,31 +32,54 @@ export default () => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
+  const stats = useStats();
   const translations = useMemo(
     () => ({
       description: isPtBr
-        ? 'Como autor e mantenedor de projetos críticos no ecossistema open source, somando mais de 200 milhões de downloads por ano, levo ao palco experiências reais de sistemas usados em escala global.'
-        : 'As the author and maintainer of critical projects in the open source ecosystem, with more than 200 million downloads a year, I bring to the stage real experiences of software used on a global scale.',
+        ? 'Com mais de 200 milhões de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.'
+        : 'With over 200 million annual downloads across my own projects, I author and maintain critical open-source projects and bring to the stage real-world experiences from systems running at global scale.',
       header: isPtBr ? (
         <p>
-          Como autor e mantenedor de projetos críticos no ecossistema{' '}
-          <em>open source</em>, somando mais de{' '}
-          <strong>200 milhões de downloads</strong> por ano, levo ao palco
+          Com mais de{' '}
+          <strong>
+            <Link
+              to='/mediakit/'
+              title='Métrica dinâmica baseada em downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
+              aria-label='Métrica dinâmica baseada em downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
+            >
+              {stats?.downloadsPerYear.value
+                ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
+                : '200 milhões'}
+            </Link>
+          </strong>{' '}
+          de downloads anuais em projetos autorais, sou autor e mantenedor de
+          projetos críticos no ecossistema open source e levo ao palco
           experiências reais de sistemas usados em escala global.
         </p>
       ) : (
         <p>
-          As the author and maintainer of critical projects in the{' '}
-          <em>open source</em> ecosystem, with more than{' '}
-          <strong>200 million downloads</strong> a year, I bring to the stage
-          real experiences of software used on a global scale.
+          With over{' '}
+          <strong>
+            <Link
+              to='/mediakit/'
+              title='Dynamic metric based on npm downloads in the last 365 days, considering only own projects.'
+              aria-label='Dynamic metric based on npm downloads in the last 365 days, considering only own projects.'
+            >
+              {stats?.downloadsPerYear.value
+                ? setLabel(stats.downloadsPerYear.value, 'en', 0)
+                : '200 million'}
+            </Link>
+          </strong>{' '}
+          downloads annually across my own projects, I author and maintain
+          critical open-source projects and bring to the stage real-world
+          experiences from systems running at global scale.
         </p>
       ),
       cta: isPtBr ? 'Me chame para o seu evento' : 'Call me for your event',
       mediakit: isPtBr ? 'Ver Media Kit' : 'See Media Kit',
     }),
 
-    [isPtBr]
+    [isPtBr, stats]
   );
 
   const places: Places[] = [
@@ -149,7 +173,7 @@ export default () => {
         </div>
       </div>
       <footer>
-        {isPtBr ? 'E mais' : 'And more'} <ChevronDown />
+        {isPtBr ? 'E mais' : 'And more'} <ChevronDown width={20} height={20} />
       </footer>
     </Articles>
   );
