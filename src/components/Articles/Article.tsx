@@ -1,7 +1,7 @@
 import type { ProcessedArticle } from '@site/src/@types/article';
 import type { ViewMode } from '@site/src/hooks/useViewMode';
 import type { FC } from 'react';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Parallax } from '@site/src/components/Parallax';
@@ -20,22 +20,16 @@ export const Article: FC<{
   route: ArticlesOptions['route'];
   viewMode?: ViewMode;
 }> = ({ article, route, viewMode = 'card' }) => {
-  const { i18n, siteConfig } = useDocusaurusContext();
+  const { i18n } = useDocusaurusContext();
   const ref = useRef<HTMLDivElement>(null);
-  const [viewCounts, setViewCounts] = useState<Record<string, string>>(
-    Object.create(null)
-  );
   const imageMap: Record<string, string> = Object.create(null);
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
-  const API = siteConfig.customFields?.COUNTTY_URL;
-  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
   const datetime = article.date.includes('T')
     ? article.date
     : `${article.date}T00:00`;
 
   const translations = {
-    views: currentLocale === 'en' ? 'Views' : 'Visualizações',
     date: currentLocale === 'en' ? 'Date' : 'Data',
     minute: currentLocale === 'en' ? 'minute' : 'minuto',
     minutes: currentLocale === 'en' ? 'minutes' : 'minutos',
@@ -55,23 +49,9 @@ export const Article: FC<{
       if (!isVisible) return;
 
       target.classList.add('show');
-
-      if (showViewsCounter && article.slug && API) {
-        fetch(`${API}/peek?slug=${article.slug}`)
-          .then((res) => res.json())
-          .then((data) => {
-            const typedData = data as { label: string };
-
-            setViewCounts((prev) => ({
-              ...prev,
-              [article.slug!]: typedData.label,
-            }));
-          })
-          .catch(() => {});
-      }
     },
     {
-      deps: [viewMode, showViewsCounter, article.slug, API],
+      deps: [viewMode],
       onReset: (target) => {
         target.classList.remove('show');
       },
@@ -152,13 +132,6 @@ export const Article: FC<{
         </div>
 
         <div className='card__footer'>
-          {viewMode === 'card' && showViewsCounter && (
-            <div>
-              <strong>{translations.views}:</strong>{' '}
-              {article.slug ? viewCounts[article.slug] : '-'}
-            </div>
-          )}
-
           <div>
             <time dateTime={datetime}>
               <strong>{translations.date}:</strong>{' '}
