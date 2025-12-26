@@ -25,6 +25,7 @@ const Worker: ExportedHandler<Env> = {
       '/views': router.views,
       '/backup': router.backup,
       '/list': router.list,
+      '/remove': router.remove,
     };
 
     if (pathname in counttyRoute) return counttyRoute[pathname]();

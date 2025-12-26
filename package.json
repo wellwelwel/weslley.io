@@ -36,7 +36,8 @@
     "countty:views": "countty views",
     "countty:peek": "countty peek",
     "countty:backup": "countty backup",
-    "countty:list": "countty list"
+    "countty:list": "countty list",
+    "countty:remove": "countty remove"
   },
   "dependencies": {
     "countty": "^2.1.1"
