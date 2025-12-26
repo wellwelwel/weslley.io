@@ -69,7 +69,7 @@
       }
 
       .authors {
-        margin-bottom: 10px;
+        margin-bottom: -10px;
 
         .author {
           @include flex(row, center);
@@ -91,7 +91,7 @@
               margin-bottom: -5px;
 
               a {
-                font-size: 14px;
+                font-size: 13px;
                 font-weight: 800;
                 text-decoration: none;
                 color: var(--card-title-color);
@@ -104,7 +104,7 @@
             }
 
             .author-title {
-              font-size: 12px;
+              font-size: 11.5px;
               font-weight: 500;
               margin-bottom: 2px;
               color: var(--card-description-color);
@@ -122,19 +122,27 @@
                 }
 
                 img {
-                  width: 18px;
-                  height: 18px;
+                  width: 16px;
+                  height: 16px;
                   border: none;
                   border-radius: 0;
                 }
               }
             }
           }
+
+          & + .author {
+            padding-top: 10px;
+            margin-top: 10px;
+            border-top: 1px solid #ecf1ff;
+          }
         }
       }
 
       .tags {
-        margin-bottom: 15px;
+        @include flex(row, center, flex-start, wrap);
+        gap: 5px;
+        margin-top: 25px;
         font-size: 14px;
 
         strong {

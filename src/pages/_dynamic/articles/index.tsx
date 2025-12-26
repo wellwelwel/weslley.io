@@ -207,8 +207,6 @@ export default ({
               </div>
             )}
 
-            <hr />
-
             {tags.length > 0 && (
               <div className='tags'>
                 <strong>{translations.tags}:</strong>{' '}
