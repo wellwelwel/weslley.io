@@ -44,16 +44,17 @@ export default () => {
           <strong>
             <Link
               to='/mediakit/'
-              title='Métrica dinâmica baseada em downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
-              aria-label='Métrica dinâmica baseada em downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
+              title='Métrica dinâmica de downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
+              aria-label='Métrica dinâmica de downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
             >
               {stats?.downloadsPerYear.value
                 ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
-                : '200 milhões'}
+                : '200 milhões'}{' '}
+              de downloads
             </Link>
           </strong>{' '}
-          de downloads anuais em projetos autorais, sou autor e mantenedor de
-          projetos críticos no ecossistema open source e levo ao palco
+          anuais em projetos autorais, sou autor e mantenedor de projetos
+          críticos no ecossistema <em>open source</em> e levo ao palco
           experiências reais de sistemas usados em escala global.
         </p>
       ) : (
@@ -67,11 +68,12 @@ export default () => {
             >
               {stats?.downloadsPerYear.value
                 ? setLabel(stats.downloadsPerYear.value, 'en', 0)
-                : '200 million'}
+                : '200 million'}{' '}
+              downloads
             </Link>
           </strong>{' '}
-          downloads annually across my own projects, I author and maintain
-          critical open-source projects and bring to the stage real-world
+          annually across my own projects, I author and maintain critical
+          <em>open-source</em> projects and bring to the stage real-world
           experiences from systems running at global scale.
         </p>
       ),
