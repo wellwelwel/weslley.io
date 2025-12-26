@@ -20,7 +20,7 @@ Evite traduções literais ou engessadas, por exemplo:
   - O mesmo vale para caracteres não comuns em teclados brasileiros, como aspas duplas (“ ”), etc.
 - Mantenha a estrutura, formatação e front matter, traduzindo apenas o conteúdo textual.
 - Preserve termos técnicos, nomes próprios, códigos, comandos, URLs e quaisquer outros elementos que não necessitem de tradução.
-  - Em palestras (./i18n/en/talks), não traduza os títulos.
+  - Em palestras (./i18n/en/talks), não traduza o título (`title`) do front matter.
   - Tags devem ser traduzidas apenas em artigos (./i18n/en/articles).
 - Não exagere nas expressões idiomáticas e evite gírias.
 
