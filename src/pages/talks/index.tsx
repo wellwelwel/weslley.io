@@ -72,7 +72,7 @@ export default () => {
               downloads
             </Link>
           </strong>{' '}
-          annually across my own projects, I author and maintain critical
+          annually across my own projects, I author and maintain critical{' '}
           <em>open-source</em> projects and bring to the stage real-world
           experiences from systems running at global scale.
         </p>
