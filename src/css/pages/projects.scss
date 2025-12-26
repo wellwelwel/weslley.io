@@ -8,12 +8,13 @@
     & > .container {
       @include flex(row, stretch, center, wrap);
       gap: 25px;
+      padding: 0;
 
       nav {
         @include flex(column);
         min-width: 310px;
         width: 100%;
-        max-width: 480px;
+        max-width: 497.5px;
         padding: 0;
         transition: box-shadow 0.5s ease;
         overflow: hidden;
@@ -215,7 +216,7 @@
           @media (max-width: 1136px) {
             min-width: 310px;
             width: 100%;
-            max-width: 480px;
+            max-width: 497.5px;
 
             main {
               flex-direction: column-reverse;
@@ -240,7 +241,7 @@
         @media (max-width: 1136px) {
           & > main,
           & > footer {
-            padding-inline: 30px;
+            padding-inline: 25px;
           }
         }
 
