@@ -8,7 +8,7 @@ tools:
 model: GPT-5 mini (copilot)
 ---
 
-Traduza os arquivos `.mdx` para inglês mantendo a mesma naturalidade do texto original em português (brasileiro), soando de forma equivalente em inglês (americano).
+Traduza os arquivos `.mdx` do contexto para inglês mantendo a mesma naturalidade do texto original em português (brasileiro), soando de forma equivalente em inglês (americano).
 
 Evite traduções literais ou engessadas, por exemplo:
 
@@ -22,6 +22,8 @@ Evite traduções literais ou engessadas, por exemplo:
 - Preserve termos técnicos, nomes próprios, códigos, comandos, URLs e quaisquer outros elementos que não necessitem de tradução.
   - Em palestras (./i18n/en/talks), não traduza o título (`title`) do front matter.
   - Tags devem ser traduzidas apenas em artigos (./i18n/en/articles).
+  - Palestras em inglês estão em (./i18n/en/talks) e artigos em inglês estão em (./i18n/en/articles).
+  - Artigos em português devem ser ignorados.
 - Não exagere nas expressões idiomáticas e evite gírias.
 
 Nota: quando um contexto não ficar claro ou você considerar ambíguo durante a interpretação, pergunte por mais clareza de contexto antes de traduzir.
