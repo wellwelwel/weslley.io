@@ -23,9 +23,6 @@
 > This site was built using [weslley.io](https://github.com/wellwelwel/weslley.io) template.
 > ```
 
-> [!WARNING]
-> 🚧 Still developing the architecture to make the project accessible to the open-source community.
-
 ---
 
 ## Development
@@ -89,7 +86,6 @@ npm run clear
 ### Settings and Definitions
 
 - [**Docusaurus**](https://github.com/facebook/docusaurus) config file: [./docusaurus.config.ts](./docusaurus.config.ts).
-- **Website** config file: [./website.config.ts](./website.config.ts).
 - **Theme** (colors and fonts): [./src/css/themes.scss](./src/css/themes.scss).
 
 ---
