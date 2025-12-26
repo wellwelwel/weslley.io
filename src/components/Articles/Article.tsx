@@ -178,7 +178,9 @@ export const Article: FC<{
           )}
 
           {article.tags.length > 0 && (
-            <div className={viewMode === 'card' ? 'margin-top--sm' : undefined}>
+            <div
+              className={viewMode === 'card' ? 'tags margin-top--sm' : 'tags'}
+            >
               <strong>{translations.tags}:</strong>{' '}
               {article.tags.map((tag, index) => (
                 <span key={tag}>

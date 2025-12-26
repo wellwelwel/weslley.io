@@ -168,21 +168,26 @@
         }
       }
 
-      code {
-        padding: 2.5px 8px;
-        border-radius: 6px;
-        border: 1px solid #dde6ff;
-        background-color: var(--ifm-code-background);
-        font-family: var(--ifm-font-family-base);
-        font-size: 12px;
-        color: var(--ifm-color-primary);
-        transition:
-          0.25s background-color,
-          0.35s color;
+      .tags {
+        @include flex(row, center, flex-start, wrap);
+        gap: 7.5px 5px;
 
-        &:hover {
-          background-color: var(--ifm-color-primary);
-          color: #fff;
+        code {
+          padding: 2.5px 8px;
+          border-radius: 6px;
+          border: 1px solid #dde6ff;
+          background-color: var(--ifm-code-background);
+          font-family: var(--ifm-font-family-base);
+          font-size: 12px;
+          color: var(--ifm-color-primary);
+          transition:
+            0.25s background-color,
+            0.35s color;
+
+          &:hover {
+            background-color: var(--ifm-color-primary);
+            color: #fff;
+          }
         }
       }
     }
