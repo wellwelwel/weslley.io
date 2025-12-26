@@ -14,7 +14,7 @@
   width: 100%;
   max-width: 1020px;
   margin-top: 5px;
-  overflow: hidden;
+  overflow-x: hidden;
 
   .places-track {
     @include flex(row, center, flex-start);
