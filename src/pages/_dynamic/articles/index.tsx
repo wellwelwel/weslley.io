@@ -104,7 +104,10 @@ export default ({
               </span>
               <div>
                 {lastModified && lastModified !== date && (
-                  <span title={translations.lastModification}>
+                  <span
+                    className='last-update'
+                    title={translations.lastModification}
+                  >
                     {translations.lastUpdate}{' '}
                     <strong>
                       {new Date(lastModified).toLocaleDateString(

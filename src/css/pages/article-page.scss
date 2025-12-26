@@ -42,7 +42,7 @@
         @include flex(row, center, flex-start, wrap);
         gap: 0 7.5px;
         margin-bottom: 10px;
-        font-size: 14px;
+        font-size: 13px;
         color: var(--card-footer-color);
 
         time {
@@ -51,6 +51,10 @@
 
         span {
           font-weight: 400;
+
+          &.last-update {
+            font-size: 12px;
+          }
         }
 
         div {
