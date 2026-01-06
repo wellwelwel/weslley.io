@@ -78,7 +78,7 @@ export const Article: FC<{
       <article className='card'>
         <div className='card__body'>
           {getSocialImage({ article, route, currentLocale, imageMap }) && (
-            <Link to={`/${route}/${article.slug}`}>
+            <Link to={`/${route}/${article.slug?.replace(/%/g, '')}`}>
               {viewMode === 'list' ? (
                 <img
                   src={
@@ -120,7 +120,9 @@ export const Article: FC<{
 
           <div className='content-wrapper'>
             <h2>
-              <Link to={`/${route}/${article.slug}`}>{article.title}</Link>
+              <Link to={`/${route}/${article.slug?.replace(/%/g, '')}`}>
+                {article.title}
+              </Link>
             </h2>
 
             {viewMode === 'card' && article.description && (

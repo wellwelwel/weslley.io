@@ -46,7 +46,7 @@ export default (
         if (previous)
           current.previousArticle = {
             title: previous.title,
-            slug: previous.slug ?? '',
+            slug: previous.slug?.replace(/%/g, '') ?? '',
             description: previous.description,
             social: previous.socialPath,
           };
@@ -54,7 +54,7 @@ export default (
         if (next)
           current.nextArticle = {
             title: next.title,
-            slug: next.slug ?? '',
+            slug: next.slug?.replace(/%/g, '') ?? '',
             description: next.description,
             social: next.socialPath,
           };
@@ -90,7 +90,7 @@ export default (
           modules.nextSocial = article.nextArticle.social;
 
         addRoute({
-          path: `${localePrefix}/${contentDir}/${article.slug}`,
+          path: `${localePrefix}/${contentDir}/${article.slug?.replace(/%/g, '')}`,
           component: `@site/src/pages/_dynamic/${contentDir}/index.tsx`,
           exact: true,
           modules,
