@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[6322],{9874:function(a){a.exports=JSON.parse('{"title":"Fernanda Kipper: Hackathon 2024","slug":"hackathon-2024","url":"https://github.com/Fernanda-Kipper/hackathon-2024/graphs/contributors","socialUrl":"https://opengraph.githubassets.com/1/Fernanda-Kipper/hackathon-2024"}')}}]);

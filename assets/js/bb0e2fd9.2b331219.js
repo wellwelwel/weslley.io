@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[343],{7721:function(e){e.exports=JSON.parse('{"title":"Filipe Deschamps: tabnews.com.br","slug":"tabnews.com.br","url":"https://github.com/filipedeschamps/tabnews.com.br/pulls?q=is:merged+author:wellwelwel","socialUrl":"https://opengraph.githubassets.com/1/filipedeschamps/tabnews.com.br"}')}}]);
