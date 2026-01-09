@@ -45,6 +45,16 @@ export const redirects: RedirectItem[] = [
     url: 'https://github.com/BrasilAPI/cep-promise/pulls?q=is:merged+author:wellwelwel',
   },
   {
+    title: 'Filipe Deschamps: tabnews.com.br',
+    slug: 'tabnews.com.br',
+    url: 'https://github.com/filipedeschamps/tabnews.com.br/pulls?q=is:merged+author:wellwelwel',
+  },
+  {
+    title: 'Facebook: Docusaurus',
+    slug: 'docusaurus',
+    url: 'https://github.com/facebook/docusaurus/pulls?q=is:merged+author:wellwelwel',
+  },
+  {
     title: 'Test Double: quibble',
     slug: 'quibble',
     url: 'https://github.com/testdouble/quibble/pulls?q=is:merged+author:wellwelwel',
@@ -53,5 +63,10 @@ export const redirects: RedirectItem[] = [
     title: 'word-wrap',
     slug: 'word-wrap',
     url: 'https://github.com/aashutoshrathi/word-wrap/commits?author=wellwelwel',
+  },
+  {
+    title: 'Fernanda Kipper: Hackathon 2024',
+    slug: 'hackathon-2024',
+    url: 'https://github.com/Fernanda-Kipper/hackathon-2024/graphs/contributors',
   },
 ];
