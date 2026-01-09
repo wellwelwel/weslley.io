@@ -9,6 +9,7 @@ try {
 } catch {}
 
 const articlesPlugin = require('./plugins/articles/mount.ts').default;
+const redirectsPlugin = require('./plugins/redirects/mount.ts').default;
 
 const config: Config = {
   title: 'Weslley Araújo',
@@ -115,6 +116,10 @@ const config: Config = {
       articlesPlugin(context, {
         pluginName: 'mount-talks',
         contentDir: 'talks',
+      }),
+    (context) =>
+      redirectsPlugin(context, {
+        pluginName: 'redirects',
       }),
   ],
 };
