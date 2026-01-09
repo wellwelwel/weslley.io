@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[1667],{6538:function(e){e.exports=JSON.parse('{"title":"Node.js: @types/node","slug":"types-node","url":"https://github.com/DefinitelyTyped/DefinitelyTyped/pull/69723","social":"https://opengraph.githubassets.com/1/nodejs/node","socialUrl":"https://opengraph.githubassets.com/1/nodejs/node"}')}}]);

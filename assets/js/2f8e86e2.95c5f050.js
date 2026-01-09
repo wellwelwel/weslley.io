@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[7501],{2745:function(l){l.exports=JSON.parse('{"title":"lru.min","slug":"lru.min","url":"https://github.com/wellwelwel/lru.min","socialUrl":"https://opengraph.githubassets.com/1/wellwelwel/lru.min"}')}}]);

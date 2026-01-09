@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[9048],{8925:function(s){s.exports=JSON.parse('{"title":"word-wrap","slug":"word-wrap","url":"https://github.com/aashutoshrathi/word-wrap/commits?author=wellwelwel","socialUrl":"https://opengraph.githubassets.com/1/aashutoshrathi/word-wrap"}')}}]);

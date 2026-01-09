@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[5369],{4896:function(e){e.exports=JSON.parse('{"title":"MSQLJS: named-placeholders","slug":"named-placeholders","url":"https://github.com/mysqljs/named-placeholders/pull/37","socialUrl":"https://opengraph.githubassets.com/1/mysqljs/named-placeholders"}')}}]);

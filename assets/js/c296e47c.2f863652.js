@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[6352],{4676:function(e){e.exports=JSON.parse('{"title":"Test Double: quibble","slug":"quibble","url":"https://github.com/testdouble/quibble/pulls?q=is:merged+author:wellwelwel","socialUrl":"https://opengraph.githubassets.com/1/testdouble/quibble"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[9732],{3002:function(e){e.exports=JSON.parse('{"title":"BrasilAPI: CEP Promise","slug":"cep-promise","url":"https://github.com/BrasilAPI/cep-promise/pulls?q=is:merged+author:wellwelwel","socialUrl":"https://opengraph.githubassets.com/1/BrasilAPI/cep-promise"}')}}]);

@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([[837],{5489:function(s){s.exports=JSON.parse('{"title":"aws-ssl-profiles","slug":"aws-ssl-profiles","url":"https://github.com/mysqljs/aws-ssl-profiles","socialUrl":"https://opengraph.githubassets.com/1/mysqljs/aws-ssl-profiles"}')}}]);
