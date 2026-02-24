@@ -36,8 +36,8 @@ export default () => {
   const translations = useMemo(
     () => ({
       description: isPtBr
-        ? 'Com mais de 200 milhões de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.'
-        : 'With over 200 million annual downloads across my own projects, I author and maintain critical open-source projects and bring to the stage real-world experiences from systems running at global scale.',
+        ? 'Com mais de 300 milhões de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.'
+        : 'With over 300 million annual downloads across my own projects, I author and maintain critical open-source projects and bring to the stage real-world experiences from systems running at global scale.',
       header: isPtBr ? (
         <p>
           Com mais de{' '}
@@ -49,7 +49,7 @@ export default () => {
             >
               {stats?.downloadsPerYear.value
                 ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
-                : '200 milhões'}{' '}
+                : '300 milhões'}{' '}
               de downloads
             </Link>
           </strong>{' '}
@@ -68,7 +68,7 @@ export default () => {
             >
               {stats?.downloadsPerYear.value
                 ? setLabel(stats.downloadsPerYear.value, 'en', 0)
-                : '200 million'}{' '}
+                : '300 million'}{' '}
               downloads
             </Link>
           </strong>{' '}
