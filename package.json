@@ -78,7 +78,7 @@
     "react-parallax-tilt": "^1.7.315",
     "remark-directive-rehype": "^0.4.2",
     "remove-markdown": "^0.6.2",
-    "rollup": "^4.54.0",
+    "rollup": "^4.59.0",
     "sass": "^1.97.1",
     "sonner": "^2.0.7",
     "tsx": "^4.21.0",
