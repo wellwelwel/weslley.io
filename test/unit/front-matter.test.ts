@@ -77,7 +77,7 @@ This is the content`;
     const result = matter(content);
 
     strict.equal(result.isEmpty, false, 'isEmpty should be false');
-    strict.equal(result.data.title, 'Test\r', 'should parse title with CRLF');
+    strict.equal(result.data.title, 'Test', 'should parse title with CRLF');
     strict.equal(result.content, 'Content', 'should extract content correctly');
   });
 
