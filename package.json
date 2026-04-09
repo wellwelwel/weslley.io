@@ -69,7 +69,7 @@
     "jsonc.min": "^1.1.0",
     "lucide-react": "^0.562.0",
     "packages-update": "^2.0.0",
-    "poku": "^3.0.3-canary.86e2832e",
+    "poku": "^4.2.1",
     "prettier": "^3.7.4",
     "prism-react-renderer": "^2.4.1",
     "react": "^19.2.3",
