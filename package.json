@@ -84,7 +84,7 @@
     "tsx": "^4.21.0",
     "typescript": "^5.9.3",
     "wrangler": "^4.59.1",
-    "yaml": "^2.8.2"
+    "yaml.min": "^1.0.0"
   },
   "browserslist": {
     "production": [

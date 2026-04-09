@@ -3,7 +3,7 @@ import type {
   MatterOptions,
   MatterResult,
 } from '../src/@types/front-matter';
-import { parse } from 'yaml';
+import { parse } from 'yaml.min';
 
 const DEFAULT_OPTIONS: Required<MatterOptions> = {
   delimiters: ['---', '---'],
