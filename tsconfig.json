@@ -22,6 +22,7 @@
     "resolveJsonModule": true,
     "allowJs": false,
     "skipLibCheck": true,
+    "types": ["webpack-env", "node"],
     "noEmit": true,
     "noEmitOnError": true,
     "paths": {

@@ -1,7 +1,7 @@
 import type { FC, ReactNode } from 'react';
 import { cloneElement, useRef } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { Github } from 'lucide-react';
+import { Github } from '@site/src/components/icons/Github';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { useScroll } from '@site/src/hooks/useScroll';
