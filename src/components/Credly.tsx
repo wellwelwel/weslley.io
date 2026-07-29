@@ -58,5 +58,10 @@ const CredlyContainer = ({ badges }: { badges: string[] }) => {
 };
 
 export const Credly = () => (
-  <CredlyContainer badges={['36aeaad9-6187-47a2-8107-d52a90a565d4']} />
+  <CredlyContainer
+    badges={[
+      '36aeaad9-6187-47a2-8107-d52a90a565d4',
+      'b6ddb701-6b63-4b06-8650-f85da5f9c727',
+    ]}
+  />
 );
