@@ -9,3 +9,12 @@
 .env
 t.ts
 t.mts
+
+# Lagune
+/.lagune/templates/
+/.lagune/hooks/
+/.lagune/proofs/
+/.lagune/specializations.md
+/.lagune/skills/*
+/**/lagune.*
+/**/lagune/
