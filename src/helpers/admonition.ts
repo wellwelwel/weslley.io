@@ -1,10 +1,5 @@
 type AdmonitionType =
-  | 'note'
-  | 'tip'
-  | 'info'
-  | 'warning'
-  | 'danger'
-  | 'caution';
+  'note' | 'tip' | 'info' | 'warning' | 'danger' | 'caution';
 
 const ADMONITION_TYPES = new Set<string>([
   'note',

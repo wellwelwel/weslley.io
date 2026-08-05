@@ -2,8 +2,8 @@ import commonjs from '@rollup/plugin-commonjs';
 import json from '@rollup/plugin-json';
 import resolve from '@rollup/plugin-node-resolve';
 import terser from '@rollup/plugin-terser';
-import typescript from '@rollup/plugin-typescript';
 import { defineConfig } from 'rollup';
+import esbuild from 'rollup-plugin-esbuild';
 
 export default defineConfig({
   input: 'src/server/index.ts',
@@ -16,9 +16,10 @@ export default defineConfig({
     resolve(),
     commonjs(),
     json({ compact: true }),
-    typescript({
+    esbuild({
       tsconfig: './tsconfig.json',
       exclude: ['**/*.tsx', 'node_modules'],
+      target: 'esnext',
     }),
     terser({
       format: {

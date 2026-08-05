@@ -20,6 +20,11 @@ const config: Config = {
     COUNTTY_URL: env.COUNTTY_URL,
     showViewsCounter: true,
   },
+  future: {
+    v4: true,
+    faster: true,
+    experimental_vcs: true,
+  },
   trailingSlash: true,
   markdown: {
     hooks: {

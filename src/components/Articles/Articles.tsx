@@ -36,14 +36,10 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
   return (
     <Layout title={translations.title[route]}>
       <Head>
-        <meta property='og:image' content={socialBanner} data-rh='true' />
-        <meta property='twitter:image' content={socialBanner} data-rh='true' />
-        {description && (
-          <meta name='description' content={description} data-rh='true' />
-        )}
-        {description && (
-          <meta name='og:description' content={description} data-rh='true' />
-        )}
+        <meta property='og:image' content={socialBanner} />
+        <meta property='twitter:image' content={socialBanner} />
+        {description && <meta name='description' content={description} />}
+        {description && <meta name='og:description' content={description} />}
       </Head>
       <div id='articles'>
         <header>
