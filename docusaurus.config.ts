@@ -21,7 +21,13 @@ const config: Config = {
     showViewsCounter: true,
   },
   future: {
-    v4: true,
+    v4: {
+      removeLegacyPostBuildHeadAttribute: true,
+      useCssCascadeLayers: false,
+      siteStorageNamespacing: true,
+      fasterByDefault: true,
+      mdx1CompatDisabledByDefault: true,
+    },
     faster: true,
     experimental_vcs: true,
   },
