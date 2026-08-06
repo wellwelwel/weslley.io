@@ -60,6 +60,13 @@ const BADGES = [
   { src: claude, alt: 'Pelúcia do Claude' },
 ];
 
+const PANEL_IN = 0.35;
+
+const TRAVEL = {
+  full: { panelY: 24, panelScale: 0.98 },
+  reduced: { panelY: 14, panelScale: 0.99 },
+};
+
 const DRAFT_KEY = 'weslley:partners-draft';
 const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
@@ -290,12 +297,12 @@ export const PartnersDialog = ({
   }, [draft]);
 
   useGSAP(() => {
-    const reduced = isReducedMotion();
+    const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
 
     gsap.fromTo(
       panel.current,
-      { autoAlpha: 0, y: reduced ? 6 : 24, scale: reduced ? 1 : 0.98 },
-      { autoAlpha: 1, y: 0, scale: 1, duration: 0.35, ease: 'power3.out' }
+      { autoAlpha: 0, y: travel.panelY, scale: travel.panelScale },
+      { autoAlpha: 1, y: 0, scale: 1, duration: PANEL_IN, ease: 'power3.out' }
     );
   });
 

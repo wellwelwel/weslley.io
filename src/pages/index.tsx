@@ -67,11 +67,11 @@ const TRAVEL = {
     railY: 100,
   },
   reduced: {
-    titleY: 12,
-    titleBlur: 2,
+    titleY: 30,
+    titleBlur: 3,
     titleStagger: 0.05,
-    textX: 12,
-    railY: 25,
+    textX: 26,
+    railY: 55,
   },
 };
 
@@ -121,7 +121,7 @@ const slides: Slide[] = [
     name: 'MySQL2',
     Icon: TbBrandMysql,
     title: ['Mantenedor do maior', 'driver MySQL do mundo', '.'],
-    text: 'Weslley mantém o MySQL2, o driver mais baixado do ecossistema JavaScript para MySQL Server, com mais de 380 milhões de downloads anuais e usado publicamente por grandes empresas como Amazon, Microsoft, Google e Facebook.',
+    text: 'Weslley mantém o MySQL2, o driver mais baixado do ecossistema JavaScript para MySQL Server, usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
     background: mysql2Background,
     color: '#00afff40',
     mark: '#00a1ff',

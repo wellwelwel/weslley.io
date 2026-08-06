@@ -39,7 +39,13 @@ const CURRENT_IN = 0.25;
 
 const TRAVEL = {
   full: { panelY: 10, panelScale: 0.96, itemY: 6, exitY: 4, exitScale: 0.98 },
-  reduced: { panelY: 0, panelScale: 1, itemY: 0, exitY: 0, exitScale: 1 },
+  reduced: {
+    panelY: 6,
+    panelScale: 0.98,
+    itemY: 4,
+    exitY: 2,
+    exitScale: 0.99,
+  },
 };
 
 const iconClass =
