@@ -32,7 +32,12 @@ type Slide = {
 
 const STEP_LOCK = 0.6;
 const GROUP_SIZE = 3;
+const TITLE_IN = 0.32;
+const TEXT_IN = 0.38;
 const TEXT_GAP = 0.05;
+const HINT_IN = 0.35;
+const HINT_OUT = 0.16;
+const HINT_LEAD = 0.12;
 
 const TRAVEL = {
   full: {
@@ -57,6 +62,9 @@ const motion = (): (typeof TRAVEL)['full'] =>
   window.matchMedia('(prefers-reduced-motion: reduce)').matches
     ? TRAVEL.reduced
     : TRAVEL.full;
+
+const afterContent = (travel: (typeof TRAVEL)['full']): number =>
+  TITLE_IN + travel.titleStagger + TEXT_GAP + TEXT_IN - HINT_LEAD;
 
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
@@ -117,7 +125,6 @@ const Dot = (): ReactNode => (
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
-  const [scrolled, setScrolled] = useState(false);
   const [partners, setPartners] = useState(false);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
@@ -127,10 +134,12 @@ export default (): ReactNode => {
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
+  const hintPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
   const last = active === slides.length - 1;
-  const hinting = !scrolled || active === 0 || last;
+  const groupEnd = Math.min((group + 1) * GROUP_SIZE, slides.length) - 1;
+  const hinting = active === groupEnd;
 
   const show = (index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -153,7 +162,6 @@ export default (): ReactNode => {
       const step = (direction: number) => {
         if (locked.current) return;
 
-        setScrolled(true);
         show(current.current + direction);
       };
 
@@ -207,7 +215,7 @@ export default (): ReactNode => {
             opacity: 1,
             yPercent: 0,
             filter: 'blur(0px)',
-            duration: 0.32,
+            duration: TITLE_IN,
             stagger: travel.titleStagger,
             ease: 'power3.out',
           }
@@ -215,7 +223,7 @@ export default (): ReactNode => {
         .fromTo(
           '[data-slide-text]',
           { opacity: 0, x: travel.textX },
-          { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out' },
+          { opacity: 1, x: 0, duration: TEXT_IN, ease: 'power2.out' },
           `+=${TEXT_GAP}`
         );
     },
@@ -245,26 +253,31 @@ export default (): ReactNode => {
   useGSAP(
     () => {
       const travel = motion();
+      const placed = hintPlaced.current;
+
+      hintPlaced.current = true;
 
       if (!hinting) {
         gsap.to(hintShell.current, {
           autoAlpha: 0,
-          duration: 0.3,
+          duration: placed ? HINT_OUT : 0,
           ease: 'power2.out',
         });
 
         return;
       }
 
+      const delay = afterContent(travel);
+
       gsap.fromTo(
         hintShell.current,
         { autoAlpha: 0 },
-        { autoAlpha: 1, duration: 0.3, ease: 'power2.out' }
+        { autoAlpha: 1, duration: HINT_IN, delay, ease: 'power2.out' }
       );
 
       // On the last slide the only way forward is back, so the wheel rides up.
       gsap
-        .timeline({ repeat: -1, repeatDelay: 0.35 })
+        .timeline({ repeat: -1, repeatDelay: 0.35, delay })
         .fromTo(
           hint.current,
           { y: 0, opacity: 0 },
@@ -291,12 +304,7 @@ export default (): ReactNode => {
         <body className='clean overscroll-none' />
       </Head>
 
-      <div
-        className={clsx(
-          'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased transition-[padding-bottom] duration-500 ease-[cubic-bezier(0.2,0,0,1)]',
-          hinting ? 'pb-18' : 'pb-5'
-        )}
-      >
+      <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
         <img
           src={background}
           alt=''
@@ -304,7 +312,7 @@ export default (): ReactNode => {
           className='pointer-events-none fixed inset-0 size-full scale-125 object-cover blur-xl saturate-150 brightness-125'
         />
 
-        <div className='relative flex min-h-0 flex-1 flex-col rounded-[2.5rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
+        <div className='relative flex min-h-0 flex-1 flex-col rounded-[2rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
           <header className='relative flex h-20 shrink-0 items-center justify-between px-4'>
             <span className='flex items-center gap-3'>
               <img
@@ -375,6 +383,19 @@ export default (): ReactNode => {
                     <Action open={partners} onOpen={() => setPartners(true)} />
                   </div>
                 )}
+
+                <div
+                  ref={hintShell}
+                  aria-hidden='true'
+                  className='pointer-events-none mt-10 flex justify-center'
+                >
+                  <span className='flex h-9 w-6 justify-center rounded-full border-2 border-ink/75 pt-1.5'>
+                    <span
+                      ref={hint}
+                      className='size-1.25 rounded-full bg-ink/75'
+                    />
+                  </span>
+                </div>
               </div>
 
               <div
@@ -417,16 +438,6 @@ export default (): ReactNode => {
               </div>
             </div>
           </main>
-        </div>
-
-        <div
-          ref={hintShell}
-          aria-hidden='true'
-          className='pointer-events-none absolute inset-x-0 bottom-4.5 flex justify-center'
-        >
-          <span className='flex h-9 w-6 justify-center rounded-full border-2 border-paper/75 pt-1.5 shadow-[0_2px_10px_rgb(14_9_39_/_0.45)]'>
-            <span ref={hint} className='size-1.25 rounded-full bg-paper' />
-          </span>
         </div>
       </div>
 

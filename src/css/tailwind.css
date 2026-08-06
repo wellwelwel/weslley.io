@@ -8,6 +8,8 @@
   --color-ink: #0e0927;
   --color-paper: #f0f4ff;
   --color-accent: #7a77ff;
+  --color-blush: #fd79a8;
+  --color-blush-deep: #e84393;
 }
 
 body.clean {

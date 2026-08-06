@@ -363,7 +363,7 @@ export const PartnersDialog = ({
           type='button'
           onClick={onClose}
           aria-label='Fechar'
-          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-ink/10 bg-paper/70 text-ink/60 backdrop-blur-sm transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-paper hover:text-ink [&>svg]:size-4.5'
+          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-white/30 bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,box-shadow,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
         >
           <X aria-hidden='true' />
         </button>
@@ -484,9 +484,18 @@ export const PartnersDialog = ({
                 <button
                   type='submit'
                   disabled={status === 'sending'}
-                  className='mt-1 inline-flex cursor-pointer appearance-none items-center justify-center gap-2.5 rounded-xl border-0 bg-accent px-5 py-3.5 text-sm font-bold tracking-[-0.01em] text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.25),0_6px_16px_-6px_rgb(122_119_255_/_0.9)] transition-[background-color,box-shadow] duration-300 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-70'
+                  className='group mt-1 inline-flex cursor-pointer appearance-none items-center justify-center gap-2.5 rounded-xl border-0 bg-accent px-5 py-3.5 text-sm font-bold tracking-[-0.01em] text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.25),0_6px_16px_-6px_rgb(122_119_255_/_0.9)] transition-[background-color,box-shadow] duration-300 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-70'
                 >
-                  <Send className='size-4.5 shrink-0' aria-hidden='true' />
+                  <span className='relative grid size-4.5 shrink-0 place-items-center overflow-hidden'>
+                    <Send
+                      className='col-start-1 row-start-1 size-4.5 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
+                      aria-hidden='true'
+                    />
+                    <Send
+                      className='col-start-1 row-start-1 size-4.5 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
+                      aria-hidden='true'
+                    />
+                  </span>
                   {status === 'sending'
                     ? 'Enviando…'
                     : 'Vamos construir juntos'}
