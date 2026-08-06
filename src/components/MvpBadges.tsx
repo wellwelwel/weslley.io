@@ -47,7 +47,7 @@ export const MvpBadges = (): ReactNode => (
 
         <span
           aria-hidden='true'
-          className='pointer-events-none absolute bottom-[calc(100%+0.625rem)] left-1/2 flex w-max max-w-52 -translate-x-1/2 translate-y-1 flex-col gap-1 rounded-xl bg-ink px-3.5 py-2.5 opacity-0 shadow-[0_2px_4px_rgb(14_9_39_/_0.2),0_14px_28px_-10px_rgb(14_9_39_/_0.55)] transition-[opacity,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100'
+          className='pointer-events-none absolute bottom-[calc(100%+0.625rem)] left-1/2 flex w-max max-w-[min(13rem,calc(50vw-1rem))] -translate-x-1/2 translate-y-1 flex-col gap-1 rounded-xl bg-ink px-3.5 py-2.5 opacity-0 shadow-[0_2px_4px_rgb(14_9_39_/_0.2),0_14px_28px_-10px_rgb(14_9_39_/_0.55)] transition-[opacity,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100'
         >
           <span className='text-[0.8125rem]/[1.35] font-semibold text-paper text-balance'>
             {title}

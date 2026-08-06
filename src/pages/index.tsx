@@ -29,6 +29,7 @@ type SlideAction = ComponentType<Trigger>;
 type Slide = {
   src: string;
   alt: string;
+  name: string;
   title: [string, string, string?];
   text: string;
   Action?: SlideAction;
@@ -78,6 +79,7 @@ const slides: Slide[] = [
   {
     src: me,
     alt: 'Pelúcia do Weslley Araújo',
+    name: 'Início',
     title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
     text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
     Action: PartnersAction,
@@ -85,6 +87,7 @@ const slides: Slide[] = [
   {
     src: mvp,
     alt: 'Pelúcia do MVP',
+    name: 'Microsoft MVP',
     title: ['Reconhecido como', 'Microsoft MVP', '.'],
     text: 'Além do open source, Weslley leva ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
     Action: MvpBadges,
@@ -92,6 +95,7 @@ const slides: Slide[] = [
   {
     src: claude,
     alt: 'Pelúcia do Claude',
+    name: 'Anthropic CVP',
     title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
     text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
   },
@@ -99,18 +103,21 @@ const slides: Slide[] = [
   {
     src: mysql,
     alt: 'Pelúcia do MySQL',
+    name: 'MySQL2',
     title: ['We keep data', 'honest', '.'],
     text: 'Schemas stay predictable and migrations stay reversible, because the surprises belong in the design and never in the data.',
   },
   {
     src: lagune,
     alt: 'Pelúcia do Lagune',
+    name: 'Lagune',
     title: ['Seu copiloto', 'em segurança', ':'],
     text: 'Lagune inova a segurança na era da IA, trazendo um conceito de proteção antes, durante e depois do desenvolvimento.',
   },
   {
     src: poku,
     alt: 'Pelúcia do Poku',
+    name: 'Poku',
     title: ['We break it', 'before you do', '.'],
     text: 'Every release runs through a suite that assumes nothing works until the test says otherwise, so bugs surface here first.',
   },
@@ -120,6 +127,8 @@ const groups = Array.from(
   { length: Math.ceil(slides.length / GROUP_SIZE) },
   (_, index) => slides.slice(index * GROUP_SIZE, (index + 1) * GROUP_SIZE)
 );
+
+const names = slides.map(({ name }) => name);
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
@@ -329,6 +338,9 @@ export default (): ReactNode => {
         <div className='relative flex min-h-0 flex-1 flex-col rounded-[2rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
           <Header
             sections={sections}
+            names={names}
+            active={active}
+            onNavigate={show}
             menu={menu}
             partners={partners}
             onMenu={setMenu}

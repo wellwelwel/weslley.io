@@ -9,6 +9,7 @@
 @source '../components/Socials.tsx';
 
 @custom-variant short (@media (max-height: 36rem));
+@custom-variant short-wide (@media (max-height: 36rem) and (min-width: 40rem));
 
 @theme {
   --text-hero: max(

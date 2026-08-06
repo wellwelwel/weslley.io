@@ -630,7 +630,7 @@ export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
   const [social, setSocial] = useState<string | null>(null);
 
   return (
-    <div className='flex flex-col items-center gap-3 short:flex-row'>
+    <div className='flex flex-col items-center gap-3 short-wide:flex-row'>
       <Partners
         open={open}
         onOpen={onOpen}
