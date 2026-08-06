@@ -3,8 +3,8 @@
 
 @source '../pages/index.tsx';
 @source '../components/Backdrop.tsx';
+@source '../components/Badges.tsx';
 @source '../components/Header.tsx';
-@source '../components/MvpBadges.tsx';
 @source '../components/Partners';
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
@@ -25,7 +25,6 @@
   --color-accent: #7a77ff;
   --color-blush: #fd79a8;
   --color-blush-deep: #e84393;
-  --color-progress: #e533ef;
   --color-progress-track: #21115a;
 }
 

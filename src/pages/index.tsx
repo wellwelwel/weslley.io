@@ -25,8 +25,8 @@ import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import defaultBackground from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
 import { Backdrop } from '@site/src/components/Backdrop';
+import { Badges } from '@site/src/components/Badges';
 import { Header } from '@site/src/components/Header';
-import { MvpBadges } from '@site/src/components/MvpBadges';
 import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
@@ -100,10 +100,10 @@ const slides: Slide[] = [
     alt: 'Pelúcia do MVP',
     name: 'Microsoft MVP',
     Icon: RiMicrosoftLine,
-    title: ['Reconhecido como', 'Microsoft MVP', '.'],
-    text: 'Além do open source, Weslley leva ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
+    title: ['Microsoft MVP &', 'Anthropic CVP', '.'],
+    text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
     texture: velvet,
-    Action: MvpBadges,
+    Action: Badges,
   },
   {
     src: claude,
@@ -305,7 +305,7 @@ export default (): ReactNode => {
         <body className='clean overscroll-none' />
       </Head>
 
-      <Progress value={(active + 1) / slides.length} />
+      <Progress value={(active + 1) / slides.length} color={mark} />
 
       <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
         <Backdrop
@@ -425,7 +425,7 @@ export default (): ReactNode => {
                             draggable={false}
                             className={clsx(
                               'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
-                              index === active ? 'scale-110' : 'scale-75'
+                              index === active ? 'scale-100' : 'scale-65'
                             )}
                           />
                         </button>
