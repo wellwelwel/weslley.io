@@ -33,6 +33,7 @@ export type Trigger = {
   open: boolean;
   onOpen: () => void;
   label?: string | null;
+  onRestore?: () => void;
 };
 
 type RollingLabel = {
@@ -565,7 +566,12 @@ export const PartnersDialog = ({
   );
 };
 
-export const Partners = ({ open, onOpen, label }: Trigger): ReactNode => {
+export const Partners = ({
+  open,
+  onOpen,
+  label,
+  onRestore,
+}: Trigger): ReactNode => {
   const current = label ?? TRIGGER_LABEL;
   const [rolling, setRolling] = useState<RollingLabel>({
     current,
@@ -579,6 +585,8 @@ export const Partners = ({ open, onOpen, label }: Trigger): ReactNode => {
     <button
       type='button'
       onClick={onOpen}
+      onPointerEnter={onRestore}
+      onFocus={onRestore}
       aria-haspopup='dialog'
       aria-expanded={open}
       aria-label={TRIGGER_LABEL}

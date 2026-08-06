@@ -375,6 +375,7 @@ export default (): ReactNode => {
                       open={partners}
                       onOpen={() => setPartners(true)}
                       label={social}
+                      onRestore={() => setSocial(null)}
                     />
                     <Socials onHover={setSocial} />
                   </div>
