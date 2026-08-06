@@ -1,3 +1,4 @@
+import type { Trigger } from '@site/src/components/Partners';
 import type { ComponentType, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
@@ -15,11 +16,11 @@ import mysql from '@site/src/assets/img/plush/mysql.png';
 import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
-import { Partners } from '@site/src/components/Partners';
+import { Partners, PartnersDialog } from '@site/src/components/Partners';
 
 gsap.registerPlugin(useGSAP, Observer);
 
-type SlideAction = ComponentType<{ onOpenChange: (open: boolean) => void }>;
+type SlideAction = ComponentType<Trigger>;
 
 type Slide = {
   src: string;
@@ -31,10 +32,8 @@ type Slide = {
 
 const STEP_LOCK = 0.6;
 const GROUP_SIZE = 3;
+const TEXT_GAP = 0.05;
 
-// Reduced motion shortens the travel instead of removing it: the same move at
-// a fraction of the distance stays legible without the sweep that unsettles.
-// The rail leans on its fade for the swap, so a short rise still reads.
 const TRAVEL = {
   full: {
     titleY: 55,
@@ -119,7 +118,7 @@ export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
   const [scrolled, setScrolled] = useState(false);
-  const [overlay, setOverlay] = useState(false);
+  const [partners, setPartners] = useState(false);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
@@ -149,7 +148,7 @@ export default (): ReactNode => {
 
   useGSAP(
     () => {
-      if (overlay) return;
+      if (partners) return;
 
       const step = (direction: number) => {
         if (locked.current) return;
@@ -188,7 +187,7 @@ export default (): ReactNode => {
         window.removeEventListener('keydown', onKeyDown);
       };
     },
-    { dependencies: [overlay], revertOnUpdate: true }
+    { dependencies: [partners], revertOnUpdate: true }
   );
 
   useGSAP(
@@ -217,7 +216,7 @@ export default (): ReactNode => {
           '[data-slide-text]',
           { opacity: 0, x: travel.textX },
           { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out' },
-          '-=0.06'
+          `+=${TEXT_GAP}`
         );
     },
     { dependencies: [active], scope: stage }
@@ -294,10 +293,8 @@ export default (): ReactNode => {
 
       <div
         className={clsx(
-          'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased transition-[padding-bottom] duration-500 ease-[cubic-bezier(0.2,0,0,1)] md:p-10 lg:p-20 xl:p-32',
-          hinting
-            ? 'pb-18 md:pb-20 lg:pb-26 xl:pb-32'
-            : 'pb-5 md:pb-10 lg:pb-14 xl:pb-20'
+          'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased transition-[padding-bottom] duration-500 ease-[cubic-bezier(0.2,0,0,1)]',
+          hinting ? 'pb-18' : 'pb-5'
         )}
       >
         <img
@@ -332,13 +329,16 @@ export default (): ReactNode => {
               ))}
             </nav>
 
-            <a
-              href='#'
-              className='flex h-11 items-center gap-4 rounded-full bg-ink px-6 text-[0.9375rem] font-medium text-paper transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90'
+            <button
+              type='button'
+              onClick={() => setPartners(true)}
+              aria-haspopup='dialog'
+              aria-expanded={partners}
+              className='flex h-11 cursor-pointer appearance-none items-center gap-4 rounded-full border-0 bg-ink px-6 font-sans text-[0.9375rem] font-medium text-paper transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
             >
               Let's Talk
               <Dot />
-            </a>
+            </button>
           </header>
 
           <main
@@ -372,7 +372,7 @@ export default (): ReactNode => {
 
                 {Action && (
                   <div data-slide-text className='mt-5 flex justify-center'>
-                    <Action onOpenChange={setOverlay} />
+                    <Action open={partners} onOpen={() => setPartners(true)} />
                   </div>
                 )}
               </div>
@@ -422,13 +422,15 @@ export default (): ReactNode => {
         <div
           ref={hintShell}
           aria-hidden='true'
-          className='pointer-events-none absolute inset-x-0 bottom-5 flex justify-center md:bottom-7 lg:bottom-9'
+          className='pointer-events-none absolute inset-x-0 bottom-4.5 flex justify-center'
         >
           <span className='flex h-9 w-6 justify-center rounded-full border-2 border-paper/75 pt-1.5 shadow-[0_2px_10px_rgb(14_9_39_/_0.45)]'>
             <span ref={hint} className='size-1.25 rounded-full bg-paper' />
           </span>
         </div>
       </div>
+
+      {partners && <PartnersDialog onClose={() => setPartners(false)} />}
     </>
   );
 };
