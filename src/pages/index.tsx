@@ -142,8 +142,8 @@ const slides: Slide[] = [
     alt: 'Pelúcia do Poku',
     name: 'Poku',
     Icon: TbPig,
-    title: ['We break it', 'before you do', '.'],
-    text: 'Every release runs through a suite that assumes nothing works until the test says otherwise, so bugs surface here first.',
+    title: ['Tornando testes fáceis', 'para Node.js, Bun e Deno', '.'],
+    text: 'Weslley é autor do Poku, um executor de testes que democratiza os testes para desenvolvedores de todos os níveis.',
     background: pokuBackground,
     color: '#56d0ff2b',
     mark: '#ff5498',
@@ -357,9 +357,9 @@ export default (): ReactNode => {
             ref={stage}
             className='relative min-h-0 flex-1 overflow-hidden rounded-t-[2.5rem] rounded-b-3xl'
           >
-            <div className='relative flex h-full flex-col px-8 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] lg:px-14'>
+            <div className='relative flex h-full flex-col px-3 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] sm:px-8 lg:px-14'>
               <div className='mt-auto text-center'>
-                <h1 className='m-0 text-hero font-[800] tracking-[-0.02em] text-ink'>
+                <h1 className='m-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink sm:text-hero sm:font-[800]'>
                   <span data-slide-title className='block'>
                     <Name stroke>{titleLead}</Name>
                   </span>
@@ -375,7 +375,7 @@ export default (): ReactNode => {
 
                 <p
                   data-slide-text
-                  className='mx-auto mt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.8125rem,min(1.125rem,3svh-0.25rem))]/normal text-ink/70 text-pretty'
+                  className='mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]'
                 >
                   {slides[active].text}
                 </p>
@@ -395,7 +395,7 @@ export default (): ReactNode => {
                 onPointerUp={release}
                 onPointerCancel={release}
                 onPointerLeave={release}
-                className='mt-auto -mx-8 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] lg:-mx-14'
+                className='mt-auto -mx-3 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
               >
                 {groups.map((members, groupIndex) => (
                   <div

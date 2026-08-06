@@ -174,7 +174,7 @@ export const Header = ({
   const { name, Icon } = steps[active];
 
   return (
-    <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-4'>
+    <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5'>
       <button
         type='button'
         onClick={closingMenu(onHome)}
@@ -255,7 +255,7 @@ export const Header = ({
           aria-expanded={menu}
           aria-controls={panelId}
           className={clsx(
-            'flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+            '-mr-3 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
             menu ? 'bg-ink/5' : 'bg-transparent'
           )}
         >
