@@ -356,6 +356,7 @@ export const PartnersDialog = ({
           src={velvet}
           alt=''
           aria-hidden='true'
+          draggable={false}
           className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
         />
 

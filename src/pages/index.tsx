@@ -32,12 +32,14 @@ type Slide = {
 
 const STEP_LOCK = 0.6;
 const GROUP_SIZE = 3;
+const TOLERANCE = 10;
 const TITLE_IN = 0.32;
 const TEXT_IN = 0.38;
 const TEXT_GAP = 0.05;
 const HINT_IN = 0.35;
 const HINT_OUT = 0.16;
 const HINT_LEAD = 0.12;
+const PROGRESS_IN = 0.5;
 
 const TRAVEL = {
   full: {
@@ -126,15 +128,18 @@ export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
   const [partners, setPartners] = useState(false);
+  const [pressed, setPressed] = useState<number | null>(null);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
   const hintShell = useRef<HTMLDivElement>(null);
+  const progress = useRef<HTMLDivElement>(null);
   const current = useRef(0);
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
   const hintPlaced = useRef(false);
+  const progressPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
   const last = active === slides.length - 1;
@@ -155,6 +160,8 @@ export default (): ReactNode => {
     });
   };
 
+  const release = () => setPressed(null);
+
   useGSAP(
     () => {
       if (partners) return;
@@ -168,7 +175,7 @@ export default (): ReactNode => {
       const observer = Observer.create({
         type: 'wheel,touch',
         wheelSpeed: -1,
-        tolerance: 10,
+        tolerance: TOLERANCE,
         preventDefault: true,
         allowClicks: true,
         onUp: () => step(1),
@@ -228,6 +235,21 @@ export default (): ReactNode => {
         );
     },
     { dependencies: [active], scope: stage }
+  );
+
+  useGSAP(
+    () => {
+      const placed = progressPlaced.current;
+
+      progressPlaced.current = true;
+
+      gsap.to(progress.current, {
+        scaleX: (active + 1) / slides.length,
+        duration: placed ? PROGRESS_IN : 0,
+        ease: 'power3.out',
+      });
+    },
+    { dependencies: [active] }
   );
 
   useGSAP(
@@ -304,11 +326,22 @@ export default (): ReactNode => {
         <body className='clean overscroll-none' />
       </Head>
 
+      <div
+        aria-hidden='true'
+        className='pointer-events-none fixed inset-x-0 top-0 z-50 h-1 bg-progress-track'
+      >
+        <div
+          ref={progress}
+          className='size-full origin-left scale-x-0 bg-progress'
+        />
+      </div>
+
       <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
         <img
           src={background}
           alt=''
           aria-hidden='true'
+          draggable={false}
           className='pointer-events-none fixed inset-0 size-full scale-125 object-cover blur-xl saturate-150 brightness-125'
         />
 
@@ -318,6 +351,7 @@ export default (): ReactNode => {
               <img
                 src={avatar}
                 alt=''
+                draggable={false}
                 className='size-9 shrink-0 rounded-full'
               />
               <span className='font-semibold tracking-tight text-ink'>
@@ -357,6 +391,7 @@ export default (): ReactNode => {
               src={velvet}
               alt=''
               aria-hidden='true'
+              draggable={false}
               className='pointer-events-none absolute inset-0 size-full object-cover opacity-25'
             />
 
@@ -400,6 +435,9 @@ export default (): ReactNode => {
 
               <div
                 ref={rail}
+                onPointerUp={release}
+                onPointerCancel={release}
+                onPointerLeave={release}
                 className='mt-auto -mx-8 grid overflow-hidden pt-6 lg:-mx-14'
               >
                 {groups.map((members, groupIndex) => (
@@ -415,14 +453,19 @@ export default (): ReactNode => {
                         <button
                           key={alt}
                           type='button'
+                          onPointerDown={() => setPressed(index)}
                           onClick={() => show(index)}
                           aria-label={alt}
                           aria-current={index === active}
-                          className='group block min-w-0 max-w-52 flex-1 cursor-pointer appearance-none border-0 bg-transparent p-0 focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent'
+                          className={clsx(
+                            'group block min-w-0 max-w-52 flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent',
+                            pressed === index && 'scale-95'
+                          )}
                         >
                           <img
                             src={src}
                             alt=''
+                            draggable={false}
                             className={clsx(
                               'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[filter,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
                               index === active
