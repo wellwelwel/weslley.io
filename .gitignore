@@ -19,3 +19,4 @@ t.mts
 /.lagune/skills/*
 /**/lagune.*
 /**/lagune/
+!src/assets/img/plush/lagune.png
