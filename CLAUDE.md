@@ -16,11 +16,11 @@ Personal site built with Docusaurus and TypeScript. Content is authored in Portu
 - Articles and talks live under `i18n/`, with no fixed hierarchy below the locale, so directories are organized freely.
 - Tests live in `test/`.
 
-## Skills
+## Main Skills
 
-- `/lagune` guards security while the work happens, so reach for it whenever you build or change code.
 - `/engineering` holds the code conventions, and the rules below only record what this project decides differently.
 - `/ui` holds the visual and interaction principles, from surfaces and typography to enter and exit animations.
+- `/lagune` guards security while the work happens, so reach for it whenever you build or change code.
 - `/writer` holds the prose conventions for documents, comments, and anything a person reads.
 
 ## Rules
