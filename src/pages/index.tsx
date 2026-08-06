@@ -17,6 +17,7 @@ import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
 import { Partners, PartnersDialog } from '@site/src/components/Partners';
+import { Progress } from '@site/src/components/Progress';
 
 gsap.registerPlugin(useGSAP, Observer);
 
@@ -39,7 +40,6 @@ const TEXT_GAP = 0.05;
 const HINT_IN = 0.35;
 const HINT_OUT = 0.16;
 const HINT_LEAD = 0.12;
-const PROGRESS_IN = 0.5;
 
 const TRAVEL = {
   full: {
@@ -133,13 +133,11 @@ export default (): ReactNode => {
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
   const hintShell = useRef<HTMLDivElement>(null);
-  const progress = useRef<HTMLDivElement>(null);
   const current = useRef(0);
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
   const hintPlaced = useRef(false);
-  const progressPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
   const last = active === slides.length - 1;
@@ -239,21 +237,6 @@ export default (): ReactNode => {
 
   useGSAP(
     () => {
-      const placed = progressPlaced.current;
-
-      progressPlaced.current = true;
-
-      gsap.to(progress.current, {
-        scaleX: (active + 1) / slides.length,
-        duration: placed ? PROGRESS_IN : 0,
-        ease: 'power3.out',
-      });
-    },
-    { dependencies: [active] }
-  );
-
-  useGSAP(
-    () => {
       const travel = motion();
 
       const rows = rail.current?.querySelectorAll('[data-group]') ?? [];
@@ -326,15 +309,7 @@ export default (): ReactNode => {
         <body className='clean overscroll-none' />
       </Head>
 
-      <div
-        aria-hidden='true'
-        className='pointer-events-none fixed inset-x-0 top-0 z-50 h-1 bg-progress-track'
-      >
-        <div
-          ref={progress}
-          className='size-full origin-left scale-x-0 bg-progress'
-        />
-      </div>
+      <Progress value={(active + 1) / slides.length} />
 
       <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
         <img

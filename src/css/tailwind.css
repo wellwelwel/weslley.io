@@ -3,6 +3,7 @@
 
 @source '../pages/index.tsx';
 @source '../components/Partners';
+@source '../components/Progress.tsx';
 
 @theme {
   --color-ink: #0e0927;
