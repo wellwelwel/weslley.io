@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import type { IconType } from 'react-icons';
 import { useEffect, useId, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
@@ -12,9 +13,14 @@ export type Section = {
   onSelect: () => void;
 };
 
+export type Step = {
+  name: string;
+  Icon: IconType;
+};
+
 export type HeaderOptions = {
   sections: Section[];
-  names: string[];
+  steps: Step[];
   active: number;
   menu: boolean;
   partners: boolean;
@@ -42,12 +48,15 @@ const iconClass =
 const itemClass =
   'flex h-11 w-full cursor-pointer appearance-none items-center rounded-xl border-0 bg-transparent px-4 font-sans text-base font-medium text-ink/70 transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 hover:text-ink focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent';
 
-const stepClass =
-  'relative hidden size-8 shrink-0 appearance-none items-center justify-center rounded-full border-0 bg-transparent p-0 transition-[color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent sm:flex [&>svg]:size-4';
+const arrowClass =
+  'relative hidden size-8 shrink-0 appearance-none items-center justify-center rounded-full border-0 bg-transparent p-0 transition-[color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent steps:flex [&>svg]:size-4';
+
+const markerClass =
+  'col-start-1 row-start-1 items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0';
 
 export const Header = ({
   sections,
-  names,
+  steps,
   active,
   menu,
   partners,
@@ -155,7 +164,8 @@ export const Header = ({
   };
 
   const hasPrevious = active > 0;
-  const hasNext = active < names.length - 1;
+  const hasNext = active < steps.length - 1;
+  const { name, Icon } = steps[active];
 
   return (
     <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-4'>
@@ -184,7 +194,7 @@ export const Header = ({
           disabled={!hasPrevious}
           aria-label='Slide anterior'
           className={clsx(
-            stepClass,
+            arrowClass,
             hasPrevious
               ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
               : 'cursor-not-allowed text-ink/15'
@@ -195,20 +205,22 @@ export const Header = ({
 
         <span
           aria-live='polite'
-          className='grid justify-items-center px-1 text-sm font-semibold tracking-tight text-ink/70 whitespace-nowrap select-none'
+          className='grid justify-items-center text-sm font-semibold tracking-tight text-ink/70 whitespace-nowrap select-none'
         >
-          {names.map((name) => (
+          {steps.map((step) => (
             <span
-              key={name}
+              key={step.name}
               aria-hidden='true'
-              className='invisible col-start-1 row-start-1 max-sm:hidden'
+              className={clsx(markerClass, 'invisible hidden steps:flex')}
             >
-              {name}
+              <step.Icon />
+              {step.name}
             </span>
           ))}
 
-          <span ref={label} className='col-start-1 row-start-1'>
-            {names[active]}
+          <span ref={label} className={clsx(markerClass, 'flex')}>
+            <Icon aria-hidden='true' className='max-[22rem]:hidden' />
+            {name}
           </span>
         </span>
 
@@ -218,7 +230,7 @@ export const Header = ({
           disabled={!hasNext}
           aria-label='Próximo slide'
           className={clsx(
-            stepClass,
+            arrowClass,
             hasNext
               ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
               : 'cursor-not-allowed text-ink/15'

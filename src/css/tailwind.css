@@ -10,6 +10,7 @@
 
 @custom-variant short (@media (max-height: 36rem));
 @custom-variant short-wide (@media (max-height: 36rem) and (min-width: 40rem));
+@custom-variant steps (@media (min-width: 25rem));
 
 @theme {
   --text-hero: max(

@@ -1,6 +1,7 @@
-import type { Section } from '@site/src/components/Header';
+import type { Section, Step } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
 import type { ComponentType, ReactNode } from 'react';
+import type { IconType } from 'react-icons';
 import { useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -8,6 +9,10 @@ import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
+import { BsClaude } from 'react-icons/bs';
+import { GiBigWave } from 'react-icons/gi';
+import { RiHomeLine, RiMicrosoftLine } from 'react-icons/ri';
+import { TbBrandMysql, TbPig } from 'react-icons/tb';
 import claude from '@site/src/assets/img/plush/claude.png';
 import lagune from '@site/src/assets/img/plush/lagune.png';
 import me from '@site/src/assets/img/plush/me.png';
@@ -30,6 +35,7 @@ type Slide = {
   src: string;
   alt: string;
   name: string;
+  Icon: IconType;
   title: [string, string, string?];
   text: string;
   Action?: SlideAction;
@@ -42,9 +48,6 @@ const TOLERANCE = 10;
 const TITLE_IN = 0.32;
 const TEXT_IN = 0.38;
 const TEXT_GAP = 0.05;
-const HINT_IN = 0.35;
-const HINT_OUT = 0.16;
-const HINT_LEAD = 0.12;
 
 const TRAVEL = {
   full: {
@@ -53,7 +56,6 @@ const TRAVEL = {
     titleStagger: 0.05,
     textX: 48,
     railY: 100,
-    hintY: 8,
   },
   reduced: {
     titleY: 12,
@@ -61,15 +63,11 @@ const TRAVEL = {
     titleStagger: 0.05,
     textX: 12,
     railY: 25,
-    hintY: 3,
   },
 };
 
 const motion = (): (typeof TRAVEL)['full'] =>
   isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
-
-const afterContent = (travel: (typeof TRAVEL)['full']): number =>
-  TITLE_IN + travel.titleStagger + TEXT_GAP + TEXT_IN - HINT_LEAD;
 
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
@@ -80,6 +78,7 @@ const slides: Slide[] = [
     src: me,
     alt: 'Pelúcia do Weslley Araújo',
     name: 'Início',
+    Icon: RiHomeLine,
     title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
     text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
     Action: PartnersAction,
@@ -88,6 +87,7 @@ const slides: Slide[] = [
     src: mvp,
     alt: 'Pelúcia do MVP',
     name: 'Microsoft MVP',
+    Icon: RiMicrosoftLine,
     title: ['Reconhecido como', 'Microsoft MVP', '.'],
     text: 'Além do open source, Weslley leva ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
     Action: MvpBadges,
@@ -96,6 +96,7 @@ const slides: Slide[] = [
     src: claude,
     alt: 'Pelúcia do Claude',
     name: 'Anthropic CVP',
+    Icon: BsClaude,
     title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
     text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
   },
@@ -104,20 +105,23 @@ const slides: Slide[] = [
     src: mysql,
     alt: 'Pelúcia do MySQL',
     name: 'MySQL2',
-    title: ['We keep data', 'honest', '.'],
-    text: 'Schemas stay predictable and migrations stay reversible, because the surprises belong in the design and never in the data.',
+    Icon: TbBrandMysql,
+    title: ['Mantenedor do maior', 'driver MySQL do mundo', '.'],
+    text: 'Weslley mantém o MySQL2, o driver mais baixado do ecossistema JavaScript para MySQL Server, com mais de 380 milhões de downloads anuais e usado publicamente por grandes empresas como Amazon, Microsoft, Google e Facebook.',
   },
   {
     src: lagune,
     alt: 'Pelúcia do Lagune',
     name: 'Lagune',
-    title: ['Seu copiloto', 'em segurança', ':'],
-    text: 'Lagune inova a segurança na era da IA, trazendo um conceito de proteção antes, durante e depois do desenvolvimento.',
+    Icon: GiBigWave,
+    title: ['Lagune, seu copiloto', 'em segurança', ':'],
+    text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores, especialmente na era da Inteligência Artificial.',
   },
   {
     src: poku,
     alt: 'Pelúcia do Poku',
     name: 'Poku',
+    Icon: TbPig,
     title: ['We break it', 'before you do', '.'],
     text: 'Every release runs through a suite that assumes nothing works until the test says otherwise, so bugs surface here first.',
   },
@@ -128,7 +132,7 @@ const groups = Array.from(
   (_, index) => slides.slice(index * GROUP_SIZE, (index + 1) * GROUP_SIZE)
 );
 
-const names = slides.map(({ name }) => name);
+const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
@@ -138,19 +142,13 @@ export default (): ReactNode => {
   const [pressed, setPressed] = useState<number | null>(null);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
-  const hint = useRef<HTMLSpanElement>(null);
-  const hintShell = useRef<HTMLDivElement>(null);
   const current = useRef(0);
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
-  const hintPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
   const [titleLead, titleTail, titleMark] = slides[active].title;
-  const last = active === slides.length - 1;
-  const groupEnd = Math.min((group + 1) * GROUP_SIZE, slides.length) - 1;
-  const hinting = active === groupEnd;
 
   const show = (index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -270,53 +268,6 @@ export default (): ReactNode => {
     { dependencies: [group], scope: rail }
   );
 
-  useGSAP(
-    () => {
-      const travel = motion();
-      const placed = hintPlaced.current;
-
-      hintPlaced.current = true;
-
-      if (!hinting) {
-        gsap.to(hintShell.current, {
-          autoAlpha: 0,
-          duration: placed ? HINT_OUT : 0,
-          ease: 'power2.out',
-        });
-
-        return;
-      }
-
-      const delay = afterContent(travel);
-
-      gsap.fromTo(
-        hintShell.current,
-        { autoAlpha: 0 },
-        { autoAlpha: 1, duration: HINT_IN, delay, ease: 'power2.out' }
-      );
-
-      // On the last slide the only way forward is back, so the wheel rides up.
-      gsap
-        .timeline({ repeat: -1, repeatDelay: 0.35, delay })
-        .fromTo(
-          hint.current,
-          { y: 0, opacity: 0 },
-          { opacity: 1, duration: 0.25, ease: 'none' }
-        )
-        .to(
-          hint.current,
-          {
-            y: last ? -travel.hintY : travel.hintY,
-            duration: 0.8,
-            ease: 'power1.in',
-          },
-          0
-        )
-        .to(hint.current, { opacity: 0, duration: 0.32 }, 0.48);
-    },
-    { dependencies: [hinting, last], revertOnUpdate: true }
-  );
-
   return (
     <>
       <Head>
@@ -338,7 +289,7 @@ export default (): ReactNode => {
         <div className='relative flex min-h-0 flex-1 flex-col rounded-[2rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
           <Header
             sections={sections}
-            names={names}
+            steps={steps}
             active={active}
             onNavigate={show}
             menu={menu}
@@ -389,19 +340,6 @@ export default (): ReactNode => {
                     <Action open={partners} onOpen={() => setPartners(true)} />
                   </div>
                 )}
-
-                <div
-                  ref={hintShell}
-                  aria-hidden='true'
-                  className='pointer-events-none mt-[clamp(0.5rem,5.5svh-1.5rem,2.5rem)] flex justify-center short:hidden'
-                >
-                  <span className='flex h-9 w-6 justify-center rounded-full border-2 border-ink/75 pt-1.5'>
-                    <span
-                      ref={hint}
-                      className='size-1.25 rounded-full bg-ink/75'
-                    />
-                  </span>
-                </div>
               </div>
 
               <div
