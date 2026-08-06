@@ -107,7 +107,7 @@ export const Header = ({
         { opacity: 1, y: 0, duration: CURRENT_IN, ease: 'power2.out' }
       );
     },
-    { dependencies: [active] }
+    { dependencies: [active], revertOnUpdate: true }
   );
 
   useGSAP(

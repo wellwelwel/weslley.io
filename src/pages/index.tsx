@@ -273,7 +273,7 @@ export default (): ReactNode => {
           `+=${TEXT_GAP}`
         );
     },
-    { dependencies: [active], scope: stage }
+    { dependencies: [active], scope: stage, revertOnUpdate: true }
   );
 
   useGSAP(
@@ -288,6 +288,7 @@ export default (): ReactNode => {
           autoAlpha: index === group ? 1 : 0,
           duration: railPlaced.current ? 0.5 : 0,
           ease: 'power3.out',
+          overwrite: true,
         })
       );
 
