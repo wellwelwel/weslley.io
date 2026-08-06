@@ -9,11 +9,15 @@ import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
-import { BsClaude } from 'react-icons/bs';
 import { GiBigWave } from 'react-icons/gi';
 import { RiMicrosoftLine } from 'react-icons/ri';
-import { TbBrandMysql, TbBrandOpenSource, TbPig } from 'react-icons/tb';
-import claude from '@site/src/assets/img/plush/claude.png';
+import {
+  TbBrandMysql,
+  TbBrandOpenSource,
+  TbPig,
+  TbPodium,
+} from 'react-icons/tb';
+import github from '@site/src/assets/img/plush/github.png';
 import laguneBackground from '@site/src/assets/img/plush/lagune-bg.png';
 import lagune from '@site/src/assets/img/plush/lagune.png';
 import me from '@site/src/assets/img/plush/me.png';
@@ -37,6 +41,8 @@ gsap.registerPlugin(useGSAP, Observer);
 
 type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
+type Theme = 'light' | 'dark';
+
 type Slide = {
   src: string;
   alt: string;
@@ -48,12 +54,16 @@ type Slide = {
   texture?: string;
   color?: string;
   mark?: string;
+  theme?: Theme;
   Action?: SlideAction;
 };
 
+type Group = {
+  label: string;
+  slides: Slide[];
+};
+
 const STEP_LOCK = 0.6;
-const GROUP_SIZE = 3;
-const PROJECTS_GROUP = 1;
 const TOLERANCE = 10;
 const TITLE_IN = 0.32;
 const TEXT_IN = 0.38;
@@ -81,88 +91,116 @@ const motion = (): (typeof TRAVEL)['full'] =>
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
+const THEMES: Record<Theme, string> = {
+  light: '',
+  dark: '[--color-ink:#f0f4ff] [--color-paper:#0e0927]',
+};
+
+/* Reads as a halo on the light theme and as depth on the dark one, since the
+   paper token already carries the surface color of each. */
+const SHADOWS: Record<Theme, string> = {
+  light: 'text-shadow-md text-shadow-paper/35',
+  dark: 'text-shadow-md text-shadow-paper/50',
+};
+
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
-const slides: Slide[] = [
-  // About and Recognitions
+const groups: Group[] = [
   {
-    src: me,
-    alt: 'Pelúcia do Weslley Araújo',
-    name: 'Open Source',
-    Icon: TbBrandOpenSource,
-    title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
-    text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
-    texture: velvet,
-    Action: PartnersAction,
+    label: 'Home',
+    slides: [
+      {
+        src: github,
+        alt: 'Pelúcia do GitHub',
+        name: 'Open Source',
+        Icon: TbBrandOpenSource,
+        title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
+        text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
+        texture: velvet,
+        Action: PartnersAction,
+      },
+      {
+        src: mvp,
+        alt: 'Pelúcia do MVP',
+        name: 'Microsoft MVP',
+        Icon: RiMicrosoftLine,
+        title: ['Microsoft MVP &', 'Anthropic CVP', '.'],
+        text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
+        texture: velvet,
+        Action: Badges,
+      },
+      {
+        src: me,
+        alt: 'Pelúcia do Weslley Araújo',
+        name: 'Palestras',
+        Icon: TbPodium,
+        title: ['Compartilhando', 'conhecimento', '.'],
+        text: 'Weslley leva aos palcos experiências reais ao longo de mais de uma década como desenvolvedor, palestrando nos principais eventos de tecnologia do Brasil.',
+        background: defaultBackground,
+        theme: 'dark',
+      },
+    ],
   },
   {
-    src: mvp,
-    alt: 'Pelúcia do MVP',
-    name: 'Microsoft MVP',
-    Icon: RiMicrosoftLine,
-    title: ['Microsoft MVP &', 'Anthropic CVP', '.'],
-    text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
-    texture: velvet,
-    Action: Badges,
-  },
-  {
-    src: claude,
-    alt: 'Pelúcia do Claude',
-    name: 'Anthropic CVP',
-    Icon: BsClaude,
-    title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
-    text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança defensiva e ofensiva.',
-    texture: velvet,
-  },
-  // Projects
-  {
-    src: mysql,
-    alt: 'Pelúcia do MySQL',
-    name: 'MySQL2',
-    Icon: TbBrandMysql,
-    title: ['O driver MySQL mais baixado do', 'ecossistema JavaScript', '.'],
-    text: 'Weslley mantém o MySQL2, driver para MySQL Server usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
-    background: mysql2Background,
-    color: '#00afff40',
-    mark: '#00a1ff',
-  },
-  {
-    src: lagune,
-    alt: 'Pelúcia do Lagune',
-    name: 'Lagune',
-    Icon: GiBigWave,
-    title: ['Lagune, seu copiloto', 'em segurança', '.'],
-    text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
-    background: laguneBackground,
-    color: '#00a7ff66',
-    mark: '#f0f9ff',
-    Action: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
-  },
-  {
-    src: poku,
-    alt: 'Pelúcia do Poku',
-    name: 'Poku',
-    Icon: TbPig,
-    title: ['Tornando testes fáceis', 'para Node.js, Bun e Deno', '.'],
-    text: 'Weslley é autor do Poku, um executor de testes que democratiza os testes para desenvolvedores de todos os níveis.',
-    background: pokuBackground,
-    color: '#56d0ff2b',
-    mark: '#ff5498',
-    Action: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+    label: 'Projetos',
+    slides: [
+      {
+        src: mysql,
+        alt: 'Pelúcia do MySQL',
+        name: 'MySQL2',
+        Icon: TbBrandMysql,
+        title: [
+          'O driver MySQL mais baixado do',
+          'ecossistema JavaScript',
+          '.',
+        ],
+        text: 'Weslley mantém o MySQL2, driver para MySQL Server usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
+        background: mysql2Background,
+        color: '#00afff40',
+        mark: '#00a1ff',
+      },
+      {
+        src: lagune,
+        alt: 'Pelúcia do Lagune',
+        name: 'Lagune',
+        Icon: GiBigWave,
+        title: ['Lagune, seu copiloto', 'em segurança', '.'],
+        text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
+        background: laguneBackground,
+        color: '#00a7ff66',
+        mark: '#f0f9ff',
+        Action: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
+      },
+      {
+        src: poku,
+        alt: 'Pelúcia do Poku',
+        name: 'Poku',
+        Icon: TbPig,
+        title: ['Tornando testes fáceis', 'para Node.js, Bun e Deno', '.'],
+        text: 'Weslley é autor do Poku, um executor de testes que democratiza os testes para desenvolvedores de todos os níveis.',
+        background: pokuBackground,
+        color: '#56d0ff2b',
+        mark: '#ff5498',
+        Action: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+      },
+    ],
   },
 ];
+
+const slides = groups.flatMap((group) => group.slides);
+
+const starts = groups.map((_, index) =>
+  groups.slice(0, index).reduce((total, { slides }) => total + slides.length, 0)
+);
+
+const groupOf = groups.flatMap((group, index) => group.slides.map(() => index));
 
 const customBackgrounds = [
   ...new Set(slides.flatMap(({ background }) => background ?? [])),
 ];
 
 const textures = [...new Set(slides.flatMap(({ texture }) => texture ?? []))];
-
-const groups = Array.from(
-  { length: Math.ceil(slides.length / GROUP_SIZE) },
-  (_, index) => slides.slice(index * GROUP_SIZE, (index + 1) * GROUP_SIZE)
-);
 
 const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
 
@@ -178,8 +216,15 @@ export default (): ReactNode => {
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
-  const group = Math.floor(active / GROUP_SIZE);
-  const { Action, background, texture, color, mark } = slides[active];
+  const group = groupOf[active]!;
+  const {
+    Action,
+    background,
+    texture,
+    color,
+    mark,
+    theme = 'light',
+  } = slides[active];
   const [titleLead, titleTail, titleMark] = slides[active].title;
 
   const show = (index: number) => {
@@ -200,10 +245,10 @@ export default (): ReactNode => {
 
   const home = () => show(0);
 
-  const sections: Section[] = [
-    { label: 'Home', onSelect: home },
-    { label: 'Projetos', onSelect: () => show(PROJECTS_GROUP * GROUP_SIZE) },
-  ];
+  const sections: Section[] = groups.map(({ label }, index) => ({
+    label,
+    onSelect: () => show(starts[index]!),
+  }));
 
   useGSAP(
     () => {
@@ -332,6 +377,7 @@ export default (): ReactNode => {
         <div
           className={clsx(
             'relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)]',
+            THEMES[theme],
             background
               ? 'bg-transparent shadow-none'
               : 'bg-paper shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
@@ -362,7 +408,12 @@ export default (): ReactNode => {
           >
             <div className='relative flex h-full flex-col px-3 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] sm:px-8 lg:px-14'>
               <div className='mt-auto text-center'>
-                <h1 className='m-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink sm:text-hero sm:font-[800]'>
+                <h1
+                  className={clsx(
+                    'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
+                    SHADOWS[theme]
+                  )}
+                >
                   <span data-slide-title className='block'>
                     <Name stroke>{titleLead}</Name>
                   </span>
@@ -378,7 +429,10 @@ export default (): ReactNode => {
 
                 <p
                   data-slide-text
-                  className='mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]'
+                  className={clsx(
+                    'mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
+                    SHADOWS[theme]
+                  )}
                 >
                   {slides[active].text}
                 </p>
@@ -404,14 +458,14 @@ export default (): ReactNode => {
                 onPointerLeave={release}
                 className='mt-auto -mx-3 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
               >
-                {groups.map((members, groupIndex) => (
+                {groups.map(({ label, slides: members }, groupIndex) => (
                   <div
-                    key={members[0]!.alt}
+                    key={label}
                     data-group
                     className='col-start-1 row-start-1 flex items-end justify-center gap-2 lg:gap-6'
                   >
                     {members.map(({ src, alt }, memberIndex) => {
-                      const index = groupIndex * GROUP_SIZE + memberIndex;
+                      const index = starts[groupIndex]! + memberIndex;
 
                       return (
                         <button
