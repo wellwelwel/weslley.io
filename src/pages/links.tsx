@@ -49,7 +49,7 @@ export default (): ReactNode => {
               />
             </Parallax>
             <h1>
-              <Name name={siteConfig.title} /> {!isPtBr && '🇧🇷'}
+              <Name>{siteConfig.title}</Name> {!isPtBr && '🇧🇷'}
             </h1>
             <small>
               <AboutResume />

@@ -27,6 +27,7 @@ import defaultBackground from '@site/src/assets/img/talks/codecon-2025/moments/0
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
 import { MvpBadges } from '@site/src/components/MvpBadges';
+import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
@@ -40,8 +41,8 @@ type Slide = {
   alt: string;
   name: string;
   Icon: IconType;
-  title: [string, string, string?];
-  text: string;
+  title: [ReactNode, ReactNode, ReactNode?];
+  text: ReactNode;
   background?: string;
   texture?: string;
   color?: string;
@@ -360,13 +361,13 @@ export default (): ReactNode => {
               <div className='mt-auto text-center'>
                 <h1 className='m-0 text-hero font-[800] tracking-[-0.02em] text-ink'>
                   <span data-slide-title className='block'>
-                    {titleLead}
+                    <Name stroke>{titleLead}</Name>
                   </span>
                   <span data-slide-title className='block'>
-                    {titleTail}
+                    <Name stroke>{titleTail}</Name>
                     {titleMark && (
                       <span className='text-accent' style={{ color: mark }}>
-                        {titleMark}
+                        <Name stroke>{titleMark}</Name>
                       </span>
                     )}
                   </span>
