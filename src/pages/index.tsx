@@ -78,8 +78,8 @@ const slides: Slide[] = [
   {
     src: me,
     alt: 'Pelúcia do Weslley Araújo',
-    title: ['Com mais de', '600 milhões'],
-    text: 'de downloads anuais em projetos autorais, Weslley impacta milhões de desenvolvedores globalmente através do open source.',
+    title: ['Mais de 600 milhões', 'de downloads anuais.'],
+    text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
     Action: Partners,
   },
   {
