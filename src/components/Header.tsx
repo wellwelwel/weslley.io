@@ -249,8 +249,8 @@ export const Header = ({
           aria-expanded={menu}
           aria-controls={panelId}
           className={clsx(
-            'flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border text-ink transition-[background-color,border-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:border-ink/25 hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
-            menu ? 'border-ink/25 bg-ink/5' : 'border-ink/12 bg-paper'
+            'flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+            menu ? 'bg-ink/5' : 'bg-transparent'
           )}
         >
           <span

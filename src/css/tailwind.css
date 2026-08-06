@@ -2,6 +2,7 @@
 @import 'tailwindcss/utilities.css' source(none);
 
 @source '../pages/index.tsx';
+@source '../components/Backdrop.tsx';
 @source '../components/Header.tsx';
 @source '../components/MvpBadges.tsx';
 @source '../components/Partners';

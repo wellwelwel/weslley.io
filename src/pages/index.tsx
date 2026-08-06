@@ -11,16 +11,20 @@ import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { BsClaude } from 'react-icons/bs';
 import { GiBigWave } from 'react-icons/gi';
-import { RiHomeLine, RiMicrosoftLine } from 'react-icons/ri';
-import { TbBrandMysql, TbPig } from 'react-icons/tb';
+import { RiMicrosoftLine } from 'react-icons/ri';
+import { TbBrandMysql, TbBrandOpenSource, TbPig } from 'react-icons/tb';
 import claude from '@site/src/assets/img/plush/claude.png';
+import laguneBackground from '@site/src/assets/img/plush/lagune-bg.png';
 import lagune from '@site/src/assets/img/plush/lagune.png';
 import me from '@site/src/assets/img/plush/me.png';
 import mvp from '@site/src/assets/img/plush/mvp.png';
 import mysql from '@site/src/assets/img/plush/mysql.png';
+import mysql2Background from '@site/src/assets/img/plush/mysql2-bg.png';
+import pokuBackground from '@site/src/assets/img/plush/poku-bg.png';
 import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
-import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
+import defaultBackground from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
+import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
 import { MvpBadges } from '@site/src/components/MvpBadges';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
@@ -38,6 +42,10 @@ type Slide = {
   Icon: IconType;
   title: [string, string, string?];
   text: string;
+  background?: string;
+  texture?: string;
+  color?: string;
+  mark?: string;
   Action?: SlideAction;
 };
 
@@ -69,6 +77,8 @@ const TRAVEL = {
 const motion = (): (typeof TRAVEL)['full'] =>
   isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
 
+const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
+
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
@@ -77,10 +87,11 @@ const slides: Slide[] = [
   {
     src: me,
     alt: 'Pelúcia do Weslley Araújo',
-    name: 'Início',
-    Icon: RiHomeLine,
+    name: 'Open Source',
+    Icon: TbBrandOpenSource,
     title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
     text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
+    texture: velvet,
     Action: PartnersAction,
   },
   {
@@ -90,6 +101,7 @@ const slides: Slide[] = [
     Icon: RiMicrosoftLine,
     title: ['Reconhecido como', 'Microsoft MVP', '.'],
     text: 'Além do open source, Weslley leva ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
+    texture: velvet,
     Action: MvpBadges,
   },
   {
@@ -98,7 +110,8 @@ const slides: Slide[] = [
     name: 'Anthropic CVP',
     Icon: BsClaude,
     title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
-    text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
+    text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança defensiva e ofensiva.',
+    texture: velvet,
   },
   // Projects
   {
@@ -108,14 +121,20 @@ const slides: Slide[] = [
     Icon: TbBrandMysql,
     title: ['Mantenedor do maior', 'driver MySQL do mundo', '.'],
     text: 'Weslley mantém o MySQL2, o driver mais baixado do ecossistema JavaScript para MySQL Server, com mais de 380 milhões de downloads anuais e usado publicamente por grandes empresas como Amazon, Microsoft, Google e Facebook.',
+    background: mysql2Background,
+    color: '#00afff40',
+    mark: '#00a1ff',
   },
   {
     src: lagune,
     alt: 'Pelúcia do Lagune',
     name: 'Lagune',
     Icon: GiBigWave,
-    title: ['Lagune, seu copiloto', 'em segurança', ':'],
+    title: ['Lagune, seu copiloto', 'em segurança', '.'],
     text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores, especialmente na era da Inteligência Artificial.',
+    background: laguneBackground,
+    color: '#00a7ff66',
+    mark: '#f0f9ff',
   },
   {
     src: poku,
@@ -124,8 +143,17 @@ const slides: Slide[] = [
     Icon: TbPig,
     title: ['We break it', 'before you do', '.'],
     text: 'Every release runs through a suite that assumes nothing works until the test says otherwise, so bugs surface here first.',
+    background: pokuBackground,
+    color: '#56d0ff2b',
+    mark: '#ff5498',
   },
 ];
+
+const customBackgrounds = [
+  ...new Set(slides.flatMap(({ background }) => background ?? [])),
+];
+
+const textures = [...new Set(slides.flatMap(({ texture }) => texture ?? []))];
 
 const groups = Array.from(
   { length: Math.ceil(slides.length / GROUP_SIZE) },
@@ -147,7 +175,7 @@ export default (): ReactNode => {
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
-  const { Action } = slides[active];
+  const { Action, background, texture, color, mark } = slides[active];
   const [titleLead, titleTail, titleMark] = slides[active].title;
 
   const show = (index: number) => {
@@ -278,15 +306,39 @@ export default (): ReactNode => {
       <Progress value={(active + 1) / slides.length} />
 
       <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
-        <img
-          src={background}
-          alt=''
-          aria-hidden='true'
-          draggable={false}
-          className='pointer-events-none fixed inset-0 size-full scale-125 object-cover blur-xl saturate-150 brightness-125'
+        <Backdrop
+          sources={[defaultBackground]}
+          active={background ?? defaultBackground}
+          className={`fixed ${BLURRED}`}
         />
 
-        <div className='relative flex min-h-0 flex-1 flex-col rounded-[2rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
+        <Backdrop
+          sources={customBackgrounds}
+          active={background}
+          className={`fixed object-bottom-right ${BLURRED}`}
+        />
+
+        <div
+          aria-hidden='true'
+          style={{ backgroundColor: color }}
+          className='pointer-events-none fixed inset-0 transition-colors duration-700 ease-[cubic-bezier(0.2,0,0,1)]'
+        />
+
+        <div
+          className={clsx(
+            'relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)]',
+            background
+              ? 'bg-transparent shadow-none'
+              : 'bg-paper shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
+          )}
+        >
+          <Backdrop
+            sources={textures}
+            active={texture}
+            className='absolute'
+            opacity={0.25}
+          />
+
           <Header
             sections={sections}
             steps={steps}
@@ -301,16 +353,8 @@ export default (): ReactNode => {
 
           <main
             ref={stage}
-            className='relative min-h-0 flex-1 overflow-hidden rounded-t-[2.5rem] rounded-b-3xl border border-ink/10 bg-paper'
+            className='relative min-h-0 flex-1 overflow-hidden rounded-t-[2.5rem] rounded-b-3xl'
           >
-            <img
-              src={velvet}
-              alt=''
-              aria-hidden='true'
-              draggable={false}
-              className='pointer-events-none absolute inset-0 size-full object-cover opacity-25'
-            />
-
             <div className='relative flex h-full flex-col px-8 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] lg:px-14'>
               <div className='mt-auto text-center'>
                 <h1 className='m-0 text-hero font-[800] tracking-[-0.02em] text-ink'>
@@ -320,7 +364,9 @@ export default (): ReactNode => {
                   <span data-slide-title className='block'>
                     {titleTail}
                     {titleMark && (
-                      <span className='text-accent'>{titleMark}</span>
+                      <span className='text-accent' style={{ color: mark }}>
+                        {titleMark}
+                      </span>
                     )}
                   </span>
                 </h1>
@@ -376,10 +422,8 @@ export default (): ReactNode => {
                             alt=''
                             draggable={false}
                             className={clsx(
-                              'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[filter,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
-                              index === active
-                                ? 'scale-110 grayscale-0'
-                                : 'scale-90 grayscale group-hover:grayscale-0 group-focus-visible:grayscale-0'
+                              'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
+                              index === active ? 'scale-110' : 'scale-75'
                             )}
                           />
                         </button>
