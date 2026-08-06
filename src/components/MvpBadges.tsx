@@ -34,6 +34,7 @@ export const MvpBadges = (): ReactNode => (
         key={title}
         to={url}
         aria-label={`${title}, ${issuer}`}
+        draggable={false}
         className='group relative block size-[clamp(2.5rem,13.33svh-2rem,7rem)] rounded-full focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent'
       >
         <img

@@ -8,7 +8,7 @@
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
 
-@custom-variant short (@media (max-height: 30rem));
+@custom-variant short (@media (max-height: 36rem));
 
 @theme {
   --text-hero: max(
@@ -36,4 +36,8 @@ body.clean :is(img, a) {
   -webkit-user-drag: none;
   -webkit-touch-callout: none;
   user-select: none;
+}
+
+body.clean img {
+  pointer-events: none;
 }

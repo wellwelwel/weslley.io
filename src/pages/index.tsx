@@ -93,7 +93,7 @@ const slides: Slide[] = [
     src: claude,
     alt: 'Pelúcia do Claude',
     title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
-    text: 'O Cybersecurity Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
+    text: 'O Cyber Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
   },
   // Projects
   {
@@ -364,7 +364,7 @@ export default (): ReactNode => {
 
                 <p
                   data-slide-text
-                  className='mx-auto mt-[clamp(0.5rem,2.75svh-0.375rem,1.5rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.8125rem,min(1.125rem,3svh-0.25rem))]/normal text-ink/70 text-pretty'
+                  className='mx-auto mt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.8125rem,min(1.125rem,3svh-0.25rem))]/normal text-ink/70 text-pretty'
                 >
                   {slides[active].text}
                 </p>
@@ -381,7 +381,7 @@ export default (): ReactNode => {
                 <div
                   ref={hintShell}
                   aria-hidden='true'
-                  className='pointer-events-none mt-[clamp(0.5rem,5.5svh-1.25rem,2.5rem)] flex justify-center short:hidden'
+                  className='pointer-events-none mt-[clamp(0.5rem,5.5svh-1.5rem,2.5rem)] flex justify-center short:hidden'
                 >
                   <span className='flex h-9 w-6 justify-center rounded-full border-2 border-ink/75 pt-1.5'>
                     <span
@@ -397,7 +397,7 @@ export default (): ReactNode => {
                 onPointerUp={release}
                 onPointerCancel={release}
                 onPointerLeave={release}
-                className='mt-auto -mx-8 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.375rem,1.5rem)] lg:-mx-14'
+                className='mt-auto -mx-8 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] lg:-mx-14'
               >
                 {groups.map((members, groupIndex) => (
                   <div
