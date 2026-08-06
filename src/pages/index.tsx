@@ -118,6 +118,7 @@ const Dot = (): ReactNode => (
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
+  const [scrolled, setScrolled] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
@@ -130,7 +131,7 @@ export default (): ReactNode => {
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
   const last = active === slides.length - 1;
-  const hinting = active === 0 || last;
+  const hinting = !scrolled || active === 0 || last;
 
   const show = (index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -153,6 +154,7 @@ export default (): ReactNode => {
       const step = (direction: number) => {
         if (locked.current) return;
 
+        setScrolled(true);
         show(current.current + direction);
       };
 
@@ -215,7 +217,7 @@ export default (): ReactNode => {
           '[data-slide-text]',
           { opacity: 0, x: travel.textX },
           { opacity: 1, x: 0, duration: 0.38, ease: 'power2.out' },
-          '-=0.22'
+          '-=0.06'
         );
     },
     { dependencies: [active], scope: stage }

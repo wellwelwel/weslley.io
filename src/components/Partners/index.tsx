@@ -5,7 +5,7 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { Building2, Check, Mail, Send, User, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
-import { GiOldMicrophone } from 'react-icons/gi';
+import { IoRocketSharp } from 'react-icons/io5';
 import claude from '@site/src/assets/img/plush/claude.png';
 import me from '@site/src/assets/img/plush/me.png';
 import mvp from '@site/src/assets/img/plush/mvp.png';
@@ -42,7 +42,6 @@ const BADGES = [
   { src: claude, alt: 'Pelúcia do Claude' },
 ];
 
-const SPONSORS_URL = 'https://github.com/sponsors/wellwelwel';
 const DRAFT_KEY = 'weslley:partners-draft';
 const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
@@ -548,11 +547,20 @@ export const Partners = ({
         onClick={() => setOpen(true)}
         aria-haspopup='dialog'
         aria-expanded={open}
-        className='inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 text-[0.9375rem] font-medium text-paper shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_8px_20px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_14px_28px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+        className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 text-[0.9375rem] font-semibold text-paper shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
       >
         Bora trabalhar juntos
         <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-paper'>
-          <GiOldMicrophone className='size-4' aria-hidden='true' />
+          <span className='relative grid size-4 place-items-center overflow-hidden'>
+            <IoRocketSharp
+              className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
+              aria-hidden='true'
+            />
+            <IoRocketSharp
+              className='col-start-1 row-start-1 size-4 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
+              aria-hidden='true'
+            />
+          </span>
         </span>
       </button>
 
