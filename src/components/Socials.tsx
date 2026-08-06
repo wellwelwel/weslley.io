@@ -31,6 +31,7 @@ export const Socials = ({ onHover }: SocialsOptions): ReactNode => {
           key={name}
           to={url}
           aria-label={name}
+          draggable={false}
           onPointerEnter={() => enter(name)}
           onPointerLeave={leave}
           onFocus={() => enter(name)}

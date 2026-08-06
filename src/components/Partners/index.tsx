@@ -10,6 +10,7 @@ import claude from '@site/src/assets/img/plush/claude.png';
 import me from '@site/src/assets/img/plush/me.png';
 import mvp from '@site/src/assets/img/plush/mvp.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
+import { Socials } from '@site/src/components/Socials';
 import { setLabel, useStats } from '@site/src/components/Stats';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 import { socialLinks } from '@site/src/helpers/social-links';
@@ -32,8 +33,11 @@ type Pill = {
 export type Trigger = {
   open: boolean;
   onOpen: () => void;
-  label?: string | null;
-  onRestore?: () => void;
+};
+
+type PartnersOptions = Trigger & {
+  label: string | null;
+  onRestore: () => void;
 };
 
 type RollingLabel = {
@@ -566,12 +570,12 @@ export const PartnersDialog = ({
   );
 };
 
-export const Partners = ({
+const Partners = ({
   open,
   onOpen,
   label,
   onRestore,
-}: Trigger): ReactNode => {
+}: PartnersOptions): ReactNode => {
   const current = label ?? TRIGGER_LABEL;
   const [rolling, setRolling] = useState<RollingLabel>({
     current,
@@ -619,5 +623,21 @@ export const Partners = ({
         </span>
       </span>
     </button>
+  );
+};
+
+export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
+  const [social, setSocial] = useState<string | null>(null);
+
+  return (
+    <div className='flex flex-col items-center gap-3 short:flex-row'>
+      <Partners
+        open={open}
+        onOpen={onOpen}
+        label={social}
+        onRestore={() => setSocial(null)}
+      />
+      <Socials onHover={setSocial} />
+    </div>
   );
 };

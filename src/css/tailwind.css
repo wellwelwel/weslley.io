@@ -3,11 +3,20 @@
 
 @source '../pages/index.tsx';
 @source '../components/Header.tsx';
+@source '../components/MvpBadges.tsx';
 @source '../components/Partners';
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
 
+@custom-variant short (@media (max-height: 30rem));
+
 @theme {
+  --text-hero: max(
+    1.5rem,
+    min(8.2vw, max(6.6vw, 2rem), 7rem, 13.9svh - 2.375rem)
+  );
+  --text-hero--line-height: 1.02;
+
   --color-ink: #0e0927;
   --color-paper: #f0f4ff;
   --color-accent: #7a77ff;
@@ -21,4 +30,10 @@ body.clean {
   --ifm-heading-font-family: var(--font-sans);
 
   font-family: var(--font-sans);
+}
+
+body.clean :is(img, a) {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
 }

@@ -17,9 +17,9 @@ import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
 import { Header } from '@site/src/components/Header';
-import { Partners, PartnersDialog } from '@site/src/components/Partners';
+import { MvpBadges } from '@site/src/components/MvpBadges';
+import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
-import { Socials } from '@site/src/components/Socials';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP, Observer);
@@ -29,7 +29,7 @@ type SlideAction = ComponentType<Trigger>;
 type Slide = {
   src: string;
   alt: string;
-  title: [string, string];
+  title: [string, string, string?];
   text: string;
   Action?: SlideAction;
 };
@@ -78,39 +78,40 @@ const slides: Slide[] = [
   {
     src: me,
     alt: 'Pelúcia do Weslley Araújo',
-    title: ['Mais de 600 milhões', 'de downloads anuais.'],
+    title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
     text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
-    Action: Partners,
+    Action: PartnersAction,
   },
   {
     src: mvp,
     alt: 'Pelúcia do MVP',
-    title: ['Reconhecido como', 'Microsoft MVP'],
-    text: 'Levo ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
+    title: ['Reconhecido como', 'Microsoft MVP', '.'],
+    text: 'Além do open source, Weslley leva ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
+    Action: MvpBadges,
   },
   {
     src: claude,
     alt: 'Pelúcia do Claude',
-    title: ['Desenvolvedor verificado pelo', 'Anthropic CVP'],
+    title: ['Desenvolvedor verificado', 'Anthropic CVP', '.'],
     text: 'O Cybersecurity Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
   },
   // Projects
   {
     src: mysql,
     alt: 'Pelúcia do MySQL',
-    title: ['We keep data', 'honest.'],
+    title: ['We keep data', 'honest', '.'],
     text: 'Schemas stay predictable and migrations stay reversible, because the surprises belong in the design and never in the data.',
   },
   {
     src: lagune,
     alt: 'Pelúcia do Lagune',
-    title: ['Seu copiloto', 'em segurança:'],
+    title: ['Seu copiloto', 'em segurança', ':'],
     text: 'Lagune inova a segurança na era da IA, trazendo um conceito de proteção antes, durante e depois do desenvolvimento.',
   },
   {
     src: poku,
     alt: 'Pelúcia do Poku',
-    title: ['We break it', 'before you do.'],
+    title: ['We break it', 'before you do', '.'],
     text: 'Every release runs through a suite that assumes nothing works until the test says otherwise, so bugs surface here first.',
   },
 ];
@@ -126,7 +127,6 @@ export default (): ReactNode => {
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
   const [pressed, setPressed] = useState<number | null>(null);
-  const [social, setSocial] = useState<string | null>(null);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
@@ -138,6 +138,7 @@ export default (): ReactNode => {
   const hintPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
   const { Action } = slides[active];
+  const [titleLead, titleTail, titleMark] = slides[active].title;
   const last = active === slides.length - 1;
   const groupEnd = Math.min((group + 1) * GROUP_SIZE, slides.length) - 1;
   const hinting = active === groupEnd;
@@ -148,7 +149,6 @@ export default (): ReactNode => {
 
     current.current = index;
     setActive(index);
-    setSocial(null);
 
     locked.current = true;
     unlock.current?.kill();
@@ -348,20 +348,23 @@ export default (): ReactNode => {
               className='pointer-events-none absolute inset-0 size-full object-cover opacity-25'
             />
 
-            <div className='relative flex h-full flex-col p-8 pb-0 lg:p-14 lg:pb-0'>
+            <div className='relative flex h-full flex-col px-8 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] lg:px-14'>
               <div className='mt-auto text-center'>
-                <h1 className='m-0 text-[clamp(2.25rem,6.6vw,7rem)]/[1.02] font-[800] tracking-[-0.02em] text-ink'>
+                <h1 className='m-0 text-hero font-[800] tracking-[-0.02em] text-ink'>
                   <span data-slide-title className='block'>
-                    {slides[active].title[0]}
+                    {titleLead}
                   </span>
                   <span data-slide-title className='block'>
-                    {slides[active].title[1]}
+                    {titleTail}
+                    {titleMark && (
+                      <span className='text-accent'>{titleMark}</span>
+                    )}
                   </span>
                 </h1>
 
                 <p
                   data-slide-text
-                  className='mx-auto mt-6 mb-0 min-h-34 w-full max-w-150 text-lg/normal text-ink/70 text-pretty lg:min-h-27 lg:text-pretty'
+                  className='mx-auto mt-[clamp(0.5rem,2.75svh-0.375rem,1.5rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.8125rem,min(1.125rem,3svh-0.25rem))]/normal text-ink/70 text-pretty'
                 >
                   {slides[active].text}
                 </p>
@@ -369,22 +372,16 @@ export default (): ReactNode => {
                 {Action && (
                   <div
                     data-slide-text
-                    className='mt-5 flex flex-col items-center gap-3'
+                    className='mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
                   >
-                    <Action
-                      open={partners}
-                      onOpen={() => setPartners(true)}
-                      label={social}
-                      onRestore={() => setSocial(null)}
-                    />
-                    <Socials onHover={setSocial} />
+                    <Action open={partners} onOpen={() => setPartners(true)} />
                   </div>
                 )}
 
                 <div
                   ref={hintShell}
                   aria-hidden='true'
-                  className='pointer-events-none mt-10 flex justify-center'
+                  className='pointer-events-none mt-[clamp(0.5rem,5.5svh-1.25rem,2.5rem)] flex justify-center short:hidden'
                 >
                   <span className='flex h-9 w-6 justify-center rounded-full border-2 border-ink/75 pt-1.5'>
                     <span
@@ -400,7 +397,7 @@ export default (): ReactNode => {
                 onPointerUp={release}
                 onPointerCancel={release}
                 onPointerLeave={release}
-                className='mt-auto -mx-8 grid overflow-hidden pt-6 lg:-mx-14'
+                className='mt-auto -mx-8 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.375rem,1.5rem)] lg:-mx-14'
               >
                 {groups.map((members, groupIndex) => (
                   <div
@@ -420,7 +417,7 @@ export default (): ReactNode => {
                           aria-label={alt}
                           aria-current={index === active}
                           className={clsx(
-                            'group block min-w-0 max-w-52 flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent',
+                            'group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent',
                             pressed === index && 'scale-95'
                           )}
                         >
