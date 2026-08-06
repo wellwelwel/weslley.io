@@ -8,6 +8,7 @@
 @source '../components/Partners';
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
+@source '../components/Star.tsx';
 
 @custom-variant short (@media (max-height: 36rem));
 @custom-variant short-wide (@media (max-height: 36rem) and (min-width: 40rem));

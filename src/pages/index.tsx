@@ -30,11 +30,12 @@ import { Header } from '@site/src/components/Header';
 import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
+import { Star } from '@site/src/components/Star';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP, Observer);
 
-type SlideAction = ComponentType<Trigger>;
+type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
 type Slide = {
   src: string;
@@ -120,8 +121,8 @@ const slides: Slide[] = [
     alt: 'Pelúcia do MySQL',
     name: 'MySQL2',
     Icon: TbBrandMysql,
-    title: ['Mantenedor do maior', 'driver MySQL do mundo', '.'],
-    text: 'Weslley mantém o MySQL2, o driver mais baixado do ecossistema JavaScript para MySQL Server, usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
+    title: ['O driver MySQL mais baixado do', 'ecossistema JavaScript', '.'],
+    text: 'Weslley mantém o MySQL2, driver para MySQL Server usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
     background: mysql2Background,
     color: '#00afff40',
     mark: '#00a1ff',
@@ -132,10 +133,11 @@ const slides: Slide[] = [
     name: 'Lagune',
     Icon: GiBigWave,
     title: ['Lagune, seu copiloto', 'em segurança', '.'],
-    text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores, especialmente na era da Inteligência Artificial.',
+    text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
     background: laguneBackground,
     color: '#00a7ff66',
     mark: '#f0f9ff',
+    Action: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
   },
   {
     src: poku,
@@ -147,6 +149,7 @@ const slides: Slide[] = [
     background: pokuBackground,
     color: '#56d0ff2b',
     mark: '#ff5498',
+    Action: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
   },
 ];
 
@@ -385,7 +388,11 @@ export default (): ReactNode => {
                     data-slide-text
                     className='mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
                   >
-                    <Action open={partners} onOpen={() => setPartners(true)} />
+                    <Action
+                      open={partners}
+                      onOpen={() => setPartners(true)}
+                      mark={mark}
+                    />
                   </div>
                 )}
               </div>
