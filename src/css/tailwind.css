@@ -2,6 +2,7 @@
 @import 'tailwindcss/utilities.css' source(none);
 
 @source '../pages/index.tsx';
+@source '../components/Partners';
 
 @theme {
   --color-ink: #0e0927;

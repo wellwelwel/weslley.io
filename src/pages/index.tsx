@@ -1,4 +1,4 @@
-import type { ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import { useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -15,14 +15,18 @@ import mysql from '@site/src/assets/img/plush/mysql.png';
 import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
+import { Partners } from '@site/src/components/Partners';
 
 gsap.registerPlugin(useGSAP, Observer);
+
+type SlideAction = ComponentType<{ onOpenChange: (open: boolean) => void }>;
 
 type Slide = {
   src: string;
   alt: string;
   title: [string, string];
   text: string;
+  Action?: SlideAction;
 };
 
 const STEP_LOCK = 0.6;
@@ -67,17 +71,18 @@ const slides: Slide[] = [
     alt: 'Pelúcia do Weslley Araújo',
     title: ['Com mais de', '600 milhões'],
     text: 'de downloads anuais em projetos autorais, Weslley impacta milhões de desenvolvedores globalmente através do open source.',
+    Action: Partners,
   },
   {
     src: mvp,
     alt: 'Pelúcia do MVP',
     title: ['Reconhecido como', 'Microsoft MVP'],
-    text: 'nas categorias Developer Technologies: Web Development e Developer Tools',
+    text: 'Levo ao palco experiências reais de sistemas usados em escala global e inovação em sua mais pura essência.',
   },
   {
     src: claude,
     alt: 'Pelúcia do Claude',
-    title: ['Verificado pelo', 'Anthropic CVP'],
+    title: ['Desenvolvedor verificado pelo', 'Anthropic CVP'],
     text: 'O Cybersecurity Verification Program (CVP) permite a profissionais de segurança qualificados trabalharem com exploração de vulnerabilidades e ferramentas de segurança ofensiva, bloqueadas para os demais usuários.',
   },
   // Projects
@@ -113,6 +118,7 @@ const Dot = (): ReactNode => (
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
+  const [overlay, setOverlay] = useState(false);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
@@ -122,6 +128,7 @@ export default (): ReactNode => {
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
   const group = Math.floor(active / GROUP_SIZE);
+  const { Action } = slides[active];
   const last = active === slides.length - 1;
   const hinting = active === 0 || last;
 
@@ -139,43 +146,48 @@ export default (): ReactNode => {
     });
   };
 
-  useGSAP(() => {
-    const step = (direction: number) => {
-      if (locked.current) return;
+  useGSAP(
+    () => {
+      if (overlay) return;
 
-      show(current.current + direction);
-    };
+      const step = (direction: number) => {
+        if (locked.current) return;
 
-    const observer = Observer.create({
-      type: 'wheel,touch',
-      wheelSpeed: -1,
-      tolerance: 10,
-      preventDefault: true,
-      allowClicks: true,
-      onUp: () => step(1),
-      onDown: () => step(-1),
-    });
+        show(current.current + direction);
+      };
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      const direction = FORWARD_KEYS.includes(event.key)
-        ? 1
-        : BACKWARD_KEYS.includes(event.key)
-          ? -1
-          : 0;
+      const observer = Observer.create({
+        type: 'wheel,touch',
+        wheelSpeed: -1,
+        tolerance: 10,
+        preventDefault: true,
+        allowClicks: true,
+        onUp: () => step(1),
+        onDown: () => step(-1),
+      });
 
-      if (!direction) return;
+      const onKeyDown = (event: KeyboardEvent) => {
+        const direction = FORWARD_KEYS.includes(event.key)
+          ? 1
+          : BACKWARD_KEYS.includes(event.key)
+            ? -1
+            : 0;
 
-      event.preventDefault();
-      step(direction);
-    };
+        if (!direction) return;
 
-    window.addEventListener('keydown', onKeyDown);
+        event.preventDefault();
+        step(direction);
+      };
 
-    return () => {
-      observer.kill();
-      window.removeEventListener('keydown', onKeyDown);
-    };
-  });
+      window.addEventListener('keydown', onKeyDown);
+
+      return () => {
+        observer.kill();
+        window.removeEventListener('keydown', onKeyDown);
+      };
+    },
+    { dependencies: [overlay], revertOnUpdate: true }
+  );
 
   useGSAP(
     () => {
@@ -293,8 +305,8 @@ export default (): ReactNode => {
           className='pointer-events-none fixed inset-0 size-full scale-125 object-cover blur-xl saturate-150 brightness-125'
         />
 
-        <div className='relative flex min-h-0 flex-1 flex-col rounded-[2.5rem] bg-paper p-4 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
-          <header className='relative flex h-16 shrink-0 items-center justify-between px-4'>
+        <div className='relative flex min-h-0 flex-1 flex-col rounded-[2.5rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
+          <header className='relative flex h-20 shrink-0 items-center justify-between px-4'>
             <span className='flex items-center gap-3'>
               <img
                 src={avatar}
@@ -329,7 +341,7 @@ export default (): ReactNode => {
 
           <main
             ref={stage}
-            className='relative min-h-0 flex-1 overflow-hidden rounded-3xl border border-ink/10 bg-paper'
+            className='relative min-h-0 flex-1 overflow-hidden rounded-t-[2.5rem] rounded-b-3xl border border-ink/10 bg-paper'
           >
             <img
               src={velvet}
@@ -339,8 +351,8 @@ export default (): ReactNode => {
             />
 
             <div className='relative flex h-full flex-col p-8 pb-0 lg:p-14 lg:pb-0'>
-              <div className='mt-auto'>
-                <h1 className='m-0 text-[clamp(2.25rem,6.6vw,7rem)]/[1.02] font-bold tracking-[-0.02em] text-ink'>
+              <div className='mt-auto text-center'>
+                <h1 className='m-0 text-[clamp(2.25rem,6.6vw,7rem)]/[1.02] font-[800] tracking-[-0.02em] text-ink'>
                   <span data-slide-title className='block'>
                     {slides[active].title[0]}
                   </span>
@@ -351,10 +363,16 @@ export default (): ReactNode => {
 
                 <p
                   data-slide-text
-                  className='mt-6 mb-0 min-h-34 w-full max-w-150 text-lg/normal text-ink/70 text-pretty lg:min-h-27 lg:text-pretty'
+                  className='mx-auto mt-6 mb-0 min-h-34 w-full max-w-150 text-lg/normal text-ink/70 text-pretty lg:min-h-27 lg:text-pretty'
                 >
                   {slides[active].text}
                 </p>
+
+                {Action && (
+                  <div data-slide-text className='mt-5 flex justify-center'>
+                    <Action onOpenChange={setOverlay} />
+                  </div>
+                )}
               </div>
 
               <div
