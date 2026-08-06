@@ -5,6 +5,7 @@
 /build
 /node_modules
 /server
+/temp/
 .DS_Store
 .env
 t.ts

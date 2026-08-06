@@ -32,10 +32,10 @@ export default function NavbarLayout({ children }: Props): ReactNode {
   const location = useLocation();
   const isInitialLoad = useRef(true);
   const navbarNode = useRef<HTMLElement | null>(null);
-  const isHome = ['/', '/en/'].includes(location.pathname);
+  const isLinks = ['/links/', '/en/links/'].includes(location.pathname);
 
   useEffect(() => {
-    if (!isHome || !navbarNode.current) return;
+    if (!isLinks || !navbarNode.current) return;
 
     const doc = document.querySelector('#__docusaurus');
     if (!doc) return;
@@ -45,11 +45,11 @@ export default function NavbarLayout({ children }: Props): ReactNode {
       const scrollTop = doc.scrollTop;
 
       if (scrollTop > 20) {
-        navbarNode.current?.classList.remove('is-home');
+        navbarNode.current?.classList.remove('is-links');
         return;
       }
 
-      navbarNode.current?.classList.add('is-home');
+      navbarNode.current?.classList.add('is-links');
     };
 
     checkScroll();
@@ -58,19 +58,19 @@ export default function NavbarLayout({ children }: Props): ReactNode {
     return () => {
       doc.removeEventListener('scroll', checkScroll);
     };
-  }, [isHome, navbarNode.current, mobileSidebar.shown]);
+  }, [isLinks, navbarNode.current, mobileSidebar.shown]);
 
   useEffect(() => {
     if (!mobileSidebar.shown) return;
 
-    navbarNode.current?.classList.remove('is-home');
+    navbarNode.current?.classList.remove('is-links');
   }, [mobileSidebar.shown]);
 
   useEffect(() => {
-    if (isHome) return;
+    if (isLinks) return;
 
     isInitialLoad.current = false;
-  }, [isHome, location.hash]);
+  }, [isLinks, location.hash]);
 
   return (
     <nav
@@ -91,8 +91,8 @@ export default function NavbarLayout({ children }: Props): ReactNode {
           !isNavbarVisible && styles.navbarHidden,
         ],
         {
-          'is-home': isInitialLoad.current && isHome,
-          show: !isInitialLoad.current || !isHome,
+          'is-links': isInitialLoad.current && isLinks,
+          show: !isInitialLoad.current || !isLinks,
           'navbar--dark': style === 'dark',
           'navbar--primary': style === 'primary',
           'navbar-sidebar--show': mobileSidebar.shown,

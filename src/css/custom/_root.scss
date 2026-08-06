@@ -2,7 +2,7 @@
 
 @include load-css('reset');
 
-body {
+body:not(.clean) {
   min-height: calc(100vh - 55px);
   min-height: calc(100dvh - 55px);
   min-width: 320px;

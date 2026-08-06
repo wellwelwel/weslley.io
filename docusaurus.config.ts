@@ -59,7 +59,7 @@ const config: Config = {
         blog: false,
         docs: false,
         theme: {
-          customCss: ['./src/css/themes.scss'],
+          customCss: ['./src/css/themes.scss', './src/css/tailwind.css'],
         },
         pages: {
           admonitions: true,

@@ -1,6 +1,6 @@
 @use '../global/mixins' as *;
 
-#home {
+#links {
   padding: 0 20px;
   margin-bottom: 0;
   transform: translateY(-5px);
@@ -665,7 +665,7 @@
 }
 
 // [data-theme='dark'] {
-//   #home {
+//   #links {
 //     & > main {
 //       & > header {
 

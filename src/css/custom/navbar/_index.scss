@@ -304,7 +304,7 @@
     }
   }
 
-  &.is-home {
+  &.is-links {
     background-color: transparent;
     backdrop-filter: unset;
     box-shadow: none;
@@ -319,7 +319,7 @@
     }
   }
 
-  &:not(.is-home) {
+  &:not(.is-links) {
     .navbar__items--left {
       a {
         height: 100%;
