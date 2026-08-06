@@ -1,3 +1,4 @@
+import type { Section } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
 import type { ComponentType, ReactNode } from 'react';
 import { useRef, useState } from 'react';
@@ -7,7 +8,6 @@ import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
-import avatar from '@site/src/assets/img/avatar.png';
 import claude from '@site/src/assets/img/plush/claude.png';
 import lagune from '@site/src/assets/img/plush/lagune.png';
 import me from '@site/src/assets/img/plush/me.png';
@@ -16,8 +16,11 @@ import mysql from '@site/src/assets/img/plush/mysql.png';
 import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import background from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
+import { Header } from '@site/src/components/Header';
 import { Partners, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
+import { Socials } from '@site/src/components/Socials';
+import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP, Observer);
 
@@ -33,6 +36,7 @@ type Slide = {
 
 const STEP_LOCK = 0.6;
 const GROUP_SIZE = 3;
+const PROJECTS_GROUP = 1;
 const TOLERANCE = 10;
 const TITLE_IN = 0.32;
 const TEXT_IN = 0.38;
@@ -61,17 +65,13 @@ const TRAVEL = {
 };
 
 const motion = (): (typeof TRAVEL)['full'] =>
-  window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    ? TRAVEL.reduced
-    : TRAVEL.full;
+  isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
 
 const afterContent = (travel: (typeof TRAVEL)['full']): number =>
   TITLE_IN + travel.titleStagger + TEXT_GAP + TEXT_IN - HINT_LEAD;
 
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
-
-const sections = ['Works', 'About', 'Contact'];
 
 const slides: Slide[] = [
   // About and Recognitions
@@ -120,15 +120,13 @@ const groups = Array.from(
   (_, index) => slides.slice(index * GROUP_SIZE, (index + 1) * GROUP_SIZE)
 );
 
-const Dot = (): ReactNode => (
-  <span className='size-3.5 shrink-0 rounded-full bg-accent' />
-);
-
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
   const [partners, setPartners] = useState(false);
+  const [menu, setMenu] = useState(false);
   const [pressed, setPressed] = useState<number | null>(null);
+  const [social, setSocial] = useState<string | null>(null);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const hint = useRef<HTMLSpanElement>(null);
@@ -150,6 +148,7 @@ export default (): ReactNode => {
 
     current.current = index;
     setActive(index);
+    setSocial(null);
 
     locked.current = true;
     unlock.current?.kill();
@@ -160,9 +159,16 @@ export default (): ReactNode => {
 
   const release = () => setPressed(null);
 
+  const home = () => show(0);
+
+  const sections: Section[] = [
+    { label: 'Home', onSelect: home },
+    { label: 'Projetos', onSelect: () => show(PROJECTS_GROUP * GROUP_SIZE) },
+  ];
+
   useGSAP(
     () => {
-      if (partners) return;
+      if (partners || menu) return;
 
       const step = (direction: number) => {
         if (locked.current) return;
@@ -200,7 +206,7 @@ export default (): ReactNode => {
         window.removeEventListener('keydown', onKeyDown);
       };
     },
-    { dependencies: [partners], revertOnUpdate: true }
+    { dependencies: [partners, menu], revertOnUpdate: true }
   );
 
   useGSAP(
@@ -321,42 +327,14 @@ export default (): ReactNode => {
         />
 
         <div className='relative flex min-h-0 flex-1 flex-col rounded-[2rem] bg-paper p-4 pt-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_8px_20px_rgb(14_9_39_/_0.14),0_28px_56px_rgb(14_9_39_/_0.20)]'>
-          <header className='relative flex h-20 shrink-0 items-center justify-between px-4'>
-            <span className='flex items-center gap-3'>
-              <img
-                src={avatar}
-                alt=''
-                draggable={false}
-                className='size-9 shrink-0 rounded-full'
-              />
-              <span className='font-semibold tracking-tight text-ink'>
-                Weslley Araújo
-              </span>
-            </span>
-
-            <nav className='absolute left-1/2 hidden -translate-x-1/2 items-center gap-9 md:flex'>
-              {sections.map((section) => (
-                <a
-                  key={section}
-                  href='#'
-                  className='flex h-10 items-center text-base text-ink/70 transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:text-ink'
-                >
-                  {section}
-                </a>
-              ))}
-            </nav>
-
-            <button
-              type='button'
-              onClick={() => setPartners(true)}
-              aria-haspopup='dialog'
-              aria-expanded={partners}
-              className='flex h-11 cursor-pointer appearance-none items-center gap-4 rounded-full border-0 bg-ink px-6 font-sans text-[0.9375rem] font-medium text-paper transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
-            >
-              Let's Talk
-              <Dot />
-            </button>
-          </header>
+          <Header
+            sections={sections}
+            menu={menu}
+            partners={partners}
+            onMenu={setMenu}
+            onHome={home}
+            onPartners={() => setPartners(true)}
+          />
 
           <main
             ref={stage}
@@ -389,8 +367,16 @@ export default (): ReactNode => {
                 </p>
 
                 {Action && (
-                  <div data-slide-text className='mt-5 flex justify-center'>
-                    <Action open={partners} onOpen={() => setPartners(true)} />
+                  <div
+                    data-slide-text
+                    className='mt-5 flex flex-col items-center gap-3'
+                  >
+                    <Action
+                      open={partners}
+                      onOpen={() => setPartners(true)}
+                      label={social}
+                    />
+                    <Socials onHover={setSocial} />
                   </div>
                 )}
 

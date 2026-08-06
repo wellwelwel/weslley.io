@@ -11,6 +11,8 @@ import me from '@site/src/assets/img/plush/me.png';
 import mvp from '@site/src/assets/img/plush/mvp.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import { setLabel, useStats } from '@site/src/components/Stats';
+import { isReducedMotion } from '@site/src/helpers/reduced-motion';
+import { socialLinks } from '@site/src/helpers/social-links';
 
 type PartnershipType = (typeof PARTNERSHIP_TYPES)[number];
 
@@ -30,6 +32,12 @@ type Pill = {
 export type Trigger = {
   open: boolean;
   onOpen: () => void;
+  label?: string | null;
+};
+
+type RollingLabel = {
+  current: string;
+  previous: string;
 };
 
 const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Podcast'] as const;
@@ -51,6 +59,19 @@ const DRAFT_KEY = 'weslley:partners-draft';
 const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
 const FALLBACK_DOWNLOADS = '600 milhões';
+const TRIGGER_LABEL = 'Bora trabalhar juntos';
+
+const TRIGGER_LABELS = [
+  TRIGGER_LABEL,
+  ...Object.values(socialLinks).map(({ name }) => name),
+];
+
+const rollingPlace = (text: string, { current, previous }: RollingLabel) => {
+  if (text === current) return 'translate-y-0 opacity-100';
+  if (text === previous) return '-translate-y-[120%] opacity-0';
+
+  return 'translate-y-[120%] opacity-0';
+};
 
 const groupClass =
   'flex items-stretch overflow-hidden rounded-xl border border-ink/12 bg-paper transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:border-ink/25 focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
@@ -264,9 +285,7 @@ export const PartnersDialog = ({
   }, [draft]);
 
   useGSAP(() => {
-    const reduced = window.matchMedia(
-      '(prefers-reduced-motion: reduce)'
-    ).matches;
+    const reduced = isReducedMotion();
 
     gsap.fromTo(
       panel.current,
@@ -546,26 +565,51 @@ export const PartnersDialog = ({
   );
 };
 
-export const Partners = ({ open, onOpen }: Trigger): ReactNode => (
-  <button
-    type='button'
-    onClick={onOpen}
-    aria-haspopup='dialog'
-    aria-expanded={open}
-    className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold text-paper shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
-  >
-    Bora trabalhar juntos
-    <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-paper'>
-      <span className='relative grid size-4 place-items-center overflow-hidden'>
-        <IoRocketSharp
-          className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
-          aria-hidden='true'
-        />
-        <IoRocketSharp
-          className='col-start-1 row-start-1 size-4 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
-          aria-hidden='true'
-        />
+export const Partners = ({ open, onOpen, label }: Trigger): ReactNode => {
+  const current = label ?? TRIGGER_LABEL;
+  const [rolling, setRolling] = useState<RollingLabel>({
+    current,
+    previous: current,
+  });
+
+  if (rolling.current !== current)
+    setRolling({ current, previous: rolling.current });
+
+  return (
+    <button
+      type='button'
+      onClick={onOpen}
+      aria-haspopup='dialog'
+      aria-expanded={open}
+      aria-label={TRIGGER_LABEL}
+      className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold text-paper shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+    >
+      <span aria-hidden='true' className='grid overflow-hidden leading-6'>
+        {TRIGGER_LABELS.map((text) => (
+          <span
+            key={text}
+            className={clsx(
+              'col-start-1 row-start-1 text-center whitespace-nowrap transition-[opacity,translate] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
+              rollingPlace(text, rolling)
+            )}
+          >
+            {text}
+          </span>
+        ))}
       </span>
-    </span>
-  </button>
-);
+
+      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-paper'>
+        <span className='relative grid size-4 place-items-center overflow-hidden'>
+          <IoRocketSharp
+            className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
+            aria-hidden='true'
+          />
+          <IoRocketSharp
+            className='col-start-1 row-start-1 size-4 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
+            aria-hidden='true'
+          />
+        </span>
+      </span>
+    </button>
+  );
+};

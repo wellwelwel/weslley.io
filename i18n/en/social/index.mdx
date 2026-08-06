@@ -1,30 +1,23 @@
 import { Social } from '@site/src/components/Social';
+import { socialLinks } from '@site/src/helpers/social-links';
 
 <Social
-  name='LinkedIn'
-  imageSrc='/img/linkedin.svg'
-  url='https://www.linkedin.com/in/wellwelwel/'
+  {...socialLinks.linkedin}
   description="Development tips, content that's more technical and achievements so you can be happy together with me 🎉"
 />
 
 <Social
-  name='GitHub'
-  imageSrc='/img/github.svg'
-  url='https://github.com/wellwelwel'
+  {...socialLinks.github}
   description="Here you'll find really interesting projects."
 />
 
 <Social
-  name='Instagram'
-  imageSrc='/img/instagram.svg'
-  url='https://www.instagram.com/wellwelwel/'
+  {...socialLinks.instagram}
   description='A concert here, a cat there and out of nowhere, content about programming.'
 />
 
 <Social
-  name='YouTube'
-  imageSrc='/img/youtube.svg'
-  url='https://www.youtube.com/@weslleyio'
+  {...socialLinks.youtube}
   description={
     <p>
       🚧 <strong>WIP:</strong> Educational content and courses completely for
@@ -34,9 +27,7 @@ import { Social } from '@site/src/components/Social';
 />
 
 <Social
-  name='GitHub Sponsors'
-  imageSrc='/img/sponsor.svg'
-  url='https://github.com/sponsors/wellwelwel'
+  {...socialLinks.sponsors}
   description={
     <p>
       All my content is <strong>totally free</strong>, so why not support my
