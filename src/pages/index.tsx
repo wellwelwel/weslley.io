@@ -99,8 +99,8 @@ const THEMES: Record<Theme, string> = {
 /* Reads as a halo on the light theme and as depth on the dark one, since the
    paper token already carries the surface color of each. */
 const SHADOWS: Record<Theme, string> = {
-  light: 'text-shadow-md text-shadow-paper/35',
-  dark: 'text-shadow-md text-shadow-paper/50',
+  light: 'text-shadow-paper/18',
+  dark: 'text-shadow-paper/50',
 };
 
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
@@ -137,6 +137,7 @@ const groups: Group[] = [
         Icon: TbPodium,
         title: ['Compartilhando', 'conhecimento', '.'],
         text: 'Weslley leva aos palcos experiências reais ao longo de mais de uma década como desenvolvedor, palestrando nos principais eventos de tecnologia do Brasil.',
+        color: '#000000aa',
         background: defaultBackground,
         theme: 'dark',
       },
@@ -410,7 +411,7 @@ export default (): ReactNode => {
               <div className='mt-auto text-center'>
                 <h1
                   className={clsx(
-                    'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
+                    'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-shadow-md sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
                     SHADOWS[theme]
                   )}
                 >
@@ -430,7 +431,7 @@ export default (): ReactNode => {
                 <p
                   data-slide-text
                   className={clsx(
-                    'mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
+                    'mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
                     SHADOWS[theme]
                   )}
                 >
