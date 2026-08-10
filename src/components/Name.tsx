@@ -35,7 +35,9 @@ const pop = ({ currentTarget }: MouseEvent<HTMLSpanElement>) => {
 
 export const Name: FC<NameOptions> = ({ children, stroke }) =>
   characters(children).map((character, index) => {
-    const blank = typeof character === 'string' && !character.trim();
+    if (typeof character !== 'string') return character;
+
+    const blank = !character.trim();
     const style: CharacterStyle | undefined = blank
       ? undefined
       : { '--index': index };

@@ -35,6 +35,7 @@ import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Progress } from '@site/src/components/Progress';
 import { Star } from '@site/src/components/Star';
+import { setLabel, useStats } from '@site/src/components/Stats';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP, Observer);
@@ -63,6 +64,7 @@ type Group = {
   slides: Slide[];
 };
 
+const FALLBACK_DOWNLOADS = '600 milhões';
 const STEP_LOCK = 0.6;
 const TOLERANCE = 10;
 const TITLE_IN = 0.32;
@@ -106,6 +108,16 @@ const SHADOWS: Record<Theme, string> = {
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
+const Downloads = (): ReactNode => {
+  const stats = useStats();
+
+  const downloads = stats
+    ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
+    : FALLBACK_DOWNLOADS;
+
+  return <Name stroke>{`Mais de ${downloads}`}</Name>;
+};
+
 const groups: Group[] = [
   {
     label: 'Home',
@@ -115,7 +127,7 @@ const groups: Group[] = [
         alt: 'Pelúcia do GitHub',
         name: 'Open Source',
         Icon: TbBrandOpenSource,
-        title: ['Mais de 600 milhões', 'de downloads anuais', '.'],
+        title: [<Downloads />, 'de downloads anuais', '.'],
         text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
         texture: velvet,
         Action: PartnersAction,
