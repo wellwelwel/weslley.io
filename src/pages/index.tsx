@@ -129,6 +129,16 @@ const groups: Group[] = [
     label: 'Home',
     slides: [
       {
+        src: github,
+        alt: 'Pelúcia do GitHub',
+        name: 'Open Source',
+        Icon: TbBrandOpenSource,
+        title: [<Downloads />, 'de downloads anuais', '.'],
+        text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
+        texture: velvet,
+        Action: PartnersAction,
+      },
+      {
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
         name: 'Agenda',
@@ -140,16 +150,6 @@ const groups: Group[] = [
         align: 'left',
         frosted: true,
         Action: () => <Agenda />,
-      },
-      {
-        src: github,
-        alt: 'Pelúcia do GitHub',
-        name: 'Open Source',
-        Icon: TbBrandOpenSource,
-        title: [<Downloads />, 'de downloads anuais', '.'],
-        text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
-        texture: velvet,
-        Action: PartnersAction,
       },
       {
         src: mvp,
