@@ -68,7 +68,14 @@ type Calendar = {
 type CardOptions = {
   slot: Slot;
   place: number;
+  /** Frosted glass only reaches the cards a viewer can actually see. */
+  frosted: boolean;
   onFocus: () => void;
+};
+
+type Stage = {
+  focus: number;
+  from: number;
 };
 
 const AVATAR = '/img/avatar.png';
@@ -448,6 +455,11 @@ const calendar = (date: string): Calendar => {
 
 const DAY = 86_400_000;
 
+/** Matches the card's own `duration-500`, so a leaving card stays dressed. */
+const SETTLE = 500;
+
+const SEEN = 1;
+
 const PITCH = { inset: 32, least: 72, daily: 4, most: 128 };
 
 const labels = slots.map(({ date }) => calendar(date));
@@ -478,6 +490,9 @@ const upcomingIndex = (): number => {
 
 const anchor = (index: number): number =>
   stations[Math.max(0, index - 1)]! - PITCH.inset;
+
+const placeOf = (index: number, at: number): number =>
+  (index - at + slots.length) % slots.length;
 
 const useCopy = (): Copier => {
   const [copied, setCopied] = useState(false);
@@ -512,7 +527,7 @@ const Swap = ({ copied, className }: SwapOptions): ReactNode => (
   </span>
 );
 
-const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
+const Card = ({ slot, place, frosted, onFocus }: CardOptions): ReactNode => {
   const [copiedCoupon, copyCoupon] = useCopy();
   const [copiedAddress, copyAddress] = useCopy();
   const [origin] = useState(place);
@@ -528,7 +543,8 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
       aria-hidden={!center}
       onClick={clickable ? onFocus : undefined}
       className={clsx(
-        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3 cramped:gap-1 cramped:p-2.5',
+        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3 cramped:gap-1 cramped:p-2.5',
+        frosted && 'backdrop-blur-xl',
         origin < 2 && 'animate-fade [animation-delay:500ms]',
         arrange(place)
       )}
@@ -668,7 +684,11 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
 };
 
 export const Agenda = memo((): ReactNode => {
-  const [focus, setFocus] = useState(upcomingIndex);
+  const [{ focus, from }, setStage] = useState<Stage>(() => {
+    const start = upcomingIndex();
+
+    return { focus: start, from: start };
+  });
   const track = useRef<HTMLElement | null>(null);
   const deck = useRef<HTMLDivElement | null>(null);
   const swiped = useRef(false);
@@ -690,9 +710,15 @@ export const Agenda = memo((): ReactNode => {
     track.current = node;
   }, []);
 
+  const focusOn = (index: number): void =>
+    setStage(({ focus: current }) => ({ focus: index, from: current }));
+
   const step = (delta: number): void => {
     navigator.vibrate?.(10);
-    setFocus((current) => (current + delta + slots.length) % slots.length);
+    setStage(({ focus: current }) => ({
+      focus: (current + delta + slots.length) % slots.length,
+      from: current,
+    }));
   };
 
   const swipe = (delta: number): void => {
@@ -721,6 +747,17 @@ export const Agenda = memo((): ReactNode => {
   useEffect(() => {
     track.current?.scrollTo({ left: anchor(focus), behavior: 'smooth' });
   }, [focus]);
+
+  useEffect(() => {
+    if (from === focus) return;
+
+    const timer = window.setTimeout(
+      () => setStage((stage) => ({ focus: stage.focus, from: stage.focus })),
+      SETTLE
+    );
+
+    return () => window.clearTimeout(timer);
+  }, [from, focus]);
 
   return (
     <div
@@ -780,8 +817,11 @@ export const Agenda = memo((): ReactNode => {
           <Card
             key={`${slot.date}:${slot.title}`}
             slot={slot}
-            place={(index - focus + slots.length) % slots.length}
-            onFocus={() => setFocus(index)}
+            place={placeOf(index, focus)}
+            frosted={
+              placeOf(index, focus) <= SEEN || placeOf(index, from) <= SEEN
+            }
+            onFocus={() => focusOn(index)}
           />
         ))}
       </div>
@@ -801,7 +841,7 @@ export const Agenda = memo((): ReactNode => {
               <button
                 key={`${slot.date}:${slot.title}`}
                 type='button'
-                onClick={() => setFocus(index)}
+                onClick={() => focusOn(index)}
                 aria-current={index === focus ? 'date' : undefined}
                 aria-label={`${labels[index].brief}: ${slot.event}`}
                 style={{ left: stations[index] }}

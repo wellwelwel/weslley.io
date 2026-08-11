@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
+import { memo, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 
@@ -11,7 +11,7 @@ export type ProgressOptions = {
 
 const FILL_IN = 0.5;
 
-export const Progress = ({ value, color }: ProgressOptions): ReactNode => {
+export const Progress = memo(({ value, color }: ProgressOptions): ReactNode => {
   const fill = useRef<HTMLDivElement>(null);
   const placed = useRef(false);
 
@@ -42,4 +42,4 @@ export const Progress = ({ value, color }: ProgressOptions): ReactNode => {
       />
     </div>
   );
-};
+});

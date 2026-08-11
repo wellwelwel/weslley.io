@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { memo } from 'react';
 
 type HillOptions = {
   center: number;
@@ -8,7 +9,7 @@ type HillOptions = {
 const WIDTH = 16;
 const HEIGHT = 8;
 
-export const Hill = ({ center, tone }: HillOptions): ReactNode => (
+export const Hill = memo(({ center, tone }: HillOptions): ReactNode => (
   <svg
     aria-hidden='true'
     viewBox='0 0 64 32'
@@ -19,4 +20,4 @@ export const Hill = ({ center, tone }: HillOptions): ReactNode => (
   >
     <path d='M0 32C15 32 22 0 32 0s17 32 32 32Z' />
   </svg>
-);
+));

@@ -1,5 +1,5 @@
-import type { CSSProperties, FC, MouseEvent, ReactNode } from 'react';
-import { Children } from 'react';
+import type { MouseEvent, ReactNode } from 'react';
+import { Children, memo, useMemo } from 'react';
 import gsap from 'gsap';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
@@ -7,8 +7,6 @@ export type NameOptions = {
   children: ReactNode;
   stroke?: boolean;
 };
-
-type CharacterStyle = CSSProperties & { '--index': number };
 
 const STROKE_WIDTHS = {
   full: { peak: '2.5px', settle: '1.25px', rest: '0px' },
@@ -33,22 +31,21 @@ const pop = ({ currentTarget }: MouseEvent<HTMLSpanElement>) => {
     .to(currentTarget, { webkitTextStrokeWidth: width.rest });
 };
 
-export const Name: FC<NameOptions> = ({ children, stroke }) =>
-  characters(children).map((character, index) => {
+export const Name = memo(({ children, stroke }: NameOptions): ReactNode => {
+  const letters = useMemo(() => characters(children), [children]);
+
+  return letters.map((character, index) => {
     if (typeof character !== 'string') return character;
 
     const blank = !character.trim();
-    const style: CharacterStyle | undefined = blank
-      ? undefined
-      : { '--index': index };
 
     return (
       <span
         key={`name:${index}`}
-        style={style}
         onMouseEnter={stroke && !blank ? pop : undefined}
       >
         {character}
       </span>
     );
   });
+});

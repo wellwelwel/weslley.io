@@ -32,6 +32,16 @@ const config: Config = {
     experimental_vcs: true,
   },
   trailingSlash: true,
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://wellwelwel.github.io',
+        crossorigin: 'anonymous',
+      },
+    },
+  ],
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',

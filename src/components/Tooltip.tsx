@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import { useLayoutEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 type TooltipOptions = {
   label: string;
@@ -19,7 +19,7 @@ const ARROW =
 export const Tooltip = ({ label, detail }: TooltipOptions): ReactNode => {
   const bubble = useRef<HTMLSpanElement>(null);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     const node = bubble.current;
     const group = node?.closest('.group');
     if (!node || !group) return;

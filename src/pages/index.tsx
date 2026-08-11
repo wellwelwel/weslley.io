@@ -304,6 +304,8 @@ const starts = groups.map((_, index) =>
 
 const groupOf = groups.flatMap((group, index) => group.slides.map(() => index));
 
+const fallbackBackgrounds = [defaultBackground];
+
 const customBackgrounds = [
   ...new Set(slides.flatMap(({ background }) => background ?? [])),
 ];
@@ -500,7 +502,7 @@ export default (): ReactNode => {
         )}
       >
         <Backdrop
-          sources={[defaultBackground]}
+          sources={fallbackBackgrounds}
           active={background ?? defaultBackground}
           className={`fixed ${BLURRED}`}
         />

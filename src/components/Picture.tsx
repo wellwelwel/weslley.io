@@ -1,4 +1,5 @@
-import type { FC, ImgHTMLAttributes } from 'react';
+import type { ImgHTMLAttributes, ReactNode } from 'react';
+import { memo } from 'react';
 import variants from '@site/src/helpers/variants.json';
 
 type Entry = {
@@ -24,23 +25,25 @@ const sourceSet = (src: string, entry: Entry, format: string): string => {
     .join(', ');
 };
 
-export const Picture: FC<PictureOptions> = ({ src, sizes, ...image }) => {
-  const entry = catalog[src];
+export const Picture = memo(
+  ({ src, sizes, ...image }: PictureOptions): ReactNode => {
+    const entry = catalog[src];
 
-  if (!entry) return <img src={src} {...image} />;
+    if (!entry) return <img src={src} {...image} />;
 
-  return (
-    <picture className='contents'>
-      {FORMATS.map((format) => (
-        <source
-          key={format}
-          hidden
-          type={`image/${format}`}
-          srcSet={sourceSet(src, entry, format)}
-          sizes={sizes}
-        />
-      ))}
-      <img src={src} {...image} />
-    </picture>
-  );
-};
+    return (
+      <picture className='contents'>
+        {FORMATS.map((format) => (
+          <source
+            key={format}
+            hidden
+            type={`image/${format}`}
+            srcSet={sourceSet(src, entry, format)}
+            sizes={sizes}
+          />
+        ))}
+        <img src={src} {...image} />
+      </picture>
+    );
+  }
+);

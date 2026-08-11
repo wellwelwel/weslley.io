@@ -1,6 +1,6 @@
 import type { ReactNode } from 'react';
 import type { IconType } from 'react-icons';
-import { useEffect, useId, useRef } from 'react';
+import { memo, useEffect, useId, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
@@ -63,260 +63,265 @@ const markerClass =
 
 const avatar = '/img/avatar.png';
 
-export const Header = ({
-  sections,
-  steps,
-  active,
-  menu,
-  partners,
-  onMenu,
-  onNavigate,
-  onHome,
-  onPartners,
-}: HeaderOptions): ReactNode => {
-  const actions = useRef<HTMLDivElement>(null);
-  const panel = useRef<HTMLDivElement>(null);
-  const trigger = useRef<HTMLButtonElement>(null);
-  const label = useRef<HTMLSpanElement>(null);
-  const labelled = useRef(false);
-  const placed = useRef(false);
-  const panelId = useId();
+export const Header = memo(
+  ({
+    sections,
+    steps,
+    active,
+    menu,
+    partners,
+    onMenu,
+    onNavigate,
+    onHome,
+    onPartners,
+  }: HeaderOptions): ReactNode => {
+    const actions = useRef<HTMLDivElement>(null);
+    const panel = useRef<HTMLDivElement>(null);
+    const trigger = useRef<HTMLButtonElement>(null);
+    const label = useRef<HTMLSpanElement>(null);
+    const labelled = useRef(false);
+    const placed = useRef(false);
+    const panelId = useId();
 
-  useEffect(() => {
-    if (!menu) return;
+    useEffect(() => {
+      if (!menu) return;
 
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key !== 'Escape') return;
+      const onKeyDown = (event: KeyboardEvent) => {
+        if (event.key !== 'Escape') return;
 
-      onMenu(false);
-      trigger.current?.focus();
-    };
+        onMenu(false);
+        trigger.current?.focus();
+      };
 
-    const onPointerDown = ({ target }: PointerEvent) => {
-      if (target instanceof Node && actions.current?.contains(target)) return;
+      const onPointerDown = ({ target }: PointerEvent) => {
+        if (target instanceof Node && actions.current?.contains(target)) return;
 
-      onMenu(false);
-    };
+        onMenu(false);
+      };
 
-    window.addEventListener('keydown', onKeyDown);
-    window.addEventListener('pointerdown', onPointerDown);
+      window.addEventListener('keydown', onKeyDown);
+      window.addEventListener('pointerdown', onPointerDown);
 
-    return () => {
-      window.removeEventListener('keydown', onKeyDown);
-      window.removeEventListener('pointerdown', onPointerDown);
-    };
-  }, [menu, onMenu]);
+      return () => {
+        window.removeEventListener('keydown', onKeyDown);
+        window.removeEventListener('pointerdown', onPointerDown);
+      };
+    }, [menu, onMenu]);
 
-  useGSAP(
-    () => {
-      const marked = labelled.current;
-      const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+    useGSAP(
+      () => {
+        const marked = labelled.current;
+        const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
 
-      labelled.current = true;
+        labelled.current = true;
 
-      if (!marked) return;
+        if (!marked) return;
 
-      gsap.fromTo(
-        label.current,
-        { opacity: 0, y: travel.itemY },
-        { opacity: 1, y: 0, duration: CURRENT_IN, ease: 'power2.out' }
-      );
-    },
-    { dependencies: [active], revertOnUpdate: true }
-  );
-
-  useGSAP(
-    () => {
-      const animated = placed.current;
-      const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
-
-      placed.current = true;
-
-      if (!menu) {
-        gsap.to(panel.current, {
-          autoAlpha: 0,
-          y: -travel.exitY,
-          scale: travel.exitScale,
-          duration: animated ? PANEL_OUT : 0,
-          ease: 'power2.out',
-        });
-
-        return;
-      }
-
-      gsap
-        .timeline()
-        .fromTo(
-          panel.current,
-          { autoAlpha: 0, y: -travel.panelY, scale: travel.panelScale },
-          {
-            autoAlpha: 1,
-            y: 0,
-            scale: 1,
-            duration: PANEL_IN,
-            ease: 'power3.out',
-          }
-        )
-        .fromTo(
-          '[data-menu-item]',
-          { autoAlpha: 0, y: -travel.itemY },
-          {
-            autoAlpha: 1,
-            y: 0,
-            duration: ITEM_IN,
-            stagger: ITEM_STAGGER,
-            ease: 'power2.out',
-          },
-          ITEM_LEAD
+        gsap.fromTo(
+          label.current,
+          { opacity: 0, y: travel.itemY },
+          { opacity: 1, y: 0, duration: CURRENT_IN, ease: 'power2.out' }
         );
-    },
-    { dependencies: [menu], scope: panel }
-  );
+      },
+      { dependencies: [active], revertOnUpdate: true }
+    );
 
-  const closingMenu = (action: () => void) => () => {
-    onMenu(false);
-    action();
-  };
+    useGSAP(
+      () => {
+        const animated = placed.current;
+        const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
 
-  const hasPrevious = active > 0;
-  const hasNext = active < steps.length - 1;
-  const { name, Icon } = steps[active];
+        placed.current = true;
 
-  return (
-    <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
-      <button
-        type='button'
-        onClick={closingMenu(onHome)}
-        aria-label='Weslley Araújo, voltar ao início'
-        className='relative flex cursor-pointer appearance-none items-center gap-3 rounded-full border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-98'
-      >
-        <Picture
-          src={avatar}
-          alt=''
-          aria-hidden='true'
-          sizes='2.25rem'
-          draggable={false}
-          className='size-9 shrink-0 rounded-full'
-        />
-        <span className='hidden font-semibold tracking-tight whitespace-nowrap text-ink sm:inline'>
-          Weslley Araújo
-        </span>
-      </button>
+        if (!menu) {
+          gsap.to(panel.current, {
+            autoAlpha: 0,
+            y: -travel.exitY,
+            scale: travel.exitScale,
+            duration: animated ? PANEL_OUT : 0,
+            ease: 'power2.out',
+          });
 
-      <div className='absolute left-1/2 flex -translate-x-1/2 items-center gap-1'>
+          return;
+        }
+
+        gsap
+          .timeline()
+          .fromTo(
+            panel.current,
+            { autoAlpha: 0, y: -travel.panelY, scale: travel.panelScale },
+            {
+              autoAlpha: 1,
+              y: 0,
+              scale: 1,
+              duration: PANEL_IN,
+              ease: 'power3.out',
+            }
+          )
+          .fromTo(
+            '[data-menu-item]',
+            { autoAlpha: 0, y: -travel.itemY },
+            {
+              autoAlpha: 1,
+              y: 0,
+              duration: ITEM_IN,
+              stagger: ITEM_STAGGER,
+              ease: 'power2.out',
+            },
+            ITEM_LEAD
+          );
+      },
+      { dependencies: [menu], scope: panel }
+    );
+
+    const closingMenu = (action: () => void) => () => {
+      onMenu(false);
+      action();
+    };
+
+    const hasPrevious = active > 0;
+    const hasNext = active < steps.length - 1;
+    const { name, Icon } = steps[active];
+
+    return (
+      <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
         <button
           type='button'
-          onClick={() => onNavigate(active - 1)}
-          disabled={!hasPrevious}
-          aria-label='Slide anterior'
-          className={clsx(
-            arrowClass,
-            hasPrevious
-              ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
-              : 'cursor-not-allowed text-ink/15'
-          )}
+          onClick={closingMenu(onHome)}
+          aria-label='Weslley Araújo, voltar ao início'
+          className='relative flex cursor-pointer appearance-none items-center gap-3 rounded-full border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-98'
         >
-          <ChevronLeft aria-hidden='true' />
-        </button>
-
-        <span
-          aria-live='polite'
-          className='grid justify-items-center text-sm font-semibold tracking-tight text-ink/70 whitespace-nowrap select-none'
-        >
-          {steps.map((step) => (
-            <span
-              key={step.name}
-              aria-hidden='true'
-              className={clsx(markerClass, 'invisible hidden steps:flex')}
-            >
-              <step.Icon />
-              {step.name}
-            </span>
-          ))}
-
-          <span ref={label} className={clsx(markerClass, 'flex')}>
-            <Icon aria-hidden='true' className='max-[22rem]:hidden' />
-            {name}
-          </span>
-        </span>
-
-        <button
-          type='button'
-          onClick={() => onNavigate(active + 1)}
-          disabled={!hasNext}
-          aria-label='Próximo slide'
-          className={clsx(
-            arrowClass,
-            hasNext
-              ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
-              : 'cursor-not-allowed text-ink/15'
-          )}
-        >
-          <ChevronRight aria-hidden='true' />
-        </button>
-      </div>
-
-      <div ref={actions} className='relative'>
-        <button
-          ref={trigger}
-          type='button'
-          onClick={() => onMenu(!menu)}
-          aria-label='Menu'
-          aria-expanded={menu}
-          aria-controls={panelId}
-          className={clsx(
-            '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
-            menu ? 'bg-ink/5' : 'bg-transparent'
-          )}
-        >
-          <span
+          <Picture
+            src={avatar}
+            alt=''
             aria-hidden='true'
-            className='relative grid size-5 place-items-center'
-          >
-            <Menu
-              className={clsx(
-                iconClass,
-                menu
-                  ? 'scale-25 opacity-0 blur-xs'
-                  : 'scale-100 opacity-100 blur-none'
-              )}
-            />
-            <X
-              className={clsx(
-                iconClass,
-                menu
-                  ? 'scale-100 opacity-100 blur-none'
-                  : 'scale-25 opacity-0 blur-xs'
-              )}
-            />
+            sizes='2.25rem'
+            draggable={false}
+            className='size-9 shrink-0 rounded-full'
+          />
+          <span className='hidden font-semibold tracking-tight whitespace-nowrap text-ink sm:inline'>
+            Weslley Araújo
           </span>
         </button>
 
-        <div
-          ref={panel}
-          id={panelId}
-          inert={!menu}
-          className='invisible absolute top-full right-0 mt-3 w-max origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_var(--shade-soft),0_14px_28px_-12px_var(--shade-deep)]'
-        >
-          <nav className='flex flex-col'>
-            {sections.map(({ label, onSelect }) => (
-              <button
-                key={label}
-                data-menu-item
-                type='button'
-                onClick={closingMenu(onSelect)}
-                className={itemClass}
-              >
-                {label}
-              </button>
-            ))}
-          </nav>
+        <div className='absolute left-1/2 flex -translate-x-1/2 items-center gap-1'>
+          <button
+            type='button'
+            onClick={() => onNavigate(active - 1)}
+            disabled={!hasPrevious}
+            aria-label='Slide anterior'
+            className={clsx(
+              arrowClass,
+              hasPrevious
+                ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
+                : 'cursor-not-allowed text-ink/15'
+            )}
+          >
+            <ChevronLeft aria-hidden='true' />
+          </button>
 
-          <div data-menu-item className='mt-2 flex justify-center'>
-            <PartnersTrigger open={partners} onOpen={closingMenu(onPartners)} />
+          <span
+            aria-live='polite'
+            className='grid justify-items-center text-sm font-semibold tracking-tight text-ink/70 whitespace-nowrap select-none'
+          >
+            {steps.map((step) => (
+              <span
+                key={step.name}
+                aria-hidden='true'
+                className={clsx(markerClass, 'invisible hidden steps:flex')}
+              >
+                <step.Icon />
+                {step.name}
+              </span>
+            ))}
+
+            <span ref={label} className={clsx(markerClass, 'flex')}>
+              <Icon aria-hidden='true' className='max-[22rem]:hidden' />
+              {name}
+            </span>
+          </span>
+
+          <button
+            type='button'
+            onClick={() => onNavigate(active + 1)}
+            disabled={!hasNext}
+            aria-label='Próximo slide'
+            className={clsx(
+              arrowClass,
+              hasNext
+                ? 'cursor-pointer text-ink/45 hover:text-ink active:scale-90'
+                : 'cursor-not-allowed text-ink/15'
+            )}
+          >
+            <ChevronRight aria-hidden='true' />
+          </button>
+        </div>
+
+        <div ref={actions} className='relative'>
+          <button
+            ref={trigger}
+            type='button'
+            onClick={() => onMenu(!menu)}
+            aria-label='Menu'
+            aria-expanded={menu}
+            aria-controls={panelId}
+            className={clsx(
+              '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
+              menu ? 'bg-ink/5' : 'bg-transparent'
+            )}
+          >
+            <span
+              aria-hidden='true'
+              className='relative grid size-5 place-items-center'
+            >
+              <Menu
+                className={clsx(
+                  iconClass,
+                  menu
+                    ? 'scale-25 opacity-0 blur-xs'
+                    : 'scale-100 opacity-100 blur-none'
+                )}
+              />
+              <X
+                className={clsx(
+                  iconClass,
+                  menu
+                    ? 'scale-100 opacity-100 blur-none'
+                    : 'scale-25 opacity-0 blur-xs'
+                )}
+              />
+            </span>
+          </button>
+
+          <div
+            ref={panel}
+            id={panelId}
+            inert={!menu}
+            className='invisible absolute top-full right-0 mt-3 w-max origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_var(--shade-soft),0_14px_28px_-12px_var(--shade-deep)]'
+          >
+            <nav className='flex flex-col'>
+              {sections.map(({ label, onSelect }) => (
+                <button
+                  key={label}
+                  data-menu-item
+                  type='button'
+                  onClick={closingMenu(onSelect)}
+                  className={itemClass}
+                >
+                  {label}
+                </button>
+              ))}
+            </nav>
+
+            <div data-menu-item className='mt-2 flex justify-center'>
+              <PartnersTrigger
+                open={partners}
+                onOpen={closingMenu(onPartners)}
+              />
+            </div>
           </div>
         </div>
-      </div>
-    </header>
-  );
-};
+      </header>
+    );
+  }
+);
