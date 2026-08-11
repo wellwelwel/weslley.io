@@ -32,6 +32,7 @@
       "lossless": true,
       "files": [
         "src/assets/img/avatar.png",
+        "src/assets/img/codecon3.png",
         "src/assets/img/dcl.png",
         "src/assets/img/devfest-cerrado.png",
         "src/assets/img/devreferencias.png",

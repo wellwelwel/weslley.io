@@ -16,9 +16,11 @@ import {
   TicketPercent,
 } from 'lucide-react';
 import { BiLinkExternal } from 'react-icons/bi';
+import { FaRegHeart } from 'react-icons/fa';
 import { RiVideoOnAiLine } from 'react-icons/ri';
 import { TbMicrophone2 } from 'react-icons/tb';
 import { Picture } from '@site/src/components/Picture';
+import { write } from '@site/src/helpers/clipboard';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(Observer);
@@ -340,6 +342,23 @@ const slots: Slot[] = [
     role: 'Keynote',
     tone: '#7a77ff',
   },
+  {
+    date: '2026-11-14',
+    event: 'Codecon Select Experience',
+    logo: '/img/codecon3.png',
+    url: 'https://codecon.dev/select',
+    coupon: {
+      code: 'WELLWELWEL',
+      url: 'https://eventos.codecon.dev/eventos/select-experience-26?c=WELLWELWEL',
+      off: 10,
+    },
+    venue: 'São Paulo, SP',
+    address: 'STATE INNOVATION CENTER, SÃO PAULO - SP',
+    title:
+      'Evento exclusivo voltado para profissionais em cargos sênior ou superiores.',
+    role: 'Embaixador',
+    tone: '#7a77ff',
+  },
 ];
 
 const TICKER = {
@@ -387,6 +406,7 @@ const ROLES: Record<string, IconType | LucideIcon> = {
   Keynote: Star,
   Mentoria: GraduationCap,
   Palestra: TbMicrophone2,
+  Embaixador: FaRegHeart,
   'Palestra (Live)': RiVideoOnAiLine,
 };
 
@@ -397,7 +417,7 @@ const arrange = (place: number): string => {
   if (place === 0) return 'z-20';
 
   if (place === 1)
-    return 'z-10 translate-x-(--spread) scale-90 opacity-55 hover:opacity-75 cursor-pointer max-sm:[mask-image:linear-gradient(to_right,black,transparent_calc(100vw_-_var(--spread)_-_5.25rem))]';
+    return 'z-10 translate-x-(--spread) scale-90 opacity-55 hover:opacity-75 cursor-pointer max-sm:peek squat:opacity-70';
 
   return 'z-0 translate-x-[calc(var(--spread)+6rem)] scale-75 opacity-0 invisible pointer-events-none';
 };
@@ -466,8 +486,10 @@ const useCopy = (): Copier => {
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const copy = (value: string): void => {
-    navigator.vibrate?.(10);
-    navigator.clipboard?.writeText(value).then(() => {
+    write(value).then((done) => {
+      if (!done) return;
+
+      navigator.vibrate?.(10);
       setCopied(true);
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setCopied(false), 1600);
@@ -506,7 +528,7 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
       aria-hidden={!center}
       onClick={clickable ? onFocus : undefined}
       className={clsx(
-        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-2 short:rounded-[1.25rem] short:p-3.5',
+        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3',
         origin < 2 && 'animate-fade [animation-delay:500ms]',
         arrange(place)
       )}
@@ -627,7 +649,7 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
                 : 'Detalhes da palestra'
             }
             className={clsx(
-              'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3.5 short:bottom-3.5',
+              'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3 short:bottom-3',
               !center && 'pointer-events-none opacity-0'
             )}
           >
@@ -703,7 +725,7 @@ export const Agenda = memo((): ReactNode => {
   return (
     <div
       style={style}
-      className='flex flex-col items-start gap-3 [--reach:calc(var(--spread)-0.9rem)] [--spread:15rem] short:gap-2 short-wide:[--spread:4rem] lg:[--spread:3.5rem] xl:[--spread:9.5rem] min-[90rem]:[--spread:15rem]'
+      className='flex flex-col items-start gap-3 [--reach:calc(var(--spread)-0.9rem)] [--spread:15rem] short:gap-1.5 short-wide:[--spread:4rem] lg:[--spread:3.5rem] xl:[--spread:9.5rem] min-[90rem]:[--spread:15rem]'
     >
       <div className='flex w-full animate-ticker items-center justify-between gap-3 [animation-delay:420ms]'>
         <time
@@ -764,14 +786,17 @@ export const Agenda = memo((): ReactNode => {
         ))}
       </div>
 
-      <div className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:hidden squat:hidden'>
+      <div className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:mt-1 short:mb-0'>
         <nav
           ref={attach}
           data-scroll=''
           aria-label='Linha do tempo dos eventos'
           className='w-full soften touch-pan-x contain-inline-size overflow-x-auto overflow-y-hidden overscroll-x-contain text-shadow-sm text-shadow-paper/50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
         >
-          <div className='relative h-14 sm:h-16.5' style={{ width: extent }}>
+          <div
+            className='relative h-14 short:h-8.5 sm:h-16.5'
+            style={{ width: extent }}
+          >
             {slots.map((slot, index) => (
               <button
                 key={`${slot.date}:${slot.title}`}
@@ -781,7 +806,7 @@ export const Agenda = memo((): ReactNode => {
                 aria-label={`${labels[index].brief}: ${slot.event}`}
                 style={{ left: stations[index] }}
                 className={clsx(
-                  'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none flex-col items-center gap-1 border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+                  'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none flex-col items-center gap-1 border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 short:gap-0.5',
                   index === focus ? 'scale-105' : 'opacity-55 hover:opacity-75'
                 )}
               >
@@ -793,16 +818,19 @@ export const Agenda = memo((): ReactNode => {
                 >
                   {labels[index].brief}
                 </span>
-                <span aria-hidden='true' className='h-2 w-px bg-ink/25' />
-                <span className='flex size-7.5 items-center justify-center sm:size-10'>
+                <span
+                  aria-hidden='true'
+                  className='h-2 w-px bg-ink/25 short:h-1'
+                />
+                <span className='flex size-7.5 items-center justify-center short:size-4 sm:size-10'>
                   <Picture
                     src={slot.logo ?? AVATAR}
                     alt=''
-                    sizes='(min-width: 40rem) 2rem, 1.5rem'
+                    sizes='(max-height: 36rem) 1rem, (min-width: 40rem) 2rem, 1.5rem'
                     loading='lazy'
                     decoding='async'
                     draggable={false}
-                    className='size-6 object-contain sm:size-8'
+                    className='size-6 object-contain short:size-3.5 sm:size-8'
                   />
                 </span>
               </button>

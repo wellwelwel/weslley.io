@@ -33,7 +33,8 @@ export type Trigger = {
 };
 
 type PartnersOptions = Trigger & {
-  label?: string | null;
+  label?: string;
+  social?: string | null;
   onRestore?: () => void;
 };
 
@@ -76,10 +77,7 @@ const SUBMIT_COOLDOWN_MS = 8000;
 const FALLBACK_DOWNLOADS = '600 milhões';
 const TRIGGER_LABEL = 'Bora trabalhar juntos';
 
-const TRIGGER_LABELS = [
-  TRIGGER_LABEL,
-  ...Object.values(socialLinks).map(({ name }) => name),
-];
+const SOCIAL_LABELS = Object.values(socialLinks).map(({ name }) => name);
 
 const rollingPlace = (text: string, { current, previous }: RollingLabel) => {
   if (text === current) return 'translate-y-0 opacity-100';
@@ -598,10 +596,11 @@ export const PartnersDialog = ({
 export const PartnersTrigger = ({
   open,
   onOpen,
-  label,
+  label = TRIGGER_LABEL,
+  social,
   onRestore,
 }: PartnersOptions): ReactNode => {
-  const current = label ?? TRIGGER_LABEL;
+  const current = social ?? label;
   const [rolling, setRolling] = useState<RollingLabel>({
     current,
     previous: current,
@@ -618,11 +617,11 @@ export const PartnersTrigger = ({
       onFocus={onRestore}
       aria-haspopup='dialog'
       aria-expanded={open}
-      aria-label={TRIGGER_LABEL}
-      className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold text-paper shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+      aria-label={label}
+      className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold text-paper max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
     >
       <span aria-hidden='true' className='grid overflow-hidden leading-6'>
-        {TRIGGER_LABELS.map((text) => (
+        {[label, ...SOCIAL_LABELS].map((text) => (
           <span
             key={text}
             className={clsx(
@@ -635,7 +634,7 @@ export const PartnersTrigger = ({
         ))}
       </span>
 
-      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-white'>
+      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-white max-sm:size-7'>
         <span className='relative grid size-4 place-items-center overflow-hidden'>
           <IoRocketSharp
             className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
@@ -659,7 +658,7 @@ export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
       <PartnersTrigger
         open={open}
         onOpen={onOpen}
-        label={social}
+        social={social}
         onRestore={() => setSocial(null)}
       />
       <Socials onHover={setSocial} />

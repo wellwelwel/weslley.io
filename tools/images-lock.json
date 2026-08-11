@@ -35,6 +35,22 @@
       "src/assets/img/badges/mvp-2026-256.e49ad043.webp"
     ]
   },
+  "src/assets/img/codecon3.png": {
+    "hash": "ceb071728b53a9442a717fb6f48d549feca1ca12d8c40b3f75f59ecd9ab62035",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
+    "variants": [
+      "src/assets/img/codecon3-48.b7ba57d4.avif",
+      "src/assets/img/codecon3-64.b7ba57d4.avif",
+      "src/assets/img/codecon3-72.b7ba57d4.avif",
+      "src/assets/img/codecon3-96.b7ba57d4.avif",
+      "src/assets/img/codecon3-108.b7ba57d4.avif",
+      "src/assets/img/codecon3-48.b7ba57d4.webp",
+      "src/assets/img/codecon3-64.b7ba57d4.webp",
+      "src/assets/img/codecon3-72.b7ba57d4.webp",
+      "src/assets/img/codecon3-96.b7ba57d4.webp",
+      "src/assets/img/codecon3-108.b7ba57d4.webp"
+    ]
+  },
   "src/assets/img/dcl.png": {
     "hash": "955e91fbd4a8708f1c4827672002c7f143f5efd75b456f2426a1e2fd1b292d2b",
     "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",

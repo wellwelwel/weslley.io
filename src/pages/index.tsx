@@ -19,7 +19,11 @@ import { Badges } from '@site/src/components/Badges';
 import { Header } from '@site/src/components/Header';
 import { Hill } from '@site/src/components/Hill';
 import { Name } from '@site/src/components/Name';
-import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
+import {
+  PartnersAction,
+  PartnersDialog,
+  PartnersTrigger,
+} from '@site/src/components/Partners';
 import { Picture } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
 import { Star } from '@site/src/components/Star';
@@ -47,7 +51,10 @@ type Slide = {
   theme?: Theme;
   align?: 'left';
   frosted?: boolean;
-  Action?: SlideAction;
+  actions?: {
+    stage?: SlideAction;
+    cta?: SlideAction;
+  };
 };
 
 type Group = {
@@ -192,21 +199,30 @@ const groups: Group[] = [
         hill: '#a3b6c9',
         text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
         texture: velvet,
-        Action: PartnersAction,
+        actions: { stage: PartnersAction },
       },
       {
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
         name: 'Agenda',
         Icon: IoIosCalendar,
-        title: ['Próximos', 'eventos', '.'],
+        title: ['Onde me', 'encontrar', '.'],
         hill: pink,
         color: '#000000aa',
         background: defaultBackground,
         theme: 'dark',
         align: 'left',
         frosted: true,
-        Action: () => <Agenda />,
+        actions: {
+          stage: () => <Agenda />,
+          cta: ({ open, onOpen }) => (
+            <PartnersTrigger
+              open={open}
+              onOpen={onOpen}
+              label='Me convide para o seu evento'
+            />
+          ),
+        },
       },
       {
         src: mvp,
@@ -217,7 +233,7 @@ const groups: Group[] = [
         hill: '#2d86ff',
         text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
         texture: velvet,
-        Action: Badges,
+        actions: { stage: Badges },
       },
     ],
   },
@@ -251,7 +267,9 @@ const groups: Group[] = [
         color: '#00a7ff66',
         mark: '#f0f9ff',
         hill: white,
-        Action: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
+        actions: {
+          stage: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
+        },
       },
       {
         src: poku,
@@ -264,7 +282,9 @@ const groups: Group[] = [
         color: '#56d0ff2b',
         mark: pink,
         hill: '#fdff00',
-        Action: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+        actions: {
+          stage: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+        },
       },
     ],
   },
@@ -309,7 +329,7 @@ export default (): ReactNode => {
       : null;
   const focus = preview ?? active;
   const {
-    Action,
+    actions,
     background,
     texture,
     color,
@@ -319,7 +339,9 @@ export default (): ReactNode => {
     align,
     frosted,
   } = slides[active];
+  const { stage: Stage, cta: Cta } = actions ?? {};
   const [titleLead, titleTail, titleMark] = slides[active].title;
+  const flow = align === 'left' && 'max-sm:inline-block';
 
   const show = useCallback((index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -526,12 +548,12 @@ export default (): ReactNode => {
           />
 
           <main className='relative min-h-0 flex-1 overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
-            <div className='relative flex h-full flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] sm:px-8 lg:px-14'>
+            <div className='relative flex h-full flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-2 sm:px-8 lg:px-14'>
               <div
                 className={clsx(
                   'mt-auto',
                   align === 'left'
-                    ? 'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-end short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10'
+                    ? 'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-center short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10'
                     : 'text-center'
                 )}
               >
@@ -544,13 +566,16 @@ export default (): ReactNode => {
                   >
                     <span
                       key={`lead:${active}`}
-                      className='block animate-title'
+                      className={clsx('block animate-title', flow)}
                     >
                       <Name stroke>{titleLead}</Name>
-                    </span>
+                    </span>{' '}
                     <span
                       key={`tail:${active}`}
-                      className='block animate-title [animation-delay:50ms]'
+                      className={clsx(
+                        'block animate-title [animation-delay:50ms]',
+                        flow
+                      )}
                     >
                       <Name stroke>{titleTail}</Name>
                       {titleMark && (
@@ -573,26 +598,35 @@ export default (): ReactNode => {
                       {slides[active].text}
                     </p>
                   )}
+
+                  {Cta && (
+                    <div
+                      key={`cta:${active}`}
+                      className='mt-10 animate-slide max-sm:hidden'
+                    >
+                      <Cta open={partners} onOpen={openPartners} mark={mark} />
+                    </div>
+                  )}
                 </div>
 
-                {Action && (
+                {Stage && (
                   <div
-                    key={`action:${active}`}
+                    key={`stage:${active}`}
                     className={clsx(
                       align === 'left'
-                        ? 'mt-[clamp(0.875rem,3.5svh-0.5rem,2rem)] shrink-0 short-wide:mt-0 lg:mt-0'
+                        ? 'mt-[clamp(1.25rem,6svh-0.75rem,3rem)] shrink-0 short-wide:mt-0 lg:mt-0'
                         : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
                       !frosted && 'animate-slide'
                     )}
                   >
-                    <Action open={partners} onOpen={openPartners} mark={mark} />
+                    <Stage open={partners} onOpen={openPartners} mark={mark} />
                   </div>
                 )}
               </div>
 
               <div
                 ref={rail}
-                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
+                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] [--chip:clamp(2.75rem,24.4svh-3.5rem,13rem)] short:pt-1 short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14'
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
                   <div
@@ -619,7 +653,7 @@ export default (): ReactNode => {
                           onBlur={() => setHovered(null)}
                           aria-label={alt}
                           aria-current={index === active}
-                          className='group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
+                          className='group block min-w-0 max-w-(--chip) flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
                         >
                           <Picture
                             src={src}
@@ -628,7 +662,7 @@ export default (): ReactNode => {
                             decoding='async'
                             draggable={false}
                             className={clsx(
-                              'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] max-sm:block',
+                              'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
                               index === active ? 'scale-100' : 'scale-65'
                             )}
                           />

@@ -161,6 +161,25 @@
     calc(100% - 2rem) 100%;
 }
 
+@utility peek {
+  mask-image: linear-gradient(
+    to right,
+    black,
+    transparent calc(100vw - var(--spread) - 5.25rem)
+  );
+
+  /* The strip left over on a squat screen is too narrow for a fade that starts
+     at the card's own edge, so it holds longer and still lands before the
+     screen ends. */
+  @media (max-width: 40rem) and (max-height: 41rem) {
+    mask-image: linear-gradient(
+      to right,
+      black calc(100vw - var(--spread) - 8rem),
+      transparent calc(100vw - var(--spread) - 3.5rem)
+    );
+  }
+}
+
 body.clean {
   --ifm-heading-font-family: var(--font-sans);
 
