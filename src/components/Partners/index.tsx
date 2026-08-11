@@ -6,10 +6,7 @@ import gsap from 'gsap';
 import { Building2, Check, Mail, Send, User, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { IoRocketSharp } from 'react-icons/io5';
-import claude from '@site/src/assets/img/plush/claude.png';
-import me from '@site/src/assets/img/plush/me.png';
-import mvp from '@site/src/assets/img/plush/mvp.png';
-import velvet from '@site/src/assets/img/plush/velvet-texture.png';
+import { Picture } from '@site/src/components/Picture';
 import { Socials } from '@site/src/components/Socials';
 import { setLabel, useStats } from '@site/src/components/Stats';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
@@ -44,6 +41,11 @@ type RollingLabel = {
   current: string;
   previous: string;
 };
+
+const claude = '/img/plush/claude.png';
+const me = '/img/plush/me.png';
+const mvp = '/img/plush/mvp.png';
+const velvet = '/img/plush/velvet-texture.png';
 
 const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Podcast'] as const;
 
@@ -395,10 +397,11 @@ export const PartnersDialog = ({
         onClick={(event) => event.stopPropagation()}
         className='relative flex max-h-full w-full max-w-5xl flex-col overflow-hidden rounded-[2rem] border border-paper/50 bg-paper/90 shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none backdrop-blur-2xl'
       >
-        <img
+        <Picture
           src={velvet}
           alt=''
           aria-hidden='true'
+          sizes='(min-width: 64rem) 64rem, 100vw'
           decoding='async'
           draggable={false}
           className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
@@ -548,14 +551,13 @@ export const PartnersDialog = ({
               </form>
 
               <aside className='flex flex-col items-center justify-center gap-4 rounded-[1.125rem] border border-ink/10 bg-paper/70 px-[clamp(1.125rem,2.5vw,1.75rem)] py-[clamp(1.25rem,2.5vw,1.5rem)] text-center md:-mt-[clamp(1.5rem,4vw,3.5rem)] md:-mr-[clamp(1.5rem,4vw,3.5rem)] md:-mb-[clamp(1.5rem,4vw,3.5rem)] md:max-w-75 md:rounded-none md:border-0 md:border-l md:border-ink/10 md:py-[clamp(1.5rem,4vw,3.5rem)]'>
-                <img
+                <Picture
                   src={me}
                   alt='Pelúcia do Weslley Araújo'
-                  width={512}
-                  height={512}
+                  sizes='(min-width: 48rem) 13.75rem, 8rem'
                   decoding='async'
                   draggable={false}
-                  className='pointer-events-none w-32 shrink-0 object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.35)] md:w-55'
+                  className='pointer-events-none aspect-square w-32 shrink-0 object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.35)] md:w-55'
                 />
 
                 <p className='m-0 text-[0.8125rem]/[1.6] font-medium text-ink/80 text-pretty'>
@@ -572,10 +574,11 @@ export const PartnersDialog = ({
 
                 <div className='flex items-end justify-center gap-2'>
                   {BADGES.map(({ src, alt }) => (
-                    <img
+                    <Picture
                       key={alt}
                       src={src}
                       alt={alt}
+                      sizes='2.75rem'
                       decoding='async'
                       draggable={false}
                       className='pointer-events-none size-11 shrink-0 object-contain drop-shadow-[0_1px_1px_rgb(14_9_39_/_0.3)]'

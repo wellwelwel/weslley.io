@@ -5,8 +5,8 @@ import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
-import avatar from '@site/src/assets/img/avatar.png';
 import { PartnersTrigger } from '@site/src/components/Partners';
+import { Picture } from '@site/src/components/Picture';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 export type Section = {
@@ -60,6 +60,8 @@ const arrowClass =
 
 const markerClass =
   'col-start-1 row-start-1 items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0';
+
+const avatar = '/img/avatar.png';
 
 export const Header = ({
   sections,
@@ -182,10 +184,11 @@ export const Header = ({
         aria-label='Weslley Araújo, voltar ao início'
         className='relative flex cursor-pointer appearance-none items-center gap-3 rounded-full border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-98'
       >
-        <img
+        <Picture
           src={avatar}
           alt=''
           aria-hidden='true'
+          sizes='2.25rem'
           draggable={false}
           className='size-9 shrink-0 rounded-full'
         />

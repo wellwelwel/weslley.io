@@ -1,8 +1,6 @@
 import type { MouseEvent, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import mvp2025 from '@site/src/assets/img/badges/mvp-2025.png';
-import mvp2026 from '@site/src/assets/img/badges/mvp-2026.png';
-import claude from '@site/src/assets/img/plush/claude.png';
+import { Picture } from '@site/src/components/Picture';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { canHover } from '@site/src/helpers/hover';
 
@@ -13,6 +11,10 @@ type Badge = {
   radius: string;
   url?: string;
 };
+
+const claude = '/img/plush/claude.png';
+const mvp2025 = '/img/badges/mvp-2025.png';
+const mvp2026 = '/img/badges/mvp-2026.png';
 
 const MICROSOFT = 'Issued by Microsoft Most Valuable Professionals Program';
 
@@ -84,9 +86,10 @@ export const Badges = (): ReactNode => {
 
         const content = (
           <>
-            <img
+            <Picture
               src={src}
               alt=''
+              sizes='7rem'
               decoding='async'
               draggable={false}
               className='size-full object-contain drop-shadow-[0_1px_2px_rgb(14_9_39_/_0.3)] transition-[scale,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:-translate-y-0.5 group-hover:scale-110 group-focus-visible:scale-110 group-data-revealed:scale-110'

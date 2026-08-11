@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import { Picture } from '@site/src/components/Picture';
 
 export type BackdropOptions = {
   sources: string[];
@@ -16,11 +17,12 @@ export const Backdrop = ({
   opacity = 1,
 }: BackdropOptions): ReactNode =>
   sources.map((src) => (
-    <img
+    <Picture
       key={src}
       src={src}
       alt=''
       aria-hidden='true'
+      sizes='100vw'
       decoding='async'
       fetchPriority={src === active ? 'high' : 'low'}
       draggable={false}

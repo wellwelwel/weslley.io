@@ -13,23 +13,13 @@ import { GiBigWave } from 'react-icons/gi';
 import { IoIosCalendar } from 'react-icons/io';
 import { RiMicrosoftLine } from 'react-icons/ri';
 import { TbBrandMysql, TbBrandOpenSource, TbPig } from 'react-icons/tb';
-import github from '@site/src/assets/img/plush/github.png';
-import laguneBackground from '@site/src/assets/img/plush/lagune-bg.png';
-import lagune from '@site/src/assets/img/plush/lagune.png';
-import me from '@site/src/assets/img/plush/me.png';
-import mvp from '@site/src/assets/img/plush/mvp.png';
-import mysql from '@site/src/assets/img/plush/mysql.png';
-import mysql2Background from '@site/src/assets/img/plush/mysql2-bg.png';
-import pokuBackground from '@site/src/assets/img/plush/poku-bg.png';
-import poku from '@site/src/assets/img/plush/poku.png';
-import velvet from '@site/src/assets/img/plush/velvet-texture.png';
-import defaultBackground from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
 import { Agenda } from '@site/src/components/Agenda';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Badges } from '@site/src/components/Badges';
 import { Header } from '@site/src/components/Header';
 import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
+import { Picture } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
 import { Star } from '@site/src/components/Star';
 import { setLabel, useStats } from '@site/src/components/Stats';
@@ -67,6 +57,18 @@ type Group = {
   label: string;
   slides: Slide[];
 };
+
+const defaultBackground = '/img/talks/codecon-2025/moments/04.jpg';
+const github = '/img/plush/github.png';
+const lagune = '/img/plush/lagune.png';
+const laguneBackground = '/img/plush/lagune-bg.png';
+const me = '/img/plush/me.png';
+const mvp = '/img/plush/mvp.png';
+const mysql = '/img/plush/mysql.png';
+const mysql2Background = '/img/plush/mysql2-bg.png';
+const poku = '/img/plush/poku.png';
+const pokuBackground = '/img/plush/poku-bg.png';
+const velvet = '/img/plush/velvet-texture.png';
 
 const FALLBACK_DOWNLOADS = '600 milhões';
 const STEP_LOCK = 0.6;
@@ -539,9 +541,10 @@ export default (): ReactNode => {
                           aria-current={index === active}
                           className='group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
                         >
-                          <img
+                          <Picture
                             src={src}
                             alt=''
+                            sizes='(min-width: 40rem) 13rem, 25vw'
                             decoding='async'
                             draggable={false}
                             className={clsx(

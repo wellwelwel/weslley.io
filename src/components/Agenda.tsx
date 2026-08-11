@@ -17,6 +17,7 @@ import {
   TicketPercent,
   Users,
 } from 'lucide-react';
+import { Picture } from '@site/src/components/Picture';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(Observer);
@@ -448,9 +449,10 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
       )}
     >
       <div className='flex items-center gap-2.5'>
-        <img
+        <Picture
           src={slot.logo ?? AVATAR}
           alt=''
+          sizes='2.25rem'
           decoding='async'
           draggable={false}
           className='size-9 shrink-0 object-contain max-sm:size-8 short:size-8'
@@ -725,9 +727,10 @@ export const Agenda = memo((): ReactNode => {
               </span>
               <span aria-hidden='true' className='h-2 w-px bg-ink/25' />
               <span className='flex size-7.5 items-center justify-center sm:size-10'>
-                <img
+                <Picture
                   src={slot.logo ?? AVATAR}
                   alt=''
+                  sizes='(min-width: 40rem) 2rem, 1.5rem'
                   loading='lazy'
                   decoding='async'
                   draggable={false}
