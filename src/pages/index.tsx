@@ -71,6 +71,8 @@ const pokuBackground = '/img/plush/poku-bg.png';
 const velvet = '/img/plush/velvet-texture.png';
 
 const FALLBACK_DOWNLOADS = '600 milhões';
+const NUMBERS = Array.from({ length: 10 }, (_, i) => i);
+const ROLL = { duration: 0.3, stagger: 0.05, ease: 'none' };
 const STEP_LOCK = 0.6;
 const TOLERANCE = 10;
 const TITLE_IN = 0.32;
@@ -84,6 +86,7 @@ const TRAVEL = {
     titleStagger: 0.05,
     textX: 48,
     railY: 100,
+    roll: 1,
   },
   reduced: {
     titleY: 30,
@@ -91,6 +94,7 @@ const TRAVEL = {
     titleStagger: 0.05,
     textX: 26,
     railY: 55,
+    roll: 0.65,
   },
 };
 
@@ -114,6 +118,53 @@ const SHADOWS: Record<Theme, string> = {
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
+const Digit = ({ char, index }: { char: string; index: number }): ReactNode => {
+  const strip = useRef<HTMLSpanElement>(null);
+  const shown = useRef(Number(char));
+  const target = Number(char);
+
+  useGSAP(
+    () => {
+      if (!strip.current || shown.current === target) return;
+
+      const from = (target - shown.current) * 10 * motion().roll;
+
+      shown.current = target;
+      gsap.fromTo(
+        strip.current,
+        { yPercent: from },
+        {
+          yPercent: 0,
+          duration: ROLL.duration,
+          ease: ROLL.ease,
+          delay: index * ROLL.stagger,
+        }
+      );
+    },
+    { dependencies: [target] }
+  );
+
+  return (
+    <span className='relative inline-block'>
+      <span className='invisible'>{char}</span>
+      <span className='absolute inset-0 overflow-hidden'>
+        <span
+          className='block'
+          style={{ transform: `translateY(-${target * 10}%)` }}
+        >
+          <span ref={strip} className='block'>
+            {NUMBERS.map((n) => (
+              <span key={n} className='block'>
+                <Name stroke>{String(n)}</Name>
+              </span>
+            ))}
+          </span>
+        </span>
+      </span>
+    </span>
+  );
+};
+
 const Downloads = (): ReactNode => {
   const stats = useStats();
 
@@ -127,7 +178,18 @@ const Downloads = (): ReactNode => {
     <Name stroke>
       {'Mais de '}
       <span className='font-featured tabular-nums'>
-        <Name stroke>{amount}</Name>
+        <span className='sr-only'>{amount}</span>
+        <span aria-hidden='true'>
+          {[...amount].map((char, index) =>
+            /^\d$/.test(char) ? (
+              <Digit key={`digit:${index}`} char={char} index={index} />
+            ) : (
+              <Name key={`char:${index}`} stroke>
+                {char}
+              </Name>
+            )
+          )}
+        </span>
       </span>
       {` ${suffix}`}
     </Name>

@@ -154,10 +154,7 @@ const slots: Slot[] = [
     event: 'MVP Conf: Tech Talk',
     logo: '/img/mvpconf.png',
     url: 'https://www.youtube.com/watch?v=alfJ6aEJhhA',
-    coupon: {
-      code: 'Gratuito',
-      url: 'https://www.youtube.com/watch?v=alfJ6aEJhhA',
-    },
+    coupon: { code: 'Gratuito' },
     venue: 'Online',
     title: 'GitHub além do Código: superando o mercado através do open source',
     role: 'Palestra (Live)',
@@ -261,10 +258,7 @@ const slots: Slot[] = [
     event: 'Practical AI with Node.js',
     logo: '/img/jsconfbr.svg',
     url: 'https://guild.host/events/practical-ai-with-nodejs-pagajf',
-    coupon: {
-      code: 'GRATUITO',
-      url: 'https://guild.host/events/practical-ai-with-nodejs-pagajf',
-    },
+    coupon: { code: 'GRATUITO' },
     venue: 'São Paulo, SP',
     title:
       'Do Código para o Mundo Real: O Ponto de Encontro entre Dados, Testes, Segurança e IA',
@@ -521,7 +515,7 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
                 <span className='truncate'>{discount(slot.coupon)}</span>
                 <ExternalLink
-                  className='size-3 shrink-0 origin-bottom text-[var(--tone)] group-hover/card:animate-hop'
+                  className='size-3 shrink-0 origin-bottom text-[#ff5498] group-hover/card:animate-hop'
                   aria-hidden='true'
                 />
               </a>
