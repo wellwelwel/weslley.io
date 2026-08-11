@@ -752,7 +752,7 @@ export const Agenda = memo((): ReactNode => {
           </span>
         </time>
 
-        <div className='flex gap-2'>
+        <div className='flex gap-2 max-sm:hidden'>
           <button
             type='button'
             aria-label='Evento anterior'
@@ -786,7 +786,7 @@ export const Agenda = memo((): ReactNode => {
         ))}
       </div>
 
-      <div className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:mt-1 short:mb-0'>
+      <div className='mt-[clamp(0.75rem,7.5svh-1.25rem,3.25rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:mt-4.5 short:mb-0 short-wide:mt-1'>
         <nav
           ref={attach}
           data-scroll=''

@@ -32,9 +32,12 @@ export type Trigger = {
   onOpen: () => void;
 };
 
+type Tone = 'ink' | 'night';
+
 type PartnersOptions = Trigger & {
   label?: string;
   social?: string | null;
+  tone?: Tone;
   onRestore?: () => void;
 };
 
@@ -49,6 +52,11 @@ const mvp = '/img/plush/mvp.png';
 const velvet = '/img/plush/velvet-texture.png';
 
 const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Podcast'] as const;
+
+const TONES: Record<Tone, string> = {
+  ink: 'bg-ink text-paper shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] hover:bg-ink/90 hover:shadow-[0_1px_2px_var(--shade-soft),0_10px_18px_-8px_var(--shade-deep)]',
+  night: 'bg-[#312f76] text-[#bcaeff] hover:bg-[#3c3a8b]',
+};
 
 const EMPTY_DRAFT: Draft = {
   name: '',
@@ -598,6 +606,7 @@ export const PartnersTrigger = ({
   onOpen,
   label = TRIGGER_LABEL,
   social,
+  tone = 'ink',
   onRestore,
 }: PartnersOptions): ReactNode => {
   const current = social ?? label;
@@ -618,7 +627,10 @@ export const PartnersTrigger = ({
       aria-haspopup='dialog'
       aria-expanded={open}
       aria-label={label}
-      className='group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 bg-ink pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold text-paper max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm shadow-[0_1px_2px_rgb(14_9_39_/_0.16),0_5px_5px_-6px_rgb(14_9_39_/_0.4)] transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 hover:shadow-[0_1px_2px_rgb(14_9_39_/_0.18),0_10px_10px_-8px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+      className={clsx(
+        'group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98',
+        TONES[tone]
+      )}
     >
       <span aria-hidden='true' className='grid overflow-hidden leading-6'>
         {[label, ...SOCIAL_LABELS].map((text) => (

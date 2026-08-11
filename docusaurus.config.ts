@@ -35,6 +35,16 @@ const config: Config = {
   headTags: [
     {
       tagName: 'link',
+      attributes: {
+        rel: 'preload',
+        as: 'font',
+        type: 'font/woff2',
+        href: '/fonts/inter-latin.woff2',
+        crossorigin: 'anonymous',
+      },
+    },
+    {
+      tagName: 'link',
       attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
     },
     {

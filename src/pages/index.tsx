@@ -1,6 +1,6 @@
 import type { Section, Step } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, CSSProperties, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
@@ -13,6 +13,7 @@ import { GiBigWave } from 'react-icons/gi';
 import { IoIosCalendar } from 'react-icons/io';
 import { RiMicrosoftLine } from 'react-icons/ri';
 import { TbBrandMysql, TbBrandOpenSource, TbPig } from 'react-icons/tb';
+import { Adopters } from '@site/src/components/Adopters';
 import { Agenda } from '@site/src/components/Agenda';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Badges } from '@site/src/components/Badges';
@@ -36,6 +37,8 @@ type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
 type Theme = 'light' | 'dark';
 
+type PageStyle = CSSProperties & { '--tint'?: string };
+
 type Slide = {
   src: string;
   alt: string;
@@ -50,7 +53,7 @@ type Slide = {
   hill?: string;
   theme?: Theme;
   align?: 'left';
-  frosted?: boolean;
+  still?: boolean;
   actions?: {
     stage?: SlideAction;
     cta?: SlideAction;
@@ -212,13 +215,14 @@ const groups: Group[] = [
         background: defaultBackground,
         theme: 'dark',
         align: 'left',
-        frosted: true,
+        still: true,
         actions: {
           stage: () => <Agenda />,
           cta: ({ open, onOpen }) => (
             <PartnersTrigger
               open={open}
               onOpen={onOpen}
+              tone='night'
               label='Me convide para o seu evento'
             />
           ),
@@ -250,11 +254,13 @@ const groups: Group[] = [
           'ecossistema JavaScript',
           '.',
         ],
-        text: 'Weslley mantém o MySQL2, driver para MySQL Server usado publicamente por empresas como Amazon, Microsoft, Google e Facebook.',
+        text: 'Weslley é mantenedor do MySQL2 e autor de diversos projetos open source críticos usados publicamente por empresas como Amazon, Microsoft, Google, Cloudflare, Vercel, dentre outras.',
         background: mysql2Background,
         color: '#00afff40',
         mark: '#00a1ff',
         hill: white,
+        still: true,
+        actions: { stage: Adopters },
       },
       {
         src: lagune,
@@ -262,7 +268,7 @@ const groups: Group[] = [
         name: 'Lagune',
         Icon: GiBigWave,
         title: ['Lagune, seu copiloto', 'em segurança', '.'],
-        text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
+        text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria (Security-Driven Hardening) ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
         background: laguneBackground,
         color: '#00a7ff66',
         mark: '#f0f9ff',
@@ -337,11 +343,12 @@ export default (): ReactNode => {
     hill,
     theme = 'light',
     align,
-    frosted,
+    still,
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
   const [titleLead, titleTail, titleMark] = slides[active].title;
   const flow = align === 'left' && 'max-sm:inline-block';
+  const tint: PageStyle = { '--tint': color ?? hill };
 
   const show = useCallback((index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -486,8 +493,9 @@ export default (): ReactNode => {
 
       <div
         ref={page}
+        style={tint}
         className={clsx(
-          'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6',
+          'shaded relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6',
           THEMES[theme]
         )}
       >
@@ -614,9 +622,9 @@ export default (): ReactNode => {
                     key={`stage:${active}`}
                     className={clsx(
                       align === 'left'
-                        ? 'mt-[clamp(1.25rem,6svh-0.75rem,3rem)] shrink-0 short-wide:mt-0 lg:mt-0'
+                        ? 'mt-[clamp(1.5rem,7.5svh-0.5rem,4rem)] shrink-0 short:mt-6 short-wide:mt-0 lg:mt-0'
                         : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
-                      !frosted && 'animate-slide'
+                      !still && 'animate-slide'
                     )}
                   >
                     <Stage open={partners} onOpen={openPartners} mark={mark} />
@@ -662,7 +670,7 @@ export default (): ReactNode => {
                             decoding='async'
                             draggable={false}
                             className={clsx(
-                              'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
+                              'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
                               index === active ? 'scale-100' : 'scale-65'
                             )}
                           />

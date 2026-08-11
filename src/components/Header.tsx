@@ -296,7 +296,7 @@ export const Header = ({
           ref={panel}
           id={panelId}
           inert={!menu}
-          className='invisible absolute top-full right-0 mt-3 w-max origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_14px_32px_-10px_rgb(14_9_39_/_0.35)]'
+          className='invisible absolute top-full right-0 mt-3 w-max origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_var(--shade-soft),0_14px_28px_-12px_var(--shade-deep)]'
         >
           <nav className='flex flex-col'>
             {sections.map(({ label, onSelect }) => (

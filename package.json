@@ -69,6 +69,7 @@
     "animejs": "^4.5.0",
     "clsx": "^2.1.1",
     "concurrently": "^10.0.4",
+    "devicon": "^2.17.0",
     "docusaurus-plugin-sass": "^0.2.6",
     "esbuild": "^0.28.1",
     "github-slugger": "^2.0.0",
