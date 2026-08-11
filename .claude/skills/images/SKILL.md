@@ -13,7 +13,7 @@ This skill owns how raster images reach the browser. Masters stay the only edite
 
 ## Generate, never hand-export
 
-Every derived image comes from the hook, so the whole set is reproducible from the masters and the manifest alone. A claim that an image is optimized is a verdict printed by the hook, not an impression from a file listing. When a master changes, the lock stops matching and the drift is a failing check, never a silent regression.
+Every derived image comes from the hook, so the whole set is reproducible from the masters and the manifest alone. A claim that an image is optimized is a verdict printed by the hook, not an impression from a file listing. When a master or the recipe that encoded it changes, the lock stops matching and the drift is a failing check, never a silent regression.
 
 ## When to use it
 
@@ -21,13 +21,14 @@ Reach for it when a raster image enters the project, when a master is edited or 
 
 ## How it works
 
-The manifest declares each master and the widths its usages need. A build encodes every declared master into AVIF and WebP at those widths, writes the variants beside the master named by width and format, refreshes the catalog that maps each public path to its ladder and intrinsic size, and records the master's hash in the lock. Verify replays that contract read-only and fails on any divergence. Scan inventories every raster under the static assets, heaviest first, and marks the ones the manifest does not cover.
+The manifest declares each master, the widths its usages need, and whether its group encodes lossless. A build encodes every declared master into AVIF and WebP at those widths, writes the variants beside the master named by width, content stamp, and format, refreshes the catalog that maps each public path to its ladder, stamp, and intrinsic size, and records the master's hash and encode recipe in the lock. The stamp derives from the master bytes and the recipe, so any change also changes every variant URL, no cache can keep serving old bytes, and the build removes the variants a previous recipe produced. Verify replays that contract read-only and fails on any divergence. Scan inventories every raster under the static assets, heaviest first, and marks the ones the manifest does not cover.
 
 On the page, the Picture component looks the image up in the catalog. A covered image renders as a picture element offering AVIF and WebP ladders with the master as fallback. An uncovered image renders as a plain img, so adopting it is never a breaking change.
 
 ## Conventions
 
-- Widths come from the rendered size multiplied by the device pixel ratios worth serving, never from the master's own size.
+- Widths come from the rendered size multiplied by the device pixel ratios worth serving, never from the master's own size. Small flat art lists those products exactly, so the browser picks a one-to-one source and never resamples what the hook already resized once.
+- Photographic and soft content compresses lossy at the default qualities. Flat-color art (logos, icons, badges with text) declares lossless in its group, since hard edges are exactly where lossy artifacts live.
 - The ladder never upscales: a width above the master clamps to the master, and the srcset only declares real pixels.
 - The caller passes a sizes attribute describing the slot the layout gives the image, since only the call site knows it.
 - The layout owns the rendered size through its own styles, on both axes or one axis plus a CSS aspect ratio. The component writes no dimension attributes, because a height hint sets a used height that defeats a CSS aspect ratio, and the catalog records each master's intrinsic size instead.

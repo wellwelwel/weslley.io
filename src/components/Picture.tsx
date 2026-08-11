@@ -3,6 +3,7 @@ import variants from '@site/src/helpers/variants.json';
 
 type Entry = {
   widths: number[];
+  stamp: string;
   width: number;
   height: number;
 };
@@ -15,11 +16,11 @@ const FORMATS = ['avif', 'webp'] as const;
 
 const catalog: Record<string, Entry> = variants;
 
-const sourceSet = (src: string, widths: number[], format: string): string => {
+const sourceSet = (src: string, entry: Entry, format: string): string => {
   const stem = src.slice(0, src.lastIndexOf('.'));
 
-  return widths
-    .map((width) => `${stem}-${width}.${format} ${width}w`)
+  return entry.widths
+    .map((width) => `${stem}-${width}.${entry.stamp}.${format} ${width}w`)
     .join(', ');
 };
 
@@ -33,8 +34,9 @@ export const Picture: FC<PictureOptions> = ({ src, sizes, ...image }) => {
       {FORMATS.map((format) => (
         <source
           key={format}
+          hidden
           type={`image/${format}`}
-          srcSet={sourceSet(src, entry.widths, format)}
+          srcSet={sourceSet(src, entry, format)}
           sizes={sizes}
         />
       ))}

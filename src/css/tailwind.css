@@ -59,6 +59,32 @@
     }
   }
 
+  --animate-hop: hop 0.7s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+
+  @keyframes hop {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg) scaleY(1);
+    }
+    12% {
+      transform: translateY(1px) rotate(-3deg) scaleY(0.9);
+    }
+    32% {
+      transform: translateY(calc(var(--hop-travel, 1) * -4.5px)) rotate(4deg)
+        scaleY(1.06);
+    }
+    48% {
+      transform: translateY(0) rotate(-2deg) scaleY(0.94);
+    }
+    60% {
+      transform: translateY(calc(var(--hop-travel, 1) * -3px)) rotate(-5deg)
+        scaleY(1.04);
+    }
+    80% {
+      transform: translateY(0) rotate(2deg) scaleY(0.97);
+    }
+  }
+
   --color-ink: #0e0927;
   --color-paper: #f0f4ff;
   --color-accent: #7a77ff;

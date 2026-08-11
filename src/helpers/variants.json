@@ -1,141 +1,169 @@
 {
   "/img/avatar.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "c0bb3628",
     "width": 512,
     "height": 512
   },
   "/img/badges/mvp-2025.png": {
     "widths": [128, 256],
+    "stamp": "09f9d5e5",
     "width": 1600,
     "height": 1600
   },
   "/img/badges/mvp-2026.png": {
     "widths": [128, 256],
+    "stamp": "e49ad043",
     "width": 600,
     "height": 600
   },
   "/img/dcl.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "a3be1795",
     "width": 200,
     "height": 200
   },
   "/img/devfest-cerrado.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "101a0a39",
     "width": 256,
     "height": 256
   },
   "/img/devreferencias.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "7eb4c695",
     "width": 460,
     "height": 326
   },
   "/img/github-brazil.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "b40147bf",
     "width": 200,
     "height": 200
   },
   "/img/mvpconf.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "e1a426ea",
     "width": 5000,
     "height": 5348
   },
   "/img/node-congress.png": {
-    "widths": [96, 114],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "a4860d3b",
     "width": 114,
     "height": 130
   },
   "/img/plush/claude.png": {
     "widths": [256, 512],
+    "stamp": "3784b7d6",
     "width": 512,
     "height": 512
   },
   "/img/plush/github.png": {
     "widths": [256, 512],
+    "stamp": "bbdc0aea",
     "width": 512,
     "height": 512
   },
   "/img/plush/heart.png": {
     "widths": [256, 512],
+    "stamp": "5fdeadfe",
     "width": 512,
     "height": 512
   },
   "/img/plush/lagune-bg.png": {
     "widths": [828, 1280],
+    "stamp": "d834c888",
     "width": 1280,
     "height": 714
   },
   "/img/plush/lagune.png": {
     "widths": [256, 512],
+    "stamp": "f619e09f",
     "width": 512,
     "height": 512
   },
   "/img/plush/me.png": {
     "widths": [256, 512],
+    "stamp": "358bf8f6",
     "width": 512,
     "height": 512
   },
   "/img/plush/mvp.png": {
     "widths": [256, 512],
+    "stamp": "6c654f5f",
     "width": 512,
     "height": 512
   },
   "/img/plush/mysql.png": {
     "widths": [256, 512],
+    "stamp": "6f2ea033",
     "width": 512,
     "height": 512
   },
   "/img/plush/mysql2-bg.png": {
     "widths": [828, 1280],
+    "stamp": "dffd29d7",
     "width": 1280,
     "height": 714
   },
   "/img/plush/osi.png": {
     "widths": [256, 512],
+    "stamp": "1073b7d3",
     "width": 512,
     "height": 512
   },
   "/img/plush/poku-bg.png": {
     "widths": [828, 1280],
+    "stamp": "b7efdfde",
     "width": 1280,
     "height": 714
   },
   "/img/plush/poku.png": {
     "widths": [256, 512],
+    "stamp": "bb5e029c",
     "width": 512,
     "height": 512
   },
   "/img/plush/velvet-texture.png": {
     "widths": [828, 1280],
+    "stamp": "f9db2e59",
     "width": 1280,
     "height": 720
   },
   "/img/reactor.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "05dea784",
     "width": 300,
     "height": 300
   },
   "/img/rogadx.png": {
-    "widths": [96, 150],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "23bbe8b7",
     "width": 150,
     "height": 150
   },
   "/img/ssi.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "f6b8959b",
     "width": 512,
     "height": 512
   },
   "/img/talks/codecon-2025/moments/04.jpg": {
     "widths": [828, 1280, 1920, 2560],
+    "stamp": "461f9c98",
     "width": 4032,
     "height": 2268
   },
   "/img/tdc.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "210dc0ae",
     "width": 400,
     "height": 400
   },
   "/img/winxday.png": {
-    "widths": [96, 192],
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "064ab00c",
     "width": 484,
     "height": 498
   }

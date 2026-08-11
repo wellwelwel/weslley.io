@@ -1,258 +1,358 @@
 {
   "src/assets/img/avatar.png": {
     "hash": "740e32a31536bc9711c2b1a12f3c3e6fb28cf02d35e93185aaa8916606ca32c2",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/avatar-96.avif",
-      "src/assets/img/avatar-192.avif",
-      "src/assets/img/avatar-96.webp",
-      "src/assets/img/avatar-192.webp"
+      "src/assets/img/avatar-48.c0bb3628.avif",
+      "src/assets/img/avatar-64.c0bb3628.avif",
+      "src/assets/img/avatar-72.c0bb3628.avif",
+      "src/assets/img/avatar-96.c0bb3628.avif",
+      "src/assets/img/avatar-108.c0bb3628.avif",
+      "src/assets/img/avatar-48.c0bb3628.webp",
+      "src/assets/img/avatar-64.c0bb3628.webp",
+      "src/assets/img/avatar-72.c0bb3628.webp",
+      "src/assets/img/avatar-96.c0bb3628.webp",
+      "src/assets/img/avatar-108.c0bb3628.webp"
     ]
   },
   "src/assets/img/badges/mvp-2025.png": {
     "hash": "53b29c44f4a7998e74d88e4080f5911a210f84a6b0757789f86fa36188dab29f",
+    "recipe": "{\"widths\":[128,256],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/badges/mvp-2025-128.avif",
-      "src/assets/img/badges/mvp-2025-256.avif",
-      "src/assets/img/badges/mvp-2025-128.webp",
-      "src/assets/img/badges/mvp-2025-256.webp"
+      "src/assets/img/badges/mvp-2025-128.09f9d5e5.avif",
+      "src/assets/img/badges/mvp-2025-256.09f9d5e5.avif",
+      "src/assets/img/badges/mvp-2025-128.09f9d5e5.webp",
+      "src/assets/img/badges/mvp-2025-256.09f9d5e5.webp"
     ]
   },
   "src/assets/img/badges/mvp-2026.png": {
     "hash": "151675d6a002b6b4da3466de76a731cf7586b81b1192bb19dda02eec19e98313",
+    "recipe": "{\"widths\":[128,256],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/badges/mvp-2026-128.avif",
-      "src/assets/img/badges/mvp-2026-256.avif",
-      "src/assets/img/badges/mvp-2026-128.webp",
-      "src/assets/img/badges/mvp-2026-256.webp"
+      "src/assets/img/badges/mvp-2026-128.e49ad043.avif",
+      "src/assets/img/badges/mvp-2026-256.e49ad043.avif",
+      "src/assets/img/badges/mvp-2026-128.e49ad043.webp",
+      "src/assets/img/badges/mvp-2026-256.e49ad043.webp"
     ]
   },
   "src/assets/img/dcl.png": {
     "hash": "955e91fbd4a8708f1c4827672002c7f143f5efd75b456f2426a1e2fd1b292d2b",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/dcl-96.avif",
-      "src/assets/img/dcl-192.avif",
-      "src/assets/img/dcl-96.webp",
-      "src/assets/img/dcl-192.webp"
+      "src/assets/img/dcl-48.a3be1795.avif",
+      "src/assets/img/dcl-64.a3be1795.avif",
+      "src/assets/img/dcl-72.a3be1795.avif",
+      "src/assets/img/dcl-96.a3be1795.avif",
+      "src/assets/img/dcl-108.a3be1795.avif",
+      "src/assets/img/dcl-48.a3be1795.webp",
+      "src/assets/img/dcl-64.a3be1795.webp",
+      "src/assets/img/dcl-72.a3be1795.webp",
+      "src/assets/img/dcl-96.a3be1795.webp",
+      "src/assets/img/dcl-108.a3be1795.webp"
     ]
   },
   "src/assets/img/devfest-cerrado.png": {
     "hash": "9d36a3c6dd44f6043eaa29027bee25d35c520fe24efac34c1c4d65ee716c82c4",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/devfest-cerrado-96.avif",
-      "src/assets/img/devfest-cerrado-192.avif",
-      "src/assets/img/devfest-cerrado-96.webp",
-      "src/assets/img/devfest-cerrado-192.webp"
+      "src/assets/img/devfest-cerrado-48.101a0a39.avif",
+      "src/assets/img/devfest-cerrado-64.101a0a39.avif",
+      "src/assets/img/devfest-cerrado-72.101a0a39.avif",
+      "src/assets/img/devfest-cerrado-96.101a0a39.avif",
+      "src/assets/img/devfest-cerrado-108.101a0a39.avif",
+      "src/assets/img/devfest-cerrado-48.101a0a39.webp",
+      "src/assets/img/devfest-cerrado-64.101a0a39.webp",
+      "src/assets/img/devfest-cerrado-72.101a0a39.webp",
+      "src/assets/img/devfest-cerrado-96.101a0a39.webp",
+      "src/assets/img/devfest-cerrado-108.101a0a39.webp"
     ]
   },
   "src/assets/img/devreferencias.png": {
     "hash": "e187ab773d0d5b93ea7b7636b4f1fe8796b86f34eda40b454f54e7180635b17c",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/devreferencias-96.avif",
-      "src/assets/img/devreferencias-192.avif",
-      "src/assets/img/devreferencias-96.webp",
-      "src/assets/img/devreferencias-192.webp"
+      "src/assets/img/devreferencias-48.7eb4c695.avif",
+      "src/assets/img/devreferencias-64.7eb4c695.avif",
+      "src/assets/img/devreferencias-72.7eb4c695.avif",
+      "src/assets/img/devreferencias-96.7eb4c695.avif",
+      "src/assets/img/devreferencias-108.7eb4c695.avif",
+      "src/assets/img/devreferencias-48.7eb4c695.webp",
+      "src/assets/img/devreferencias-64.7eb4c695.webp",
+      "src/assets/img/devreferencias-72.7eb4c695.webp",
+      "src/assets/img/devreferencias-96.7eb4c695.webp",
+      "src/assets/img/devreferencias-108.7eb4c695.webp"
     ]
   },
   "src/assets/img/github-brazil.png": {
     "hash": "b42c9bf439d197e9680d3eb2ed2fda61cd38c01c238889021d323479eb199f7e",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/github-brazil-96.avif",
-      "src/assets/img/github-brazil-192.avif",
-      "src/assets/img/github-brazil-96.webp",
-      "src/assets/img/github-brazil-192.webp"
+      "src/assets/img/github-brazil-48.b40147bf.avif",
+      "src/assets/img/github-brazil-64.b40147bf.avif",
+      "src/assets/img/github-brazil-72.b40147bf.avif",
+      "src/assets/img/github-brazil-96.b40147bf.avif",
+      "src/assets/img/github-brazil-108.b40147bf.avif",
+      "src/assets/img/github-brazil-48.b40147bf.webp",
+      "src/assets/img/github-brazil-64.b40147bf.webp",
+      "src/assets/img/github-brazil-72.b40147bf.webp",
+      "src/assets/img/github-brazil-96.b40147bf.webp",
+      "src/assets/img/github-brazil-108.b40147bf.webp"
     ]
   },
   "src/assets/img/mvpconf.png": {
     "hash": "062fdaefe8688ff739842183c35918932bbe4f6362d9d9dfe80831e02e467b9d",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/mvpconf-96.avif",
-      "src/assets/img/mvpconf-192.avif",
-      "src/assets/img/mvpconf-96.webp",
-      "src/assets/img/mvpconf-192.webp"
+      "src/assets/img/mvpconf-48.e1a426ea.avif",
+      "src/assets/img/mvpconf-64.e1a426ea.avif",
+      "src/assets/img/mvpconf-72.e1a426ea.avif",
+      "src/assets/img/mvpconf-96.e1a426ea.avif",
+      "src/assets/img/mvpconf-108.e1a426ea.avif",
+      "src/assets/img/mvpconf-48.e1a426ea.webp",
+      "src/assets/img/mvpconf-64.e1a426ea.webp",
+      "src/assets/img/mvpconf-72.e1a426ea.webp",
+      "src/assets/img/mvpconf-96.e1a426ea.webp",
+      "src/assets/img/mvpconf-108.e1a426ea.webp"
     ]
   },
   "src/assets/img/node-congress.png": {
     "hash": "09b04ada68a0ac2f0d974e51eb56c62f4809bba70fc2a30a64bf06b828bd32b1",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/node-congress-96.avif",
-      "src/assets/img/node-congress-114.avif",
-      "src/assets/img/node-congress-96.webp",
-      "src/assets/img/node-congress-114.webp"
+      "src/assets/img/node-congress-48.a4860d3b.avif",
+      "src/assets/img/node-congress-64.a4860d3b.avif",
+      "src/assets/img/node-congress-72.a4860d3b.avif",
+      "src/assets/img/node-congress-96.a4860d3b.avif",
+      "src/assets/img/node-congress-108.a4860d3b.avif",
+      "src/assets/img/node-congress-48.a4860d3b.webp",
+      "src/assets/img/node-congress-64.a4860d3b.webp",
+      "src/assets/img/node-congress-72.a4860d3b.webp",
+      "src/assets/img/node-congress-96.a4860d3b.webp",
+      "src/assets/img/node-congress-108.a4860d3b.webp"
     ]
   },
   "src/assets/img/plush/claude.png": {
     "hash": "1e133b0f6fa18cd9197524f454a8fe77fe4e5135a4aab067943db34f5fa2a5df",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/claude-256.avif",
-      "src/assets/img/plush/claude-512.avif",
-      "src/assets/img/plush/claude-256.webp",
-      "src/assets/img/plush/claude-512.webp"
+      "src/assets/img/plush/claude-256.3784b7d6.avif",
+      "src/assets/img/plush/claude-512.3784b7d6.avif",
+      "src/assets/img/plush/claude-256.3784b7d6.webp",
+      "src/assets/img/plush/claude-512.3784b7d6.webp"
     ]
   },
   "src/assets/img/plush/github.png": {
     "hash": "222deaa86f41057ca518e948a8c0fec07e9492b77b437b291d5ead1222d91880",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/github-256.avif",
-      "src/assets/img/plush/github-512.avif",
-      "src/assets/img/plush/github-256.webp",
-      "src/assets/img/plush/github-512.webp"
+      "src/assets/img/plush/github-256.bbdc0aea.avif",
+      "src/assets/img/plush/github-512.bbdc0aea.avif",
+      "src/assets/img/plush/github-256.bbdc0aea.webp",
+      "src/assets/img/plush/github-512.bbdc0aea.webp"
     ]
   },
   "src/assets/img/plush/heart.png": {
     "hash": "58dc8e38742ada258c4fadcb6fef4a09e7a06ad5b98dadf7904640186a79f3e9",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/heart-256.avif",
-      "src/assets/img/plush/heart-512.avif",
-      "src/assets/img/plush/heart-256.webp",
-      "src/assets/img/plush/heart-512.webp"
+      "src/assets/img/plush/heart-256.5fdeadfe.avif",
+      "src/assets/img/plush/heart-512.5fdeadfe.avif",
+      "src/assets/img/plush/heart-256.5fdeadfe.webp",
+      "src/assets/img/plush/heart-512.5fdeadfe.webp"
     ]
   },
   "src/assets/img/plush/lagune-bg.png": {
     "hash": "3532fab3c98a1f3c099af7ffa3871a34a8a15aeb4914e16b2afea20827d98aba",
+    "recipe": "{\"widths\":[828,1280],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/lagune-bg-828.avif",
-      "src/assets/img/plush/lagune-bg-1280.avif",
-      "src/assets/img/plush/lagune-bg-828.webp",
-      "src/assets/img/plush/lagune-bg-1280.webp"
+      "src/assets/img/plush/lagune-bg-828.d834c888.avif",
+      "src/assets/img/plush/lagune-bg-1280.d834c888.avif",
+      "src/assets/img/plush/lagune-bg-828.d834c888.webp",
+      "src/assets/img/plush/lagune-bg-1280.d834c888.webp"
     ]
   },
   "src/assets/img/plush/lagune.png": {
     "hash": "cd57e2ad75b4f4db2c242d33c827739bf1a9a4e0e99e68eee06d54289fa67394",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/lagune-256.avif",
-      "src/assets/img/plush/lagune-512.avif",
-      "src/assets/img/plush/lagune-256.webp",
-      "src/assets/img/plush/lagune-512.webp"
+      "src/assets/img/plush/lagune-256.f619e09f.avif",
+      "src/assets/img/plush/lagune-512.f619e09f.avif",
+      "src/assets/img/plush/lagune-256.f619e09f.webp",
+      "src/assets/img/plush/lagune-512.f619e09f.webp"
     ]
   },
   "src/assets/img/plush/me.png": {
     "hash": "5675b51428ab60ac8a2f7008acc8f59d1738d0ac81f9cdaa1423fd657a22db58",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/me-256.avif",
-      "src/assets/img/plush/me-512.avif",
-      "src/assets/img/plush/me-256.webp",
-      "src/assets/img/plush/me-512.webp"
+      "src/assets/img/plush/me-256.358bf8f6.avif",
+      "src/assets/img/plush/me-512.358bf8f6.avif",
+      "src/assets/img/plush/me-256.358bf8f6.webp",
+      "src/assets/img/plush/me-512.358bf8f6.webp"
     ]
   },
   "src/assets/img/plush/mvp.png": {
     "hash": "9b3a21b83ff28d8da5d0a6650cdca9e4ab3169211a29e8ee87ef145a1b6d088f",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/mvp-256.avif",
-      "src/assets/img/plush/mvp-512.avif",
-      "src/assets/img/plush/mvp-256.webp",
-      "src/assets/img/plush/mvp-512.webp"
+      "src/assets/img/plush/mvp-256.6c654f5f.avif",
+      "src/assets/img/plush/mvp-512.6c654f5f.avif",
+      "src/assets/img/plush/mvp-256.6c654f5f.webp",
+      "src/assets/img/plush/mvp-512.6c654f5f.webp"
     ]
   },
   "src/assets/img/plush/mysql.png": {
     "hash": "2da517ae0d20c6a109995a2cd7bd9e720a4bdb27066ba531070223c50471c620",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/mysql-256.avif",
-      "src/assets/img/plush/mysql-512.avif",
-      "src/assets/img/plush/mysql-256.webp",
-      "src/assets/img/plush/mysql-512.webp"
+      "src/assets/img/plush/mysql-256.6f2ea033.avif",
+      "src/assets/img/plush/mysql-512.6f2ea033.avif",
+      "src/assets/img/plush/mysql-256.6f2ea033.webp",
+      "src/assets/img/plush/mysql-512.6f2ea033.webp"
     ]
   },
   "src/assets/img/plush/mysql2-bg.png": {
     "hash": "a98c4c47c9f23766a7330efe1b8f2e7e0d1ef6fe217cda0ec45b1caa5627f43b",
+    "recipe": "{\"widths\":[828,1280],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/mysql2-bg-828.avif",
-      "src/assets/img/plush/mysql2-bg-1280.avif",
-      "src/assets/img/plush/mysql2-bg-828.webp",
-      "src/assets/img/plush/mysql2-bg-1280.webp"
+      "src/assets/img/plush/mysql2-bg-828.dffd29d7.avif",
+      "src/assets/img/plush/mysql2-bg-1280.dffd29d7.avif",
+      "src/assets/img/plush/mysql2-bg-828.dffd29d7.webp",
+      "src/assets/img/plush/mysql2-bg-1280.dffd29d7.webp"
     ]
   },
   "src/assets/img/plush/osi.png": {
     "hash": "bdca6b1efab30baf086cbdcfbffe1b652ddd6e279c3460a1777adf6991fafdc3",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/osi-256.avif",
-      "src/assets/img/plush/osi-512.avif",
-      "src/assets/img/plush/osi-256.webp",
-      "src/assets/img/plush/osi-512.webp"
+      "src/assets/img/plush/osi-256.1073b7d3.avif",
+      "src/assets/img/plush/osi-512.1073b7d3.avif",
+      "src/assets/img/plush/osi-256.1073b7d3.webp",
+      "src/assets/img/plush/osi-512.1073b7d3.webp"
     ]
   },
   "src/assets/img/plush/poku-bg.png": {
     "hash": "7fa9f06b48df28c9f4135e2cc0baaf587ba33a65fbead8fd4198aaa114ff8c41",
+    "recipe": "{\"widths\":[828,1280],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/poku-bg-828.avif",
-      "src/assets/img/plush/poku-bg-1280.avif",
-      "src/assets/img/plush/poku-bg-828.webp",
-      "src/assets/img/plush/poku-bg-1280.webp"
+      "src/assets/img/plush/poku-bg-828.b7efdfde.avif",
+      "src/assets/img/plush/poku-bg-1280.b7efdfde.avif",
+      "src/assets/img/plush/poku-bg-828.b7efdfde.webp",
+      "src/assets/img/plush/poku-bg-1280.b7efdfde.webp"
     ]
   },
   "src/assets/img/plush/poku.png": {
     "hash": "e2a8e7dd6a49938097d02ccb227a9883f5da45e0b3d63078662000e2db2a8a77",
+    "recipe": "{\"widths\":[256,512],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/poku-256.avif",
-      "src/assets/img/plush/poku-512.avif",
-      "src/assets/img/plush/poku-256.webp",
-      "src/assets/img/plush/poku-512.webp"
+      "src/assets/img/plush/poku-256.bb5e029c.avif",
+      "src/assets/img/plush/poku-512.bb5e029c.avif",
+      "src/assets/img/plush/poku-256.bb5e029c.webp",
+      "src/assets/img/plush/poku-512.bb5e029c.webp"
     ]
   },
   "src/assets/img/plush/velvet-texture.png": {
     "hash": "5593b8ad349c0c544173f296c22e9060729d47611e1529b3f8ec8ae4e8e62770",
+    "recipe": "{\"widths\":[828,1280],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/plush/velvet-texture-828.avif",
-      "src/assets/img/plush/velvet-texture-1280.avif",
-      "src/assets/img/plush/velvet-texture-828.webp",
-      "src/assets/img/plush/velvet-texture-1280.webp"
+      "src/assets/img/plush/velvet-texture-828.f9db2e59.avif",
+      "src/assets/img/plush/velvet-texture-1280.f9db2e59.avif",
+      "src/assets/img/plush/velvet-texture-828.f9db2e59.webp",
+      "src/assets/img/plush/velvet-texture-1280.f9db2e59.webp"
     ]
   },
   "src/assets/img/reactor.png": {
     "hash": "c6c94ea99776e515363dabf49ab93c55fe5b4b119a1ba619a241164ac0940779",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/reactor-96.avif",
-      "src/assets/img/reactor-192.avif",
-      "src/assets/img/reactor-96.webp",
-      "src/assets/img/reactor-192.webp"
+      "src/assets/img/reactor-48.05dea784.avif",
+      "src/assets/img/reactor-64.05dea784.avif",
+      "src/assets/img/reactor-72.05dea784.avif",
+      "src/assets/img/reactor-96.05dea784.avif",
+      "src/assets/img/reactor-108.05dea784.avif",
+      "src/assets/img/reactor-48.05dea784.webp",
+      "src/assets/img/reactor-64.05dea784.webp",
+      "src/assets/img/reactor-72.05dea784.webp",
+      "src/assets/img/reactor-96.05dea784.webp",
+      "src/assets/img/reactor-108.05dea784.webp"
     ]
   },
   "src/assets/img/rogadx.png": {
     "hash": "bf22f73de4748e46806aeb2f3e8941bc49a377c78a43dfbcf42332676ac5a478",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/rogadx-96.avif",
-      "src/assets/img/rogadx-150.avif",
-      "src/assets/img/rogadx-96.webp",
-      "src/assets/img/rogadx-150.webp"
+      "src/assets/img/rogadx-48.23bbe8b7.avif",
+      "src/assets/img/rogadx-64.23bbe8b7.avif",
+      "src/assets/img/rogadx-72.23bbe8b7.avif",
+      "src/assets/img/rogadx-96.23bbe8b7.avif",
+      "src/assets/img/rogadx-108.23bbe8b7.avif",
+      "src/assets/img/rogadx-48.23bbe8b7.webp",
+      "src/assets/img/rogadx-64.23bbe8b7.webp",
+      "src/assets/img/rogadx-72.23bbe8b7.webp",
+      "src/assets/img/rogadx-96.23bbe8b7.webp",
+      "src/assets/img/rogadx-108.23bbe8b7.webp"
     ]
   },
   "src/assets/img/ssi.png": {
     "hash": "e861a37378d253eab434ec75633492ab1a2de6692b7f95039905951175ad7ce6",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/ssi-96.avif",
-      "src/assets/img/ssi-192.avif",
-      "src/assets/img/ssi-96.webp",
-      "src/assets/img/ssi-192.webp"
+      "src/assets/img/ssi-48.f6b8959b.avif",
+      "src/assets/img/ssi-64.f6b8959b.avif",
+      "src/assets/img/ssi-72.f6b8959b.avif",
+      "src/assets/img/ssi-96.f6b8959b.avif",
+      "src/assets/img/ssi-108.f6b8959b.avif",
+      "src/assets/img/ssi-48.f6b8959b.webp",
+      "src/assets/img/ssi-64.f6b8959b.webp",
+      "src/assets/img/ssi-72.f6b8959b.webp",
+      "src/assets/img/ssi-96.f6b8959b.webp",
+      "src/assets/img/ssi-108.f6b8959b.webp"
     ]
   },
   "src/assets/img/talks/codecon-2025/moments/04.jpg": {
     "hash": "c5a0cec1529a46ea8718cd55870c3a9ee18729085326ce47f28b022e7eaff203",
+    "recipe": "{\"widths\":[828,1280,1920,2560],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
     "variants": [
-      "src/assets/img/talks/codecon-2025/moments/04-828.avif",
-      "src/assets/img/talks/codecon-2025/moments/04-1280.avif",
-      "src/assets/img/talks/codecon-2025/moments/04-1920.avif",
-      "src/assets/img/talks/codecon-2025/moments/04-2560.avif",
-      "src/assets/img/talks/codecon-2025/moments/04-828.webp",
-      "src/assets/img/talks/codecon-2025/moments/04-1280.webp",
-      "src/assets/img/talks/codecon-2025/moments/04-1920.webp",
-      "src/assets/img/talks/codecon-2025/moments/04-2560.webp"
+      "src/assets/img/talks/codecon-2025/moments/04-828.461f9c98.avif",
+      "src/assets/img/talks/codecon-2025/moments/04-1280.461f9c98.avif",
+      "src/assets/img/talks/codecon-2025/moments/04-1920.461f9c98.avif",
+      "src/assets/img/talks/codecon-2025/moments/04-2560.461f9c98.avif",
+      "src/assets/img/talks/codecon-2025/moments/04-828.461f9c98.webp",
+      "src/assets/img/talks/codecon-2025/moments/04-1280.461f9c98.webp",
+      "src/assets/img/talks/codecon-2025/moments/04-1920.461f9c98.webp",
+      "src/assets/img/talks/codecon-2025/moments/04-2560.461f9c98.webp"
     ]
   },
   "src/assets/img/tdc.png": {
     "hash": "ecabd2ac854be37cdf9e4fd81ab26e9073c8f806c4b4d9726b941222473a9bcf",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/tdc-96.avif",
-      "src/assets/img/tdc-192.avif",
-      "src/assets/img/tdc-96.webp",
-      "src/assets/img/tdc-192.webp"
+      "src/assets/img/tdc-48.210dc0ae.avif",
+      "src/assets/img/tdc-64.210dc0ae.avif",
+      "src/assets/img/tdc-72.210dc0ae.avif",
+      "src/assets/img/tdc-96.210dc0ae.avif",
+      "src/assets/img/tdc-108.210dc0ae.avif",
+      "src/assets/img/tdc-48.210dc0ae.webp",
+      "src/assets/img/tdc-64.210dc0ae.webp",
+      "src/assets/img/tdc-72.210dc0ae.webp",
+      "src/assets/img/tdc-96.210dc0ae.webp",
+      "src/assets/img/tdc-108.210dc0ae.webp"
     ]
   },
   "src/assets/img/winxday.png": {
     "hash": "fa760d81ff7a48f7ef29cd85c39bf2d66469d66a79b805dd25b8874fc9880c52",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
     "variants": [
-      "src/assets/img/winxday-96.avif",
-      "src/assets/img/winxday-192.avif",
-      "src/assets/img/winxday-96.webp",
-      "src/assets/img/winxday-192.webp"
+      "src/assets/img/winxday-48.064ab00c.avif",
+      "src/assets/img/winxday-64.064ab00c.avif",
+      "src/assets/img/winxday-72.064ab00c.avif",
+      "src/assets/img/winxday-96.064ab00c.avif",
+      "src/assets/img/winxday-108.064ab00c.avif",
+      "src/assets/img/winxday-48.064ab00c.webp",
+      "src/assets/img/winxday-64.064ab00c.webp",
+      "src/assets/img/winxday-72.064ab00c.webp",
+      "src/assets/img/winxday-96.064ab00c.webp",
+      "src/assets/img/winxday-108.064ab00c.webp"
     ]
   }
 }

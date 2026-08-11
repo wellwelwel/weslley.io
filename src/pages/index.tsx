@@ -308,7 +308,8 @@ export default (): ReactNode => {
         preventDefault: true,
         allowClicks: true,
         lockAxis: true,
-        ignore: '[data-scroll]',
+        ignoreCheck: ({ target }) =>
+          target instanceof Element && target.closest('[data-scroll]') !== null,
         onUp: (self) => self.axis !== 'x' && step(1),
         onDown: (self) => self.axis !== 'x' && step(-1),
       });

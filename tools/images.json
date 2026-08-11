@@ -28,7 +28,8 @@
       "files": ["src/assets/img/talks/codecon-2025/moments/04.jpg"]
     },
     {
-      "widths": [96, 192],
+      "widths": [48, 64, 72, 96, 108],
+      "lossless": true,
       "files": [
         "src/assets/img/avatar.png",
         "src/assets/img/dcl.png",
@@ -46,6 +47,7 @@
     },
     {
       "widths": [128, 256],
+      "lossless": true,
       "files": [
         "src/assets/img/badges/mvp-2025.png",
         "src/assets/img/badges/mvp-2026.png"

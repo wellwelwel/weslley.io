@@ -1,5 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
+import type { IconType } from 'react-icons';
 import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
@@ -8,15 +9,15 @@ import {
   ArrowLeft,
   ArrowRight,
   Check,
-  ChevronRight,
   Copy,
   ExternalLink,
-  Mic,
-  Radio,
+  GraduationCap,
   Star,
   TicketPercent,
-  Users,
 } from 'lucide-react';
+import { BiLinkExternal } from 'react-icons/bi';
+import { RiVideoOnAiLine } from 'react-icons/ri';
+import { TbMicrophone2 } from 'react-icons/tb';
 import { Picture } from '@site/src/components/Picture';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
@@ -32,6 +33,7 @@ type Slot = {
   coupon?: {
     code: string;
     url?: string;
+    off?: number;
   };
   venue?: string;
   title: string;
@@ -43,6 +45,7 @@ type RootStyle = CSSProperties & {
   '--tone': string;
   '--ticker-travel'?: string;
   '--rise-travel'?: string;
+  '--hop-travel'?: string;
 };
 
 type Calendar = {
@@ -55,7 +58,6 @@ type Calendar = {
 type CardOptions = {
   slot: Slot;
   place: number;
-  live: boolean;
   onFocus: () => void;
 };
 
@@ -288,6 +290,7 @@ const slots: Slot[] = [
     coupon: {
       code: 'WELLWELWEL',
       url: 'https://eventos.codecon.dev/eventos/codecon-summit-26?c=WELLWELWEL',
+      off: 20,
     },
     venue: 'Pinhais, PR',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
@@ -327,6 +330,11 @@ const RISE = {
   reduced: '0.75rem',
 };
 
+const HOP = {
+  full: '1',
+  reduced: '0.6',
+};
+
 const STEPPER =
   'relative flex size-9 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 p-0 transition-[background-color,color,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-0.75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90 max-sm:size-8 short:size-8';
 
@@ -338,17 +346,30 @@ const EMPHASIS = {
 };
 
 const COUPON =
-  'relative flex min-w-0 items-center gap-1 text-[0.625rem]/none font-bold tracking-wide text-[var(--tone)] transition-[color,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-x-1 after:-inset-y-3.5 hover:text-[color-mix(in_srgb,var(--tone)_70%,white)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95';
+  'flex min-w-0 items-center gap-1 text-[0.625rem]/none font-bold tracking-wide text-ink/70 uppercase';
+
+const REDEEM = `${COUPON} relative transition-[color,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-x-1 after:-inset-y-3.5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95`;
 
 const SWAP =
   'absolute size-3 transition-[opacity,scale,filter] duration-250 ease-[cubic-bezier(0.2,0,0,1)]';
 
-const ROLES: Record<string, LucideIcon> = {
-  Keynote: Star,
-  Mentoria: Users,
-  Palestra: Mic,
-  'Palestra (Live)': Radio,
+const FLIGHT =
+  'col-start-1 row-start-1 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]';
+
+const LAUNCH = {
+  leave: `${FLIGHT} size-4 group-hover/launch:translate-x-[120%] group-hover/launch:translate-y-[-120%]`,
+  enter: `${FLIGHT} size-4 translate-x-[-120%] translate-y-[120%] group-hover/launch:translate-x-0 group-hover/launch:translate-y-0`,
 };
+
+const ROLES: Record<string, IconType | LucideIcon> = {
+  Keynote: Star,
+  Mentoria: GraduationCap,
+  Palestra: TbMicrophone2,
+  'Palestra (Live)': RiVideoOnAiLine,
+};
+
+const discount = ({ code, off }: NonNullable<Slot['coupon']>): string =>
+  off ? `${off}% OFF` : code.replace(/^\D*([1-9]\d?)$/, '$1% OFF');
 
 const arrange = (place: number): string => {
   if (place === 0) return 'z-20';
@@ -416,14 +437,15 @@ const upcomingIndex = (): number => {
 const anchor = (index: number): number =>
   stations[Math.max(0, index - 1)]! - PITCH.inset;
 
-const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
+const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
   const [copied, setCopied] = useState(false);
   const [origin] = useState(place);
   const timer = useRef(0);
   const center = place === 0;
   const clickable = place === 1;
+  const free = slot.coupon?.code.toLowerCase() === 'gratuito';
   const details = slot.material ?? slot.url;
-  const Role = ROLES[slot.role] ?? Mic;
+  const Role = ROLES[slot.role] ?? TbMicrophone2;
 
   const copy = (): void => {
     if (!slot.coupon) return;
@@ -443,8 +465,8 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
       aria-hidden={!center}
       onClick={clickable ? onFocus : undefined}
       className={clsx(
-        'col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-2 short:rounded-[1.25rem] short:p-3.5',
-        live && origin < 2 && 'animate-fade [animation-delay:500ms]',
+        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-2 short:rounded-[1.25rem] short:p-3.5',
+        origin < 2 && 'animate-fade [animation-delay:500ms]',
         arrange(place)
       )}
     >
@@ -470,13 +492,18 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
         </div>
       </div>
 
-      <p className='m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85 select-none'>
+      <p className='m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85'>
         {slot.title}
       </p>
 
-      <footer className='mt-auto flex items-center justify-between gap-3'>
+      <footer
+        className={clsx(
+          'mt-auto flex items-center justify-between gap-3',
+          details && 'pr-10.5'
+        )}
+      >
         <div className='flex min-w-0 flex-col items-start gap-1.5'>
-          <span className='flex items-center gap-1 text-[0.625rem]/none font-bold tracking-widest text-[var(--tone)] uppercase'>
+          <span className='flex items-center gap-1 text-[0.625rem]/none font-bold tracking-widest text-ink/70 uppercase'>
             <Role className='size-3 shrink-0' aria-hidden='true' />
             {slot.role}
           </span>
@@ -488,13 +515,21 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
                 target='_blank'
                 rel='noreferrer'
                 tabIndex={center ? undefined : -1}
-                aria-label={`Cupom ${slot.coupon.code}`}
-                className={clsx(COUPON, !center && 'pointer-events-none')}
+                aria-label={`Cupom ${discount(slot.coupon)}`}
+                className={clsx(REDEEM, !center && 'pointer-events-none')}
               >
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{slot.coupon.code}</span>
-                <ExternalLink className='size-3 shrink-0' aria-hidden='true' />
+                <span className='truncate'>{discount(slot.coupon)}</span>
+                <ExternalLink
+                  className='size-3 shrink-0 origin-bottom text-[var(--tone)] group-hover/card:animate-hop'
+                  aria-hidden='true'
+                />
               </a>
+            ) : free ? (
+              <span className={COUPON}>
+                <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
+                <span className='truncate'>{slot.coupon.code}</span>
+              </span>
             ) : (
               <button
                 type='button'
@@ -504,14 +539,17 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
                   copied ? 'Cupom copiado' : `Copiar cupom ${slot.coupon.code}`
                 }
                 className={clsx(
-                  COUPON,
+                  REDEEM,
                   'cursor-pointer appearance-none border-0 bg-transparent p-0',
                   !center && 'pointer-events-none'
                 )}
               >
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
                 <span className='truncate'>{slot.coupon.code}</span>
-                <span className='relative size-3 shrink-0' aria-hidden='true'>
+                <span
+                  className='relative size-3 shrink-0 text-[var(--tone)]'
+                  aria-hidden='true'
+                >
                   <Copy
                     className={clsx(
                       SWAP,
@@ -541,11 +579,17 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
                 : 'Detalhes da palestra'
             }
             className={clsx(
-              'relative flex size-7.5 shrink-0 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+              'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3.5 short:bottom-3.5',
               !center && 'pointer-events-none opacity-0'
             )}
           >
-            <ChevronRight className='size-4' aria-hidden='true' />
+            <span
+              className='relative grid size-4 place-items-center overflow-hidden'
+              aria-hidden='true'
+            >
+              <BiLinkExternal className={LAUNCH.leave} />
+              <BiLinkExternal className={LAUNCH.enter} />
+            </span>
           </a>
         )}
       </footer>
@@ -555,22 +599,20 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
 
 export const Agenda = memo((): ReactNode => {
   const [focus, setFocus] = useState(upcomingIndex);
-  const [live, setLive] = useState(false);
   const track = useRef<HTMLElement | null>(null);
   const deck = useRef<HTMLDivElement | null>(null);
   const swiped = useRef(false);
   const { date, tone } = slots[focus];
   const { day, month, weekday } = labels[focus];
   const opening = openings[focus];
-  const reduced = live && isReducedMotion();
+  const reduced = isReducedMotion();
 
-  const style: RootStyle = live
-    ? {
-        '--tone': tone,
-        '--ticker-travel': reduced ? TICKER.reduced : TICKER.full,
-        '--rise-travel': reduced ? RISE.reduced : RISE.full,
-      }
-    : { '--tone': tone };
+  const style: RootStyle = {
+    '--tone': tone,
+    '--ticker-travel': reduced ? TICKER.reduced : TICKER.full,
+    '--rise-travel': reduced ? RISE.reduced : RISE.full,
+    '--hop-travel': reduced ? HOP.reduced : HOP.full,
+  };
 
   const attach = useCallback((node: HTMLElement | null): void => {
     if (node && !track.current) node.scrollTo({ left: anchor(focus) });
@@ -607,45 +649,29 @@ export const Agenda = memo((): ReactNode => {
   }, []);
 
   useEffect(() => {
-    track.current?.scrollTo({
-      left: anchor(focus),
-      behavior: live ? 'smooth' : 'auto',
-    });
+    track.current?.scrollTo({ left: anchor(focus), behavior: 'smooth' });
   }, [focus]);
-
-  useEffect(() => setLive(true), []);
 
   return (
     <div
       style={style}
       className='flex flex-col items-start gap-3 [--reach:calc(var(--spread)-0.9rem)] [--spread:15rem] short:gap-2 short-wide:[--spread:4rem] lg:[--spread:3.5rem] xl:[--spread:9.5rem] min-[90rem]:[--spread:15rem]'
     >
-      <div
-        className={clsx(
-          'flex w-full items-center justify-between gap-3',
-          live && 'animate-ticker [animation-delay:420ms]'
-        )}
-      >
+      <div className='flex w-full animate-ticker items-center justify-between gap-3 [animation-delay:420ms]'>
         <time
           dateTime={opening ? `${date}T${opening}` : date}
           className='flex items-center gap-3 text-shadow-sm text-shadow-paper/50 short:gap-2'
         >
           <span
             key={date}
-            className={clsx(
-              'text-[1.75rem]/none font-[800] text-[var(--tone)] tabular-nums short:text-lg/none',
-              live && 'animate-ticker'
-            )}
+            className='animate-ticker text-[2rem]/none font-[800] text-[var(--tone)] tabular-nums short:text-lg/none'
           >
             {day}
           </span>
 
           <span
             key={`labels:${date}:${opening}`}
-            className={clsx(
-              'flex flex-col gap-0.5',
-              live && 'animate-ticker [animation-delay:80ms]'
-            )}
+            className='flex animate-ticker flex-col gap-1 [animation-delay:80ms]'
           >
             <span className='text-[0.6875rem]/none font-bold tracking-widest text-ink uppercase'>
               {month}
@@ -678,17 +704,13 @@ export const Agenda = memo((): ReactNode => {
 
       <div
         ref={deck}
-        className={clsx(
-          'grid short-wide:pr-(--reach) xl:pr-(--reach)',
-          live && 'animate-rise [animation-delay:500ms]'
-        )}
+        className='grid animate-rise [animation-delay:500ms] short-wide:pr-(--reach) xl:pr-(--reach)'
       >
         {slots.map((slot, index) => (
           <Card
             key={`${slot.date}:${slot.title}`}
             slot={slot}
             place={(index - focus + slots.length) % slots.length}
-            live={live}
             onFocus={() => setFocus(index)}
           />
         ))}
@@ -698,10 +720,7 @@ export const Agenda = memo((): ReactNode => {
         ref={attach}
         data-scroll=''
         aria-label='Linha do tempo dos eventos'
-        className={clsx(
-          'mt-[clamp(1rem,5svh-1rem,2rem)] w-full touch-pan-x contain-inline-size overflow-x-auto overflow-y-hidden overscroll-x-contain text-shadow-sm text-shadow-paper/50 [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] [scrollbar-width:none] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:hidden squat:hidden [&::-webkit-scrollbar]:hidden',
-          live && 'animate-ticker [animation-delay:580ms]'
-        )}
+        className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker touch-pan-x contain-inline-size overflow-x-auto overflow-y-hidden overscroll-x-contain text-shadow-sm text-shadow-paper/50 [animation-delay:580ms] [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] [scrollbar-width:none] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:hidden squat:hidden [&::-webkit-scrollbar]:hidden'
       >
         <div className='relative h-14 sm:h-16.5' style={{ width: extent }}>
           {slots.map((slot, index) => (

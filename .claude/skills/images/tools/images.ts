@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import { readdir, readFile, stat, writeFile } from 'node:fs/promises';
+import { readdir, readFile, stat, unlink, writeFile } from 'node:fs/promises';
 import { extname, join, relative, resolve, sep } from 'node:path';
 import { argv, cwd, exit } from 'node:process';
 import { format, resolveConfig } from 'prettier';
@@ -14,6 +14,7 @@ type Group = {
   widths: number[];
   files: string[];
   quality?: Partial<Quality>;
+  lossless?: boolean;
 };
 
 type Manifest = {
@@ -25,6 +26,7 @@ type Plan = {
   master: string;
   widths: number[];
   quality: Quality;
+  lossless: boolean;
 };
 
 type Shape = {
@@ -34,11 +36,13 @@ type Shape = {
 
 type Locked = {
   hash: string;
+  recipe: string;
   variants: string[];
 };
 
 type Entry = Shape & {
   widths: number[];
+  stamp: string;
 };
 
 type Verdict = 'ok' | 'stale' | 'missing' | 'orphan';
@@ -74,8 +78,12 @@ const posix = (path: string): string => path.split(sep).join('/');
 const stem = (path: string): string =>
   path.slice(0, path.length - extname(path).length);
 
-const variantPath = (master: string, width: number, format: string): string =>
-  `${stem(master)}-${width}.${format}`;
+const variantPath = (
+  master: string,
+  width: number,
+  stamp: string,
+  format: string
+): string => `${stem(master)}-${width}.${stamp}.${format}`;
 
 const publicPath = (master: string): string => {
   const path = posix(relative(root, contain(master)));
@@ -172,6 +180,7 @@ const plans = async (): Promise<Plan[]> => {
         master,
         widths: group.widths,
         quality: { ...QUALITY, ...manifest.quality, ...group.quality },
+        lossless: group.lossless ?? false,
       });
     }
 
@@ -183,32 +192,78 @@ const ladder = (widths: number[], master: Shape): number[] =>
     (left, right) => left - right
   );
 
-const expected = (plan: Plan, widths: number[]): string[] =>
+const recipeOf = (plan: Plan, widths: number[]): string =>
+  JSON.stringify({ widths, quality: plan.quality, lossless: plan.lossless });
+
+const stampOf = (hash: string, recipe: string): string =>
+  createHash('sha256')
+    .update(hash + recipe)
+    .digest('hex')
+    .slice(0, 8);
+
+const expected = (plan: Plan, widths: number[], stamp: string): string[] =>
   FORMATS.flatMap((format) =>
-    widths.map((width) => variantPath(plan.master, width, format))
+    widths.map((width) =>
+      posix(relative(root, variantPath(plan.master, width, stamp, format)))
+    )
   );
 
-const fresh = async (plan: Plan, locked?: Locked): Promise<boolean> => {
-  if (!locked || locked.hash !== (await hashFile(plan.master))) return false;
+const matches = (left: string[], right: string[]): boolean =>
+  left.length === right.length &&
+  left.every((value, index) => value === right[index]);
 
-  const checks = await Promise.all(locked.variants.map(exists));
+const fresh = async (
+  hash: string,
+  recipe: string,
+  variants: string[],
+  locked?: Locked
+): Promise<boolean> => {
+  if (!locked || locked.recipe !== recipe || locked.hash !== hash) return false;
+  if (!matches(locked.variants, variants)) return false;
+
+  const checks = await Promise.all(
+    variants.map((variant) => exists(contain(variant)))
+  );
 
   return checks.every(Boolean);
 };
 
-const encode = async (plan: Plan, widths: number[]): Promise<void> => {
+const prune = async (
+  locked: Locked | undefined,
+  keep: string[]
+): Promise<void> => {
+  if (!locked) return;
+
+  const kept = new Set(keep);
+
+  await Promise.all(
+    locked.variants
+      .filter((variant) => !kept.has(variant))
+      .map((variant) => unlink(contain(variant)).catch(() => {}))
+  );
+};
+
+const encode = async (
+  plan: Plan,
+  widths: number[],
+  stamp: string
+): Promise<void> => {
   await Promise.all(
     widths.flatMap((width) => [
       sharp(plan.master)
         .rotate()
         .resize({ width, withoutEnlargement: true })
-        .avif({ quality: plan.quality.avif })
-        .toFile(variantPath(plan.master, width, 'avif')),
+        .avif(
+          plan.lossless ? { lossless: true } : { quality: plan.quality.avif }
+        )
+        .toFile(variantPath(plan.master, width, stamp, 'avif')),
       sharp(plan.master)
         .rotate()
         .resize({ width, withoutEnlargement: true })
-        .webp({ quality: plan.quality.webp })
-        .toFile(variantPath(plan.master, width, 'webp')),
+        .webp(
+          plan.lossless ? { lossless: true } : { quality: plan.quality.webp }
+        )
+        .toFile(variantPath(plan.master, width, stamp, 'webp')),
     ])
   );
 };
@@ -221,22 +276,27 @@ const build = async (): Promise<void> => {
 
   for (const plan of await plans()) {
     const key = posix(relative(root, plan.master));
+    const hash = await hashFile(plan.master);
     const shape = await shapeOf(plan.master);
     const widths = ladder(plan.widths, shape);
-    const variants = expected(plan, widths);
-    const ready = await fresh(plan, lock[key]);
+    const recipe = recipeOf(plan, widths);
+    const stamp = stampOf(hash, recipe);
+    const variants = expected(plan, widths, stamp);
+    const ready = await fresh(hash, recipe, variants, lock[key]);
 
-    if (!ready) await encode(plan, widths);
+    if (!ready) {
+      await encode(plan, widths, stamp);
+      await prune(lock[key], variants);
+    }
 
-    nextLock[key] = {
-      hash: await hashFile(plan.master),
-      variants: variants.map((variant) => posix(relative(root, variant))),
-    };
-
-    catalog[publicPath(plan.master)] = { widths, ...shape };
+    nextLock[key] = { hash, recipe, variants };
+    catalog[publicPath(plan.master)] = { widths, stamp, ...shape };
 
     console.log(`${ready ? 'fresh' : 'built'}  ${key}`);
   }
+
+  for (const key of Object.keys(lock))
+    if (!(key in nextLock)) await prune(lock[key], []);
 
   await writeJson(lockPath, sorted(nextLock));
   await writeJson(contain(CATALOG), sorted(catalog));
@@ -251,12 +311,18 @@ const verify = async (): Promise<void> => {
   for (const plan of await plans()) {
     const key = posix(relative(root, plan.master));
     const locked = lock[key];
+    const hash = await hashFile(plan.master);
+    const shape = await shapeOf(plan.master);
+    const widths = ladder(plan.widths, shape);
+    const recipe = recipeOf(plan, widths);
+    const variants = expected(plan, widths, stampOf(hash, recipe));
 
     managed.add(key);
 
     if (!locked || !catalog[publicPath(plan.master)])
       verdicts.push(['missing', key]);
-    else if (!(await fresh(plan, locked))) verdicts.push(['stale', key]);
+    else if (!(await fresh(hash, recipe, variants, locked)))
+      verdicts.push(['stale', key]);
     else verdicts.push(['ok', key]);
   }
 
