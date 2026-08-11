@@ -13,7 +13,6 @@ import {
 import { useScroll } from '@site/src/hooks/useScroll';
 import { isDevelopment } from '@site/tools/environment';
 import { MarkdownWithAdmonitions } from './Admonition';
-import '@site/src/css/pages/_article-item.scss';
 
 export const Article: FC<{
   article: ProcessedArticle;

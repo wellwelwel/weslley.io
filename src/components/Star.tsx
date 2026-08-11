@@ -19,7 +19,7 @@ export const Star = ({ repo, mark }: StarOptions): ReactNode => (
     to={`https://github.com/${repo}`}
     aria-label={`${LABEL} no ${repo}`}
     draggable={false}
-    className='group inline-flex h-11 items-center gap-3 rounded-full bg-ink pr-1.5 pl-5 font-sans text-[0.9375rem] font-semibold text-paper no-underline shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] transition-[box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] [--ifm-link-hover-color:var(--color-paper)] hover:no-underline hover:shadow-[0_1px_2px_var(--shade-soft),0_10px_18px_-8px_var(--shade-deep)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+    className='group inline-flex h-11 items-center gap-3 rounded-full bg-ink pr-1.5 pl-5 font-sans text-[0.9375rem] font-semibold text-paper no-underline shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] transition-[box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] hover:no-underline hover:shadow-[0_1px_2px_var(--shade-soft),0_10px_18px_-8px_var(--shade-deep)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
   >
     <span className='flex items-center gap-2.5 leading-6 whitespace-nowrap'>
       <Github className='size-4.5 shrink-0' />

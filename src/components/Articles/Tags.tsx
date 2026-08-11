@@ -3,7 +3,6 @@ import type { ProcessedArticle } from '../../@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import '@site/src/css/pages/articles.scss';
 
 export const Tags = ({ route }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();

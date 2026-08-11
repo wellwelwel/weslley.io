@@ -4,7 +4,6 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { CassetteTape, Pen } from 'lucide-react';
 import { getSideLabel } from '../../helpers/get-side-label';
 import { SideContext } from './context';
-import styles from './styles.module.scss';
 
 interface SideSelectorProps {
   sides: SideConfig[];
@@ -43,12 +42,12 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
   const currentId = activeId ?? defaultId;
 
   return (
-    <div className={styles.selector}>
-      <div className={styles.header}>
+    <div>
+      <div>
         <Pen /> {translations.chooseArticleSide}
       </div>
 
-      <div className={styles.options}>
+      <div>
         {sides.map((side: SideConfig, index: number) => {
           const sideLabel = getSideLabel(index);
 
@@ -56,17 +55,14 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
             <button
               key={side.id}
               onClick={() => setActiveId(side.id)}
-              className={currentId === side.id ? styles.active : ''}
               aria-pressed={currentId === side.id}
             >
-              <span className={styles.side}>
+              <span>
                 {translations.side} {sideLabel}{' '}
                 <CassetteTape width={16} height={16} />
               </span>
-              <span className={styles.label}>{side.label}</span>
-              {side.description && (
-                <span className={styles.description}>{side.description}</span>
-              )}
+              <span>{side.label}</span>
+              {side.description && <span>{side.description}</span>}
             </button>
           );
         })}

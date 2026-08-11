@@ -7,7 +7,6 @@ import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import IconLanguage from '@theme/Icon/Language';
 import DropdownNavbarItem from '@theme/NavbarItem/DropdownNavbarItem';
-import styles from './styles.module.css';
 
 export default function LocaleDropdownNavbarItem({
   mobile,
@@ -67,7 +66,7 @@ export default function LocaleDropdownNavbarItem({
       mobile={mobile}
       label={
         <>
-          <IconLanguage className={styles.iconLanguage} />
+          <IconLanguage />
           <span>{dropdownLabel}</span>
         </>
       }

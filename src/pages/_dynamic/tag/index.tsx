@@ -2,13 +2,12 @@ import type { ProcessedArticle } from '../../../@types/article';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
+import { Article } from '@site/src/components/Articles/Article';
 import {
   ArticlesOptions,
   createImagesContext,
 } from '@site/src/helpers/get-social';
 import { useViewMode } from '@site/src/hooks/useViewMode';
-import '@site/src/css/pages/_article-item.scss';
-import { Article } from '@site/src/components/Articles/Article';
 
 type TagPageProps = {
   data: {

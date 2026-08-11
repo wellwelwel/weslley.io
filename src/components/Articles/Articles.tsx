@@ -6,7 +6,6 @@ import { ArticlesOptions } from '@site/src/helpers/get-social';
 import { useViewMode } from '@site/src/hooks/useViewMode';
 import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
-import '@site/src/css/pages/articles.scss';
 
 export const Articles = ({ route, description, children }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();

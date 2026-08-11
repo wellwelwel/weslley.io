@@ -13,7 +13,6 @@ import {
   MDXImports,
   socials,
 } from '@site/src/helpers/get-contents';
-import '@site/src/css/pages/links.scss';
 
 export default (): ReactNode => {
   const { siteConfig, i18n } = useDocusaurusContext();

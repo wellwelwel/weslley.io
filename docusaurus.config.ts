@@ -32,37 +32,6 @@ const config: Config = {
     experimental_vcs: true,
   },
   trailingSlash: true,
-  headTags: [
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preload',
-        as: 'font',
-        type: 'font/woff2',
-        href: '/fonts/inter-latin.woff2',
-        crossorigin: 'anonymous',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'preconnect',
-        href: 'https://fonts.gstatic.com',
-        crossorigin: 'anonymous',
-      },
-    },
-    {
-      tagName: 'link',
-      attributes: {
-        rel: 'stylesheet',
-        href: 'https://fonts.googleapis.com/css2?display=swap&family=Poppins:wght@300;400;500;600&family=Noto+Sans:wght@600;700;800',
-      },
-    },
-  ],
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
@@ -90,7 +59,7 @@ const config: Config = {
         blog: false,
         docs: false,
         theme: {
-          customCss: ['./src/css/themes.scss', './src/css/tailwind.css'],
+          customCss: ['./src/css/tailwind.css'],
         },
         pages: {
           admonitions: true,
@@ -134,7 +103,6 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
-    'docusaurus-plugin-sass',
     [
       '@easyops-cn/docusaurus-search-local',
       {

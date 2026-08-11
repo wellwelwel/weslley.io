@@ -17,7 +17,7 @@ function CloseButton() {
       className='clean-btn navbar-sidebar__close'
       onClick={() => mobileSidebar.toggle()}
     >
-      <IconClose color='var(--ifm-color-emphasis-600)' />
+      <IconClose />
     </button>
   );
 }

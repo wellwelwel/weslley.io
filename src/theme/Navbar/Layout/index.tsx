@@ -10,8 +10,6 @@ import {
 import { translate } from '@docusaurus/Translate';
 import NavbarMobileSidebar from '@theme/Navbar/MobileSidebar';
 import clsx from 'clsx';
-// @ts-ignore
-import styles from './styles.module.scss';
 
 function NavbarBackdrop(props: ComponentProps<'div'>) {
   return (
@@ -28,7 +26,7 @@ export default function NavbarLayout({ children }: Props): ReactNode {
     navbar: { hideOnScroll, style },
   } = useThemeConfig();
   const mobileSidebar = useNavbarMobileSidebar();
-  const { navbarRef, isNavbarVisible } = useHideableNavbar(hideOnScroll);
+  const { navbarRef } = useHideableNavbar(hideOnScroll);
   const location = useLocation();
   const isInitialLoad = useRef(true);
   const navbarNode = useRef<HTMLElement | null>(null);
@@ -83,21 +81,13 @@ export default function NavbarLayout({ children }: Props): ReactNode {
         message: 'Main',
         description: 'The ARIA label for the main navigation',
       })}
-      className={clsx(
-        'navbar',
-        'navbar--fixed-top',
-        hideOnScroll && [
-          styles.navbarHideable,
-          !isNavbarVisible && styles.navbarHidden,
-        ],
-        {
-          'is-links': isInitialLoad.current && isLinks,
-          show: !isInitialLoad.current || !isLinks,
-          'navbar--dark': style === 'dark',
-          'navbar--primary': style === 'primary',
-          'navbar-sidebar--show': mobileSidebar.shown,
-        }
-      )}
+      className={clsx('navbar', 'navbar--fixed-top', {
+        'is-links': isInitialLoad.current && isLinks,
+        show: !isInitialLoad.current || !isLinks,
+        'navbar--dark': style === 'dark',
+        'navbar--primary': style === 'primary',
+        'navbar-sidebar--show': mobileSidebar.shown,
+      })}
     >
       {children}
       <NavbarBackdrop onClick={mobileSidebar.toggle} />

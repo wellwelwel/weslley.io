@@ -1,4 +1,3 @@
-import '@site/src/css/pages/about.scss';
 import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Admonition from '@theme/Admonition';
