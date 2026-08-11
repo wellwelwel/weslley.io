@@ -18,6 +18,8 @@
 @custom-variant steps (@media (min-width: 25rem));
 
 @theme {
+  --font-featured: var(--ifm-font-family-featured);
+
   --text-hero: max(
     1.5rem,
     min(8.2vw, max(6.6vw, 2rem), 7rem, 13.9svh - 2.375rem)

@@ -121,7 +121,17 @@ const Downloads = (): ReactNode => {
     ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
     : FALLBACK_DOWNLOADS;
 
-  return <Name stroke>{`Mais de ${downloads}`}</Name>;
+  const [amount, suffix] = downloads.split(' ');
+
+  return (
+    <Name stroke>
+      {'Mais de '}
+      <span className='font-featured tabular-nums'>
+        <Name stroke>{amount}</Name>
+      </span>
+      {` ${suffix}`}
+    </Name>
+  );
 };
 
 const groups: Group[] = [
