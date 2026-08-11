@@ -21,6 +21,8 @@ export const Backdrop = ({
       src={src}
       alt=''
       aria-hidden='true'
+      decoding='async'
+      fetchPriority={src === active ? 'high' : 'low'}
       draggable={false}
       style={{ opacity: src === active ? opacity : 0 }}
       className={`pointer-events-none inset-0 size-full object-cover transition-opacity duration-700 ease-[cubic-bezier(0.2,0,0,1)] ${className}`}

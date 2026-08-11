@@ -2,20 +2,53 @@ import { useEffect, useState } from 'react';
 import { ExternalLink } from 'lucide-react';
 import { SafeLink } from './SafeLink';
 
+type Metric = {
+  value: number;
+  label: string;
+};
+
 type MediaKitStats = {
   packages: string[];
-  downloadsPerMonth: {
-    value: number;
-    label: string;
-  };
-  downloadsPerYear: {
-    value: number;
-    label: string;
-  };
+  downloadsPerMonth: Metric;
+  downloadsPerYear: Metric;
   fetched: string;
 };
 
 const base = 'https://wellwelwel.github.io/wellwelwel/stats.json';
+
+const isMetric = (value: unknown): value is Metric => {
+  if (typeof value !== 'object' || value === null) return false;
+
+  const metric: Partial<Record<keyof Metric, unknown>> = value;
+
+  return typeof metric.value === 'number' && typeof metric.label === 'string';
+};
+
+const isStats = (value: unknown): value is MediaKitStats => {
+  if (typeof value !== 'object' || value === null) return false;
+
+  const stats: Partial<Record<keyof MediaKitStats, unknown>> = value;
+
+  return (
+    Array.isArray(stats.packages) &&
+    isMetric(stats.downloadsPerMonth) &&
+    isMetric(stats.downloadsPerYear) &&
+    typeof stats.fetched === 'string'
+  );
+};
+
+let cache: MediaKitStats | undefined;
+let pending: Promise<MediaKitStats | undefined> | undefined;
+
+const load = (): Promise<MediaKitStats | undefined> =>
+  (pending ??= fetch(base)
+    .then((response) => response.json())
+    .then((data: unknown) => (cache = isStats(data) ? data : undefined))
+    .catch(() => {
+      pending = undefined;
+
+      return undefined;
+    }));
 
 export const setLabel = (
   value: number,
@@ -58,14 +91,21 @@ export const setLabel = (
     : value.toLocaleString(locale);
 };
 
-export const useStats = () => {
-  const [stats, setStats] = useState<MediaKitStats>();
+export const useStats = (): MediaKitStats | undefined => {
+  const [stats, setStats] = useState(cache);
 
   useEffect(() => {
-    fetch(base)
-      .then((res) => res.json())
-      .catch(() => {})
-      .then((data: unknown) => setStats(data as MediaKitStats));
+    if (cache) return;
+
+    let alive = true;
+
+    load().then((data) => {
+      if (alive && data) setStats(data);
+    });
+
+    return () => {
+      alive = false;
+    };
   }, []);
 
   return stats;

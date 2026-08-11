@@ -68,6 +68,7 @@ const TRAVEL = {
 };
 
 const DRAFT_KEY = 'weslley:partners-draft';
+const SAVE_DELAY_MS = 400;
 const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
 const FALLBACK_DOWNLOADS = '600 milhões';
@@ -102,6 +103,12 @@ const labelClass =
 
 const isPartnershipType = (value: unknown): value is PartnershipType =>
   PARTNERSHIP_TYPES.some((type) => type === value);
+
+const saveDraft = (draft: Draft): void => {
+  try {
+    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+  } catch {}
+};
 
 const readDraft = (): Draft => {
   try {
@@ -267,6 +274,7 @@ export const PartnersDialog = ({
   const [sent, setSent] = useState(false);
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [draft, setDraft] = useState<Draft>(readDraft);
+  const latest = useRef(draft);
   const stats = useStats();
 
   const downloads = stats
@@ -291,10 +299,14 @@ export const PartnersDialog = ({
   }, [onClose]);
 
   useEffect(() => {
-    try {
-      localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-    } catch {}
+    latest.current = draft;
+
+    const timer = setTimeout(() => saveDraft(draft), SAVE_DELAY_MS);
+
+    return () => clearTimeout(timer);
   }, [draft]);
+
+  useEffect(() => () => saveDraft(latest.current), []);
 
   useGSAP(() => {
     const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
@@ -387,6 +399,7 @@ export const PartnersDialog = ({
           src={velvet}
           alt=''
           aria-hidden='true'
+          decoding='async'
           draggable={false}
           className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
         />
@@ -538,6 +551,8 @@ export const PartnersDialog = ({
                 <img
                   src={me}
                   alt='Pelúcia do Weslley Araújo'
+                  width={512}
+                  height={512}
                   decoding='async'
                   draggable={false}
                   className='pointer-events-none w-32 shrink-0 object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.35)] md:w-55'

@@ -1,6 +1,6 @@
 import type { LucideIcon } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { memo, useCallback, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -364,18 +364,21 @@ const parse = (date: string): Date => {
   return new Date(year, month - 1, day);
 };
 
+const formatters = {
+  monthLong: new Intl.DateTimeFormat('pt-BR', { month: 'long' }),
+  monthShort: new Intl.DateTimeFormat('pt-BR', { month: 'short' }),
+  weekday: new Intl.DateTimeFormat('pt-BR', { weekday: 'long' }),
+};
+
 const calendar = (date: string): Calendar => {
   const when = parse(date);
   const day = String(when.getDate()).padStart(2, '0');
 
-  const label = (options: Intl.DateTimeFormatOptions): string =>
-    new Intl.DateTimeFormat('pt-BR', options).format(when);
-
   return {
     day,
-    month: `${label({ month: 'long' })} ${when.getFullYear()}`,
-    weekday: label({ weekday: 'long' }),
-    brief: `${day} ${label({ month: 'short' }).replace('.', '')}`,
+    month: `${formatters.monthLong.format(when)} ${when.getFullYear()}`,
+    weekday: formatters.weekday.format(when),
+    brief: `${day} ${formatters.monthShort.format(when).replace('.', '')}`,
   };
 };
 
@@ -403,8 +406,11 @@ const stations = times.reduce<number[]>(
 
 const extent = stations[stations.length - 1]! + PITCH.inset;
 
-const nearest = times.findIndex((time) => time >= Date.now());
-const upcoming = nearest === -1 ? slots.length - 1 : nearest;
+const upcomingIndex = (): number => {
+  const nearest = times.findIndex((time) => time >= Date.now());
+
+  return nearest === -1 ? slots.length - 1 : nearest;
+};
 
 const anchor = (index: number): number =>
   stations[Math.max(0, index - 1)]! - PITCH.inset;
@@ -445,6 +451,7 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
         <img
           src={slot.logo ?? AVATAR}
           alt=''
+          decoding='async'
           draggable={false}
           className='size-9 shrink-0 object-contain max-sm:size-8 short:size-8'
         />
@@ -544,8 +551,8 @@ const Card = ({ slot, place, live, onFocus }: CardOptions): ReactNode => {
   );
 };
 
-export const Agenda = (): ReactNode => {
-  const [focus, setFocus] = useState(upcoming);
+export const Agenda = memo((): ReactNode => {
+  const [focus, setFocus] = useState(upcomingIndex);
   const [live, setLive] = useState(false);
   const track = useRef<HTMLElement | null>(null);
   const deck = useRef<HTMLDivElement | null>(null);
@@ -564,7 +571,7 @@ export const Agenda = (): ReactNode => {
     : { '--tone': tone };
 
   const attach = useCallback((node: HTMLElement | null): void => {
-    if (node && !track.current) node.scrollTo({ left: anchor(upcoming) });
+    if (node && !track.current) node.scrollTo({ left: anchor(focus) });
 
     track.current = node;
   }, []);
@@ -721,6 +728,8 @@ export const Agenda = (): ReactNode => {
                 <img
                   src={slot.logo ?? AVATAR}
                   alt=''
+                  loading='lazy'
+                  decoding='async'
                   draggable={false}
                   className='size-6 object-contain sm:size-8'
                 />
@@ -731,4 +740,4 @@ export const Agenda = (): ReactNode => {
       </nav>
     </div>
   );
-};
+});

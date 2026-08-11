@@ -2,7 +2,7 @@ import type { Section, Step } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
 import type { ComponentType, CSSProperties, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useGSAP } from '@gsap/react';
@@ -221,6 +221,8 @@ const customBackgrounds = [
 
 const textures = [...new Set(slides.flatMap(({ texture }) => texture ?? []))];
 
+const colors = [...new Set(slides.flatMap(({ color }) => color ?? []))];
+
 const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
 
 export default (): ReactNode => {
@@ -229,7 +231,6 @@ export default (): ReactNode => {
   const [live, setLive] = useState(false);
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
-  const [pressed, setPressed] = useState<number | null>(null);
   const stage = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const current = useRef(0);
@@ -257,7 +258,7 @@ export default (): ReactNode => {
       }
     : undefined;
 
-  const show = (index: number) => {
+  const show = useCallback((index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
       return;
 
@@ -269,16 +270,22 @@ export default (): ReactNode => {
     unlock.current = gsap.delayedCall(STEP_LOCK, () => {
       locked.current = false;
     });
-  };
+  }, []);
 
-  const release = () => setPressed(null);
+  const home = useCallback(() => show(0), [show]);
 
-  const home = () => show(0);
+  const openPartners = useCallback(() => setPartners(true), []);
 
-  const sections: Section[] = groups.map(({ label }, index) => ({
-    label,
-    onSelect: () => show(starts[index]!),
-  }));
+  const closePartners = useCallback(() => setPartners(false), []);
+
+  const sections = useMemo<Section[]>(
+    () =>
+      groups.map(({ label }, index) => ({
+        label,
+        onSelect: () => show(starts[index]!),
+      })),
+    [show]
+  );
 
   useEffect(() => setLive(true), []);
 
@@ -395,11 +402,14 @@ export default (): ReactNode => {
           className={`fixed object-bottom-right ${BLURRED}`}
         />
 
-        <div
-          aria-hidden='true'
-          style={{ backgroundColor: color }}
-          className='pointer-events-none fixed inset-0 transition-colors duration-700 ease-[cubic-bezier(0.2,0,0,1)]'
-        />
+        {colors.map((tone) => (
+          <div
+            key={tone}
+            aria-hidden='true'
+            style={{ backgroundColor: tone, opacity: tone === color ? 1 : 0 }}
+            className='pointer-events-none fixed inset-0 transition-opacity duration-700 ease-[cubic-bezier(0.2,0,0,1)]'
+          />
+        ))}
 
         <div
           aria-hidden='true'
@@ -433,7 +443,7 @@ export default (): ReactNode => {
             partners={partners}
             onMenu={setMenu}
             onHome={home}
-            onPartners={() => setPartners(true)}
+            onPartners={openPartners}
           />
 
           <main
@@ -502,20 +512,13 @@ export default (): ReactNode => {
                         : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
                     }
                   >
-                    <Action
-                      open={partners}
-                      onOpen={() => setPartners(true)}
-                      mark={mark}
-                    />
+                    <Action open={partners} onOpen={openPartners} mark={mark} />
                   </div>
                 )}
               </div>
 
               <div
                 ref={rail}
-                onPointerUp={release}
-                onPointerCancel={release}
-                onPointerLeave={release}
                 className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
@@ -531,18 +534,15 @@ export default (): ReactNode => {
                         <button
                           key={alt}
                           type='button'
-                          onPointerDown={() => setPressed(index)}
                           onClick={() => show(index)}
                           aria-label={alt}
                           aria-current={index === active}
-                          className={clsx(
-                            'group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent',
-                            pressed === index && 'scale-95'
-                          )}
+                          className='group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
                         >
                           <img
                             src={src}
                             alt=''
+                            decoding='async'
                             draggable={false}
                             className={clsx(
                               'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] max-sm:block',
@@ -560,7 +560,7 @@ export default (): ReactNode => {
         </div>
       </div>
 
-      {partners && <PartnersDialog onClose={() => setPartners(false)} />}
+      {partners && <PartnersDialog onClose={closePartners} />}
     </>
   );
 };

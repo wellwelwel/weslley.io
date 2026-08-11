@@ -1,11 +1,8 @@
 @use 'sass:meta' as *;
-@use 'global/functions' as *;
 
-// Import the fonts you want based in their names (preconfigured for Google Fonts)
+// The font faces load from the headTags links in docusaurus.config.ts
 $baseFontFamily: 'Poppins';
 $featuredFontFamily: 'Noto Sans';
-
-@import url('https://fonts.googleapis.com/css2?display=swap&family=#{set-font($baseFontFamily)}:wght@300;400;500;600&family=#{set-font($featuredFontFamily)}:wght@600;700;800');
 
 :root {
   // Docusaurus

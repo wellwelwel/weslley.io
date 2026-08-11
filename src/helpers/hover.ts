@@ -1,2 +1,4 @@
+let query: MediaQueryList | undefined;
+
 export const canHover = (): boolean =>
-  window.matchMedia('(hover: hover)').matches;
+  (query ??= window.matchMedia('(hover: hover)')).matches;
