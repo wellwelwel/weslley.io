@@ -36,8 +36,8 @@ export type Trigger = {
 };
 
 type PartnersOptions = Trigger & {
-  label: string | null;
-  onRestore: () => void;
+  label?: string | null;
+  onRestore?: () => void;
 };
 
 type RollingLabel = {
@@ -577,7 +577,7 @@ export const PartnersDialog = ({
   );
 };
 
-const Partners = ({
+export const PartnersTrigger = ({
   open,
   onOpen,
   label,
@@ -617,7 +617,7 @@ const Partners = ({
         ))}
       </span>
 
-      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-paper'>
+      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-white'>
         <span className='relative grid size-4 place-items-center overflow-hidden'>
           <IoRocketSharp
             className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
@@ -638,7 +638,7 @@ export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
 
   return (
     <div className='flex flex-col items-center justify-center gap-3 short-wide:flex-row'>
-      <Partners
+      <PartnersTrigger
         open={open}
         onOpen={onOpen}
         label={social}

@@ -1,8 +1,8 @@
 import type { Section, Step } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
-import type { ComponentType, ReactNode } from 'react';
+import type { ComponentType, CSSProperties, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { useGSAP } from '@gsap/react';
@@ -10,13 +10,9 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { GiBigWave } from 'react-icons/gi';
+import { IoIosCalendar } from 'react-icons/io';
 import { RiMicrosoftLine } from 'react-icons/ri';
-import {
-  TbBrandMysql,
-  TbBrandOpenSource,
-  TbPig,
-  TbPodium,
-} from 'react-icons/tb';
+import { TbBrandMysql, TbBrandOpenSource, TbPig } from 'react-icons/tb';
 import github from '@site/src/assets/img/plush/github.png';
 import laguneBackground from '@site/src/assets/img/plush/lagune-bg.png';
 import lagune from '@site/src/assets/img/plush/lagune.png';
@@ -28,6 +24,7 @@ import pokuBackground from '@site/src/assets/img/plush/poku-bg.png';
 import poku from '@site/src/assets/img/plush/poku.png';
 import velvet from '@site/src/assets/img/plush/velvet-texture.png';
 import defaultBackground from '@site/src/assets/img/talks/codecon-2025/moments/04.jpg';
+import { Agenda } from '@site/src/components/Agenda';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Badges } from '@site/src/components/Badges';
 import { Header } from '@site/src/components/Header';
@@ -44,18 +41,25 @@ type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
 type Theme = 'light' | 'dark';
 
+type TitleStyle = CSSProperties & {
+  '--title-travel': string;
+  '--title-blur': string;
+};
+
 type Slide = {
   src: string;
   alt: string;
   name: string;
   Icon: IconType;
   title: [ReactNode, ReactNode, ReactNode?];
-  text: ReactNode;
+  text?: ReactNode;
   background?: string;
   texture?: string;
   color?: string;
   mark?: string;
   theme?: Theme;
+  align?: 'left';
+  frosted?: boolean;
   Action?: SlideAction;
 };
 
@@ -123,6 +127,19 @@ const groups: Group[] = [
     label: 'Home',
     slides: [
       {
+        src: me,
+        alt: 'Pelúcia do Weslley Araújo',
+        name: 'Agenda',
+        Icon: IoIosCalendar,
+        title: ['Próximos', 'eventos', '.'],
+        color: '#000000aa',
+        background: defaultBackground,
+        theme: 'dark',
+        align: 'left',
+        frosted: true,
+        Action: () => <Agenda />,
+      },
+      {
         src: github,
         alt: 'Pelúcia do GitHub',
         name: 'Open Source',
@@ -141,17 +158,6 @@ const groups: Group[] = [
         text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
         texture: velvet,
         Action: Badges,
-      },
-      {
-        src: me,
-        alt: 'Pelúcia do Weslley Araújo',
-        name: 'Palestras',
-        Icon: TbPodium,
-        title: ['Compartilhando', 'conhecimento', '.'],
-        text: 'Weslley leva aos palcos experiências reais ao longo de mais de uma década como desenvolvedor, palestrando nos principais eventos de tecnologia do Brasil.',
-        color: '#000000aa',
-        background: defaultBackground,
-        theme: 'dark',
       },
     ],
   },
@@ -220,6 +226,7 @@ const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
+  const [live, setLive] = useState(false);
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
   const [pressed, setPressed] = useState<number | null>(null);
@@ -237,8 +244,18 @@ export default (): ReactNode => {
     color,
     mark,
     theme = 'light',
+    align,
+    frosted,
   } = slides[active];
   const [titleLead, titleTail, titleMark] = slides[active].title;
+  const travel = live && isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+
+  const entrance: TitleStyle | undefined = live
+    ? {
+        '--title-travel': `${travel.titleY}%`,
+        '--title-blur': `${travel.titleBlur}px`,
+      }
+    : undefined;
 
   const show = (index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -263,6 +280,8 @@ export default (): ReactNode => {
     onSelect: () => show(starts[index]!),
   }));
 
+  useEffect(() => setLive(true), []);
+
   useGSAP(
     () => {
       if (partners || menu) return;
@@ -279,8 +298,10 @@ export default (): ReactNode => {
         tolerance: TOLERANCE,
         preventDefault: true,
         allowClicks: true,
-        onUp: () => step(1),
-        onDown: () => step(-1),
+        lockAxis: true,
+        ignore: '[data-scroll]',
+        onUp: (self) => self.axis !== 'x' && step(1),
+        onDown: (self) => self.axis !== 'x' && step(-1),
       });
 
       const onKeyDown = (event: KeyboardEvent) => {
@@ -308,31 +329,19 @@ export default (): ReactNode => {
 
   useGSAP(
     () => {
-      const travel = motion();
+      const texts = stage.current?.querySelectorAll('[data-slide-text]');
 
-      gsap
-        .timeline()
-        .fromTo(
-          '[data-slide-title]',
-          {
-            opacity: 0,
-            yPercent: travel.titleY,
-            filter: `blur(${travel.titleBlur}px)`,
-          },
+      if (texts?.length)
+        gsap.fromTo(
+          texts,
+          { opacity: 0, x: travel.textX },
           {
             opacity: 1,
-            yPercent: 0,
-            filter: 'blur(0px)',
-            duration: TITLE_IN,
-            stagger: travel.titleStagger,
-            ease: 'power3.out',
+            x: 0,
+            duration: TEXT_IN,
+            ease: 'power2.out',
+            delay: TITLE_IN + travel.titleStagger + TEXT_GAP,
           }
-        )
-        .fromTo(
-          '[data-slide-text]',
-          { opacity: 0, x: travel.textX },
-          { opacity: 1, x: 0, duration: TEXT_IN, ease: 'power2.out' },
-          `+=${TEXT_GAP}`
         );
     },
     { dependencies: [active], scope: stage, revertOnUpdate: true }
@@ -368,7 +377,12 @@ export default (): ReactNode => {
 
       <Progress value={(active + 1) / slides.length} color={mark} />
 
-      <div className='relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased'>
+      <div
+        className={clsx(
+          'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6',
+          THEMES[theme]
+        )}
+      >
         <Backdrop
           sources={[defaultBackground]}
           active={background ?? defaultBackground}
@@ -388,18 +402,25 @@ export default (): ReactNode => {
         />
 
         <div
+          aria-hidden='true'
           className={clsx(
-            'relative flex min-h-0 flex-1 flex-col overflow-hidden rounded-[2rem] p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)]',
-            THEMES[theme],
+            'pointer-events-none fixed inset-0 bg-paper transition-opacity duration-700 ease-[cubic-bezier(0.2,0,0,1)] sm:hidden',
+            background ? 'opacity-0' : 'opacity-100'
+          )}
+        />
+
+        <div
+          className={clsx(
+            'relative flex min-h-0 flex-1 flex-col p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)] max-sm:p-0 sm:overflow-hidden sm:rounded-[2rem]',
             background
               ? 'bg-transparent shadow-none'
-              : 'bg-paper shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
+              : 'sm:bg-paper sm:shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
           )}
         >
           <Backdrop
             sources={textures}
             active={texture}
-            className='absolute'
+            className='absolute max-sm:fixed'
             opacity={0.25}
           />
 
@@ -417,43 +438,69 @@ export default (): ReactNode => {
 
           <main
             ref={stage}
-            className='relative min-h-0 flex-1 overflow-hidden rounded-t-[2.5rem] rounded-b-3xl'
+            className='relative min-h-0 flex-1 overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'
           >
-            <div className='relative flex h-full flex-col px-3 pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] sm:px-8 lg:px-14'>
-              <div className='mt-auto text-center'>
-                <h1
-                  className={clsx(
-                    'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-shadow-md sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
-                    SHADOWS[theme]
-                  )}
-                >
-                  <span data-slide-title className='block'>
-                    <Name stroke>{titleLead}</Name>
-                  </span>
-                  <span data-slide-title className='block'>
-                    <Name stroke>{titleTail}</Name>
-                    {titleMark && (
-                      <span className='text-accent' style={{ color: mark }}>
-                        <Name stroke>{titleMark}</Name>
-                      </span>
+            <div className='relative flex h-full flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] sm:px-8 lg:px-14'>
+              <div
+                className={clsx(
+                  'mt-auto',
+                  align === 'left'
+                    ? 'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-end short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-end lg:justify-between lg:gap-10'
+                    : 'text-center'
+                )}
+              >
+                <div className='min-w-0'>
+                  <h1
+                    style={entrance}
+                    className={clsx(
+                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-shadow-md select-none sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
+                      SHADOWS[theme]
                     )}
-                  </span>
-                </h1>
+                  >
+                    <span
+                      key={`lead:${active}`}
+                      className={clsx('block', live && 'animate-title')}
+                    >
+                      <Name stroke>{titleLead}</Name>
+                    </span>
+                    <span
+                      key={`tail:${active}`}
+                      className={clsx(
+                        'block',
+                        live && 'animate-title [animation-delay:50ms]'
+                      )}
+                    >
+                      <Name stroke>{titleTail}</Name>
+                      {titleMark && (
+                        <span className='text-accent' style={{ color: mark }}>
+                          <Name stroke>{titleMark}</Name>
+                        </span>
+                      )}
+                    </span>
+                  </h1>
 
-                <p
-                  data-slide-text
-                  className={clsx(
-                    'mx-auto mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
-                    SHADOWS[theme]
+                  {slides[active].text && (
+                    <p
+                      data-slide-text
+                      className={clsx(
+                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
+                        align !== 'left' && 'mx-auto',
+                        SHADOWS[theme]
+                      )}
+                    >
+                      {slides[active].text}
+                    </p>
                   )}
-                >
-                  {slides[active].text}
-                </p>
+                </div>
 
                 {Action && (
                   <div
-                    data-slide-text
-                    className='mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
+                    data-slide-text={frosted ? undefined : ''}
+                    className={
+                      align === 'left'
+                        ? 'mt-[clamp(0.875rem,3.5svh-0.5rem,2rem)] shrink-0 short-wide:mt-0 lg:mt-0'
+                        : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
+                    }
                   >
                     <Action
                       open={partners}
@@ -469,7 +516,7 @@ export default (): ReactNode => {
                 onPointerUp={release}
                 onPointerCancel={release}
                 onPointerLeave={release}
-                className='mt-auto -mx-3 grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
+                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] sm:-mx-8 lg:-mx-14'
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
                   <div
@@ -498,7 +545,7 @@ export default (): ReactNode => {
                             alt=''
                             draggable={false}
                             className={clsx(
-                              'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
+                              'aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_2px_rgb(14_9_39_/_0.3)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] max-sm:block',
                               index === active ? 'scale-100' : 'scale-65'
                             )}
                           />

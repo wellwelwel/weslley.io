@@ -2,6 +2,7 @@
 @import 'tailwindcss/utilities.css' source(none);
 
 @source '../pages/index.tsx';
+@source '../components/Agenda.tsx';
 @source '../components/Backdrop.tsx';
 @source '../components/Badges.tsx';
 @source '../components/Header.tsx';
@@ -12,6 +13,7 @@
 
 @custom-variant short (@media (max-height: 36rem));
 @custom-variant short-wide (@media (max-height: 36rem) and (min-width: 40rem));
+@custom-variant squat (@media (max-width: 40rem) and (max-height: 41rem));
 @custom-variant steps (@media (min-width: 25rem));
 
 @theme {
@@ -20,6 +22,41 @@
     min(8.2vw, max(6.6vw, 2rem), 7rem, 13.9svh - 2.375rem)
   );
   --text-hero--line-height: 1.02;
+
+  --animate-ticker: ticker 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes ticker {
+    from {
+      translate: 0 var(--ticker-travel, 0.6em);
+      opacity: 0;
+    }
+  }
+
+  --animate-title: title 0.32s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+
+  @keyframes title {
+    from {
+      translate: 0 var(--title-travel, 55%);
+      opacity: 0;
+      filter: blur(var(--title-blur, 6px));
+    }
+  }
+
+  --animate-rise: rise 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes rise {
+    from {
+      translate: 0 var(--rise-travel, 1.25rem);
+    }
+  }
+
+  --animate-fade: fade 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
 
   --color-ink: #0e0927;
   --color-paper: #f0f4ff;

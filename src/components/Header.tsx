@@ -6,6 +6,7 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
 import avatar from '@site/src/assets/img/avatar.png';
+import { PartnersTrigger } from '@site/src/components/Partners';
 import { isReducedMotion } from '@site/src/helpers/reduced-motion';
 
 export type Section = {
@@ -174,7 +175,7 @@ export const Header = ({
   const { name, Icon } = steps[active];
 
   return (
-    <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5'>
+    <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0'>
       <button
         type='button'
         onClick={closingMenu(onHome)}
@@ -255,7 +256,7 @@ export const Header = ({
           aria-expanded={menu}
           aria-controls={panelId}
           className={clsx(
-            '-mr-3 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+            '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
             menu ? 'bg-ink/5' : 'bg-transparent'
           )}
         >
@@ -286,7 +287,7 @@ export const Header = ({
           ref={panel}
           id={panelId}
           inert={!menu}
-          className='invisible absolute top-full right-0 mt-3 w-52 origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_14px_32px_-10px_rgb(14_9_39_/_0.35)]'
+          className='invisible absolute top-full right-0 mt-3 w-max origin-top-right rounded-[1.25rem] border border-ink/10 bg-paper p-2 opacity-0 shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_14px_32px_-10px_rgb(14_9_39_/_0.35)]'
         >
           <nav className='flex flex-col'>
             {sections.map(({ label, onSelect }) => (
@@ -302,17 +303,9 @@ export const Header = ({
             ))}
           </nav>
 
-          <button
-            data-menu-item
-            type='button'
-            onClick={closingMenu(onPartners)}
-            aria-haspopup='dialog'
-            aria-expanded={partners}
-            className='mt-2 flex h-11 w-full cursor-pointer appearance-none items-center justify-center gap-3 rounded-xl border-0 bg-ink font-sans text-[0.9375rem] font-medium whitespace-nowrap text-paper transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/90 focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent'
-          >
-            Let's Talk
-            <span className='size-3.5 shrink-0 rounded-full bg-accent' />
-          </button>
+          <div data-menu-item className='mt-2 flex justify-center'>
+            <PartnersTrigger open={partners} onOpen={closingMenu(onPartners)} />
+          </div>
         </div>
       </div>
     </header>
