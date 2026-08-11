@@ -495,7 +495,7 @@ export default (): ReactNode => {
         ref={page}
         style={tint}
         className={clsx(
-          'shaded relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6',
+          'shaded relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6 short:p-3 cramped:p-2',
           THEMES[theme]
         )}
       >
@@ -530,7 +530,7 @@ export default (): ReactNode => {
 
         <div
           className={clsx(
-            'relative flex min-h-0 flex-1 flex-col p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)] max-sm:p-0 sm:overflow-hidden sm:rounded-[2rem]',
+            'relative flex min-h-0 flex-1 flex-col p-4 pt-0 transition-[background-color,box-shadow] duration-700 ease-[cubic-bezier(0.2,0,0,1)] max-sm:p-0 short:p-3 short:pt-0 sm:overflow-hidden sm:rounded-[2rem]',
             background
               ? 'bg-transparent shadow-none'
               : 'sm:bg-paper sm:shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
@@ -555,8 +555,10 @@ export default (): ReactNode => {
             onPartners={openPartners}
           />
 
-          <main className='relative min-h-0 flex-1 overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
-            <div className='relative flex h-full flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-2 sm:px-8 lg:px-14'>
+          {/* Past 1440p the scales are frozen, so the stage caps at the height
+              it had there and stays on the ground instead of spreading. */}
+          <main className='relative flex min-h-0 flex-1 flex-col overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
+            <div className='relative mt-auto flex h-full max-h-326 flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-1 cramped:pt-0 sm:px-8 lg:px-14'>
               <div
                 className={clsx(
                   'mt-auto',
@@ -568,7 +570,7 @@ export default (): ReactNode => {
                 <div className='min-w-0'>
                   <h1
                     className={clsx(
-                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-shadow-md select-none sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
+                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-balance text-shadow-md select-none sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
                       SHADOWS[theme]
                     )}
                   >
@@ -598,7 +600,7 @@ export default (): ReactNode => {
                     <p
                       key={`text:${active}`}
                       className={clsx(
-                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
+                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2 short:min-h-10',
                         align !== 'left' && 'mx-auto',
                         SHADOWS[theme]
                       )}
@@ -610,7 +612,7 @@ export default (): ReactNode => {
                   {Cta && (
                     <div
                       key={`cta:${active}`}
-                      className='mt-10 animate-slide max-sm:hidden'
+                      className='mt-10 animate-slide max-sm:hidden tight:hidden'
                     >
                       <Cta open={partners} onOpen={openPartners} mark={mark} />
                     </div>
@@ -622,7 +624,7 @@ export default (): ReactNode => {
                     key={`stage:${active}`}
                     className={clsx(
                       align === 'left'
-                        ? 'mt-[clamp(1.5rem,7.5svh-0.5rem,4rem)] shrink-0 short:mt-6 short-wide:mt-0 lg:mt-0'
+                        ? 'mt-[clamp(1.5rem,7.5svh-0.5rem,4rem)] shrink-0 short:mt-3 cramped:mt-1 short-wide:mt-0 lg:mt-0'
                         : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
                       !still && 'animate-slide'
                     )}
@@ -634,7 +636,7 @@ export default (): ReactNode => {
 
               <div
                 ref={rail}
-                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] [--chip:clamp(2.75rem,24.4svh-3.5rem,13rem)] short:pt-1 short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14'
+                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:pt-1 short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14'
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
                   <div
@@ -666,7 +668,7 @@ export default (): ReactNode => {
                           <Picture
                             src={src}
                             alt=''
-                            sizes='(min-width: 40rem) 13rem, 25vw'
+                            sizes='(min-width: 40rem) 16rem, 25vw'
                             decoding='async'
                             draggable={false}
                             className={clsx(

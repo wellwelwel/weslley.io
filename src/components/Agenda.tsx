@@ -528,7 +528,7 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
       aria-hidden={!center}
       onClick={clickable ? onFocus : undefined}
       className={clsx(
-        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3',
+        'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] backdrop-blur-xl transition-[translate,scale,opacity,visibility] duration-500 ease-[cubic-bezier(0.2,0,0,1)] select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3 cramped:gap-1 cramped:p-2.5',
         origin < 2 && 'animate-fade [animation-delay:500ms]',
         arrange(place)
       )}
@@ -786,7 +786,7 @@ export const Agenda = memo((): ReactNode => {
         ))}
       </div>
 
-      <div className='mt-[clamp(0.75rem,7.5svh-1.25rem,3.25rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:mt-4.5 short:mb-0 short-wide:mt-1'>
+      <div className='mt-[clamp(0.75rem,6.5svh-1.25rem,3rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-2 short:mt-4.5 short:mb-0 short-wide:mt-0 cramped:hidden'>
         <nav
           ref={attach}
           data-scroll=''
