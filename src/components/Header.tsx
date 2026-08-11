@@ -78,6 +78,7 @@ export const Header = ({
   const panel = useRef<HTMLDivElement>(null);
   const trigger = useRef<HTMLButtonElement>(null);
   const label = useRef<HTMLSpanElement>(null);
+  const labelled = useRef(false);
   const placed = useRef(false);
   const panelId = useId();
 
@@ -108,7 +109,12 @@ export const Header = ({
 
   useGSAP(
     () => {
+      const marked = labelled.current;
       const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+
+      labelled.current = true;
+
+      if (!marked) return;
 
       gsap.fromTo(
         label.current,

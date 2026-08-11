@@ -36,9 +36,17 @@ type Slot = {
     off?: number;
   };
   venue?: string;
+  address?: string;
   title: string;
   role: string;
   tone: string;
+};
+
+type Copier = [copied: boolean, copy: (value: string) => void];
+
+type SwapOptions = {
+  copied: boolean;
+  className?: string;
 };
 
 type RootStyle = CSSProperties & {
@@ -79,6 +87,8 @@ const slots: Slot[] = [
     event: 'DevFest Cerrado (GDG)',
     logo: '/img/devfest-cerrado.png',
     venue: 'Goiânia, GO',
+    address:
+      'Unialfa, 74445-190, Av. Perimetral Norte, St. Vila João Vaz, Goiânia - GO, Goiás',
     title:
       'Superando a síndrome do impostor e os desafios de existir no mercado através do open source',
     role: 'Palestra',
@@ -116,6 +126,7 @@ const slots: Slot[] = [
       url: 'https://eventos.codecon.dev/codecon-summit-25?cp=PALESTRANTE15',
     },
     venue: 'Curitiba, PR',
+    address: 'Viasoft Experience - Curitiba, PR',
     title: 'Criando um Test Runner: O que acontece por trás dos testes?',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -131,6 +142,7 @@ const slots: Slot[] = [
       url: 'https://www.sympla.com.br/evento/devconverge-latam---sprint-sp/3026669',
     },
     venue: 'São Paulo, SP',
+    address: 'Rua Dr. José Áureo Bustamante, 455 - São Paulo, SP',
     title:
       'Inventando o Novo: o ponto de encontro entre criatividade humana e geração assistida por IA',
     role: 'Palestra',
@@ -144,6 +156,7 @@ const slots: Slot[] = [
     url: 'https://www.semanadesi.com/',
     coupon: { code: 'Gratuito' },
     venue: 'São Paulo, SP',
+    address: 'EACH (USP Leste) - São Paulo, SP',
     title: 'GitHub além do Código: superando o mercado através do open source',
     role: 'Keynote',
     tone: '#7a77ff',
@@ -171,6 +184,7 @@ const slots: Slot[] = [
       url: 'https://doity.com.br/rogadx25?c=SPEAKER10',
     },
     venue: 'Maceió, AL',
+    address: 'Centro de Convenções de Maceió - Maceió, AL',
     title: 'Des(cobrindo) Testes: Criando Sistemas Seguros e Resilientes',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -182,6 +196,7 @@ const slots: Slot[] = [
     logo: '/img/tdc.png',
     url: 'https://thedevconf.com/tdc/2025/sao-paulo/trilha-web-e-front-end',
     venue: 'São Paulo, SP · Online',
+    address: 'Avenida Professora Ida Kolb, 513 - São Paulo, SP',
     title: 'Des(cobrindo) Testes: Criando Sistemas Seguros e Resilientes',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -193,6 +208,7 @@ const slots: Slot[] = [
     logo: '/img/mvpconf.png',
     url: 'https://mvpconf.com.br/',
     venue: 'São Paulo, SP',
+    address: 'Rua Vergueiro, 1211 (UNIP) - São Paulo, SP',
     title:
       'Do Open Source ao Microsoft MVP: Interoperabilidade, Segurança e Impacto Global',
     role: 'Palestra',
@@ -209,6 +225,7 @@ const slots: Slot[] = [
       url: 'https://www.sympla.com.br/evento/dev-referencias/3060749?referrer=weslley.io&referrer=weslley.io',
     },
     venue: 'São Paulo, SP · Online',
+    address: 'R. Cubatão, 726 (Faculdade Impacta) - São Paulo, SP',
     title: 'Como se Tornar uma Referência na Área Tech',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -221,6 +238,8 @@ const slots: Slot[] = [
     url: 'https://doity.com.br/dfc25',
     material: 'https://github.com/wellwelwel/devfest-cerrado-2025',
     venue: 'Goiânia, GO',
+    address:
+      'R. 261, 384 - Setor Leste Universitário (HUB Goiás) - Goiânia, GO',
     title:
       'Do Código para o Mundo Real: O Ponto de Encontro entre Dados, Testes e Segurança',
     role: 'Palestra',
@@ -234,6 +253,8 @@ const slots: Slot[] = [
     url: 'https://doity.com.br/dfc25',
     material: 'https://github.com/wellwelwel/devfest-cerrado-2025',
     venue: 'Goiânia, GO',
+    address:
+      'R. 261, 384 - Setor Leste Universitário (HUB Goiás) - Goiânia, GO',
     title: 'Open Source e todo seu ecossistema',
     role: 'Mentoria',
     tone: '#7a77ff',
@@ -260,6 +281,8 @@ const slots: Slot[] = [
     url: 'https://guild.host/events/practical-ai-with-nodejs-pagajf',
     coupon: { code: 'GRATUITO' },
     venue: 'São Paulo, SP',
+    address:
+      'Av. Paulista, 1374 - 12º Andar - Bela Vista, São Paulo - SP, 01310-000',
     title:
       'Do Código para o Mundo Real: O Ponto de Encontro entre Dados, Testes, Segurança e IA',
     role: 'Palestra',
@@ -287,6 +310,8 @@ const slots: Slot[] = [
       off: 20,
     },
     venue: 'Pinhais, PR',
+    address:
+      'Rod. Dep. João Leopoldo Jacomel, 10454 - Vila Amelia, Pinhais - PR',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -297,6 +322,7 @@ const slots: Slot[] = [
     logo: '/img/rogadx.png',
     url: 'https://rogadx.com/',
     venue: 'Maceió, AL',
+    address: 'Rua Celso Piatti, 280-372 - Jaraguá, Maceió - AL',
     title: 'Inteligência Sintética: ainda vale a pena investir em humanos?',
     role: 'Palestra',
     tone: '#7a77ff',
@@ -309,6 +335,8 @@ const slots: Slot[] = [
     coupon: { code: 'Gratuito' },
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     venue: 'São Paulo, SP',
+    address:
+      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020, Brazil',
     role: 'Keynote',
     tone: '#7a77ff',
   },
@@ -345,7 +373,7 @@ const COUPON =
 const REDEEM = `${COUPON} relative transition-[color,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-x-1 after:-inset-y-3.5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95`;
 
 const SWAP =
-  'absolute size-3 transition-[opacity,scale,filter] duration-250 ease-[cubic-bezier(0.2,0,0,1)]';
+  'absolute inset-0 size-3 transition-[opacity,scale,filter] duration-250 ease-[cubic-bezier(0.2,0,0,1)]';
 
 const FLIGHT =
   'col-start-1 row-start-1 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)]';
@@ -431,28 +459,47 @@ const upcomingIndex = (): number => {
 const anchor = (index: number): number =>
   stations[Math.max(0, index - 1)]! - PITCH.inset;
 
-const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
+const useCopy = (): Copier => {
   const [copied, setCopied] = useState(false);
-  const [origin] = useState(place);
   const timer = useRef(0);
-  const center = place === 0;
-  const clickable = place === 1;
-  const free = slot.coupon?.code.toLowerCase() === 'gratuito';
-  const details = slot.material ?? slot.url;
-  const Role = ROLES[slot.role] ?? TbMicrophone2;
 
-  const copy = (): void => {
-    if (!slot.coupon) return;
+  useEffect(() => () => window.clearTimeout(timer.current), []);
 
+  const copy = (value: string): void => {
     navigator.vibrate?.(10);
-    navigator.clipboard?.writeText(slot.coupon.code).then(() => {
+    navigator.clipboard?.writeText(value).then(() => {
       setCopied(true);
       window.clearTimeout(timer.current);
       timer.current = window.setTimeout(() => setCopied(false), 1600);
     });
   };
 
-  useEffect(() => () => window.clearTimeout(timer.current), []);
+  return [copied, copy];
+};
+
+const Swap = ({ copied, className }: SwapOptions): ReactNode => (
+  <span
+    className={clsx(
+      'relative size-3 shrink-0 transition-opacity duration-250 ease-[cubic-bezier(0.2,0,0,1)]',
+      className
+    )}
+    aria-hidden='true'
+  >
+    <Copy className={clsx(SWAP, copied && 'scale-25 opacity-0 blur-xs')} />
+    <Check className={clsx(SWAP, !copied && 'scale-25 opacity-0 blur-xs')} />
+  </span>
+);
+
+const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
+  const [copiedCoupon, copyCoupon] = useCopy();
+  const [copiedAddress, copyAddress] = useCopy();
+  const [origin] = useState(place);
+  const { address, coupon } = slot;
+  const center = place === 0;
+  const clickable = place === 1;
+  const free = coupon?.code.toLowerCase() === 'gratuito';
+  const details = slot.material ?? slot.url;
+  const Role = ROLES[slot.role] ?? TbMicrophone2;
 
   return (
     <article
@@ -474,13 +521,30 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
           className='size-9 shrink-0 object-contain max-sm:size-8 short:size-8'
         />
 
-        <div className='min-w-0'>
+        <div className='flex min-w-0 flex-col gap-0.5'>
           <p className='m-0 truncate text-sm/tight font-semibold text-ink'>
             {slot.event}
           </p>
           {slot.venue && (
-            <p className='m-0 truncate text-[0.6875rem]/snug font-medium text-ink/55'>
-              {slot.venue}
+            <p className='m-0 flex items-center gap-1.75 text-[0.6875rem]/normal font-medium text-ink/55'>
+              <span className='truncate'>{slot.venue}</span>
+
+              {address && (
+                <button
+                  type='button'
+                  onClick={() => copyAddress(address)}
+                  tabIndex={center ? undefined : -1}
+                  aria-label={
+                    copiedAddress ? 'Endereço copiado' : 'Copiar endereço'
+                  }
+                  className={clsx(
+                    'relative flex cursor-pointer appearance-none border-0 bg-transparent p-0 text-inherit transition-[color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-3.5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+                    !center && 'pointer-events-none opacity-0'
+                  )}
+                >
+                  <Swap copied={copiedAddress} />
+                </button>
+              )}
             </p>
           )}
         </div>
@@ -502,35 +566,38 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
             {slot.role}
           </span>
 
-          {slot.coupon &&
-            (slot.coupon.url ? (
+          {coupon &&
+            (coupon.url ? (
               <a
-                href={slot.coupon.url}
+                href={coupon.url}
                 target='_blank'
                 rel='noreferrer'
                 tabIndex={center ? undefined : -1}
-                aria-label={`Cupom ${discount(slot.coupon)}`}
+                aria-label={`Cupom ${discount(coupon)}`}
                 className={clsx(REDEEM, !center && 'pointer-events-none')}
               >
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{discount(slot.coupon)}</span>
+                <span className='truncate'>{discount(coupon)}</span>
                 <ExternalLink
-                  className='size-3 shrink-0 origin-bottom text-[#ff5498] group-hover/card:animate-hop'
+                  className={clsx(
+                    'size-3 shrink-0 origin-bottom text-[#ff5498] transition-opacity duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover/card:animate-hop',
+                    !center && 'opacity-0'
+                  )}
                   aria-hidden='true'
                 />
               </a>
             ) : free ? (
               <span className={COUPON}>
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{slot.coupon.code}</span>
+                <span className='truncate'>{coupon.code}</span>
               </span>
             ) : (
               <button
                 type='button'
-                onClick={copy}
+                onClick={() => copyCoupon(coupon.code)}
                 tabIndex={center ? undefined : -1}
                 aria-label={
-                  copied ? 'Cupom copiado' : `Copiar cupom ${slot.coupon.code}`
+                  copiedCoupon ? 'Cupom copiado' : `Copiar cupom ${coupon.code}`
                 }
                 className={clsx(
                   REDEEM,
@@ -539,24 +606,11 @@ const Card = ({ slot, place, onFocus }: CardOptions): ReactNode => {
                 )}
               >
                 <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{slot.coupon.code}</span>
-                <span
-                  className='relative size-3 shrink-0 text-[var(--tone)]'
-                  aria-hidden='true'
-                >
-                  <Copy
-                    className={clsx(
-                      SWAP,
-                      copied && 'scale-25 opacity-0 blur-xs'
-                    )}
-                  />
-                  <Check
-                    className={clsx(
-                      SWAP,
-                      !copied && 'scale-25 opacity-0 blur-xs'
-                    )}
-                  />
-                </span>
+                <span className='truncate'>{coupon.code}</span>
+                <Swap
+                  copied={copiedCoupon}
+                  className={clsx('text-[var(--tone)]', !center && 'opacity-0')}
+                />
               </button>
             ))}
         </div>
@@ -710,50 +764,52 @@ export const Agenda = memo((): ReactNode => {
         ))}
       </div>
 
-      <nav
-        ref={attach}
-        data-scroll=''
-        aria-label='Linha do tempo dos eventos'
-        className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker touch-pan-x contain-inline-size overflow-x-auto overflow-y-hidden overscroll-x-contain text-shadow-sm text-shadow-paper/50 [animation-delay:580ms] [mask-image:linear-gradient(to_right,transparent,black_2rem,black_calc(100%-2rem),transparent)] [scrollbar-width:none] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:hidden squat:hidden [&::-webkit-scrollbar]:hidden'
-      >
-        <div className='relative h-14 sm:h-16.5' style={{ width: extent }}>
-          {slots.map((slot, index) => (
-            <button
-              key={`${slot.date}:${slot.title}`}
-              type='button'
-              onClick={() => setFocus(index)}
-              aria-current={index === focus ? 'date' : undefined}
-              aria-label={`${labels[index].brief}: ${slot.event}`}
-              style={{ left: stations[index] }}
-              className={clsx(
-                'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none flex-col items-center gap-1 border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
-                index === focus ? 'scale-105' : 'opacity-55 hover:opacity-75'
-              )}
-            >
-              <span
+      <div className='mt-[clamp(1rem,5svh-1rem,2rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-3 short:hidden squat:hidden'>
+        <nav
+          ref={attach}
+          data-scroll=''
+          aria-label='Linha do tempo dos eventos'
+          className='w-full soften touch-pan-x contain-inline-size overflow-x-auto overflow-y-hidden overscroll-x-contain text-shadow-sm text-shadow-paper/50 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'
+        >
+          <div className='relative h-14 sm:h-16.5' style={{ width: extent }}>
+            {slots.map((slot, index) => (
+              <button
+                key={`${slot.date}:${slot.title}`}
+                type='button'
+                onClick={() => setFocus(index)}
+                aria-current={index === focus ? 'date' : undefined}
+                aria-label={`${labels[index].brief}: ${slot.event}`}
+                style={{ left: stations[index] }}
                 className={clsx(
-                  'text-[0.625rem]/none font-bold tracking-widest whitespace-nowrap uppercase',
-                  index === focus ? 'text-ink' : 'text-ink/55 max-sm:hidden'
+                  'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none flex-col items-center gap-1 border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+                  index === focus ? 'scale-105' : 'opacity-55 hover:opacity-75'
                 )}
               >
-                {labels[index].brief}
-              </span>
-              <span aria-hidden='true' className='h-2 w-px bg-ink/25' />
-              <span className='flex size-7.5 items-center justify-center sm:size-10'>
-                <Picture
-                  src={slot.logo ?? AVATAR}
-                  alt=''
-                  sizes='(min-width: 40rem) 2rem, 1.5rem'
-                  loading='lazy'
-                  decoding='async'
-                  draggable={false}
-                  className='size-6 object-contain sm:size-8'
-                />
-              </span>
-            </button>
-          ))}
-        </div>
-      </nav>
+                <span
+                  className={clsx(
+                    'text-[0.625rem]/none font-bold tracking-widest whitespace-nowrap uppercase',
+                    index === focus ? 'text-ink' : 'text-ink/55 max-sm:hidden'
+                  )}
+                >
+                  {labels[index].brief}
+                </span>
+                <span aria-hidden='true' className='h-2 w-px bg-ink/25' />
+                <span className='flex size-7.5 items-center justify-center sm:size-10'>
+                  <Picture
+                    src={slot.logo ?? AVATAR}
+                    alt=''
+                    sizes='(min-width: 40rem) 2rem, 1.5rem'
+                    loading='lazy'
+                    decoding='async'
+                    draggable={false}
+                    className='size-6 object-contain sm:size-8'
+                  />
+                </span>
+              </button>
+            ))}
+          </div>
+        </nav>
+      </div>
     </div>
   );
 });

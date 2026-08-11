@@ -6,6 +6,7 @@
 @source '../components/Backdrop.tsx';
 @source '../components/Badges.tsx';
 @source '../components/Header.tsx';
+@source '../components/Hill.tsx';
 @source '../components/Partners';
 @source '../components/Picture.tsx';
 @source '../components/Progress.tsx';
@@ -39,9 +40,19 @@
 
   @keyframes title {
     from {
-      translate: 0 var(--title-travel, 55%);
+      translate: 0 var(--title-travel);
       opacity: 0;
-      filter: blur(var(--title-blur, 6px));
+      filter: blur(var(--title-blur));
+    }
+  }
+
+  --animate-slide: slide 0.38s cubic-bezier(0.215, 0.61, 0.355, 1) 0.42s
+    backwards;
+
+  @keyframes slide {
+    from {
+      translate: var(--slide-travel) 0;
+      opacity: 0;
     }
   }
 
@@ -93,6 +104,61 @@
   --color-blush: #fd79a8;
   --color-blush-deep: #e84393;
   --color-progress-track: #21115a;
+}
+
+:root {
+  --title-travel: 55%;
+  --title-blur: 6px;
+  --slide-travel: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --title-travel: 30%;
+    --title-blur: 3px;
+    --slide-travel: 26px;
+  }
+}
+
+@property --head {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 32px;
+}
+
+@property --tail {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 32px;
+}
+
+@keyframes head {
+  from {
+    --head: 0px;
+  }
+}
+
+@keyframes tail {
+  to {
+    --tail: 0px;
+  }
+}
+
+@utility soften {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--head),
+    black calc(100% - var(--tail)),
+    transparent
+  );
+  animation:
+    head linear both,
+    tail linear both;
+  animation-timeline: scroll(self inline);
+  animation-range:
+    0 2rem,
+    calc(100% - 2rem) 100%;
 }
 
 body.clean {

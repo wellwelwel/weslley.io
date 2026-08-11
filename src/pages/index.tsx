@@ -1,6 +1,6 @@
 import type { Section, Step } from '@site/src/components/Header';
 import type { Trigger } from '@site/src/components/Partners';
-import type { ComponentType, CSSProperties, ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import Head from '@docusaurus/Head';
@@ -17,6 +17,7 @@ import { Agenda } from '@site/src/components/Agenda';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Badges } from '@site/src/components/Badges';
 import { Header } from '@site/src/components/Header';
+import { Hill } from '@site/src/components/Hill';
 import { Name } from '@site/src/components/Name';
 import { PartnersAction, PartnersDialog } from '@site/src/components/Partners';
 import { Picture } from '@site/src/components/Picture';
@@ -31,11 +32,6 @@ type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
 type Theme = 'light' | 'dark';
 
-type TitleStyle = CSSProperties & {
-  '--title-travel': string;
-  '--title-blur': string;
-};
-
 type Slide = {
   src: string;
   alt: string;
@@ -47,6 +43,7 @@ type Slide = {
   texture?: string;
   color?: string;
   mark?: string;
+  hill?: string;
   theme?: Theme;
   align?: 'left';
   frosted?: boolean;
@@ -70,32 +67,18 @@ const poku = '/img/plush/poku.png';
 const pokuBackground = '/img/plush/poku-bg.png';
 const velvet = '/img/plush/velvet-texture.png';
 
+const pink = '#ff5498';
+const white = '#ffffff';
+
 const FALLBACK_DOWNLOADS = '600 milhões';
 const NUMBERS = Array.from({ length: 10 }, (_, i) => i);
 const ROLL = { duration: 0.3, stagger: 0.05, ease: 'none' };
 const STEP_LOCK = 0.6;
 const TOLERANCE = 10;
-const TITLE_IN = 0.32;
-const TEXT_IN = 0.38;
-const TEXT_GAP = 0.05;
 
 const TRAVEL = {
-  full: {
-    titleY: 55,
-    titleBlur: 6,
-    titleStagger: 0.05,
-    textX: 48,
-    railY: 100,
-    roll: 1,
-  },
-  reduced: {
-    titleY: 30,
-    titleBlur: 3,
-    titleStagger: 0.05,
-    textX: 26,
-    railY: 55,
-    roll: 0.65,
-  },
+  full: { railY: 100, roll: 1 },
+  reduced: { railY: 55, roll: 0.65 },
 };
 
 const motion = (): (typeof TRAVEL)['full'] =>
@@ -206,6 +189,7 @@ const groups: Group[] = [
         name: 'Open Source',
         Icon: TbBrandOpenSource,
         title: [<Downloads />, 'de downloads anuais', '.'],
+        hill: '#a3b6c9',
         text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
         texture: velvet,
         Action: PartnersAction,
@@ -216,6 +200,7 @@ const groups: Group[] = [
         name: 'Agenda',
         Icon: IoIosCalendar,
         title: ['Próximos', 'eventos', '.'],
+        hill: pink,
         color: '#000000aa',
         background: defaultBackground,
         theme: 'dark',
@@ -229,6 +214,7 @@ const groups: Group[] = [
         name: 'Microsoft MVP',
         Icon: RiMicrosoftLine,
         title: ['Microsoft MVP &', 'Anthropic CVP', '.'],
+        hill: '#2d86ff',
         text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
         texture: velvet,
         Action: Badges,
@@ -252,6 +238,7 @@ const groups: Group[] = [
         background: mysql2Background,
         color: '#00afff40',
         mark: '#00a1ff',
+        hill: white,
       },
       {
         src: lagune,
@@ -263,6 +250,7 @@ const groups: Group[] = [
         background: laguneBackground,
         color: '#00a7ff66',
         mark: '#f0f9ff',
+        hill: white,
         Action: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
       },
       {
@@ -274,7 +262,8 @@ const groups: Group[] = [
         text: 'Weslley é autor do Poku, um executor de testes que democratiza os testes para desenvolvedores de todos os níveis.',
         background: pokuBackground,
         color: '#56d0ff2b',
-        mark: '#ff5498',
+        mark: pink,
+        hill: '#fdff00',
         Action: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
       },
     ],
@@ -302,35 +291,35 @@ const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
   const [active, setActive] = useState(0);
-  const [live, setLive] = useState(false);
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
-  const stage = useRef<HTMLElement>(null);
+  const [hovered, setHovered] = useState<number | null>(null);
+  const [spots, setSpots] = useState<number[]>([]);
   const rail = useRef<HTMLDivElement>(null);
+  const page = useRef<HTMLDivElement>(null);
+  const chips = useRef<(HTMLButtonElement | null)[]>([]);
   const current = useRef(0);
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
   const railPlaced = useRef(false);
   const group = groupOf[active]!;
+  const preview =
+    hovered !== null && hovered !== active && groupOf[hovered] === group
+      ? hovered
+      : null;
+  const focus = preview ?? active;
   const {
     Action,
     background,
     texture,
     color,
     mark,
+    hill,
     theme = 'light',
     align,
     frosted,
   } = slides[active];
   const [titleLead, titleTail, titleMark] = slides[active].title;
-  const travel = live && isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
-
-  const entrance: TitleStyle | undefined = live
-    ? {
-        '--title-travel': `${travel.titleY}%`,
-        '--title-blur': `${travel.titleBlur}px`,
-      }
-    : undefined;
 
   const show = useCallback((index: number) => {
     if (index === current.current || index < 0 || index > slides.length - 1)
@@ -361,7 +350,41 @@ export default (): ReactNode => {
     [show]
   );
 
-  useEffect(() => setLive(true), []);
+  useEffect(() => {
+    const measure = () => {
+      const base = page.current;
+
+      if (!base) return;
+
+      const origin = base.getBoundingClientRect().left;
+
+      setSpots(
+        chips.current.map((chip) => {
+          const box = chip?.getBoundingClientRect();
+
+          return box ? box.left + box.width / 2 - origin : 0;
+        })
+      );
+    };
+
+    measure();
+
+    if (!rail.current) return;
+
+    let frame = 0;
+
+    const observer = new ResizeObserver(() => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(measure);
+    });
+
+    observer.observe(rail.current);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -411,26 +434,6 @@ export default (): ReactNode => {
 
   useGSAP(
     () => {
-      const texts = stage.current?.querySelectorAll('[data-slide-text]');
-
-      if (texts?.length)
-        gsap.fromTo(
-          texts,
-          { opacity: 0, x: travel.textX },
-          {
-            opacity: 1,
-            x: 0,
-            duration: TEXT_IN,
-            ease: 'power2.out',
-            delay: TITLE_IN + travel.titleStagger + TEXT_GAP,
-          }
-        );
-    },
-    { dependencies: [active], scope: stage, revertOnUpdate: true }
-  );
-
-  useGSAP(
-    () => {
       const travel = motion();
 
       const rows = rail.current?.querySelectorAll('[data-group]') ?? [];
@@ -460,6 +463,7 @@ export default (): ReactNode => {
       <Progress value={(active + 1) / slides.length} color={mark} />
 
       <div
+        ref={page}
         className={clsx(
           'relative flex h-dvh touch-pan-x touch-pinch-zoom flex-col p-5 antialiased max-sm:h-svh max-sm:pt-6',
           THEMES[theme]
@@ -521,10 +525,7 @@ export default (): ReactNode => {
             onPartners={openPartners}
           />
 
-          <main
-            ref={stage}
-            className='relative min-h-0 flex-1 overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'
-          >
+          <main className='relative min-h-0 flex-1 overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
             <div className='relative flex h-full flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] sm:px-8 lg:px-14'>
               <div
                 className={clsx(
@@ -536,7 +537,6 @@ export default (): ReactNode => {
               >
                 <div className='min-w-0'>
                   <h1
-                    style={entrance}
                     className={clsx(
                       'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-shadow-md select-none sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
                       SHADOWS[theme]
@@ -544,16 +544,13 @@ export default (): ReactNode => {
                   >
                     <span
                       key={`lead:${active}`}
-                      className={clsx('block', live && 'animate-title')}
+                      className='block animate-title'
                     >
                       <Name stroke>{titleLead}</Name>
                     </span>
                     <span
                       key={`tail:${active}`}
-                      className={clsx(
-                        'block',
-                        live && 'animate-title [animation-delay:50ms]'
-                      )}
+                      className='block animate-title [animation-delay:50ms]'
                     >
                       <Name stroke>{titleTail}</Name>
                       {titleMark && (
@@ -566,9 +563,9 @@ export default (): ReactNode => {
 
                   {slides[active].text && (
                     <p
-                      data-slide-text
+                      key={`text:${active}`}
                       className={clsx(
-                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
+                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-[max(1rem,min(1.125rem,3svh-0.25rem))]',
                         align !== 'left' && 'mx-auto',
                         SHADOWS[theme]
                       )}
@@ -580,12 +577,13 @@ export default (): ReactNode => {
 
                 {Action && (
                   <div
-                    data-slide-text={frosted ? undefined : ''}
-                    className={
+                    key={`action:${active}`}
+                    className={clsx(
                       align === 'left'
                         ? 'mt-[clamp(0.875rem,3.5svh-0.5rem,2rem)] shrink-0 short-wide:mt-0 lg:mt-0'
-                        : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]'
-                    }
+                        : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
+                      !frosted && 'animate-slide'
+                    )}
                   >
                     <Action open={partners} onOpen={openPartners} mark={mark} />
                   </div>
@@ -608,8 +606,17 @@ export default (): ReactNode => {
                       return (
                         <button
                           key={alt}
+                          ref={(chip) => {
+                            chips.current[index] = chip;
+                          }}
                           type='button'
                           onClick={() => show(index)}
+                          onPointerEnter={({ pointerType }) =>
+                            pointerType === 'mouse' && setHovered(index)
+                          }
+                          onPointerLeave={() => setHovered(null)}
+                          onFocus={() => setHovered(index)}
+                          onBlur={() => setHovered(null)}
                           aria-label={alt}
                           aria-current={index === active}
                           className='group block min-w-0 max-w-[clamp(2.75rem,24.4svh-3.5rem,13rem)] flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
@@ -634,6 +641,10 @@ export default (): ReactNode => {
             </div>
           </main>
         </div>
+
+        {spots[focus] !== undefined && (
+          <Hill center={spots[focus]} tone={hill ?? mark} />
+        )}
       </div>
 
       {partners && <PartnersDialog onClose={closePartners} />}
