@@ -1,5 +1,5 @@
 import type { ArticlesOptions } from '@site/src/helpers/get-social';
-import type { ProcessedArticle } from '../../@types/article';
+import type { ArticleListing } from '../../@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -7,8 +7,8 @@ import Layout from '@theme/Layout';
 export const Tags = ({ route }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();
   const articles =
-    (globalData[`mount-${route}`] as { default: ProcessedArticle[] })
-      ?.default || [];
+    (globalData[`mount-${route}`] as { default: ArticleListing[] })?.default ||
+    [];
   const currentLocale = i18n.currentLocale;
 
   const translations = {

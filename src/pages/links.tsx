@@ -2,16 +2,14 @@ import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import { ArrowBigDownDash } from 'lucide-react';
+import AboutHeadline from '@site/i18n/pt-BR/about/headline.mdx';
 import { AnimatedCount } from '@site/src/components/AnimatedCount';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
 import { dynamicImport } from '@site/src/helpers/dynamic-require';
-import {
-  anchors,
-  cards,
-  MDXImports,
-  socials,
-} from '@site/src/helpers/get-contents';
+import { anchors } from '@site/src/helpers/get-anchors';
+import { cards } from '@site/src/helpers/get-cards';
+import { socials } from '@site/src/helpers/get-socials';
 import { useStats } from '@site/src/hooks/useStats';
 
 export default (): ReactNode => {
@@ -22,7 +20,7 @@ export default (): ReactNode => {
   const Socials = socials(currentLocale);
   const Cards = cards(currentLocale);
   const stats = useStats();
-  const AboutResume = dynamicImport(currentLocale, MDXImports.AboutResume);
+  const AboutResume = dynamicImport(currentLocale, { 'pt-BR': AboutHeadline });
 
   return (
     <Layout

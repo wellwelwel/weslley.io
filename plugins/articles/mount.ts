@@ -1,4 +1,7 @@
-import type { ProcessedArticle } from '../../src/@types/article';
+import type {
+  ArticleListing,
+  ProcessedArticle,
+} from '../../src/@types/article';
 import { resolve } from 'node:path';
 import { LoadContext, Plugin } from '@docusaurus/types';
 import { findArticles } from '../../tools/find-articles';
@@ -9,6 +12,32 @@ interface PluginOptions {
   pluginName: string;
   contentDir: string;
 }
+
+/** Global data reaches every page's shared bundle, so only the fields the
+    listings render may travel in it. */
+const listing = ({
+  title,
+  slug,
+  date,
+  description,
+  readingTime,
+  lastModified,
+  tags,
+  order,
+  social,
+  mdxPath,
+}: ProcessedArticle): ArticleListing => ({
+  title,
+  slug,
+  date,
+  description,
+  readingTime,
+  lastModified,
+  tags,
+  order,
+  social,
+  mdxPath,
+});
 
 export default (
   context: LoadContext,
@@ -69,7 +98,7 @@ export default (
       const localePrefix =
         currentLocale === i18n.defaultLocale ? '' : `/${currentLocale}`;
 
-      setGlobalData(content);
+      setGlobalData(content.map(listing));
 
       for (const article of content) {
         const dataPath = await createData(

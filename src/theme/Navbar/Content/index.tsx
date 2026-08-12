@@ -12,7 +12,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarSearch from '@theme/Navbar/Search';
 import NavbarItem from '@theme/NavbarItem';
 import SearchBar from '@theme/SearchBar';
-import { anchors } from '@site/src/helpers/get-contents';
+import { anchors } from '@site/src/helpers/get-anchors';
 
 // Importa os anchors gerados dinamicamente
 

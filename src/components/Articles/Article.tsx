@@ -1,4 +1,4 @@
-import type { ProcessedArticle } from '@site/src/@types/article';
+import type { ArticleListing } from '@site/src/@types/article';
 import type { ViewMode } from '@site/src/hooks/useViewMode';
 import type { FC } from 'react';
 import { useRef } from 'react';
@@ -15,7 +15,7 @@ import { isDevelopment } from '@site/tools/environment';
 import { MarkdownWithAdmonitions } from './Admonition';
 
 export const Article: FC<{
-  article: ProcessedArticle;
+  article: ArticleListing;
   route: ArticlesOptions['route'];
   viewMode?: ViewMode;
 }> = ({ article, route, viewMode = 'card' }) => {

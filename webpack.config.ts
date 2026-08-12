@@ -27,6 +27,12 @@ type Compiler = {
 };
 
 const STYLESHEET = /\.(css|scss|sass)$/i;
+
+/* The theme registers the extra Prism languages through a client module that
+   drags prism-react-renderer into every page's entry bundle, so the register
+   lives in src/theme/CodeBlock instead and this entry copy goes silent. */
+const PRISM = /theme-classic[\\/]lib[\\/]prism-include-languages(\.js)?$/;
+
 const SITE = '@site/';
 
 const MANIFEST = 'client-manifest.json';
@@ -50,6 +56,10 @@ const locate = ({ request, context = __dirname }: Resource) =>
 const strip = (resource: Resource) => {
   if (chained(resource.request) || locate(resource) === home) return;
 
+  resource.request = empty;
+};
+
+const silence = (resource: Resource) => {
   resource.request = empty;
 };
 
@@ -157,6 +167,10 @@ export default () => {
             STYLESHEET,
             strip
           ),
+          new currentBundler.instance.NormalModuleReplacementPlugin(
+            PRISM,
+            silence
+          ),
           ...(patching ? [routeScripts] : []),
         ],
         resolve: {
@@ -168,6 +182,24 @@ export default () => {
             '@Keynote': resolve(__dirname, 'src/components/Keynote'),
           },
         },
+        ...(isServer
+          ? {}
+          : {
+              optimization: {
+                splitChunks: {
+                  cacheGroups: {
+                    prism: {
+                      test: /[\\/]node_modules[\\/](?:prism-react-renderer|prismjs)[\\/]/,
+                      chunks: 'async',
+                      minChunks: 2,
+                      priority: 45,
+                      reuseExistingChunk: true,
+                      name: 'prism',
+                    },
+                  },
+                },
+              },
+            }),
       };
     },
   };

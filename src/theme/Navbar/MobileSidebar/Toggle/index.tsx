@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import { translate } from '@docusaurus/Translate';
 import IconMenu from '@theme/Icon/Menu';
-import { anchors } from '@site/src/helpers/get-contents';
+import { anchors } from '@site/src/helpers/get-anchors';
 
 export default function MobileSidebarToggle(): ReactNode {
   const hasAnchors = anchors.length > 0;
