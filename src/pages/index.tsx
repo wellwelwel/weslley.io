@@ -27,6 +27,9 @@ import { Name } from '@site/src/components/Name';
 import { PartnersDialog } from '@site/src/components/Partners/Dialog';
 import { Picture } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
+import interLatin from '@site/src/fonts/inter-latin.woff2';
+import noto800 from '@site/src/fonts/noto-sans-latin-800.woff2';
+import noto900 from '@site/src/fonts/noto-sans-latin-900.woff2';
 import { motion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP);
@@ -36,6 +39,10 @@ type PageStyle = CSSProperties & { '--tint'?: string };
 const fallbackBackgrounds = [defaultBackground];
 
 const RAIL = { full: 100, reduced: 55 };
+
+/* Mirrors the placement GSAP applies at hydration, so the static frame
+   already shows a single group instead of every row stacked. */
+const PARKED: CSSProperties = { opacity: 0, visibility: 'hidden' };
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
@@ -119,6 +126,29 @@ export default (): ReactNode => {
       <Head>
         <title>{siteConfig.title}</title>
         <body className='clean overscroll-none' />
+        <link
+          rel='preload'
+          as='font'
+          type='font/woff2'
+          href={interLatin}
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          as='font'
+          type='font/woff2'
+          href={noto900}
+          media='(max-width: 39.9375rem)'
+          crossOrigin='anonymous'
+        />
+        <link
+          rel='preload'
+          as='font'
+          type='font/woff2'
+          href={noto800}
+          media='(min-width: 40rem)'
+          crossOrigin='anonymous'
+        />
       </Head>
 
       <Progress value={(active + 1) / slides.length} color={mark} />
@@ -168,11 +198,14 @@ export default (): ReactNode => {
               : 'sm:bg-paper sm:shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
           )}
         >
+          {/* Auto keeps the grain from disputing bandwidth with the backdrop
+              and the fonts while the first view loads. */}
           <Backdrop
             sources={textures}
             active={texture}
             className='absolute max-sm:fixed'
             opacity={0.25}
+            priority='auto'
           />
 
           <Header
@@ -274,6 +307,7 @@ export default (): ReactNode => {
                   <div
                     key={label}
                     data-group
+                    style={groupIndex ? PARKED : undefined}
                     className='col-start-1 row-start-1 flex items-end justify-center gap-2 lg:gap-6'
                   >
                     {members.map(({ src, alt }, memberIndex) => {

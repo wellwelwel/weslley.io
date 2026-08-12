@@ -24,12 +24,17 @@ export const useSpots = (): Spots => {
 
       const origin = base.getBoundingClientRect().left;
 
-      setSpots(
-        chips.current.map((chip) => {
-          const box = chip?.getBoundingClientRect();
+      const centers = chips.current.map((chip) => {
+        const box = chip?.getBoundingClientRect();
 
-          return box ? box.left + box.width / 2 - origin : 0;
-        })
+        return box ? box.left + box.width / 2 - origin : 0;
+      });
+
+      setSpots((previous) =>
+        centers.length === previous.length &&
+        centers.every((center, index) => center === previous[index])
+          ? previous
+          : centers
       );
     };
 
