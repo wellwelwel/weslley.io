@@ -1,7 +1,14 @@
 import type { LucideIcon } from 'lucide-react';
 import type { CSSProperties, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
-import { memo, useCallback, useEffect, useRef, useState } from 'react';
+import {
+  memo,
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -70,6 +77,8 @@ type CardOptions = {
   place: number;
   /** Frosted glass only reaches the cards a viewer can actually see. */
   frosted: boolean;
+  /** An undressed card keeps its shell, so it still has a state to animate from. */
+  dressed: boolean;
   onFocus: () => void;
 };
 
@@ -459,6 +468,12 @@ const DAY = 86_400_000;
 const SETTLE = 500;
 
 const SEEN = 1;
+const WINDOW = 2;
+
+/* Every card stretches to the tallest one, so the deck can only shed the cards
+   nobody sees once it holds that height on its own. Measuring it once per size
+   keeps the height the content earned, and outlives each visit to the slide. */
+let held: number | undefined;
 
 const PITCH = { inset: 32, least: 72, daily: 4, most: 128 };
 
@@ -527,7 +542,13 @@ const Swap = ({ copied, className }: SwapOptions): ReactNode => (
   </span>
 );
 
-const Card = ({ slot, place, frosted, onFocus }: CardOptions): ReactNode => {
+const Card = ({
+  slot,
+  place,
+  frosted,
+  dressed,
+  onFocus,
+}: CardOptions): ReactNode => {
   const [copiedCoupon, copyCoupon] = useCopy();
   const [copiedAddress, copyAddress] = useCopy();
   const [origin] = useState(place);
@@ -549,136 +570,154 @@ const Card = ({ slot, place, frosted, onFocus }: CardOptions): ReactNode => {
         arrange(place)
       )}
     >
-      <div className='flex items-center gap-2.5'>
-        <Picture
-          src={slot.logo ?? AVATAR}
-          alt=''
-          sizes='2.25rem'
-          decoding='async'
-          draggable={false}
-          className='size-9 shrink-0 object-contain max-sm:size-8 short:size-8'
-        />
+      {!dressed ? null : (
+        <>
+          <div className='flex items-center gap-2.5'>
+            <Picture
+              src={slot.logo ?? AVATAR}
+              alt=''
+              sizes='2.25rem'
+              decoding='async'
+              draggable={false}
+              className='size-9 shrink-0 object-contain max-sm:size-8 short:size-8'
+            />
 
-        <div className='flex min-w-0 flex-col gap-0.5'>
-          <p className='m-0 truncate text-sm/tight font-semibold text-ink'>
-            {slot.event}
-          </p>
-          {slot.venue && (
-            <p className='m-0 flex items-center gap-1.75 text-[0.6875rem]/normal font-medium text-ink/55'>
-              <span className='truncate'>{slot.venue}</span>
+            <div className='flex min-w-0 flex-col gap-0.5'>
+              <p className='m-0 truncate text-sm/tight font-semibold text-ink'>
+                {slot.event}
+              </p>
+              {slot.venue && (
+                <p className='m-0 flex items-center gap-1.75 text-[0.6875rem]/normal font-medium text-ink/55'>
+                  <span className='truncate'>{slot.venue}</span>
 
-              {address && (
-                <button
-                  type='button'
-                  onClick={() => copyAddress(address)}
-                  tabIndex={center ? undefined : -1}
-                  aria-label={
-                    copiedAddress ? 'Endereço copiado' : 'Copiar endereço'
-                  }
-                  className={clsx(
-                    'relative flex cursor-pointer appearance-none border-0 bg-transparent p-0 text-inherit transition-[color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-3.5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
-                    !center && 'pointer-events-none opacity-0'
+                  {address && (
+                    <button
+                      type='button'
+                      onClick={() => copyAddress(address)}
+                      tabIndex={center ? undefined : -1}
+                      aria-label={
+                        copiedAddress ? 'Endereço copiado' : 'Copiar endereço'
+                      }
+                      className={clsx(
+                        'relative flex cursor-pointer appearance-none border-0 bg-transparent p-0 text-inherit transition-[color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-3.5 hover:text-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95',
+                        !center && 'pointer-events-none opacity-0'
+                      )}
+                    >
+                      <Swap copied={copiedAddress} />
+                    </button>
                   )}
-                >
-                  <Swap copied={copiedAddress} />
-                </button>
+                </p>
               )}
-            </p>
-          )}
-        </div>
-      </div>
+            </div>
+          </div>
 
-      <p className='m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85'>
-        {slot.title}
-      </p>
+          <p className='m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85'>
+            {slot.title}
+          </p>
 
-      <footer
-        className={clsx(
-          'mt-auto flex items-center justify-between gap-3',
-          details && 'pr-10.5'
-        )}
-      >
-        <div className='flex min-w-0 flex-col items-start gap-1.5'>
-          <span className='flex items-center gap-1 text-[0.625rem]/none font-bold tracking-widest text-ink/70 uppercase'>
-            <Role className='size-3 shrink-0' aria-hidden='true' />
-            {slot.role}
-          </span>
+          <footer
+            className={clsx(
+              'mt-auto flex items-center justify-between gap-3',
+              details && 'pr-10.5'
+            )}
+          >
+            <div className='flex min-w-0 flex-col items-start gap-1.5'>
+              <span className='flex items-center gap-1 text-[0.625rem]/none font-bold tracking-widest text-ink/70 uppercase'>
+                <Role className='size-3 shrink-0' aria-hidden='true' />
+                {slot.role}
+              </span>
 
-          {coupon &&
-            (coupon.url ? (
+              {coupon &&
+                (coupon.url ? (
+                  <a
+                    href={coupon.url}
+                    target='_blank'
+                    rel='noreferrer'
+                    tabIndex={center ? undefined : -1}
+                    aria-label={`Cupom ${discount(coupon)}`}
+                    className={clsx(REDEEM, !center && 'pointer-events-none')}
+                  >
+                    <TicketPercent
+                      className='size-3 shrink-0'
+                      aria-hidden='true'
+                    />
+                    <span className='truncate'>{discount(coupon)}</span>
+                    <ExternalLink
+                      className={clsx(
+                        'size-3 shrink-0 origin-bottom text-[#ff5498] transition-opacity duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover/card:animate-hop',
+                        !center && 'opacity-0'
+                      )}
+                      aria-hidden='true'
+                    />
+                  </a>
+                ) : free ? (
+                  <span className={COUPON}>
+                    <TicketPercent
+                      className='size-3 shrink-0'
+                      aria-hidden='true'
+                    />
+                    <span className='truncate'>{coupon.code}</span>
+                  </span>
+                ) : (
+                  <button
+                    type='button'
+                    onClick={() => copyCoupon(coupon.code)}
+                    tabIndex={center ? undefined : -1}
+                    aria-label={
+                      copiedCoupon
+                        ? 'Cupom copiado'
+                        : `Copiar cupom ${coupon.code}`
+                    }
+                    className={clsx(
+                      REDEEM,
+                      'cursor-pointer appearance-none border-0 bg-transparent p-0',
+                      !center && 'pointer-events-none'
+                    )}
+                  >
+                    <TicketPercent
+                      className='size-3 shrink-0'
+                      aria-hidden='true'
+                    />
+                    <span className='truncate'>{coupon.code}</span>
+                    <Swap
+                      copied={copiedCoupon}
+                      className={clsx(
+                        'text-[var(--tone)]',
+                        !center && 'opacity-0'
+                      )}
+                    />
+                  </button>
+                ))}
+            </div>
+
+            {details && (
               <a
-                href={coupon.url}
+                href={details}
                 target='_blank'
                 rel='noreferrer'
                 tabIndex={center ? undefined : -1}
-                aria-label={`Cupom ${discount(coupon)}`}
-                className={clsx(REDEEM, !center && 'pointer-events-none')}
-              >
-                <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{discount(coupon)}</span>
-                <ExternalLink
-                  className={clsx(
-                    'size-3 shrink-0 origin-bottom text-[#ff5498] transition-opacity duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover/card:animate-hop',
-                    !center && 'opacity-0'
-                  )}
-                  aria-hidden='true'
-                />
-              </a>
-            ) : free ? (
-              <span className={COUPON}>
-                <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{coupon.code}</span>
-              </span>
-            ) : (
-              <button
-                type='button'
-                onClick={() => copyCoupon(coupon.code)}
-                tabIndex={center ? undefined : -1}
                 aria-label={
-                  copiedCoupon ? 'Cupom copiado' : `Copiar cupom ${coupon.code}`
+                  slot.time
+                    ? `Detalhes da palestra às ${slot.time}`
+                    : 'Detalhes da palestra'
                 }
                 className={clsx(
-                  REDEEM,
-                  'cursor-pointer appearance-none border-0 bg-transparent p-0',
-                  !center && 'pointer-events-none'
+                  'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3 short:bottom-3',
+                  !center && 'pointer-events-none opacity-0'
                 )}
               >
-                <TicketPercent className='size-3 shrink-0' aria-hidden='true' />
-                <span className='truncate'>{coupon.code}</span>
-                <Swap
-                  copied={copiedCoupon}
-                  className={clsx('text-[var(--tone)]', !center && 'opacity-0')}
-                />
-              </button>
-            ))}
-        </div>
-
-        {details && (
-          <a
-            href={details}
-            target='_blank'
-            rel='noreferrer'
-            tabIndex={center ? undefined : -1}
-            aria-label={
-              slot.time
-                ? `Detalhes da palestra às ${slot.time}`
-                : 'Detalhes da palestra'
-            }
-            className={clsx(
-              'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3 short:bottom-3',
-              !center && 'pointer-events-none opacity-0'
+                <span
+                  className='relative grid size-4 place-items-center overflow-hidden'
+                  aria-hidden='true'
+                >
+                  <BiLinkExternal className={LAUNCH.leave} />
+                  <BiLinkExternal className={LAUNCH.enter} />
+                </span>
+              </a>
             )}
-          >
-            <span
-              className='relative grid size-4 place-items-center overflow-hidden'
-              aria-hidden='true'
-            >
-              <BiLinkExternal className={LAUNCH.leave} />
-              <BiLinkExternal className={LAUNCH.enter} />
-            </span>
-          </a>
-        )}
-      </footer>
+          </footer>
+        </>
+      )}
     </article>
   );
 };
@@ -689,6 +728,7 @@ export const Agenda = memo((): ReactNode => {
 
     return { focus: start, from: start };
   });
+  const [height, setHeight] = useState(held);
   const track = useRef<HTMLElement | null>(null);
   const deck = useRef<HTMLDivElement | null>(null);
   const swiped = useRef(false);
@@ -759,6 +799,34 @@ export const Agenda = memo((): ReactNode => {
     return () => window.clearTimeout(timer);
   }, [from, focus]);
 
+  useLayoutEffect(() => {
+    if (height !== undefined || !deck.current) return;
+
+    /* Rounding here would resize the deck by half a pixel and nudge every
+       line above it, so the fractional height is the one worth keeping. */
+    held = deck.current.getBoundingClientRect().height;
+    setHeight(held);
+  }, [height]);
+
+  useEffect(() => {
+    let frame = 0;
+
+    const remeasure = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        held = undefined;
+        setHeight(undefined);
+      });
+    };
+
+    window.addEventListener('resize', remeasure);
+
+    return () => {
+      cancelAnimationFrame(frame);
+      window.removeEventListener('resize', remeasure);
+    };
+  }, []);
+
   return (
     <div
       style={style}
@@ -811,19 +879,26 @@ export const Agenda = memo((): ReactNode => {
 
       <div
         ref={deck}
+        style={{ minHeight: height }}
         className='grid animate-rise [animation-delay:500ms] short-wide:pr-(--reach) xl:pr-(--reach)'
       >
-        {slots.map((slot, index) => (
-          <Card
-            key={`${slot.date}:${slot.title}`}
-            slot={slot}
-            place={placeOf(index, focus)}
-            frosted={
-              placeOf(index, focus) <= SEEN || placeOf(index, from) <= SEEN
-            }
-            onFocus={() => focusOn(index)}
-          />
-        ))}
+        {slots.map((slot, index) => {
+          const here = placeOf(index, focus);
+          const there = placeOf(index, from);
+
+          return (
+            <Card
+              key={`${slot.date}:${slot.title}`}
+              slot={slot}
+              place={here}
+              frosted={here <= SEEN || there <= SEEN}
+              dressed={
+                height === undefined || here <= WINDOW || there <= WINDOW
+              }
+              onFocus={() => focusOn(index)}
+            />
+          );
+        })}
       </div>
 
       <div className='mt-[clamp(0.75rem,6.5svh-1.25rem,3rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-2 short:mt-4.5 short:mb-0 short-wide:mt-0 cramped:hidden'>
