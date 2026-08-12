@@ -25,7 +25,7 @@ import { useSlideshow } from '@site/src/components/Home/useSlideshow';
 import { useSpots } from '@site/src/components/Home/useSpots';
 import { Name } from '@site/src/components/Name';
 import { PartnersDialog } from '@site/src/components/Partners/Dialog';
-import { Picture } from '@site/src/components/Picture';
+import { Picture, srcset } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
 import interLatin from '@site/src/fonts/inter-latin.woff2';
 import noto800 from '@site/src/fonts/noto-sans-latin-800.woff2';
@@ -43,6 +43,10 @@ const RAIL = { full: 100, reduced: 55 };
 /* Mirrors the placement GSAP applies at hydration, so the static frame
    already shows a single group instead of every row stacked. */
 const PARKED: CSSProperties = { opacity: 0, visibility: 'hidden' };
+
+/* The texture is the LCP element only where the card leaves a gutter, so the
+   early high-priority fetch stays gated to that breakpoint. */
+const grain = slides[0].texture && srcset(slides[0].texture, 'avif');
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
@@ -153,6 +157,17 @@ export default (): ReactNode => {
           media='(min-width: 40rem)'
           crossOrigin='anonymous'
         />
+        {grain && (
+          <link
+            rel='preload'
+            as='image'
+            type='image/avif'
+            imageSrcSet={grain}
+            imageSizes='100vw'
+            media='(min-width: 40rem)'
+            fetchPriority='high'
+          />
+        )}
       </Head>
 
       <Progress value={(active + 1) / slides.length} color={mark} />

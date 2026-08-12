@@ -25,6 +25,12 @@ const sourceSet = (src: string, entry: Entry, format: string): string => {
     .join(', ');
 };
 
+export const srcset = (src: string, format: string): string | undefined => {
+  const entry = catalog[src];
+
+  return entry ? sourceSet(src, entry, format) : undefined;
+};
+
 export const Picture = memo(
   ({ src, sizes, ...image }: PictureOptions): ReactNode => {
     const entry = catalog[src];
