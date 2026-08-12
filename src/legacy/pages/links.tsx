@@ -8,9 +8,9 @@ import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
 import { dynamicImport } from '@site/src/helpers/dynamic-require';
 import { anchors } from '@site/src/helpers/get-anchors';
-import { cards } from '@site/src/helpers/get-cards';
 import { socials } from '@site/src/helpers/get-socials';
 import { useStats } from '@site/src/hooks/useStats';
+import { cards } from '@site/src/legacy/helpers/get-cards';
 
 export default (): ReactNode => {
   const { siteConfig, i18n } = useDocusaurusContext();
