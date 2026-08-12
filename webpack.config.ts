@@ -28,10 +28,12 @@ type Compiler = {
 
 const STYLESHEET = /\.(css|scss|sass)$/i;
 
-/* The theme registers the extra Prism languages through a client module that
-   drags prism-react-renderer into every page's entry bundle, so the register
-   lives in src/theme/CodeBlock instead and this entry copy goes silent. */
-const PRISM = /theme-classic[\\/]lib[\\/]prism-include-languages(\.js)?$/;
+/* Two theme client modules go silent. The Prism register drags
+   prism-react-renderer into every page's entry bundle, so it lives in
+   src/theme/CodeBlock instead. The nprogress bar depends on a stylesheet this
+   config strips, so the module animates something that never renders. */
+const SILENCED =
+  /theme-classic[\\/]lib[\\/](?:prism-include-languages|nprogress)(\.js)?$/;
 
 const SITE = '@site/';
 
@@ -168,7 +170,7 @@ export default () => {
             strip
           ),
           new currentBundler.instance.NormalModuleReplacementPlugin(
-            PRISM,
+            SILENCED,
             silence
           ),
           ...(patching ? [routeScripts] : []),

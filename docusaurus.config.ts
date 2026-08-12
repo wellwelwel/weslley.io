@@ -120,7 +120,6 @@ const config: Config = {
         indexBlog: false,
         indexPages: true,
         hashed: true,
-        highlightSearchTermsOnTargetPage: true,
         searchResultLimits: 100,
         ignoreFiles: /(articles|talks)\/(tags)/,
         language: ['pt', 'en'],
