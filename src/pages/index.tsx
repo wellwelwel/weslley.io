@@ -125,6 +125,10 @@ export default (): ReactNode => {
     <>
       <Head>
         <title>{siteConfig.title}</title>
+        <meta
+          name='description'
+          content='Microsoft MVP e Anthropic CVP, Weslley Araújo mantém o MySQL2 e criou o Poku e o Lagune, impactando milhões de desenvolvedores através do open source.'
+        />
         <body className='clean overscroll-none' />
         <link
           rel='preload'
