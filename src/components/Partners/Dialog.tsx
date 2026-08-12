@@ -1,3 +1,7 @@
+import type {
+  Draft,
+  PartnershipType,
+} from '@site/src/components/Partners/draft';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
@@ -5,66 +9,24 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { Building2, Check, Mail, Send, User, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
-import { IoRocketSharp } from 'react-icons/io5';
+import {
+  PARTNERSHIP_TYPES,
+  readDraft,
+  saveDraft,
+} from '@site/src/components/Partners/draft';
 import { Picture } from '@site/src/components/Picture';
-import { Socials } from '@site/src/components/Socials';
-import { setLabel, useStats } from '@site/src/components/Stats';
-import { isReducedMotion } from '@site/src/helpers/reduced-motion';
-import { socialLinks } from '@site/src/helpers/social-links';
-
-type PartnershipType = (typeof PARTNERSHIP_TYPES)[number];
-
-type Draft = {
-  name: string;
-  email: string;
-  company: string;
-  type: PartnershipType | '';
-  message: string;
-};
+import { motion } from '@site/src/helpers/reduced-motion';
+import { useDownloads } from '@site/src/hooks/useDownloads';
 
 type Pill = {
   left: number;
   width: number;
 };
 
-export type Trigger = {
-  open: boolean;
-  onOpen: () => void;
-};
-
-type Tone = 'ink' | 'night';
-
-type PartnersOptions = Trigger & {
-  label?: string;
-  social?: string | null;
-  tone?: Tone;
-  onRestore?: () => void;
-};
-
-type RollingLabel = {
-  current: string;
-  previous: string;
-};
-
 const claude = '/img/plush/claude.png';
 const me = '/img/plush/me.png';
 const mvp = '/img/plush/mvp.png';
 const velvet = '/img/plush/velvet-texture.png';
-
-const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Podcast'] as const;
-
-const TONES: Record<Tone, string> = {
-  ink: 'bg-ink text-paper shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] hover:bg-ink/90 hover:shadow-[0_1px_2px_var(--shade-soft),0_10px_18px_-8px_var(--shade-deep)]',
-  night: 'bg-[#312f76] text-[#bcaeff] hover:bg-[#3c3a8b]',
-};
-
-const EMPTY_DRAFT: Draft = {
-  name: '',
-  email: '',
-  company: '',
-  type: '',
-  message: '',
-};
 
 const BADGES = [
   { src: mvp, alt: 'Pelúcia do MVP' },
@@ -78,24 +40,12 @@ const TRAVEL = {
   reduced: { panelY: 14, panelScale: 0.99 },
 };
 
-const DRAFT_KEY = 'weslley:partners-draft';
 const SAVE_DELAY_MS = 400;
 const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
-const FALLBACK_DOWNLOADS = '600 milhões';
-const TRIGGER_LABEL = 'Bora trabalhar juntos';
-
-const SOCIAL_LABELS = Object.values(socialLinks).map(({ name }) => name);
-
-const rollingPlace = (text: string, { current, previous }: RollingLabel) => {
-  if (text === current) return 'translate-y-0 opacity-100';
-  if (text === previous) return '-translate-y-[120%] opacity-0';
-
-  return 'translate-y-[120%] opacity-0';
-};
 
 const groupClass =
-  'flex items-stretch overflow-hidden rounded-xl border border-ink/12 bg-paper transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:border-ink/25 focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
+  'flex items-stretch overflow-hidden rounded-xl border border-ink/12 bg-paper transition-[border-color,box-shadow] duration-200 ease-swift hover:border-ink/25 focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
 
 const groupIconClass =
   'flex w-12 shrink-0 items-center justify-center border-r border-ink/10 bg-ink/3 text-ink/45 [&>svg]:size-4.5';
@@ -104,43 +54,10 @@ const groupInputClass =
   'w-full appearance-none border-0 bg-transparent px-3.5 py-2.5 font-sans text-base font-medium text-ink outline-none placeholder:font-normal placeholder:text-ink/35';
 
 const fieldClass =
-  'w-full appearance-none rounded-xl border border-ink/12 bg-paper px-3.5 py-2.5 font-sans text-base text-ink outline-none transition-[border-color,box-shadow] duration-200 ease-[cubic-bezier(0.2,0,0,1)] placeholder:text-ink/35 hover:border-ink/25 focus:border-accent focus:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
+  'w-full appearance-none rounded-xl border border-ink/12 bg-paper px-3.5 py-2.5 font-sans text-base text-ink outline-none transition-[border-color,box-shadow] duration-200 ease-swift placeholder:text-ink/35 hover:border-ink/25 focus:border-accent focus:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
 
 const labelClass =
   'flex flex-col gap-2 text-[0.8125rem] font-semibold tracking-[-0.005em] text-ink';
-
-const isPartnershipType = (value: unknown): value is PartnershipType =>
-  PARTNERSHIP_TYPES.some((type) => type === value);
-
-const saveDraft = (draft: Draft): void => {
-  try {
-    localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
-  } catch {}
-};
-
-const readDraft = (): Draft => {
-  try {
-    const raw = localStorage.getItem(DRAFT_KEY);
-
-    if (!raw) return EMPTY_DRAFT;
-
-    const parsed: unknown = JSON.parse(raw);
-
-    if (typeof parsed !== 'object' || parsed === null) return EMPTY_DRAFT;
-
-    const value: Partial<Record<keyof Draft, unknown>> = parsed;
-
-    return {
-      name: typeof value.name === 'string' ? value.name : '',
-      email: typeof value.email === 'string' ? value.email : '',
-      company: typeof value.company === 'string' ? value.company : '',
-      type: isPartnershipType(value.type) ? value.type : '',
-      message: typeof value.message === 'string' ? value.message : '',
-    };
-  } catch {
-    return EMPTY_DRAFT;
-  }
-};
 
 const Field = ({
   label,
@@ -236,7 +153,7 @@ const TypeChips = ({
           aria-checked={value === type}
           onClick={() => onChange(type)}
           className={clsx(
-            'relative z-1 flex-1 cursor-pointer appearance-none rounded-lg border-0 bg-transparent px-3.5 py-1.5 text-[0.8125rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
+            'relative z-1 flex-1 cursor-pointer appearance-none rounded-lg border-0 bg-transparent px-3.5 py-1.5 text-[0.8125rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
             value === type ? 'text-ink' : 'text-ink/60 hover:text-ink'
           )}
         >
@@ -265,7 +182,7 @@ const Sent = ({ onReset }: { onReset: () => void }): ReactNode => (
     <button
       type='button'
       onClick={onReset}
-      className='inline-flex cursor-pointer appearance-none items-center rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-semibold text-ink transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:border-ink/25'
+      className='inline-flex cursor-pointer appearance-none items-center rounded-full border border-ink/12 bg-paper px-4 py-2 text-sm font-semibold text-ink transition-colors duration-200 ease-swift hover:border-ink/25'
     >
       Enviar outra
     </button>
@@ -283,11 +200,7 @@ export const PartnersDialog = ({
   const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
   const [draft, setDraft] = useState<Draft>(readDraft);
   const latest = useRef(draft);
-  const stats = useStats();
-
-  const downloads = stats
-    ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
-    : FALLBACK_DOWNLOADS;
+  const downloads = useDownloads();
 
   useEffect(() => {
     const onKeyDown = (event: KeyboardEvent) => {
@@ -317,7 +230,7 @@ export const PartnersDialog = ({
   useEffect(() => () => saveDraft(latest.current), []);
 
   useGSAP(() => {
-    const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+    const travel = motion(TRAVEL);
 
     gsap.fromTo(
       panel.current,
@@ -417,7 +330,7 @@ export const PartnersDialog = ({
           type='button'
           onClick={onClose}
           aria-label='Fechar'
-          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-white/30 bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,box-shadow,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
+          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-white/30 bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,box-shadow,scale] duration-200 ease-swift hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
         >
           <X aria-hidden='true' />
         </button>
@@ -514,15 +427,15 @@ export const PartnersDialog = ({
                   />
                 </Field>
 
-                <label className='flex cursor-pointer items-start gap-2.5 text-[0.8125rem]/[1.5] text-ink/70 transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] select-none hover:text-ink'>
+                <label className='flex cursor-pointer items-start gap-2.5 text-[0.8125rem]/[1.5] text-ink/70 transition-colors duration-200 ease-swift select-none hover:text-ink'>
                   <span className='relative mt-px block size-4.5 shrink-0'>
                     <input
-                      className='peer absolute inset-0 z-1 m-0 size-full cursor-pointer appearance-none rounded-md border border-ink/20 bg-paper transition-[border-color,background-color] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:top-1/2 after:left-1/2 after:size-11 after:-translate-x-1/2 after:-translate-y-1/2 checked:border-accent checked:bg-accent hover:border-ink/35'
+                      className='peer absolute inset-0 z-1 m-0 size-full cursor-pointer appearance-none rounded-md border border-ink/20 bg-paper transition-[border-color,background-color] duration-200 ease-swift after:absolute after:top-1/2 after:left-1/2 after:size-11 after:-translate-x-1/2 after:-translate-y-1/2 checked:border-accent checked:bg-accent hover:border-ink/35'
                       type='checkbox'
                       name='consent'
                       required
                     />
-                    <span className='pointer-events-none absolute inset-0 z-2 flex items-center justify-center text-white opacity-0 transition-opacity duration-200 ease-[cubic-bezier(0.2,0,0,1)] peer-checked:opacity-100 [&>svg]:size-3'>
+                    <span className='pointer-events-none absolute inset-0 z-2 flex items-center justify-center text-white opacity-0 transition-opacity duration-200 ease-swift peer-checked:opacity-100 [&>svg]:size-3'>
                       <Check aria-hidden='true' />
                     </span>
                   </span>
@@ -538,15 +451,15 @@ export const PartnersDialog = ({
                 <button
                   type='submit'
                   disabled={status === 'sending'}
-                  className='group mt-1 inline-flex cursor-pointer appearance-none items-center justify-center gap-2.5 rounded-xl border-0 bg-accent px-5 py-3.5 text-sm font-bold tracking-[-0.01em] text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.25),0_6px_16px_-6px_rgb(122_119_255_/_0.9)] transition-[background-color,box-shadow] duration-300 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-70'
+                  className='group mt-1 inline-flex cursor-pointer appearance-none items-center justify-center gap-2.5 rounded-xl border-0 bg-accent px-5 py-3.5 text-sm font-bold tracking-[-0.01em] text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.25),0_6px_16px_-6px_rgb(122_119_255_/_0.9)] transition-[background-color,box-shadow] duration-300 ease-swift hover:bg-accent/90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent disabled:cursor-not-allowed disabled:opacity-70'
                 >
                   <span className='relative grid size-4.5 shrink-0 place-items-center overflow-hidden'>
                     <Send
-                      className='col-start-1 row-start-1 size-4.5 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
+                      className='col-start-1 row-start-1 size-4.5 transition-transform duration-300 ease-swift group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
                       aria-hidden='true'
                     />
                     <Send
-                      className='col-start-1 row-start-1 size-4.5 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
+                      className='col-start-1 row-start-1 size-4.5 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-swift group-hover:translate-x-0 group-hover:translate-y-0'
                       aria-hidden='true'
                     />
                   </span>
@@ -598,82 +511,5 @@ export const PartnersDialog = ({
       </div>
     </div>,
     document.body
-  );
-};
-
-export const PartnersTrigger = ({
-  open,
-  onOpen,
-  label = TRIGGER_LABEL,
-  social,
-  tone = 'ink',
-  onRestore,
-}: PartnersOptions): ReactNode => {
-  const current = social ?? label;
-  const [rolling, setRolling] = useState<RollingLabel>({
-    current,
-    previous: current,
-  });
-
-  if (rolling.current !== current)
-    setRolling({ current, previous: rolling.current });
-
-  return (
-    <button
-      type='button'
-      onClick={onOpen}
-      onPointerEnter={onRestore}
-      onFocus={onRestore}
-      aria-haspopup='dialog'
-      aria-expanded={open}
-      aria-label={label}
-      className={clsx(
-        'group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm transition-[background-color,box-shadow,scale] duration-750 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98',
-        TONES[tone]
-      )}
-    >
-      <span aria-hidden='true' className='grid overflow-hidden leading-6'>
-        {[label, ...SOCIAL_LABELS].map((text) => (
-          <span
-            key={text}
-            className={clsx(
-              'col-start-1 row-start-1 text-center whitespace-nowrap transition-[opacity,translate] duration-300 ease-[cubic-bezier(0.2,0,0,1)]',
-              rollingPlace(text, rolling)
-            )}
-          >
-            {text}
-          </span>
-        ))}
-      </span>
-
-      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-white max-sm:size-7'>
-        <span className='relative grid size-4 place-items-center overflow-hidden'>
-          <IoRocketSharp
-            className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'
-            aria-hidden='true'
-          />
-          <IoRocketSharp
-            className='col-start-1 row-start-1 size-4 translate-x-[-120%] translate-y-[120%] transition-transform duration-300 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-x-0 group-hover:translate-y-0'
-            aria-hidden='true'
-          />
-        </span>
-      </span>
-    </button>
-  );
-};
-
-export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
-  const [social, setSocial] = useState<string | null>(null);
-
-  return (
-    <div className='flex flex-col items-center justify-center gap-3 short-wide:flex-row'>
-      <PartnersTrigger
-        open={open}
-        onOpen={onOpen}
-        social={social}
-        onRestore={() => setSocial(null)}
-      />
-      <Socials onHover={setSocial} />
-    </div>
   );
 };

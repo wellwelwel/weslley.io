@@ -5,7 +5,6 @@ import { ArrowBigDownDash } from 'lucide-react';
 import { AnimatedCount } from '@site/src/components/AnimatedCount';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
-import { useStats } from '@site/src/components/Stats';
 import { dynamicImport } from '@site/src/helpers/dynamic-require';
 import {
   anchors,
@@ -13,6 +12,7 @@ import {
   MDXImports,
   socials,
 } from '@site/src/helpers/get-contents';
+import { useStats } from '@site/src/hooks/useStats';
 
 export default (): ReactNode => {
   const { siteConfig, i18n } = useDocusaurusContext();

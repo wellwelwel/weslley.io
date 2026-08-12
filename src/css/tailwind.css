@@ -4,11 +4,12 @@
 
 @source '../pages/index.tsx';
 @source '../components/Adopters.tsx';
-@source '../components/Agenda.tsx';
+@source '../components/Agenda';
 @source '../components/Backdrop.tsx';
 @source '../components/Badges.tsx';
 @source '../components/Header.tsx';
 @source '../components/Hill.tsx';
+@source '../components/Home';
 @source '../components/Partners';
 @source '../components/Picture.tsx';
 @source '../components/Progress.tsx';
@@ -72,6 +73,8 @@
 @custom-variant tight (@media (max-height: 36rem) and (max-width: 50rem));
 
 @theme {
+  --ease-swift: cubic-bezier(0.2, 0, 0, 1);
+
   --font-sans:
     'Inter', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
     'Segoe UI Symbol', 'Noto Color Emoji';

@@ -10,7 +10,7 @@ const EDGE = 8;
 const CORNER = 16;
 
 const BUBBLE =
-  'pointer-events-none absolute bottom-[calc(100%+0.625rem)] left-1/2 flex w-max max-w-[min(13rem,calc(50vw-1rem))] translate-x-[calc(-50%_+_var(--shift,0px))] translate-y-1 flex-col gap-1 rounded-xl bg-ink px-3.5 py-2.5 opacity-0 shadow-[0_1px_2px_var(--shade-soft),0_12px_24px_-12px_var(--shade-deep)] transition-[opacity,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-data-revealed:translate-y-0 group-data-revealed:opacity-100';
+  'pointer-events-none absolute bottom-[calc(100%+0.625rem)] left-1/2 flex w-max max-w-[min(13rem,calc(50vw-1rem))] translate-x-[calc(-50%_+_var(--shift,0px))] translate-y-1 flex-col gap-1 rounded-xl bg-ink px-3.5 py-2.5 opacity-0 shadow-[0_1px_2px_var(--shade-soft),0_12px_24px_-12px_var(--shade-deep)] transition-[opacity,translate] duration-250 ease-swift group-hover:translate-y-0 group-hover:opacity-100 group-focus-visible:translate-y-0 group-focus-visible:opacity-100 group-data-revealed:translate-y-0 group-data-revealed:opacity-100';
 
 const ARROW =
   'absolute -bottom-1 left-1/2 size-2.5 translate-x-[calc(-50%_-_var(--point,0px))] rotate-45 rounded-xs bg-ink';

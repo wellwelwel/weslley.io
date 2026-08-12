@@ -74,7 +74,7 @@ export const Badges = (): ReactNode => {
               sizes='7rem'
               decoding='async'
               draggable={false}
-              className='size-full object-contain drop-shadow-[0_1px_2px_var(--shade-deep)] transition-[scale,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:-translate-y-0.5 group-hover:scale-110 group-focus-visible:scale-110 group-data-revealed:scale-110'
+              className='size-full object-contain drop-shadow-[0_1px_2px_var(--shade-deep)] transition-[scale,translate] duration-250 ease-swift group-hover:-translate-y-0.5 group-hover:scale-110 group-focus-visible:scale-110 group-data-revealed:scale-110'
             />
 
             <Tooltip label={title} detail={issuer} />

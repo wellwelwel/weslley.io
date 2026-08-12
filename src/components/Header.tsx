@@ -5,9 +5,9 @@ import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { ChevronLeft, ChevronRight, Menu, X } from 'lucide-react';
-import { PartnersTrigger } from '@site/src/components/Partners';
+import { PartnersTrigger } from '@site/src/components/Partners/Trigger';
 import { Picture } from '@site/src/components/Picture';
-import { isReducedMotion } from '@site/src/helpers/reduced-motion';
+import { motion } from '@site/src/helpers/reduced-motion';
 
 export type Section = {
   label: string;
@@ -50,13 +50,13 @@ const TRAVEL = {
 };
 
 const iconClass =
-  'col-start-1 row-start-1 size-5 transition-[scale,opacity,filter] duration-300 ease-[cubic-bezier(0.2,0,0,1)]';
+  'col-start-1 row-start-1 size-5 transition-[scale,opacity,filter] duration-300 ease-swift';
 
 const itemClass =
-  'flex h-11 w-full cursor-pointer appearance-none items-center rounded-xl border-0 bg-transparent px-4 font-sans text-base font-medium text-ink/70 transition-colors duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 hover:text-ink focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent';
+  'flex h-11 w-full cursor-pointer appearance-none items-center rounded-xl border-0 bg-transparent px-4 font-sans text-base font-medium text-ink/70 transition-colors duration-200 ease-swift hover:bg-ink/5 hover:text-ink focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-accent';
 
 const arrowClass =
-  'relative hidden size-8 shrink-0 appearance-none items-center justify-center rounded-full border-0 bg-transparent p-0 transition-[color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:-inset-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent steps:flex [&>svg]:size-4';
+  'relative hidden size-8 shrink-0 appearance-none items-center justify-center rounded-full border-0 bg-transparent p-0 transition-[color,scale] duration-200 ease-swift after:absolute after:-inset-1 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent steps:flex [&>svg]:size-4';
 
 const markerClass =
   'col-start-1 row-start-1 items-center gap-2 [&>svg]:size-4 [&>svg]:shrink-0';
@@ -111,7 +111,7 @@ export const Header = memo(
     useGSAP(
       () => {
         const marked = labelled.current;
-        const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+        const travel = motion(TRAVEL);
 
         labelled.current = true;
 
@@ -129,7 +129,7 @@ export const Header = memo(
     useGSAP(
       () => {
         const animated = placed.current;
-        const travel = isReducedMotion() ? TRAVEL.reduced : TRAVEL.full;
+        const travel = motion(TRAVEL);
 
         placed.current = true;
 
@@ -189,7 +189,7 @@ export const Header = memo(
           type='button'
           onClick={closingMenu(onHome)}
           aria-label='Weslley Araújo, voltar ao início'
-          className='relative flex cursor-pointer appearance-none items-center gap-3 rounded-full border-0 bg-transparent p-0 transition-[scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] after:absolute after:inset-x-0 after:-inset-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-98'
+          className='relative flex cursor-pointer appearance-none items-center gap-3 rounded-full border-0 bg-transparent p-0 transition-[scale] duration-200 ease-swift after:absolute after:inset-x-0 after:-inset-y-1 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent active:scale-98'
         >
           <Picture
             src={avatar}
@@ -266,7 +266,7 @@ export const Header = memo(
             aria-expanded={menu}
             aria-controls={panelId}
             className={clsx(
-              '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-[cubic-bezier(0.2,0,0,1)] hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
+              '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-swift hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
               menu ? 'bg-ink/5' : 'bg-transparent'
             )}
           >

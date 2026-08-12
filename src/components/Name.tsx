@@ -1,7 +1,7 @@
 import type { MouseEvent, ReactNode } from 'react';
 import { Children, memo, useMemo } from 'react';
 import gsap from 'gsap';
-import { isReducedMotion } from '@site/src/helpers/reduced-motion';
+import { motion } from '@site/src/helpers/reduced-motion';
 
 export type NameOptions = {
   children: ReactNode;
@@ -21,7 +21,7 @@ const characters = (children: ReactNode) =>
   );
 
 const pop = ({ currentTarget }: MouseEvent<HTMLSpanElement>) => {
-  const width = isReducedMotion() ? STROKE_WIDTHS.reduced : STROKE_WIDTHS.full;
+  const width = motion(STROKE_WIDTHS);
 
   gsap.killTweensOf(currentTarget);
   gsap

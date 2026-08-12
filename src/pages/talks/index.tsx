@@ -4,7 +4,8 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { ChevronDown } from 'lucide-react';
 import { Articles } from '@site/src/components/Articles/Articles';
 import { SafeLink } from '@site/src/components/SafeLink';
-import { setLabel, useStats } from '@site/src/components/Stats';
+import { abbreviate } from '@site/src/helpers/abbreviate';
+import { useStats } from '@site/src/hooks/useStats';
 
 type Places = {
   name: string;
@@ -48,7 +49,7 @@ export default () => {
               aria-label='Métrica dinâmica de downloads no npm nos últimos 365 dias, considerando apenas projetos autorais.'
             >
               {stats?.downloadsPerYear.value
-                ? setLabel(stats.downloadsPerYear.value, 'pt-BR', 0)
+                ? abbreviate(stats.downloadsPerYear.value, 'pt-BR', 0)
                 : '300 milhões'}{' '}
               de downloads
             </Link>
@@ -67,7 +68,7 @@ export default () => {
               aria-label='Dynamic metric based on npm downloads in the last 365 days, considering only own projects.'
             >
               {stats?.downloadsPerYear.value
-                ? setLabel(stats.downloadsPerYear.value, 'en', 0)
+                ? abbreviate(stats.downloadsPerYear.value, 'en', 0)
                 : '300 million'}{' '}
               downloads
             </Link>

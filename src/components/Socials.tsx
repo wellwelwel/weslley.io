@@ -10,7 +10,7 @@ export type SocialsOptions = {
 const RESTORE_DELAY_MS = 150;
 
 const ICON =
-  'size-6 transition-[scale,translate] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:-translate-y-0.5 group-hover:scale-115 group-focus-visible:scale-115';
+  'size-6 transition-[scale,translate] duration-250 ease-swift group-hover:-translate-y-0.5 group-hover:scale-115 group-focus-visible:scale-115';
 
 export const Socials = ({ onHover }: SocialsOptions): ReactNode => {
   const restore = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);

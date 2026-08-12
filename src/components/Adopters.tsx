@@ -8,7 +8,7 @@ import Vercel from 'devicon/icons/vercel/vercel-original.svg';
 import { SiLangchain, SiN8N, SiStrapi } from 'react-icons/si';
 import { Microsoft } from '@site/src/components/icons/Microsoft';
 import { Tooltip } from '@site/src/components/Tooltip';
-import { isReducedMotion } from '@site/src/helpers/reduced-motion';
+import { motion } from '@site/src/helpers/reduced-motion';
 import { useReveal } from '@site/src/hooks/useReveal';
 
 type Adopter = {
@@ -40,16 +40,16 @@ const LEAD = 420;
 const STEP = 40;
 
 const CHIP =
-  'group relative flex size-[clamp(2.5rem,6.67svh-0.5rem,3.5rem)] cursor-pointer animate-ticker appearance-none items-center justify-center rounded-2xl border-0 bg-[#ffffffbd] p-0 shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95';
+  'group relative flex size-[clamp(2.5rem,6.67svh-0.5rem,3.5rem)] cursor-pointer animate-ticker appearance-none items-center justify-center rounded-2xl border-0 bg-[#ffffffbd] p-0 shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] transition-[scale] duration-250 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95';
 
 const LOGO =
-  'size-[45%] transition-[scale] duration-250 ease-[cubic-bezier(0.2,0,0,1)] group-hover:scale-110 group-data-revealed:scale-115';
+  'size-[45%] transition-[scale] duration-250 ease-swift group-hover:scale-110 group-data-revealed:scale-115';
 
 export const Adopters = (): ReactNode => {
   const { container, revealed, toggle } = useReveal<HTMLUListElement>();
 
   const style: ListStyle = {
-    '--ticker-travel': isReducedMotion() ? POP.reduced : POP.full,
+    '--ticker-travel': motion(POP),
   };
 
   return (

@@ -38,7 +38,7 @@ export const Progress = memo(({ value, color }: ProgressOptions): ReactNode => {
       <div
         ref={fill}
         style={{ backgroundColor: color }}
-        className='size-full origin-left scale-x-0 bg-accent transition-colors duration-500 ease-[cubic-bezier(0.2,0,0,1)]'
+        className='size-full origin-left scale-x-0 bg-accent transition-colors duration-500 ease-swift'
       />
     </div>
   );
