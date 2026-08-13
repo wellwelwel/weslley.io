@@ -84,7 +84,7 @@ export const groups: Group[] = [
         Icon: TbBrandOpenSource,
         title: [<Downloads />, 'de downloads anuais', '.'],
         hill: '#a3b6c9',
-        text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source.',
+        text: 'Weslley impacta diretamente milhões de desenvolvedores e projetos globalmente através do open source e palestras globais.',
         texture: velvet,
         actions: { stage: PartnersAction },
       },
