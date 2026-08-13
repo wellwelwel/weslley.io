@@ -309,6 +309,138 @@
       "src/assets/img/rogadx-108.23bbe8b7.webp"
     ]
   },
+  "src/assets/img/slide/codecon-001.jpg": {
+    "hash": "560706bd26f51eb06e27de874a2de494d9dede269f3ed02f9d262e82ab2509cc",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/codecon-001-576.e1612d54.avif",
+      "src/assets/img/slide/codecon-001-828.e1612d54.avif",
+      "src/assets/img/slide/codecon-001-1040.e1612d54.avif",
+      "src/assets/img/slide/codecon-001-576.e1612d54.webp",
+      "src/assets/img/slide/codecon-001-828.e1612d54.webp",
+      "src/assets/img/slide/codecon-001-1040.e1612d54.webp"
+    ]
+  },
+  "src/assets/img/slide/codecon-002.jpg": {
+    "hash": "8fa38647dd6b2c38f2933f5988fff69ebb2d243e01e0ac2745c4cf114adb4f8d",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/codecon-002-576.fa9f3773.avif",
+      "src/assets/img/slide/codecon-002-828.fa9f3773.avif",
+      "src/assets/img/slide/codecon-002-1040.fa9f3773.avif",
+      "src/assets/img/slide/codecon-002-576.fa9f3773.webp",
+      "src/assets/img/slide/codecon-002-828.fa9f3773.webp",
+      "src/assets/img/slide/codecon-002-1040.fa9f3773.webp"
+    ]
+  },
+  "src/assets/img/slide/devfest-cerrado-001.jpg": {
+    "hash": "b9c1554e1d6a0248da6752eeee740540aeb3590b9e1e88b1fc0ffb716f2b23e3",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/devfest-cerrado-001-576.39988b6d.avif",
+      "src/assets/img/slide/devfest-cerrado-001-828.39988b6d.avif",
+      "src/assets/img/slide/devfest-cerrado-001-1040.39988b6d.avif",
+      "src/assets/img/slide/devfest-cerrado-001-576.39988b6d.webp",
+      "src/assets/img/slide/devfest-cerrado-001-828.39988b6d.webp",
+      "src/assets/img/slide/devfest-cerrado-001-1040.39988b6d.webp"
+    ]
+  },
+  "src/assets/img/slide/devfest-cerrado-002.jpg": {
+    "hash": "e18d8bb4edb6e06712a474fc92103e4638b4919f464896240e0209b6e7ed872d",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/devfest-cerrado-002-576.120e26ff.avif",
+      "src/assets/img/slide/devfest-cerrado-002-828.120e26ff.avif",
+      "src/assets/img/slide/devfest-cerrado-002-1040.120e26ff.avif",
+      "src/assets/img/slide/devfest-cerrado-002-576.120e26ff.webp",
+      "src/assets/img/slide/devfest-cerrado-002-828.120e26ff.webp",
+      "src/assets/img/slide/devfest-cerrado-002-1040.120e26ff.webp"
+    ]
+  },
+  "src/assets/img/slide/mvpconf-001.jpg": {
+    "hash": "96c5be356ab69ba25bf74aaf634b08af7ee3419173efebb9e5a9a6c95422bfbb",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/mvpconf-001-576.d581e947.avif",
+      "src/assets/img/slide/mvpconf-001-828.d581e947.avif",
+      "src/assets/img/slide/mvpconf-001-1040.d581e947.avif",
+      "src/assets/img/slide/mvpconf-001-576.d581e947.webp",
+      "src/assets/img/slide/mvpconf-001-828.d581e947.webp",
+      "src/assets/img/slide/mvpconf-001-1040.d581e947.webp"
+    ]
+  },
+  "src/assets/img/slide/nodebr-001.jpg": {
+    "hash": "5796e63717459e8d47b9ae2cbd6b6bd6b843f64211acda0e6cc2c0cf7f0fed12",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/nodebr-001-576.adfd8952.avif",
+      "src/assets/img/slide/nodebr-001-828.adfd8952.avif",
+      "src/assets/img/slide/nodebr-001-1040.adfd8952.avif",
+      "src/assets/img/slide/nodebr-001-576.adfd8952.webp",
+      "src/assets/img/slide/nodebr-001-828.adfd8952.webp",
+      "src/assets/img/slide/nodebr-001-1040.adfd8952.webp"
+    ]
+  },
+  "src/assets/img/slide/oracle-001.jpg": {
+    "hash": "de8380f79fa8b18cbef87426d6d34b9875d3d75899ac2f10c39f76b6848e4223",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/oracle-001-576.6fe8ea80.avif",
+      "src/assets/img/slide/oracle-001-828.6fe8ea80.avif",
+      "src/assets/img/slide/oracle-001-1040.6fe8ea80.avif",
+      "src/assets/img/slide/oracle-001-576.6fe8ea80.webp",
+      "src/assets/img/slide/oracle-001-828.6fe8ea80.webp",
+      "src/assets/img/slide/oracle-001-1040.6fe8ea80.webp"
+    ]
+  },
+  "src/assets/img/slide/roga-001.jpg": {
+    "hash": "2e4284f9ca2453ea901f47f27676ae17979b382516199a2610d8a85b1a1162a4",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/roga-001-576.69136c62.avif",
+      "src/assets/img/slide/roga-001-828.69136c62.avif",
+      "src/assets/img/slide/roga-001-1040.69136c62.avif",
+      "src/assets/img/slide/roga-001-576.69136c62.webp",
+      "src/assets/img/slide/roga-001-828.69136c62.webp",
+      "src/assets/img/slide/roga-001-1040.69136c62.webp"
+    ]
+  },
+  "src/assets/img/slide/roga-002.jpg": {
+    "hash": "23acf5c6e829e1bdf7f02d052d7e5e8efe9a636c2a3e90f89c1eac248951e9dd",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/roga-002-576.0cb14421.avif",
+      "src/assets/img/slide/roga-002-828.0cb14421.avif",
+      "src/assets/img/slide/roga-002-1040.0cb14421.avif",
+      "src/assets/img/slide/roga-002-576.0cb14421.webp",
+      "src/assets/img/slide/roga-002-828.0cb14421.webp",
+      "src/assets/img/slide/roga-002-1040.0cb14421.webp"
+    ]
+  },
+  "src/assets/img/slide/tdc-001.jpg": {
+    "hash": "74e12afa108a8742309b1fd388771a74696db50505fda9e2dcab4fa7a5e7d2d6",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/tdc-001-576.784951cf.avif",
+      "src/assets/img/slide/tdc-001-828.784951cf.avif",
+      "src/assets/img/slide/tdc-001-1040.784951cf.avif",
+      "src/assets/img/slide/tdc-001-576.784951cf.webp",
+      "src/assets/img/slide/tdc-001-828.784951cf.webp",
+      "src/assets/img/slide/tdc-001-1040.784951cf.webp"
+    ]
+  },
+  "src/assets/img/slide/usp-001.jpg": {
+    "hash": "97fd50c11ee064f54d6cf7c9efb682c3495be881dae6d21fddde7f474d9ec400",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/usp-001-576.384581f6.avif",
+      "src/assets/img/slide/usp-001-828.384581f6.avif",
+      "src/assets/img/slide/usp-001-1040.384581f6.avif",
+      "src/assets/img/slide/usp-001-576.384581f6.webp",
+      "src/assets/img/slide/usp-001-828.384581f6.webp",
+      "src/assets/img/slide/usp-001-1040.384581f6.webp"
+    ]
+  },
   "src/assets/img/ssi.png": {
     "hash": "e861a37378d253eab434ec75633492ab1a2de6692b7f95039905951175ad7ce6",
     "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
@@ -337,6 +469,18 @@
       "src/assets/img/talks/codecon-2025/moments/04-1280.461f9c98.webp",
       "src/assets/img/talks/codecon-2025/moments/04-1920.461f9c98.webp",
       "src/assets/img/talks/codecon-2025/moments/04-2560.461f9c98.webp"
+    ]
+  },
+  "src/assets/img/talks/devfest-cerrado-2025/moments/07.jpg": {
+    "hash": "abf5cb6315ae02bdd0e3de8dc491cd3053d1bc45418b002e6b45f2cf87f66c4b",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-576.35af5c6d.avif",
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-828.35af5c6d.avif",
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-1040.35af5c6d.avif",
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-576.35af5c6d.webp",
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-828.35af5c6d.webp",
+      "src/assets/img/talks/devfest-cerrado-2025/moments/07-1040.35af5c6d.webp"
     ]
   },
   "src/assets/img/tdc.png": {

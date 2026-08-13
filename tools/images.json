@@ -28,6 +28,23 @@
       "files": ["src/assets/img/talks/codecon-2025/moments/04.jpg"]
     },
     {
+      "widths": [576, 828, 1040],
+      "files": [
+        "src/assets/img/slide/codecon-001.jpg",
+        "src/assets/img/slide/codecon-002.jpg",
+        "src/assets/img/slide/devfest-cerrado-001.jpg",
+        "src/assets/img/slide/devfest-cerrado-002.jpg",
+        "src/assets/img/slide/mvpconf-001.jpg",
+        "src/assets/img/slide/nodebr-001.jpg",
+        "src/assets/img/slide/oracle-001.jpg",
+        "src/assets/img/slide/roga-001.jpg",
+        "src/assets/img/slide/roga-002.jpg",
+        "src/assets/img/slide/tdc-001.jpg",
+        "src/assets/img/slide/usp-001.jpg",
+        "src/assets/img/talks/devfest-cerrado-2025/moments/07.jpg"
+      ]
+    },
+    {
       "widths": [48, 64, 72, 96, 108],
       "lossless": true,
       "files": [

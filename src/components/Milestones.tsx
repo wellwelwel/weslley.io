@@ -1,0 +1,140 @@
+import type { ReactNode } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import clsx from 'clsx';
+import gsap from 'gsap';
+import { ExternalLink } from 'lucide-react';
+import { SafeLink } from '@site/src/components/SafeLink';
+import { motion } from '@site/src/helpers/reduced-motion';
+
+type Year = {
+  year: number;
+  /** Absent while the year is still running. */
+  downloads?: number;
+};
+
+const YEARS: Year[] = [
+  { year: 2021, downloads: 91 },
+  { year: 2022, downloads: 9_470 },
+  { year: 2023, downloads: 9_733 },
+  { year: 2024, downloads: 46_912_782 },
+  { year: 2025, downloads: 233_754_383 },
+  { year: 2026 },
+];
+
+/** The wheel comes to rest on the last year already counted, leaving the
+    running one as the row below it. */
+const FOCUS = YEARS.reduce(
+  (last, { downloads }, index) => (downloads === undefined ? last : index),
+  0
+);
+
+/** Rows the wheel travels before it rests, counted back from the focused one. */
+const ROLL = {
+  full: FOCUS,
+  reduced: FOCUS * 0.6,
+};
+
+const SPIN = 1.5;
+const LEAD = 0.5;
+
+/* A blank row above and below lets the first and last years reach the middle,
+   which puts row N at a scroll offset of exactly N rows. */
+const PADDING = 2;
+
+const WHEEL =
+  'mx-auto h-[calc(var(--row)*3)] w-64 max-w-full touch-pan-y overflow-y-auto overscroll-contain picker [--row:2.75rem] [scrollbar-width:none] short:[--row:2.5rem] sm:w-70 sm:[--row:3rem] [&::-webkit-scrollbar]:hidden';
+
+const TRACK = 'm-0 flex list-none flex-col p-0 py-(--row)';
+
+const ROW =
+  'group flex h-(--row) items-center justify-between gap-3 no-underline [scroll-snap-align:center] hover:no-underline focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-accent';
+
+const LABEL = 'text-sm/none font-bold tracking-widest text-ink/55 tabular-nums';
+
+const VALUE =
+  'font-featured text-2xl/none font-extrabold text-ink tabular-nums sm:text-[1.75rem]/none';
+
+const OPEN = 'text-base/none font-semibold text-ink/50 sm:text-lg/none';
+
+const ICON =
+  'size-3.5 shrink-0 text-ink/35 transition-colors duration-250 ease-swift group-hover:text-ink/70';
+
+/** The year the chart is still filling in. */
+const RUNNING = 'em curso';
+
+const chart = (year: number): string =>
+  `https://npm-stat.com/charts.html?author=weslley.io&from=${year}-01-01&to=${year}-12-31`;
+
+export const Milestones = (): ReactNode => {
+  const wheel = useRef<HTMLDivElement>(null);
+  const [settled, setSettled] = useState(false);
+
+  useEffect(() => {
+    const node = wheel.current;
+    if (!node) return;
+
+    const row = node.scrollHeight / (YEARS.length + PADDING);
+    const rest = () => setSettled(true);
+
+    const spin = gsap.fromTo(
+      node,
+      { scrollTop: (FOCUS - motion(ROLL)) * row },
+      {
+        scrollTop: FOCUS * row,
+        duration: SPIN,
+        delay: LEAD,
+        ease: 'power3.out',
+        onComplete: rest,
+      }
+    );
+
+    /** The first touch takes the wheel over, the way a real one stops spinning. */
+    const release = () => {
+      spin.kill();
+      rest();
+    };
+
+    node.addEventListener('pointerdown', release);
+    node.addEventListener('wheel', release, { passive: true });
+
+    return () => {
+      spin.kill();
+      node.removeEventListener('pointerdown', release);
+      node.removeEventListener('wheel', release);
+    };
+  }, []);
+
+  return (
+    <div
+      ref={wheel}
+      data-scroll=''
+      className={clsx(WHEEL, settled && '[scroll-snap-type:y_mandatory]')}
+    >
+      <ul aria-label='Downloads anuais dos projetos autorais' className={TRACK}>
+        {YEARS.map(({ year, downloads }) => {
+          const exact = downloads?.toLocaleString('pt-BR');
+
+          return (
+            <li key={year} className='halo'>
+              <SafeLink
+                to={chart(year)}
+                draggable={false}
+                aria-label={`${year}: ${exact ? `${exact} downloads` : RUNNING}`}
+                className={ROW}
+              >
+                <span className={LABEL}>{year}</span>
+
+                <span className='flex items-center gap-1.5'>
+                  <span className={exact ? VALUE : OPEN}>
+                    {exact ?? RUNNING}
+                  </span>
+                  <ExternalLink aria-hidden='true' className={ICON} />
+                </span>
+              </SafeLink>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};

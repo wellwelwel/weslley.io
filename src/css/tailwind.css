@@ -10,6 +10,8 @@
 @source '../components/Header.tsx';
 @source '../components/Hill.tsx';
 @source '../components/Home';
+@source '../components/Memories.tsx';
+@source '../components/Milestones.tsx';
 @source '../components/Partners';
 @source '../components/Picture.tsx';
 @source '../components/Progress.tsx';
@@ -200,6 +202,12 @@
   initial-value: 32px;
 }
 
+@keyframes drift {
+  to {
+    translate: calc(-50% - var(--gap) / 2) 0;
+  }
+}
+
 @keyframes head {
   from {
     --head: 0px;
@@ -239,6 +247,58 @@
   animation-range:
     0 2rem,
     calc(100% - 2rem) 100%;
+}
+
+/* The horizontal edges bleed off the screen. On a portrait screen the bands stop
+   short of the vertical ones, so the fade is long enough to melt them into the
+   backdrop; once they cover the screen it only has to dress the header. */
+/* Only the row in the middle comes through whole, and distance dims the ones
+   around it. That fade is the entire focus indicator this control needs. */
+@utility picker {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(0 0 0 / 0.26) 22%,
+    black 38%,
+    black 62%,
+    rgb(0 0 0 / 0.26) 78%,
+    transparent
+  );
+}
+
+/* Lifts text off a photographic backdrop with no surface behind it: a tight
+   shadow for the edge and a wide one for the ground. */
+@utility halo {
+  text-shadow:
+    0 1px 2px color-mix(in oklab, var(--color-paper) 92%, transparent),
+    0 2px 14px color-mix(in oklab, var(--color-paper) 82%, transparent);
+}
+
+@utility vignette {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 13%,
+    black 87%,
+    transparent
+  );
+
+  @media (min-width: 40rem) {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 9%,
+      black 96%,
+      transparent
+    );
+  }
+}
+
+/* One knob paces the whole reel: each band divides it by its own rate, so a
+   band at half the rate naturally takes twice as long to cross its strip. */
+@utility drift {
+  animation: drift calc(var(--pace) / var(--rate)) linear
+    calc(var(--pace) / var(--rate) * var(--phase) * -1) infinite;
 }
 
 @utility peek {

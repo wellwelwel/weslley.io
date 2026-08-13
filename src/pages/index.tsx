@@ -78,15 +78,18 @@ export default (): ReactNode => {
   const focus = preview ?? active;
   const {
     actions,
+    src: plush,
     background,
     texture,
     color,
     mark,
     hill,
+    scene: Scene,
     theme = 'light',
     align,
     still,
     text,
+    note,
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
   const [titleLead, titleTail, titleMark] = slides[active].title;
@@ -192,6 +195,10 @@ export default (): ReactNode => {
           className={`fixed object-bottom-right ${BLURRED}`}
         />
 
+        {/* Under the tint, so a slide dims its own scene through the same
+            color that dresses everything else it shows. */}
+        {Scene && <Scene />}
+
         {colors.map((tone) => (
           <div
             key={tone}
@@ -242,10 +249,20 @@ export default (): ReactNode => {
           {/* Past 1440p the scales are frozen, so the stage caps at the height
               it had there and stays on the ground instead of spreading. */}
           <main className='relative flex min-h-0 flex-1 flex-col overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
-            <div className='relative mt-auto flex h-full max-h-326 flex-col pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-1 cramped:pt-0 sm:px-8 lg:px-14'>
+            <div
+              className={clsx(
+                'relative mt-auto flex h-full max-h-326 flex-col sm:px-8 lg:px-14',
+                plush &&
+                  'pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-1 cramped:pt-0'
+              )}
+            >
+              {/* Without a rail below it, the block takes the height that
+                  freed and centres one stack in it, one gap throughout. */}
               <div
                 className={clsx(
-                  'mt-auto',
+                  plush
+                    ? 'mt-auto'
+                    : 'flex flex-1 flex-col justify-center gap-[clamp(1.5rem,5svh,3rem)]',
                   align === 'left'
                     ? 'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-center short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10'
                     : 'text-center'
@@ -284,7 +301,9 @@ export default (): ReactNode => {
                     <p
                       key={`text:${active}`}
                       className={clsx(
-                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2 short:min-h-10',
+                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2',
+                        plush &&
+                          'min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] short:min-h-10',
                         align !== 'left' && 'mx-auto',
                         SHADOWS[theme]
                       )}
@@ -309,32 +328,50 @@ export default (): ReactNode => {
                     className={clsx(
                       align === 'left'
                         ? 'mt-[clamp(1.5rem,7.5svh-0.5rem,4rem)] shrink-0 short:mt-3 cramped:mt-1 short-wide:mt-0 lg:mt-0'
-                        : 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
+                        : plush && 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
                       !still && 'animate-slide'
                     )}
                   >
                     <Stage open={partners} onOpen={openPartners} mark={mark} />
                   </div>
                 )}
+
+                {note && (
+                  <p
+                    key={`note:${active}`}
+                    className='m-0 flex animate-ticker items-center justify-center gap-2 text-[0.8125rem]/none font-semibold text-ink/55 halo [animation-delay:700ms]'
+                  >
+                    {note}
+                  </p>
+                )}
               </div>
 
+              {/* A slide with no plush folds the rail away, and the two auto
+                  margins left over center what stays on screen. */}
               <div
                 ref={rail}
-                className='mt-auto grid shrink-0 overflow-hidden pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:pt-1 short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14'
+                className={clsx(
+                  'mt-auto grid shrink-0 overflow-hidden transition-[grid-template-rows,padding-top,opacity] duration-500 ease-swift [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14',
+                  plush
+                    ? 'grid-rows-[1fr] pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] opacity-100 short:pt-1'
+                    : 'grid-rows-[0fr] pt-0 opacity-0'
+                )}
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
                   <div
                     key={label}
                     data-group
                     style={groupIndex ? PARKED : undefined}
-                    className='col-start-1 row-start-1 flex items-end justify-center gap-2 lg:gap-6'
+                    className='col-start-1 row-start-1 flex min-h-0 items-end justify-center gap-2 lg:gap-6'
                   >
                     {members.map(({ src, alt }, memberIndex) => {
+                      if (!src) return null;
+
                       const index = starts[groupIndex] + memberIndex;
 
                       return (
                         <button
-                          key={alt}
+                          key={src}
                           ref={place(index)}
                           type='button'
                           onClick={() => show(index)}
@@ -369,7 +406,7 @@ export default (): ReactNode => {
           </main>
         </div>
 
-        {spots[focus] !== undefined && (
+        {plush && spots[focus] !== undefined && (
           <Hill center={spots[focus]} tone={hill ?? mark} />
         )}
       </div>

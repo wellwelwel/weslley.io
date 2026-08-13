@@ -149,6 +149,72 @@
     "width": 150,
     "height": 150
   },
+  "/img/slide/codecon-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "e1612d54",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/codecon-002.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "fa9f3773",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/devfest-cerrado-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "39988b6d",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/devfest-cerrado-002.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "120e26ff",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/mvpconf-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "d581e947",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/nodebr-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "adfd8952",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/oracle-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "6fe8ea80",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/roga-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "69136c62",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/roga-002.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "0cb14421",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/tdc-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "784951cf",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/usp-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "384581f6",
+    "width": 1040,
+    "height": 581
+  },
   "/img/ssi.png": {
     "widths": [48, 64, 72, 96, 108],
     "stamp": "f6b8959b",
@@ -160,6 +226,12 @@
     "stamp": "461f9c98",
     "width": 4032,
     "height": 2268
+  },
+  "/img/talks/devfest-cerrado-2025/moments/07.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "35af5c6d",
+    "width": 2048,
+    "height": 1365
   },
   "/img/tdc.png": {
     "widths": [48, 64, 72, 96, 108],
