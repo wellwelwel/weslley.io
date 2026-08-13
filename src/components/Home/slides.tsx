@@ -126,6 +126,40 @@ export const groups: Group[] = [
     ],
   },
   {
+    label: 'Impacto',
+    slides: [
+      {
+        name: 'Impacto',
+        Icon: TbUsersGroup,
+        title: [
+          [
+            'Os ',
+            <span key='millions' style={{ color: pink }}>
+              milhões
+            </span>,
+            ' não são',
+          ],
+          'apenas números',
+          '.',
+        ],
+        text: 'Esse número reflete milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
+        note: (
+          <>
+            Do Brasil para o mundo
+            <img src={brazil} alt='' className='h-4 w-auto' />
+          </>
+        ),
+        background: defaultBackground,
+        scene: Memories,
+        color: '#0e0927cc',
+        mark: pink,
+        hill: pink,
+        theme: 'dark',
+        actions: { stage: Milestones },
+      },
+    ],
+  },
+  {
     label: 'Projetos',
     slides: [
       {
@@ -175,40 +209,6 @@ export const groups: Group[] = [
         actions: {
           stage: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
         },
-      },
-    ],
-  },
-  {
-    label: 'Impacto',
-    slides: [
-      {
-        name: 'Impacto',
-        Icon: TbUsersGroup,
-        title: [
-          [
-            'Os ',
-            <span key='millions' style={{ color: pink }}>
-              milhões
-            </span>,
-            ' não são',
-          ],
-          'apenas números',
-          '.',
-        ],
-        text: 'Esse número reflete milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
-        note: (
-          <>
-            Do Brasil para o mundo
-            <img src={brazil} alt='' className='h-4 w-auto' />
-          </>
-        ),
-        background: defaultBackground,
-        scene: Memories,
-        color: '#0e0927cc',
-        mark: pink,
-        hill: pink,
-        theme: 'dark',
-        actions: { stage: Milestones },
       },
     ],
   },
