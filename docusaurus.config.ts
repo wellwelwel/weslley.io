@@ -1,6 +1,5 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
-import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import { env, loadEnvFile } from 'node:process';
 import { themes as prismThemes } from 'prism-react-renderer';
 

@@ -1,15 +1,14 @@
 import type { Section } from '@site/src/components/Header';
 import type { Theme } from '@site/src/components/Home/slides';
 import type { CSSProperties, ReactNode } from 'react';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
-import gsap from 'gsap';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
 import { Hill } from '@site/src/components/Hill';
+import { Rail } from '@site/src/components/Home/Rail';
 import {
   backgrounds,
   colors,
@@ -21,32 +20,29 @@ import {
   steps,
   textures,
 } from '@site/src/components/Home/slides';
+import { Tint } from '@site/src/components/Home/Tint';
 import { useSlideshow } from '@site/src/components/Home/useSlideshow';
 import { useSpots } from '@site/src/components/Home/useSpots';
 import { Name } from '@site/src/components/Name';
 import { PartnersDialog } from '@site/src/components/Partners/Dialog';
-import { Picture, srcset } from '@site/src/components/Picture';
+import { srcset } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
 import interLatin from '@site/src/fonts/inter-latin.woff2';
 import noto800 from '@site/src/fonts/noto-sans-latin-800.woff2';
 import noto900 from '@site/src/fonts/noto-sans-latin-900.woff2';
-import { motion } from '@site/src/helpers/reduced-motion';
-
-gsap.registerPlugin(useGSAP);
 
 type PageStyle = CSSProperties & { '--tint'?: string };
 
+const MEDIA = {
+  narrow: '(max-width: 39.9375rem)',
+  wide: '(min-width: 40rem)',
+};
+
 const fallbackBackgrounds = [defaultBackground];
 
-const RAIL = { full: 100, reduced: 55 };
+const opening = slides[0].texture;
 
-/* Mirrors the placement GSAP applies at hydration, so the static frame
-   already shows a single group instead of every row stacked. */
-const PARKED: CSSProperties = { opacity: 0, visibility: 'hidden' };
-
-/* The texture is the LCP element only where the card leaves a gutter, so the
-   early high-priority fetch stays gated to that breakpoint. */
-const grain = slides[0].texture && srcset(slides[0].texture, 'avif');
+const grain = opening && srcset(opening, 'avif');
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
@@ -55,8 +51,6 @@ const THEMES: Record<Theme, string> = {
   dark: '[--color-ink:#f0f4ff] [--color-paper:#0e0927]',
 };
 
-/* Reads as a halo on the light theme and as depth on the dark one, since the
-   paper token already carries the surface color of each. */
 const SHADOWS: Record<Theme, string> = {
   light: 'text-shadow-paper/18',
   dark: 'text-shadow-paper/50',
@@ -69,9 +63,6 @@ export default (): ReactNode => {
   const [hovered, setHovered] = useState<number | null>(null);
   const { active, show, home } = useSlideshow(slides.length, partners || menu);
   const { page, rail, place, spots } = useSpots();
-  const railPlaced = useRef(false);
-  const railShown = useRef(false);
-  const kept = useRef(0);
   const group = groupOf[active];
   const preview =
     hovered !== null && hovered !== active && groupOf[hovered] === group
@@ -91,13 +82,9 @@ export default (): ReactNode => {
     align,
     still,
     text,
-    note,
+    footnote,
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
-
-  /* A slide with no plush is active for no chip, so the emphasis holds on the
-     last one it had: nothing rescales while the rail is only fading away. */
-  if (plush) kept.current = active;
   const [titleLead, titleTail, titleMark] = slides[active].title;
   const flow = align === 'left' && 'max-sm:inline-block';
   const tint: PageStyle = { '--tint': color ?? hill };
@@ -113,35 +100,6 @@ export default (): ReactNode => {
         onSelect: () => show(starts[index]),
       })),
     [show]
-  );
-
-  useGSAP(
-    () => {
-      const rows = rail.current?.querySelectorAll('[data-group]') ?? [];
-      const placed = railPlaced.current;
-      const carried = railShown.current;
-
-      railPlaced.current = true;
-      railShown.current = Boolean(plush);
-
-      /* The travel is a percentage of the row's own height, which the fold is
-         collapsing at the same time, so a swap riding along with it would rise
-         and fall back instead of leaving. The fade carries it on the way out
-         and the rows take their new places on the way in, while the rail is
-         still transparent. */
-      if (placed && !plush) return;
-
-      rows.forEach((row, index) =>
-        gsap.to(row, {
-          yPercent: (index - group) * motion(RAIL),
-          autoAlpha: index === group ? 1 : 0,
-          duration: placed && carried ? 0.5 : 0,
-          ease: 'power3.out',
-          overwrite: true,
-        })
-      );
-    },
-    { dependencies: [group, plush], scope: rail }
   );
 
   return (
@@ -165,7 +123,7 @@ export default (): ReactNode => {
           as='font'
           type='font/woff2'
           href={noto900}
-          media='(max-width: 39.9375rem)'
+          media={MEDIA.narrow}
           crossOrigin='anonymous'
         />
         <link
@@ -173,7 +131,7 @@ export default (): ReactNode => {
           as='font'
           type='font/woff2'
           href={noto800}
-          media='(min-width: 40rem)'
+          media={MEDIA.wide}
           crossOrigin='anonymous'
         />
         {grain && (
@@ -183,7 +141,7 @@ export default (): ReactNode => {
             type='image/avif'
             imageSrcSet={grain}
             imageSizes='100vw'
-            media='(min-width: 40rem)'
+            media={MEDIA.wide}
             fetchPriority='high'
           />
         )}
@@ -211,18 +169,9 @@ export default (): ReactNode => {
           className={`fixed object-bottom-right ${BLURRED}`}
         />
 
-        {/* Under the tint, so a slide dims its own scene through the same
-            color that dresses everything else it shows. */}
         {Scene && <Scene />}
 
-        {colors.map((tone) => (
-          <div
-            key={tone}
-            aria-hidden='true'
-            style={{ backgroundColor: tone, opacity: tone === color ? 1 : 0 }}
-            className='pointer-events-none fixed inset-0 transition-opacity duration-700 ease-swift'
-          />
-        ))}
+        <Tint tones={colors} active={color} />
 
         <div
           aria-hidden='true'
@@ -240,8 +189,6 @@ export default (): ReactNode => {
               : 'sm:bg-paper sm:shadow-[0_0_24px_rgb(255_255_255_/_0.3)]'
           )}
         >
-          {/* Auto keeps the grain from disputing bandwidth with the backdrop
-              and the fonts while the first view loads. */}
           <Backdrop
             sources={textures}
             active={texture}
@@ -262,8 +209,6 @@ export default (): ReactNode => {
             onPartners={openPartners}
           />
 
-          {/* Past 1440p the scales are frozen, so the stage caps at the height
-              it had there and stays on the ground instead of spreading. */}
           <main className='relative flex min-h-0 flex-1 flex-col overflow-hidden sm:rounded-t-[2.5rem] sm:rounded-b-3xl'>
             <div
               className={clsx(
@@ -272,8 +217,6 @@ export default (): ReactNode => {
                   'pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-1 cramped:pt-0'
               )}
             >
-              {/* Without a rail below it, the block takes the height that
-                  freed and centres one stack in it, one gap throughout. */}
               <div
                 className={clsx(
                   plush
@@ -352,82 +295,24 @@ export default (): ReactNode => {
                   </div>
                 )}
 
-                {note && (
+                {footnote && (
                   <p
-                    key={`note:${active}`}
+                    key={`footnote:${active}`}
                     className='m-0 flex animate-ticker items-center justify-center gap-2 text-[0.8125rem]/none font-semibold text-ink/55 halo [animation-delay:700ms]'
                   >
-                    {note}
+                    {footnote}
                   </p>
                 )}
               </div>
 
-              {/* A slide with no plush folds the rail away, and the two auto
-                  margins left over center what stays on screen. Both the fold
-                  and the group swap move a whole row through where the clip edge
-                  would be, so the clip stands a chip back from it. The margin
-                  only takes a plain length, hence the ceiling of `--chip` in
-                  place of the variable, and the folded rail drops its pointer
-                  events, since what the clip no longer cuts would answer to the
-                  cursor while invisible. The fr interpolation warps the closing
-                  track, so `content-end` and `self-end` on the rows keep them
-                  glued to the floor while it happens. The durations pair with
-                  the transition properties in order: the fade takes half the
-                  fold, so the chips are gone before most of the reclaim runs. */}
-              <div
+              <Rail
                 ref={rail}
-                className={clsx(
-                  'mt-auto grid shrink-0 content-end overflow-clip [overflow-clip-margin:16rem] transition-[grid-template-rows,padding-top,opacity] duration-[500ms,500ms,250ms] ease-swift [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14',
-                  plush
-                    ? 'grid-rows-[1fr] pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] opacity-100 short:pt-1'
-                    : 'pointer-events-none grid-rows-[0fr] pt-0 opacity-0'
-                )}
-              >
-                {groups.map(({ label, slides: members }, groupIndex) => (
-                  <div
-                    key={label}
-                    data-group
-                    style={groupIndex ? PARKED : undefined}
-                    className='col-start-1 row-start-1 flex min-h-0 items-end justify-center gap-2 self-end lg:gap-6'
-                  >
-                    {members.map(({ src, alt }, memberIndex) => {
-                      if (!src) return null;
-
-                      const index = starts[groupIndex] + memberIndex;
-
-                      return (
-                        <button
-                          key={src}
-                          ref={place(index)}
-                          type='button'
-                          onClick={() => show(index)}
-                          onPointerEnter={({ pointerType }) =>
-                            pointerType === 'mouse' && setHovered(index)
-                          }
-                          onPointerLeave={() => setHovered(null)}
-                          onFocus={() => setHovered(index)}
-                          onBlur={() => setHovered(null)}
-                          aria-label={alt}
-                          aria-current={index === active}
-                          className='group block min-w-0 max-w-(--chip) flex-1 origin-bottom cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[scale] duration-200 ease-swift focus-visible:-outline-offset-4 focus-visible:outline-2 focus-visible:outline-accent active:scale-95'
-                        >
-                          <Picture
-                            src={src}
-                            alt=''
-                            sizes='(min-width: 40rem) 16rem, 25vw'
-                            decoding='async'
-                            draggable={false}
-                            className={clsx(
-                              'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
-                              index === kept.current ? 'scale-100' : 'scale-65'
-                            )}
-                          />
-                        </button>
-                      );
-                    })}
-                  </div>
-                ))}
-              </div>
+                active={active}
+                open={Boolean(plush)}
+                place={place}
+                onSelect={show}
+                onHover={setHovered}
+              />
             </div>
           </main>
         </div>

@@ -18,6 +18,7 @@
 @source '../components/Socials.tsx';
 @source '../components/Star.tsx';
 @source '../components/Tooltip.tsx';
+@source '../theme/NotFound';
 
 @font-face {
   font-family: 'Inter';

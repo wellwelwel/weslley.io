@@ -34,10 +34,8 @@ type Slide = {
   Icon: IconType;
   title: [ReactNode, ReactNode, ReactNode?];
   text?: ReactNode;
-  /** Closing line, at the very bottom of the slide. */
-  note?: ReactNode;
+  footnote?: ReactNode;
   background?: string;
-  /** Moving backdrop, layered under the slide's tint. */
   scene?: ComponentType;
   texture?: string;
   color?: string;
@@ -145,7 +143,7 @@ export const groups: Group[] = [
           '.',
         ],
         text: 'Eles refletem milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
-        note: (
+        footnote: (
           <>
             Do Brasil para o mundo
             <img src={brazil} alt='' className='h-4 w-auto' />

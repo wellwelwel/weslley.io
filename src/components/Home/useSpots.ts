@@ -8,8 +8,6 @@ type Spots = {
   spots: number[];
 };
 
-/** Measures the horizontal center of each placed chip relative to `page`,
-    remeasuring whenever `rail` resizes. */
 export const useSpots = (): Spots => {
   const [spots, setSpots] = useState<number[]>([]);
   const page = useRef<HTMLDivElement>(null);
