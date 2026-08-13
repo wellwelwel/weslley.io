@@ -239,7 +239,7 @@ export const Agenda = memo((): ReactNode => {
       <div
         ref={deck}
         style={{ minHeight: height }}
-        className='grid animate-rise [animation-delay:500ms] short-wide:pr-(--reach) xl:pr-(--reach)'
+        className='grid animate-rise [animation-delay:500ms] short-wide:pr-(--reach) lg:pr-(--reach)'
       >
         {slots.map((slot, index) => {
           const here = placeOf(index, focus);
