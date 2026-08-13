@@ -4,7 +4,7 @@ import { SafeLink } from '@site/src/components/SafeLink';
 import { socialLinks } from '@site/src/helpers/social-links';
 
 export type SocialsOptions = {
-  onHover: (name: string | null) => void;
+  onHover?: (name: string | null) => void;
 };
 
 const RESTORE_DELAY_MS = 150;
@@ -17,12 +17,12 @@ export const Socials = ({ onHover }: SocialsOptions): ReactNode => {
 
   const enter = (name: string) => {
     clearTimeout(restore.current);
-    onHover(name);
+    onHover?.(name);
   };
 
   const leave = () => {
     clearTimeout(restore.current);
-    restore.current = setTimeout(() => onHover(null), RESTORE_DELAY_MS);
+    restore.current = setTimeout(() => onHover?.(null), RESTORE_DELAY_MS);
   };
 
   useEffect(() => () => clearTimeout(restore.current), []);

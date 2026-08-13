@@ -70,6 +70,8 @@ export default (): ReactNode => {
   const { active, show, home } = useSlideshow(slides.length, partners || menu);
   const { page, rail, place, spots } = useSpots();
   const railPlaced = useRef(false);
+  const railShown = useRef(false);
+  const kept = useRef(0);
   const group = groupOf[active];
   const preview =
     hovered !== null && hovered !== active && groupOf[hovered] === group
@@ -92,6 +94,10 @@ export default (): ReactNode => {
     note,
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
+
+  /* A slide with no plush is active for no chip, so the emphasis holds on the
+     last one it had: nothing rescales while the rail is only fading away. */
+  if (plush) kept.current = active;
   const [titleLead, titleTail, titleMark] = slides[active].title;
   const flow = align === 'left' && 'max-sm:inline-block';
   const tint: PageStyle = { '--tint': color ?? hill };
@@ -112,20 +118,30 @@ export default (): ReactNode => {
   useGSAP(
     () => {
       const rows = rail.current?.querySelectorAll('[data-group]') ?? [];
+      const placed = railPlaced.current;
+      const carried = railShown.current;
+
+      railPlaced.current = true;
+      railShown.current = Boolean(plush);
+
+      /* The travel is a percentage of the row's own height, which the fold is
+         collapsing at the same time, so a swap riding along with it would rise
+         and fall back instead of leaving. The fade carries it on the way out
+         and the rows take their new places on the way in, while the rail is
+         still transparent. */
+      if (placed && !plush) return;
 
       rows.forEach((row, index) =>
         gsap.to(row, {
           yPercent: (index - group) * motion(RAIL),
           autoAlpha: index === group ? 1 : 0,
-          duration: railPlaced.current ? 0.5 : 0,
+          duration: placed && carried ? 0.5 : 0,
           ease: 'power3.out',
           overwrite: true,
         })
       );
-
-      railPlaced.current = true;
     },
-    { dependencies: [group], scope: rail }
+    { dependencies: [group, plush], scope: rail }
   );
 
   return (
@@ -347,14 +363,24 @@ export default (): ReactNode => {
               </div>
 
               {/* A slide with no plush folds the rail away, and the two auto
-                  margins left over center what stays on screen. */}
+                  margins left over center what stays on screen. Both the fold
+                  and the group swap move a whole row through where the clip edge
+                  would be, so the clip stands a chip back from it. The margin
+                  only takes a plain length, hence the ceiling of `--chip` in
+                  place of the variable, and the folded rail drops its pointer
+                  events, since what the clip no longer cuts would answer to the
+                  cursor while invisible. The fr interpolation warps the closing
+                  track, so `content-end` and `self-end` on the rows keep them
+                  glued to the floor while it happens. The durations pair with
+                  the transition properties in order: the fade takes half the
+                  fold, so the chips are gone before most of the reclaim runs. */}
               <div
                 ref={rail}
                 className={clsx(
-                  'mt-auto grid shrink-0 overflow-hidden transition-[grid-template-rows,padding-top,opacity] duration-500 ease-swift [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14',
+                  'mt-auto grid shrink-0 content-end overflow-clip [overflow-clip-margin:16rem] transition-[grid-template-rows,padding-top,opacity] duration-[500ms,500ms,250ms] ease-swift [--chip:clamp(2.75rem,24.4svh-3.5rem,16rem)] short:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] squat:[--chip:clamp(2.5rem,25svh-5.5rem,13rem)] sm:-mx-8 lg:-mx-14',
                   plush
                     ? 'grid-rows-[1fr] pt-[clamp(0.5rem,2.75svh-0.5rem,1.5rem)] opacity-100 short:pt-1'
-                    : 'grid-rows-[0fr] pt-0 opacity-0'
+                    : 'pointer-events-none grid-rows-[0fr] pt-0 opacity-0'
                 )}
               >
                 {groups.map(({ label, slides: members }, groupIndex) => (
@@ -362,7 +388,7 @@ export default (): ReactNode => {
                     key={label}
                     data-group
                     style={groupIndex ? PARKED : undefined}
-                    className='col-start-1 row-start-1 flex min-h-0 items-end justify-center gap-2 lg:gap-6'
+                    className='col-start-1 row-start-1 flex min-h-0 items-end justify-center gap-2 self-end lg:gap-6'
                   >
                     {members.map(({ src, alt }, memberIndex) => {
                       if (!src) return null;
@@ -393,7 +419,7 @@ export default (): ReactNode => {
                             draggable={false}
                             className={clsx(
                               'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
-                              index === active ? 'scale-100' : 'scale-65'
+                              index === kept.current ? 'scale-100' : 'scale-65'
                             )}
                           />
                         </button>

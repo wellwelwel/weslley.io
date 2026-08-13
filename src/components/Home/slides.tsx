@@ -8,6 +8,7 @@ import { LuTrophy } from 'react-icons/lu';
 import {
   TbBrandMysql,
   TbBrandOpenSource,
+  TbConfetti,
   TbPig,
   TbUsersGroup,
 } from 'react-icons/tb';
@@ -19,6 +20,7 @@ import { Memories } from '@site/src/components/Memories';
 import { Milestones } from '@site/src/components/Milestones';
 import { PartnersAction } from '@site/src/components/Partners/Action';
 import { PartnersTrigger } from '@site/src/components/Partners/Trigger';
+import { Socials } from '@site/src/components/Socials';
 import { Star } from '@site/src/components/Star';
 
 export type Theme = 'light' | 'dark';
@@ -142,7 +144,7 @@ export const groups: Group[] = [
           'apenas números',
           '.',
         ],
-        text: 'Esse número reflete milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
+        text: 'Eles refletem milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
         note: (
           <>
             Do Brasil para o mundo
@@ -208,6 +210,28 @@ export const groups: Group[] = [
         hill: '#fdff00',
         actions: {
           stage: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+        },
+      },
+    ],
+  },
+  {
+    label: 'Fim',
+    slides: [
+      {
+        src: me,
+        alt: 'Pelúcia do Weslley Araújo',
+        name: 'Redes sociais',
+        Icon: TbConfetti,
+        title: ['Você chegou', 'ao fim', '.'],
+        hill: pink,
+        text: 'Me siga nas redes sociais e acompanhe meu trabalho. Apoie meu trabalho deixando sua estrela nos projetos open source que eu mantenho com todo carinho do mundo.',
+        texture: velvet,
+        actions: {
+          stage: () => (
+            <div className='flex justify-center'>
+              <Socials />
+            </div>
+          ),
         },
       },
     ],
