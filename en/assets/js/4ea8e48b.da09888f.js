@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["9517"],{7883:function(e){e.exports=JSON.parse('{"title":"Packages Update","slug":"packages-update","url":"https://github.com/wellwelwel/packages-update","socialUrl":"https://opengraph.githubassets.com/1/wellwelwel/packages-update"}')}}]);

@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["2977"],{4438:function(s){s.exports=JSON.parse('{"title":"SVPS","slug":"svps","url":"https://github.com/wellwelwel/svps","socialUrl":"https://opengraph.githubassets.com/1/wellwelwel/svps"}')}}]);

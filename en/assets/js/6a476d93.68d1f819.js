@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["446"],{6252:function(s){s.exports=JSON.parse('{"title":"Facebook: Docusaurus","slug":"docusaurus","url":"https://github.com/facebook/docusaurus/pulls?q=is:merged+author:wellwelwel","socialUrl":"https://opengraph.githubassets.com/1/facebook/docusaurus"}')}}]);
