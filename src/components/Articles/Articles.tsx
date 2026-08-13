@@ -1,4 +1,4 @@
-import type { ProcessedArticle } from '@site/src/@types/article';
+import type { ArticleListing } from '@site/src/@types/article';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
@@ -6,7 +6,6 @@ import { ArticlesOptions } from '@site/src/helpers/get-social';
 import { useViewMode } from '@site/src/hooks/useViewMode';
 import { MarkdownWithAdmonitions } from './Admonition';
 import { Article } from './Article';
-import '@site/src/css/pages/articles.scss';
 
 export const Articles = ({ route, description, children }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();
@@ -30,8 +29,8 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
   };
 
   const articles =
-    (globalData[`mount-${route}`] as { default: ProcessedArticle[] })
-      ?.default || [];
+    (globalData[`mount-${route}`] as { default: ArticleListing[] })?.default ||
+    [];
 
   return (
     <Layout title={translations.title[route]}>

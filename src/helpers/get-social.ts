@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import type { ProcessedArticle } from '../@types/article';
+import type { ArticleListing } from '../@types/article';
 
 export type ArticlesOptions = {
   route: keyof typeof regex;
@@ -18,7 +18,7 @@ export const getSocialImage = ({
   currentLocale,
   imageMap,
 }: {
-  article: ProcessedArticle;
+  article: ArticleListing;
   route: ArticlesOptions['route'];
   currentLocale: string;
   imageMap: Record<string, string>;

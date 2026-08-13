@@ -1,0 +1,336 @@
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/preflight.css' layer(base);
+@import 'tailwindcss/utilities.css' source(none);
+
+@source '../pages/index.tsx';
+@source '../components/Adopters.tsx';
+@source '../components/Agenda';
+@source '../components/Backdrop.tsx';
+@source '../components/Badges.tsx';
+@source '../components/Header.tsx';
+@source '../components/Hill.tsx';
+@source '../components/Home';
+@source '../components/Memories.tsx';
+@source '../components/Milestones.tsx';
+@source '../components/Partners';
+@source '../components/Picture.tsx';
+@source '../components/Progress.tsx';
+@source '../components/Socials.tsx';
+@source '../components/Star.tsx';
+@source '../components/Tooltip.tsx';
+@source '../theme/NotFound';
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/inter-latin-ext.woff2') format('woff2');
+  unicode-range:
+    U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304,
+    U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB,
+    U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-800.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: 'Noto Sans';
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url('../fonts/noto-sans-latin-900.woff2') format('woff2');
+  unicode-range:
+    U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC,
+    U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212,
+    U+2215, U+FEFF, U+FFFD;
+}
+
+@custom-variant short (@media (max-height: 36rem));
+@custom-variant short-wide (@media (max-height: 36rem) and (min-width: 40rem));
+@custom-variant squat (@media (max-width: 40rem) and (max-height: 41rem));
+@custom-variant steps (@media (min-width: 25rem));
+@custom-variant cramped (@media (max-height: 22rem));
+@custom-variant tight (@media (max-height: 36rem) and (max-width: 50rem));
+
+@theme {
+  --ease-swift: cubic-bezier(0.2, 0, 0, 1);
+
+  --font-sans:
+    'Inter', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --font-featured: 'Noto Sans', sans-serif;
+
+  /* The height term drives the scale and the third cap freezes it at 1440p. */
+  --text-hero: max(
+    1.5rem,
+    min(8.2vw, max(6.6vw, 2rem), 10.125rem, 13.9svh - 2.375rem)
+  );
+  --text-hero--line-height: 1.02;
+
+  /* The second ramp resumes past 1.125rem, so the lede keeps pace with the hero
+     and freezes with it at 1440p. */
+  --text-lede: max(
+    1rem,
+    min(1.125rem, 3svh - 0.25rem),
+    min(1.625rem, 2.22svh - 0.375rem)
+  );
+
+  --animate-ticker: ticker 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes ticker {
+    from {
+      translate: 0 var(--ticker-travel, 0.6em);
+      opacity: 0;
+    }
+  }
+
+  --animate-title: title 0.32s cubic-bezier(0.215, 0.61, 0.355, 1) backwards;
+
+  @keyframes title {
+    from {
+      translate: 0 var(--title-travel);
+      opacity: 0;
+      filter: blur(var(--title-blur));
+    }
+  }
+
+  --animate-slide: slide 0.38s cubic-bezier(0.215, 0.61, 0.355, 1) 0.42s
+    backwards;
+
+  @keyframes slide {
+    from {
+      translate: var(--slide-travel) 0;
+      opacity: 0;
+    }
+  }
+
+  --animate-rise: rise 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes rise {
+    from {
+      translate: 0 var(--rise-travel, 1.25rem);
+    }
+  }
+
+  --animate-fade: fade 0.5s cubic-bezier(0.2, 0, 0, 1) backwards;
+
+  @keyframes fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  --animate-hop: hop 0.7s cubic-bezier(0.3, 0.7, 0.4, 1) both;
+
+  @keyframes hop {
+    0%,
+    100% {
+      transform: translateY(0) rotate(0deg) scaleY(1);
+    }
+    12% {
+      transform: translateY(1px) rotate(-3deg) scaleY(0.9);
+    }
+    32% {
+      transform: translateY(calc(var(--hop-travel, 1) * -4.5px)) rotate(4deg)
+        scaleY(1.06);
+    }
+    48% {
+      transform: translateY(0) rotate(-2deg) scaleY(0.94);
+    }
+    60% {
+      transform: translateY(calc(var(--hop-travel, 1) * -3px)) rotate(-5deg)
+        scaleY(1.04);
+    }
+    80% {
+      transform: translateY(0) rotate(2deg) scaleY(0.97);
+    }
+  }
+
+  --color-ink: #0e0927;
+  --color-paper: #f0f4ff;
+  --color-accent: #7a77ff;
+  --color-blush: #fd79a8;
+  --color-blush-deep: #e84393;
+  --color-progress-track: #21115a;
+}
+
+:root {
+  --title-travel: 55%;
+  --title-blur: 6px;
+  --slide-travel: 48px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --title-travel: 30%;
+    --title-blur: 3px;
+    --slide-travel: 26px;
+  }
+}
+
+@property --head {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 32px;
+}
+
+@property --tail {
+  syntax: '<length>';
+  inherits: false;
+  initial-value: 32px;
+}
+
+@keyframes drift {
+  to {
+    translate: calc(-50% - var(--gap) / 2) 0;
+  }
+}
+
+@keyframes head {
+  from {
+    --head: 0px;
+  }
+}
+
+@keyframes tail {
+  to {
+    --tail: 0px;
+  }
+}
+
+/* Shadows follow the slide's own tint instead of a fixed grey, so they read as
+   depth over a background that changes color on every step. */
+@utility shaded {
+  --shade: color-mix(
+    in oklab,
+    var(--color-ink) 75%,
+    var(--tint, var(--color-ink))
+  );
+  --shade-soft: color-mix(in oklab, var(--shade) 12%, transparent);
+  --shade-deep: color-mix(in oklab, var(--shade) 28%, transparent);
+}
+
+@utility soften {
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black var(--head),
+    black calc(100% - var(--tail)),
+    transparent
+  );
+  animation:
+    head linear both,
+    tail linear both;
+  animation-timeline: scroll(self inline);
+  animation-range:
+    0 2rem,
+    calc(100% - 2rem) 100%;
+}
+
+/* The horizontal edges bleed off the screen. On a portrait screen the bands stop
+   short of the vertical ones, so the fade is long enough to melt them into the
+   backdrop; once they cover the screen it only has to dress the header. */
+/* Only the row in the middle comes through whole, and distance dims the ones
+   around it. That fade is the entire focus indicator this control needs. */
+@utility picker {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    rgb(0 0 0 / 0.26) 22%,
+    black 38%,
+    black 62%,
+    rgb(0 0 0 / 0.26) 78%,
+    transparent
+  );
+}
+
+/* Lifts text off a photographic backdrop with no surface behind it: a tight
+   shadow for the edge and a wide one for the ground. */
+@utility halo {
+  text-shadow:
+    0 1px 2px color-mix(in oklab, var(--color-paper) 92%, transparent),
+    0 2px 14px color-mix(in oklab, var(--color-paper) 82%, transparent);
+}
+
+@utility vignette {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent,
+    black 13%,
+    black 87%,
+    transparent
+  );
+
+  @media (min-width: 40rem) {
+    mask-image: linear-gradient(
+      to bottom,
+      transparent,
+      black 9%,
+      black 96%,
+      transparent
+    );
+  }
+}
+
+/* One knob paces the whole reel: each band divides it by its own rate, so a
+   band at half the rate naturally takes twice as long to cross its strip. */
+@utility drift {
+  animation: drift calc(var(--pace) / var(--rate)) linear
+    calc(var(--pace) / var(--rate) * var(--phase) * -1) infinite;
+}
+
+@utility peek {
+  mask-image: linear-gradient(
+    to right,
+    black,
+    transparent calc(100vw - var(--spread) - 5.25rem)
+  );
+
+  /* The strip left over on a squat screen is too narrow for a fade that starts
+     at the card's own edge, so it holds longer and still lands before the
+     screen ends. */
+  @media (max-width: 40rem) and (max-height: 41rem) {
+    mask-image: linear-gradient(
+      to right,
+      black calc(100vw - var(--spread) - 8rem),
+      transparent calc(100vw - var(--spread) - 3.5rem)
+    );
+  }
+}
+
+body.clean {
+  font-family: var(--font-sans);
+}
+
+body.clean :is(img, a) {
+  -webkit-user-drag: none;
+  -webkit-touch-callout: none;
+  user-select: none;
+}
+
+body.clean img {
+  pointer-events: none;
+}

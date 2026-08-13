@@ -2,8 +2,6 @@ import type { FC } from 'react';
 import { memo, useEffect, useId, useMemo, useRef, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MonitorPlay } from 'lucide-react';
-import '../css/custom/_moments.scss';
-import '../css/custom/_keynote.scss';
 
 export type KeynoteProps = {
   slides: string[];

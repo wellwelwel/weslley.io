@@ -13,7 +13,6 @@ import { SideSelector } from '../../../components/Side/Selector';
 import { Navigation } from './_navigation';
 import { SocialShare } from './_social-share';
 import { Summary } from './_summary';
-import '@site/src/css/pages/article-page.scss';
 
 export default ({
   data,

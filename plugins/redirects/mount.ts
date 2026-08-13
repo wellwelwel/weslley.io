@@ -41,13 +41,11 @@ export default (
       return processed;
     },
     contentLoaded: async ({ content, actions }) => {
-      const { addRoute, createData, setGlobalData } = actions;
+      const { addRoute, createData } = actions;
       const { i18n } = context;
       const currentLocale = i18n.currentLocale;
       const localePrefix =
         currentLocale === i18n.defaultLocale ? '' : `/${currentLocale}`;
-
-      setGlobalData(content);
 
       for (const redirect of content) {
         const dataPath = await createData(

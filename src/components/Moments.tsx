@@ -1,6 +1,5 @@
 import type { FC } from 'react';
 import { memo, useEffect, useId, useMemo, useRef, useState } from 'react';
-import '../css/custom/_moments.scss';
 
 export type MomentOptions = {
   src: string;

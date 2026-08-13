@@ -1,5 +1,6 @@
 /.cache-loader
 /.docusaurus
+/.lagune
 /.wrangler
 /backups
 /build

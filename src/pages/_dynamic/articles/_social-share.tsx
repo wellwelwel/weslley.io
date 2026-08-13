@@ -1,6 +1,5 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Link } from 'lucide-react';
-import { toast } from 'sonner';
 
 type SocialShareProps = {
   url: string;
@@ -11,13 +10,7 @@ type SocialShareProps = {
 const shareText = (title: string, author: string, locale: string) =>
   locale === 'en' ? `"${title}" by ${author}:` : `"${title}" por ${author}:`;
 
-const alert = (message: string) => {
-  toast.info(message, {
-    duration: 2000,
-  });
-};
-
-const fallbackCopyToClipboard = (text: string): boolean => {
+const fallbackCopyToClipboard = (text: string) => {
   const textArea = document.createElement('textarea');
   textArea.value = text;
   textArea.style.position = 'fixed';
@@ -28,35 +21,21 @@ const fallbackCopyToClipboard = (text: string): boolean => {
   textArea.select();
 
   try {
-    const successful = document.execCommand('copy');
+    document.execCommand('copy');
+  } finally {
     document.body.removeChild(textArea);
-    return successful;
-  } catch {
-    document.body.removeChild(textArea);
-    return false;
   }
 };
 
-const copyToClipboard = async (text: string, locale: string) => {
-  const successMessage =
-    locale === 'en'
-      ? 'Link copied to clipboard!'
-      : 'Link copiado para a área de transferência!';
-  const errorMessage =
-    locale === 'en'
-      ? 'Failed to copy link. Please try again.'
-      : 'Falha ao copiar link. Por favor, tente novamente.';
-
+const copyToClipboard = async (text: string) => {
   if (navigator.clipboard?.writeText) {
     try {
       await navigator.clipboard.writeText(text);
-      alert(successMessage);
       return;
     } catch {}
   }
 
-  const success = fallbackCopyToClipboard(text);
-  alert(success ? successMessage : errorMessage);
+  fallbackCopyToClipboard(text);
 };
 
 export const SocialShare = ({ url, title, author }: SocialShareProps) => {
@@ -142,7 +121,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
   const copyLink = {
     name: 'Copy Link',
     ariaLabel: translations.copyLink,
-    onClick: () => copyToClipboard(url, currentLocale),
+    onClick: () => copyToClipboard(url),
   };
 
   return (

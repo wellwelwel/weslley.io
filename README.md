@@ -86,7 +86,7 @@ npm run clear
 ### Settings and Definitions
 
 - [**Docusaurus**](https://github.com/facebook/docusaurus) config file: [./docusaurus.config.ts](./docusaurus.config.ts).
-- **Theme** (colors and fonts): [./src/css/themes.scss](./src/css/themes.scss).
+- **Theme** (colors and fonts): [./src/css/tailwind.css](./src/css/tailwind.css).
 
 ---
 

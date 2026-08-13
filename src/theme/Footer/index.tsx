@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { memo } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { SafeLink } from '@site/src/components/SafeLink';
-import { socials } from '@site/src/helpers/get-contents';
+import { socials } from '@site/src/helpers/get-socials';
 
 const footers: Record<string, ReactNode> = {
   'pt-BR': (

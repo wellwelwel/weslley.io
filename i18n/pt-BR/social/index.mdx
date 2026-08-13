@@ -1,30 +1,23 @@
 import { Social } from '@site/src/components/Social';
+import { socialLinks } from '@site/src/helpers/social-links';
 
 <Social
-  name='LinkedIn'
-  imageSrc='/img/linkedin.svg'
-  url='https://www.linkedin.com/in/wellwelwel/'
+  {...socialLinks.linkedin}
   description='Dicas de programação, conteúdos mais técnicos e conquistas pra você ficar feliz junto comigo 🎉'
 />
 
 <Social
-  name='GitHub'
-  imageSrc='/img/github.svg'
-  url='https://github.com/wellwelwel'
+  {...socialLinks.github}
   description='Aqui você encontra projetos interessantes de verdade.'
 />
 
 <Social
-  name='Instagram'
-  imageSrc='/img/instagram.svg'
-  url='https://www.instagram.com/wellwelwel/'
+  {...socialLinks.instagram}
   description='Um show aqui, um gato ali e do nada, conteúdos sobre programação.'
 />
 
 <Social
-  name='YouTube'
-  imageSrc='/img/youtube.svg'
-  url='https://www.youtube.com/@weslleyio'
+  {...socialLinks.youtube}
   description={
     <p>
       🚧 <strong>Em construção:</strong> Conteúdos educacionais e cursos
@@ -34,9 +27,7 @@ import { Social } from '@site/src/components/Social';
 />
 
 <Social
-  name='GitHub Sponsors'
-  imageSrc='/img/sponsor.svg'
-  url='https://github.com/sponsors/wellwelwel'
+  {...socialLinks.sponsors}
   description={
     <p>
       Meus conteúdos são <strong>totalmente gratuitos</strong>, que tal apoiar

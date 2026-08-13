@@ -3,7 +3,6 @@ import { memo, useEffect } from 'react';
 import { useLocation } from '@docusaurus/router';
 import NavbarContent from '@theme/Navbar/Content';
 import NavbarLayout from '@theme/Navbar/Layout';
-import { Toaster } from 'sonner';
 
 const Navbar = (): ReactNode => {
   const location = useLocation();
@@ -44,17 +43,9 @@ const Navbar = (): ReactNode => {
   }, [location.key]);
 
   return (
-    <>
-      <Toaster
-        richColors={true}
-        theme='light'
-        position='top-right'
-        closeButton={true}
-      />
-      <NavbarLayout>
-        <NavbarContent />
-      </NavbarLayout>
-    </>
+    <NavbarLayout>
+      <NavbarContent />
+    </NavbarLayout>
   );
 };
 

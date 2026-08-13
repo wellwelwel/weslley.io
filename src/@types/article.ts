@@ -51,6 +51,20 @@ export type ProcessedArticle = ArticleFrontMatter & {
   order?: number;
 };
 
+export type ArticleListing = Pick<
+  ProcessedArticle,
+  | 'title'
+  | 'slug'
+  | 'date'
+  | 'description'
+  | 'readingTime'
+  | 'lastModified'
+  | 'tags'
+  | 'order'
+  | 'social'
+  | 'mdxPath'
+>;
+
 export type ArticlePageProps = {
   data: ProcessedArticle;
   content: ComponentType;

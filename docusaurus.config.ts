@@ -1,6 +1,5 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
-import type { PluginOptions } from '@easyops-cn/docusaurus-search-local';
 import { env, loadEnvFile } from 'node:process';
 import { themes as prismThemes } from 'prism-react-renderer';
 
@@ -9,6 +8,7 @@ try {
 } catch {}
 
 const articlesPlugin = require('./plugins/articles/mount.ts').default;
+const inlineCssPlugin = require('./plugins/inline-css/mount.ts').default;
 const redirectsPlugin = require('./plugins/redirects/mount.ts').default;
 
 const config: Config = {
@@ -32,6 +32,16 @@ const config: Config = {
     experimental_vcs: true,
   },
   trailingSlash: true,
+  headTags: [
+    {
+      tagName: 'link',
+      attributes: {
+        rel: 'preconnect',
+        href: 'https://wellwelwel.github.io',
+        crossorigin: 'anonymous',
+      },
+    },
+  ],
   markdown: {
     hooks: {
       onBrokenMarkdownLinks: 'throw',
@@ -42,14 +52,14 @@ const config: Config = {
   onDuplicateRoutes: 'throw',
   i18n: {
     defaultLocale: 'pt-BR',
-    locales: ['pt-BR', 'en'],
+    locales: ['pt-BR' /* 'en'*/],
     localeConfigs: {
       'pt-BR': {
         label: '🇧🇷 Português (Brasil)',
       },
-      en: {
-        label: '🇺🇸 English',
-      },
+      // en: {
+      //   label: '🇺🇸 English',
+      // },
     },
   },
   presets: [
@@ -59,7 +69,7 @@ const config: Config = {
         blog: false,
         docs: false,
         theme: {
-          customCss: ['./src/css/themes.scss'],
+          customCss: ['./src/css/tailwind.css'],
         },
         pages: {
           admonitions: true,
@@ -103,20 +113,6 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
-    'docusaurus-plugin-sass',
-    [
-      '@easyops-cn/docusaurus-search-local',
-      {
-        indexDocs: false,
-        indexBlog: false,
-        indexPages: true,
-        hashed: true,
-        highlightSearchTermsOnTargetPage: true,
-        searchResultLimits: 100,
-        ignoreFiles: /(articles|talks)\/(tags)/,
-        language: ['pt', 'en'],
-      } satisfies PluginOptions,
-    ],
     require.resolve('./webpack.config'),
     (context) =>
       articlesPlugin(context, {
@@ -124,13 +120,12 @@ const config: Config = {
         contentDir: 'articles',
       }),
     (context) =>
-      articlesPlugin(context, {
-        pluginName: 'mount-talks',
-        contentDir: 'talks',
-      }),
-    (context) =>
       redirectsPlugin(context, {
         pluginName: 'redirects',
+      }),
+    (context) =>
+      inlineCssPlugin(context, {
+        pluginName: 'inline-css',
       }),
   ],
 };

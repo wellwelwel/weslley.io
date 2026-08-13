@@ -2,7 +2,7 @@ import type { ComponentProps, ReactNode } from 'react';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { useNavbarSecondaryMenu } from '@docusaurus/theme-common/internal';
 import Translate from '@docusaurus/Translate';
-import { anchors } from '@site/src/helpers/get-contents';
+import { anchors } from '@site/src/helpers/get-anchors';
 
 function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
   return (
