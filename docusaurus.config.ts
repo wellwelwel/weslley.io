@@ -114,28 +114,11 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
-    [
-      '@easyops-cn/docusaurus-search-local',
-      {
-        indexDocs: false,
-        indexBlog: false,
-        indexPages: true,
-        hashed: true,
-        searchResultLimits: 100,
-        ignoreFiles: /(articles|talks)\/(tags)/,
-        language: ['pt', 'en'],
-      } satisfies PluginOptions,
-    ],
     require.resolve('./webpack.config'),
     (context) =>
       articlesPlugin(context, {
         pluginName: 'mount-articles',
         contentDir: 'articles',
-      }),
-    (context) =>
-      articlesPlugin(context, {
-        pluginName: 'mount-talks',
-        contentDir: 'talks',
       }),
     (context) =>
       redirectsPlugin(context, {
