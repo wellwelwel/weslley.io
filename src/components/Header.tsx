@@ -184,7 +184,7 @@ export const Header = memo(
     const { name, Icon } = steps[active];
 
     return (
-      <header className='relative z-10 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
+      <header className='relative z-30 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
         <button
           type='button'
           onClick={closingMenu(onHome)}
