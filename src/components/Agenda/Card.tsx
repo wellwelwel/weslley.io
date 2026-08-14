@@ -45,6 +45,9 @@ const REDEEM = `${COUPON} relative transition-[color,scale] duration-250 ease-sw
 const SWAP =
   'absolute inset-0 size-3 transition-[opacity,scale,filter] duration-250 ease-swift';
 
+/** Fades with the deck glide when the sliver peek veils the card's body. */
+const BODY = 'transition-opacity duration-500 ease-swift';
+
 const FLIGHT =
   'col-start-1 row-start-1 transition-transform duration-300 ease-swift';
 
@@ -71,7 +74,7 @@ const arrange = (place: number, passed: boolean): string => {
   if (place === 0) return 'z-20';
 
   if (place === 1)
-    return 'z-10 translate-x-(--spread) scale-90 opacity-55 hover:opacity-75 cursor-pointer max-sm:peek squat:opacity-70';
+    return 'z-10 translate-x-(--spread) scale-90 opacity-55 hover:opacity-75 cursor-pointer max-sm:peek squat:opacity-70 lg:max-xl:*:opacity-0 short-wide:*:opacity-0';
 
   return 'z-0 translate-x-[calc(var(--spread)+6rem)] scale-75 opacity-0 invisible pointer-events-none';
 };
@@ -120,7 +123,7 @@ export const Card = ({
     >
       {!dressed ? null : (
         <>
-          <div className='flex items-center gap-2.5'>
+          <div className={`${BODY} flex items-center gap-2.5`}>
             <Picture
               src={slot.logo ?? AVATAR}
               alt=''
@@ -159,12 +162,15 @@ export const Card = ({
             </div>
           </div>
 
-          <p className='m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85'>
+          <p
+            className={`${BODY} m-0 text-[0.8125rem]/normal font-medium text-pretty text-ink/85`}
+          >
             {slot.title}
           </p>
 
           <footer
             className={clsx(
+              BODY,
               'mt-auto flex items-center justify-between gap-3',
               details && 'pr-10.5'
             )}
