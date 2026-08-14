@@ -15,6 +15,13 @@ const formatters = {
   monthLong: new Intl.DateTimeFormat('pt-BR', { month: 'long' }),
   monthShort: new Intl.DateTimeFormat('pt-BR', { month: 'short' }),
   weekday: new Intl.DateTimeFormat('pt-BR', { weekday: 'long' }),
+  /* en-CA prints dates as YYYY-MM-DD, the same shape the slots carry. */
+  brazil: new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'America/Sao_Paulo',
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+  }),
 };
 
 const parse = (date: string): Date => {
@@ -58,7 +65,8 @@ export const stations = times.reduce<number[]>(
 export const extent = stations[stations.length - 1] + PITCH.inset;
 
 export const upcomingIndex = (): number => {
-  const nearest = times.findIndex((time) => time >= Date.now());
+  const today = formatters.brazil.format(new Date());
+  const nearest = slots.findIndex(({ date }) => date >= today);
 
   return nearest === -1 ? slots.length - 1 : nearest;
 };
