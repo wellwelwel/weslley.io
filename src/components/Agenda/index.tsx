@@ -197,7 +197,7 @@ export const Agenda = memo((): ReactNode => {
   return (
     <div
       style={style}
-      className='flex flex-col items-start gap-3 [--reach:calc(var(--spread)-0.9rem)] [--spread:15rem] short:gap-1.5 short-wide:[--spread:4rem] lg:[--spread:3.5rem] xl:[--spread:9.5rem] min-[90rem]:[--spread:15rem]'
+      className='flex flex-col items-start gap-3 [--reach:calc(var(--spread)-0.9rem)] [--spread:15rem] short:gap-1.5 sm:max-lg:[--spread:min(17.85rem,100vw_-_25.6rem)] short-wide:[--spread:4rem] lg:[--spread:3.5rem] xl:[--spread:9.5rem] min-[90rem]:[--spread:15rem]'
     >
       <div className='flex w-full animate-ticker items-center justify-between gap-3 [animation-delay:420ms]'>
         <time
