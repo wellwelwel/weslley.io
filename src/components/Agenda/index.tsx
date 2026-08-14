@@ -72,6 +72,14 @@ const SETTLE = 500;
 const SEEN = 1;
 const WINDOW = 2;
 
+/* The card behind the focus waits on the left, so leaving the focus exits
+   with the deck flow instead of sweeping back across it. A card caught
+   between that parking spot and the hidden stack stays put until it fades. */
+const tail = slots.length - 1;
+
+const passedOf = (here: number, there: number): boolean =>
+  here === tail || (here > SEEN && (there === 0 || there === tail));
+
 /* Every card stretches to the tallest one, so the deck keeps the height it
    measured across visits to the slide, not only across renders. */
 let held: number | undefined;
@@ -250,6 +258,7 @@ export const Agenda = memo((): ReactNode => {
               key={`${slot.date}:${slot.title}`}
               slot={slot}
               place={here}
+              passed={passedOf(here, there)}
               frosted={here <= SEEN || there <= SEEN}
               dressed={
                 height === undefined || here <= WINDOW || there <= WINDOW
