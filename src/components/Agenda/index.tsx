@@ -269,7 +269,7 @@ export const Agenda = memo((): ReactNode => {
         })}
       </div>
 
-      <div className='mt-[clamp(0.75rem,6.5svh-1.25rem,3rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-2 short:mt-4.5 short:mb-0 short-wide:mt-0 cramped:hidden'>
+      <div className='mt-[clamp(0.75rem,18svh-7.125rem,3rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-2 short:mt-4.5 short:mb-0 short-wide:mt-0 cramped:hidden'>
         <nav
           ref={attach}
           data-scroll=''

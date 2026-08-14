@@ -79,7 +79,7 @@ export const Rail = ({
     <div
       ref={ref}
       className={clsx(
-        'mt-auto shrink-0 sm:-mx-8 lg:-mx-14',
+        'mt-auto min-h-0 sm:-mx-8 lg:-mx-14',
         SIZE,
         CLIP,
         FOLD,
@@ -91,7 +91,7 @@ export const Rail = ({
           key={label}
           data-group
           style={groupIndex === 0 ? undefined : HIDDEN}
-          className='col-start-1 row-start-1 flex min-h-0 items-end justify-center gap-2 self-end lg:gap-6'
+          className='col-start-1 row-start-1 flex max-h-full min-h-0 justify-center gap-2 self-end lg:gap-6'
         >
           {members.map(({ src, alt }, memberIndex) => {
             if (!src) return null;
@@ -121,7 +121,7 @@ export const Rail = ({
                   decoding='async'
                   draggable={false}
                   className={clsx(
-                    'block aspect-square w-full origin-bottom object-contain drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
+                    'block aspect-square max-h-full w-full origin-bottom object-contain object-bottom drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
                     index === highlight.current ? 'scale-100' : 'scale-65'
                   )}
                 />

@@ -86,7 +86,7 @@ export default (): ReactNode => {
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
   const [titleLead, titleTail, titleMark] = slides[active].title;
-  const flow = align === 'left' && 'max-sm:inline-block';
+  const flow = align === 'left' && 'max-lg:inline-block';
   const tint: PageStyle = { '--tint': color ?? hill };
 
   const openPartners = useCallback(() => setPartners(true), []);
@@ -274,7 +274,7 @@ export default (): ReactNode => {
                   {Cta && (
                     <div
                       key={`cta:${active}`}
-                      className='mt-10 animate-slide max-sm:hidden tight:hidden'
+                      className='mt-10 animate-slide max-lg:hidden'
                     >
                       <Cta open={partners} onOpen={openPartners} mark={mark} />
                     </div>
@@ -286,7 +286,7 @@ export default (): ReactNode => {
                     key={`stage:${active}`}
                     className={clsx(
                       align === 'left'
-                        ? 'mt-[clamp(1.5rem,7.5svh-0.5rem,4rem)] shrink-0 short:mt-3 cramped:mt-1 short-wide:mt-0 lg:mt-0'
+                        ? 'mt-[clamp(1.5rem,20svh-7.25rem,4rem)] shrink-0 short:mt-3 cramped:mt-1 short-wide:mt-0 lg:mt-0'
                         : plush && 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
                       !still && 'animate-slide'
                     )}
