@@ -11,10 +11,13 @@ export type Trigger = {
 
 type Tone = 'ink' | 'night';
 
+type Shape = 'pill' | 'nested';
+
 type TriggerOptions = Trigger & {
   label?: string;
   social?: string | null;
   tone?: Tone;
+  shape?: Shape;
   onRestore?: () => void;
 };
 
@@ -26,6 +29,11 @@ type RollingLabel = {
 const TONES: Record<Tone, string> = {
   ink: 'bg-ink text-paper shadow-[0_1px_2px_var(--shade-soft),0_4px_10px_-4px_var(--shade-deep)] hover:bg-ink/90 hover:shadow-[0_1px_2px_var(--shade-soft),0_10px_18px_-8px_var(--shade-deep)]',
   night: 'bg-[#312f76] text-[#bcaeff] hover:bg-[#3c3a8b]',
+};
+
+const SHAPES: Record<Shape, { trigger: string; badge: string }> = {
+  pill: { trigger: 'rounded-full', badge: 'rounded-full' },
+  nested: { trigger: 'rounded-xl', badge: 'rounded-md' },
 };
 
 const TRIGGER_LABEL = 'Bora trabalhar juntos';
@@ -45,6 +53,7 @@ export const PartnersTrigger = ({
   label = TRIGGER_LABEL,
   social,
   tone = 'ink',
+  shape = 'pill',
   onRestore,
 }: TriggerOptions): ReactNode => {
   const current = social ?? label;
@@ -66,7 +75,8 @@ export const PartnersTrigger = ({
       aria-expanded={open}
       aria-label={label}
       className={clsx(
-        'group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 rounded-full border-0 pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm transition-[background-color,box-shadow,scale] duration-750 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98',
+        'group inline-flex h-11 cursor-pointer appearance-none items-center gap-3.5 border-0 pr-1.5 pl-6 font-sans text-[0.9375rem] font-semibold max-sm:h-10 max-sm:gap-3 max-sm:pl-5 max-sm:text-sm transition-[background-color,box-shadow,scale] duration-750 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98',
+        SHAPES[shape].trigger,
         TONES[tone]
       )}
     >
@@ -84,7 +94,12 @@ export const PartnersTrigger = ({
         ))}
       </span>
 
-      <span className='flex size-8 shrink-0 items-center justify-center rounded-full bg-accent text-white max-sm:size-7'>
+      <span
+        className={clsx(
+          'flex size-8 shrink-0 items-center justify-center bg-accent text-white max-sm:size-7',
+          SHAPES[shape].badge
+        )}
+      >
         <span className='relative grid size-4 place-items-center overflow-hidden'>
           <IoRocketSharp
             className='col-start-1 row-start-1 size-4 transition-transform duration-300 ease-swift group-hover:translate-x-[120%] group-hover:translate-y-[-120%]'

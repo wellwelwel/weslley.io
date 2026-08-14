@@ -213,12 +213,12 @@ export const groups: Group[] = [
     ],
   },
   {
-    label: 'Fim',
+    label: 'Redes Sociais',
     slides: [
       {
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
-        name: 'Redes sociais',
+        name: 'Redes Sociais',
         Icon: TbConfetti,
         title: ['Você chegou', 'ao fim', '.'],
         hill: pink,

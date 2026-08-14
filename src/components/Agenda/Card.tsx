@@ -28,6 +28,8 @@ type SwapOptions = {
 export type CardOptions = {
   slot: Slot;
   place: number;
+  /** A passed card rests to the left, so leaving the focus follows the deck flow. */
+  passed: boolean;
   /** Frosted glass only reaches the cards a viewer can actually see. */
   frosted: boolean;
   /** An undressed card keeps its shell, so it still has a state to animate from. */
@@ -62,7 +64,10 @@ const ROLES: Record<string, IconType | LucideIcon> = {
 const discount = ({ code, off }: NonNullable<Slot['coupon']>): string =>
   off ? `${off}% OFF` : code.replace(/^\D*([1-9]\d?)$/, '$1% OFF');
 
-const arrange = (place: number): string => {
+const arrange = (place: number, passed: boolean): string => {
+  if (passed)
+    return 'z-0 -translate-x-14 scale-90 opacity-0 invisible pointer-events-none';
+
   if (place === 0) return 'z-20';
 
   if (place === 1)
@@ -87,6 +92,7 @@ const Swap = ({ copied, className }: SwapOptions): ReactNode => (
 export const Card = ({
   slot,
   place,
+  passed,
   frosted,
   dressed,
   onFocus,
@@ -109,7 +115,7 @@ export const Card = ({
         'group/card relative col-start-1 row-start-1 flex w-full max-w-72 flex-col gap-3 rounded-3xl bg-ink/6 p-5 shadow-[inset_0_1px_0_rgb(240_244_255_/_0.12),inset_0_0_0_1px_rgb(240_244_255_/_0.06),0_16px_32px_-16px_rgb(0_0_0_/_0.55)] transition-[translate,scale,opacity,visibility] duration-500 ease-swift select-none max-sm:rounded-[1.25rem] max-sm:p-3.5 short:gap-1.5 short:rounded-[1.25rem] short:p-3 cramped:gap-1 cramped:p-2.5',
         frosted && 'backdrop-blur-xl',
         origin < 2 && 'animate-fade [animation-delay:500ms]',
-        arrange(place)
+        arrange(place, passed)
       )}
     >
       {!dressed ? null : (
