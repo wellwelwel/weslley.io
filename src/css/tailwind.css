@@ -83,10 +83,11 @@
     'Segoe UI Symbol', 'Noto Color Emoji';
   --font-featured: 'Noto Sans', sans-serif;
 
-  /* The height term drives the scale and the third cap freezes it at 1440p. */
+  /* The height term drives the scale and the third cap freezes it at the
+     1024px width size. */
   --text-hero: max(
     1.5rem,
-    min(8.2vw, max(6.6vw, 2rem), 10.125rem, 13.9svh - 2.375rem)
+    min(8.2vw, max(6.6vw, 2rem), 4.224rem, 13.9svh - 2.375rem)
   );
   --text-hero--line-height: 1.02;
 

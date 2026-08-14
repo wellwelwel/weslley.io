@@ -230,7 +230,7 @@ export default (): ReactNode => {
                 <div className='min-w-0'>
                   <h1
                     className={clsx(
-                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-balance text-shadow-md select-none sm:text-hero sm:font-[800] lg:text-[calc(var(--text-hero)-2px)] 2xl:text-hero',
+                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-balance text-shadow-md select-none sm:text-hero sm:font-[800]',
                       SHADOWS[theme]
                     )}
                   >
