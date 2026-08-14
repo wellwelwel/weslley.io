@@ -37,17 +37,30 @@ const ITEM_IN = 0.26;
 const ITEM_STAGGER = 0.05;
 const ITEM_LEAD = 0.06;
 const CURRENT_IN = 0.25;
+const VEIL_IN = 0.5;
+const VEIL_OUT = 0.24;
+const VEIL_COVER = 142;
 
 const TRAVEL = {
-  full: { panelY: 10, panelScale: 0.96, itemY: 6, exitY: 4, exitScale: 0.98 },
+  full: {
+    panelY: 10,
+    panelScale: 0.96,
+    itemY: 6,
+    exitY: 4,
+    exitScale: 0.98,
+    veilStart: 0,
+  },
   reduced: {
     panelY: 6,
     panelScale: 0.98,
     itemY: 4,
     exitY: 2,
     exitScale: 0.99,
+    veilStart: 60,
   },
 };
+
+const circle = (radius: number): string => `circle(${radius}% at 100% 0%)`;
 
 const iconClass =
   'col-start-1 row-start-1 size-5 transition-[scale,opacity,filter] duration-300 ease-swift';
@@ -77,6 +90,7 @@ export const Header = memo(
   }: HeaderOptions): ReactNode => {
     const actions = useRef<HTMLDivElement>(null);
     const panel = useRef<HTMLDivElement>(null);
+    const veil = useRef<HTMLDivElement>(null);
     const trigger = useRef<HTMLButtonElement>(null);
     const label = useRef<HTMLSpanElement>(null);
     const labelled = useRef(false);
@@ -142,11 +156,28 @@ export const Header = memo(
             ease: 'power2.out',
           });
 
+          gsap.to(veil.current, {
+            autoAlpha: 0,
+            clipPath: circle(travel.veilStart),
+            duration: animated ? VEIL_OUT : 0,
+            ease: 'power2.out',
+          });
+
           return;
         }
 
         gsap
           .timeline()
+          .fromTo(
+            veil.current,
+            { autoAlpha: 0, clipPath: circle(travel.veilStart) },
+            {
+              autoAlpha: 1,
+              clipPath: circle(VEIL_COVER),
+              duration: VEIL_IN,
+              ease: 'power2.out',
+            }
+          )
           .fromTo(
             panel.current,
             { autoAlpha: 0, y: -travel.panelY, scale: travel.panelScale },
@@ -156,7 +187,8 @@ export const Header = memo(
               scale: 1,
               duration: PANEL_IN,
               ease: 'power3.out',
-            }
+            },
+            0
           )
           .fromTo(
             '[data-menu-item]',
@@ -184,7 +216,13 @@ export const Header = memo(
     const { name, Icon } = steps[active];
 
     return (
-      <header className='relative z-30 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
+      <header className='relative z-60 flex h-20 shrink-0 items-center justify-between px-1.5 max-sm:h-9 max-sm:px-0 short:h-9'>
+        <div
+          ref={veil}
+          aria-hidden='true'
+          className='invisible fixed inset-0 z-10 bg-veil/70 opacity-0'
+        />
+
         <button
           type='button'
           onClick={closingMenu(onHome)}
@@ -257,7 +295,7 @@ export const Header = memo(
           </button>
         </div>
 
-        <div ref={actions} className='relative'>
+        <div ref={actions} className='relative z-20'>
           <button
             ref={trigger}
             type='button'
@@ -266,8 +304,8 @@ export const Header = memo(
             aria-expanded={menu}
             aria-controls={panelId}
             className={clsx(
-              '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-swift hover:bg-ink/5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
-              menu ? 'bg-ink/5' : 'bg-transparent'
+              '-mr-1 flex size-11 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 text-ink transition-[background-color,scale] duration-200 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:-mr-3',
+              menu ? 'bg-paper' : 'bg-transparent hover:bg-ink/5'
             )}
           >
             <span
