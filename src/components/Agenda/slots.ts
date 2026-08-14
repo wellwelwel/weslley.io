@@ -231,6 +231,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-08-14',
+    time: '10:40',
     event: 'Codecon Summit',
     logo: '/img/codecon2.svg',
     url: 'https://codecon.dev/summit',
@@ -247,6 +248,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-08-15',
+    time: '13:00',
     event: 'Roga DX',
     logo: '/img/rogadx.png',
     url: 'https://rogadx.com/',
@@ -254,6 +256,17 @@ export const slots: Slot[] = [
     address: 'Rua Celso Piatti, 280-372 - Jaraguá, Maceió - AL',
     title: 'Inteligência Sintética: ainda vale a pena investir em humanos?',
     role: 'Palestra',
+  },
+  {
+    date: '2026-08-15',
+    time: '14:00',
+    event: 'Roga DX',
+    logo: '/img/rogadx.png',
+    url: 'https://rogadx.com/',
+    venue: 'Maceió, AL',
+    address: 'Rua Celso Piatti, 280-372 - Jaraguá, Maceió - AL',
+    title: 'Mentoria aberta sobre IA, Inovação e Segurança.',
+    role: 'Mentoria',
   },
   {
     date: '2026-09-05',

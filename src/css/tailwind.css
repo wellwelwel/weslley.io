@@ -304,20 +304,24 @@
 }
 
 @utility peek {
-  mask-image: linear-gradient(
-    to right,
-    black,
-    transparent calc(100vw - var(--spread) - 5.25rem)
-  );
+  /* The card rests 2.25rem past --spread and is drawn at 90% scale, so --edge
+     is where its own coordinates meet the screen. The floor keeps the fade
+     readable on narrow phones, and the cap lands it right at that edge. */
+  --edge: calc((100vw - var(--spread) - 2.25rem) / 0.9);
+  --fade: min(max(calc(100vw - var(--spread) - 5.25rem), 6.25rem), var(--edge));
+  mask-image: linear-gradient(to right, black, transparent var(--fade));
 
   /* The strip left over on a squat screen is too narrow for a fade that starts
-     at the card's own edge, so it holds longer and still lands before the
-     screen ends. */
+     at the card's own edge, so it holds longer before fading out. */
   @media (max-width: 40rem) and (max-height: 41rem) {
+    --fade: min(
+      max(calc(100vw - var(--spread) - 3.5rem), 6.25rem),
+      var(--edge)
+    );
     mask-image: linear-gradient(
       to right,
-      black calc(100vw - var(--spread) - 8rem),
-      transparent calc(100vw - var(--spread) - 3.5rem)
+      black calc(var(--fade) - 4.5rem),
+      transparent var(--fade)
     );
   }
 }
