@@ -317,6 +317,7 @@ export const Header = memo(
               <PartnersTrigger
                 open={partners}
                 onOpen={closingMenu(onPartners)}
+                shape='nested'
               />
             </div>
           </div>

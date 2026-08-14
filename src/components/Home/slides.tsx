@@ -213,7 +213,7 @@ export const groups: Group[] = [
     ],
   },
   {
-    label: 'Fim',
+    label: 'Redes Sociais',
     slides: [
       {
         src: me,
