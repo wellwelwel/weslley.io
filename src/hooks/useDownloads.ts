@@ -7,7 +7,7 @@ type Downloads = {
   rolling?: number;
 };
 
-const FALLBACK = '600 milhões';
+const FALLBACK = '700 milhões';
 
 export const useDownloads = (): string => {
   const { rolling } = usePluginData('downloads') as Downloads;
