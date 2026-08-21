@@ -28,6 +28,7 @@ export type Theme = 'light' | 'dark';
 type SlideAction = ComponentType<Trigger & { mark?: string }>;
 
 type Slide = {
+  id: string;
   src?: string;
   alt?: string;
   name: string;
@@ -78,6 +79,7 @@ export const groups: Group[] = [
     label: 'Home',
     slides: [
       {
+        id: 'open-source',
         src: github,
         alt: 'Pelúcia do GitHub',
         name: 'Open Source',
@@ -89,6 +91,7 @@ export const groups: Group[] = [
         actions: { stage: PartnersAction },
       },
       {
+        id: 'agenda',
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
         name: 'Agenda',
@@ -113,6 +116,7 @@ export const groups: Group[] = [
         },
       },
       {
+        id: 'recognition',
         src: mvp,
         alt: 'Pelúcia do MVP',
         name: 'Reconhecimento',
@@ -129,6 +133,7 @@ export const groups: Group[] = [
     label: 'Impacto',
     slides: [
       {
+        id: 'impact',
         name: 'Impacto',
         Icon: TbUsersGroup,
         title: [
@@ -163,6 +168,7 @@ export const groups: Group[] = [
     label: 'Projetos',
     slides: [
       {
+        id: 'mysql2',
         src: mysql,
         alt: 'Pelúcia do MySQL',
         name: 'MySQL2',
@@ -181,6 +187,7 @@ export const groups: Group[] = [
         actions: { stage: Adopters },
       },
       {
+        id: 'lagune',
         src: lagune,
         alt: 'Pelúcia do Lagune',
         name: 'Lagune',
@@ -196,6 +203,7 @@ export const groups: Group[] = [
         },
       },
       {
+        id: 'poku',
         src: poku,
         alt: 'Pelúcia do Poku',
         name: 'Poku',
@@ -216,6 +224,7 @@ export const groups: Group[] = [
     label: 'Redes Sociais',
     slides: [
       {
+        id: 'socials',
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
         name: 'Redes Sociais',
@@ -237,6 +246,8 @@ export const groups: Group[] = [
 ];
 
 export const slides = groups.flatMap((group) => group.slides);
+
+export const slideIds = slides.map(({ id }) => id);
 
 export const starts = groups.map((_, index) =>
   groups.slice(0, index).reduce((total, { slides }) => total + slides.length, 0)

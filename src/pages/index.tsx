@@ -16,6 +16,7 @@ import {
   defaultBackground,
   groupOf,
   groups,
+  slideIds,
   slides,
   starts,
   steps,
@@ -63,7 +64,7 @@ export default (): ReactNode => {
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-  const { active, show, home } = useSlideshow(slides.length, partners || menu);
+  const { active, show, home } = useSlideshow(slideIds, partners || menu);
   const { page, rail, place, spots } = useSpots();
   const group = groupOf[active];
   const preview =

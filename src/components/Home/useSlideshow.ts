@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -17,29 +17,69 @@ const TOLERANCE = 10;
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
-export const useSlideshow = (count: number, paused: boolean): Slideshow => {
+export const useSlideshow = (
+  ids: readonly string[],
+  paused: boolean
+): Slideshow => {
   const [active, setActive] = useState(0);
   const current = useRef(0);
   const locked = useRef(false);
   const unlock = useRef<gsap.core.Tween | null>(null);
+  const indices = useMemo(
+    () => new Map(ids.map((id, index) => [id, index])),
+    [ids]
+  );
+
+  const activate = useCallback((index: number) => {
+    if (index === current.current) return;
+
+    current.current = index;
+    setActive(index);
+
+    locked.current = true;
+    unlock.current?.kill();
+    unlock.current = gsap.delayedCall(STEP_LOCK, () => {
+      locked.current = false;
+    });
+  }, []);
 
   const show = useCallback(
     (index: number) => {
-      if (index === current.current || index < 0 || index > count - 1) return;
+      if (index === current.current || index < 0 || index >= ids.length) return;
 
-      current.current = index;
-      setActive(index);
-
-      locked.current = true;
-      unlock.current?.kill();
-      unlock.current = gsap.delayedCall(STEP_LOCK, () => {
-        locked.current = false;
-      });
+      activate(index);
+      window.history.pushState(null, '', `#${ids[index]}`);
     },
-    [count]
+    [activate, ids]
   );
 
   const home = useCallback(() => show(0), [show]);
+
+  useEffect(
+    () => () => {
+      unlock.current?.kill();
+    },
+    []
+  );
+
+  useEffect(() => {
+    const sync = () => {
+      const index = indices.get(window.location.hash.slice(1));
+
+      if (index === undefined) {
+        activate(0);
+        window.history.replaceState(null, '', `#${ids[0]}`);
+        return;
+      }
+
+      activate(index);
+    };
+
+    sync();
+    window.addEventListener('hashchange', sync);
+
+    return () => window.removeEventListener('hashchange', sync);
+  }, [activate, ids, indices]);
 
   useGSAP(
     () => {
