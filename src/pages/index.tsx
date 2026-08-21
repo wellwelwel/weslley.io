@@ -266,7 +266,7 @@ export default (): ReactNode => {
                     <p
                       key={`text:${active}`}
                       className={clsx(
-                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 w-full max-w-150 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2',
+                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 w-full max-w-225 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2',
                         plush &&
                           'min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] short:min-h-10',
                         align !== 'left' && 'mx-auto',
