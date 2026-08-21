@@ -33,7 +33,7 @@
       "@Keynote": ["./src/components/Keynote"]
     }
   },
-  "exclude": ["static", ".docusaurus", "build"],
+  "exclude": ["static", ".docusaurus", "build", "temp", ".lagune"],
   "mdx": {
     "checkMdx": true
   }

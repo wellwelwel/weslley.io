@@ -1,8 +1,9 @@
 import type { Section } from '@site/src/components/Header';
 import type { Theme } from '@site/src/components/Home/slides';
 import type { CSSProperties, ReactNode } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from '@docusaurus/Head';
+import { useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import clsx from 'clsx';
 import { Backdrop } from '@site/src/components/Backdrop';
@@ -58,6 +59,7 @@ const SHADOWS: Record<Theme, string> = {
 
 export default (): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
+  const { search } = useLocation();
   const [partners, setPartners] = useState(false);
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
@@ -92,6 +94,10 @@ export default (): ReactNode => {
   const openPartners = useCallback(() => setPartners(true), []);
 
   const closePartners = useCallback(() => setPartners(false), []);
+
+  useEffect(() => {
+    if (new URLSearchParams(search).has('partners')) setPartners(true);
+  }, [search]);
 
   const sections = useMemo<Section[]>(
     () =>

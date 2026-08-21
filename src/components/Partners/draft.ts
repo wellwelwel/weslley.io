@@ -8,7 +8,7 @@ export type Draft = {
   message: string;
 };
 
-export const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Podcast'] as const;
+export const PARTNERSHIP_TYPES = ['Palestra', 'Workshop', 'Outros'] as const;
 
 export const EMPTY_DRAFT: Draft = {
   name: '',
