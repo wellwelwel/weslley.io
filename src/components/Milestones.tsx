@@ -10,6 +10,7 @@ import { useYear } from '@site/src/hooks/useDownloads';
 type Year = {
   year: number;
   downloads?: number;
+  running?: boolean;
 };
 
 const CLOSED: Year[] = [
@@ -41,20 +42,28 @@ const VALUE =
 
 const OPEN = 'text-base/none font-semibold text-ink/50 sm:text-lg/none';
 
+/* The row keeps a fixed height, so the note hangs in the breathing room the number leaves below itself and the wheel still measures every row the same. */
+const NOTE =
+  'pointer-events-none absolute top-full right-0 text-[0.625rem]/none font-semibold tracking-wide text-ink/60';
+
 const ICON =
-  'size-3.5 shrink-0 text-ink/35 transition-colors duration-250 ease-swift group-hover:text-ink/70';
+  'size-3.5 shrink-0 text-accent transition-colors duration-250 ease-swift group-hover:text-ink';
 
 /** The year the chart is still filling in. */
 const RUNNING = 'em curso';
 
+/* A closed year matches the chart npm-stat draws for it. The running one only exists in the history the build reads, so it points there instead. */
 const chart = (year: number): string =>
   `https://npm-stat.com/charts.html?author=weslley.io&from=${year}-01-01&to=${year}-12-31`;
 
 export const Milestones = (): ReactNode => {
   const wheel = useRef<HTMLDivElement>(null);
   const [settled, setSettled] = useState(false);
-  const running = useYear();
-  const years = [...CLOSED, { year: running.year, downloads: running.total }];
+  const current = useYear();
+  const years: Year[] = [
+    ...CLOSED,
+    { year: current.year, downloads: current.total, running: true },
+  ];
   const focus = years.reduce(
     (last, { downloads }, index) => (downloads === undefined ? last : index),
     0
@@ -103,23 +112,34 @@ export const Milestones = (): ReactNode => {
       className={clsx(WHEEL, settled && '[scroll-snap-type:y_mandatory]')}
     >
       <ul aria-label='Downloads anuais dos projetos autorais' className={TRACK}>
-        {years.map(({ year, downloads }) => {
+        {years.map(({ year, downloads, running }) => {
           const exact = downloads?.toLocaleString('pt-BR');
+          const note = running && exact ? RUNNING : '';
+          const reading = `${year}: ${exact ? `${exact} downloads` : RUNNING}${note ? `, ${note}` : ''}`;
 
           return (
             <li key={year} className='halo'>
               <SafeLink
-                to={chart(year)}
+                to={running ? current.source : chart(year)}
                 draggable={false}
-                aria-label={`${year}: ${exact ? `${exact} downloads` : RUNNING}`}
+                aria-label={reading}
                 className={ROW}
               >
                 <span className={LABEL}>{year}</span>
 
                 <span className='flex items-center gap-1.5'>
-                  <span className={exact ? VALUE : OPEN}>
-                    {exact ?? RUNNING}
+                  <span className='relative flex'>
+                    <span className={exact ? VALUE : OPEN}>
+                      {exact ?? RUNNING}
+                    </span>
+
+                    {note && (
+                      <span aria-hidden='true' className={NOTE}>
+                        {note}
+                      </span>
+                    )}
                   </span>
+
                   <ExternalLink aria-hidden='true' className={ICON} />
                 </span>
               </SafeLink>

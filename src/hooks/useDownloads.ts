@@ -3,6 +3,7 @@ import { abbreviate } from '@site/src/helpers/abbreviate';
 
 type Downloads = {
   year: number;
+  source: string;
   total?: number;
   rolling?: number;
 };
