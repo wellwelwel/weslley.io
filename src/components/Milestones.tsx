@@ -44,7 +44,7 @@ const OPEN = 'text-base/none font-semibold text-ink/50 sm:text-lg/none';
 
 /* The row keeps a fixed height, so the note hangs in the breathing room the number leaves below itself and the wheel still measures every row the same. */
 const NOTE =
-  'pointer-events-none absolute top-full right-0 text-[0.625rem]/none font-semibold tracking-wide text-ink/60';
+  'pointer-events-none absolute top-full right-0.25 text-[0.625rem]/none font-semibold tracking-wide text-ink/60';
 
 const ICON =
   'size-3.5 shrink-0 text-accent transition-colors duration-250 ease-swift group-hover:text-ink';
