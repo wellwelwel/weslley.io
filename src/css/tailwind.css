@@ -255,16 +255,16 @@
 /* The horizontal edges bleed off the screen. On a portrait screen the bands stop
    short of the vertical ones, so the fade is long enough to melt them into the
    backdrop; once they cover the screen it only has to dress the header. */
-/* Only the row in the middle comes through whole, and distance dims the ones
-   around it. That fade is the entire focus indicator this control needs. */
+/* Only the bottom row comes through whole, and distance dims the history
+   stacked above it. That fade is the entire focus indicator this control needs. */
 @utility picker {
   mask-image: linear-gradient(
     to bottom,
     transparent,
-    rgb(0 0 0 / 0.26) 22%,
-    black 38%,
-    black 62%,
-    rgb(0 0 0 / 0.26) 78%,
+    rgb(0 0 0 / 0.14) calc(var(--row) * 0.5),
+    rgb(0 0 0 / 0.34) calc(var(--row) * 1.5),
+    black calc(var(--row) * 2.2),
+    black calc(var(--row) * 3),
     transparent
   );
 }

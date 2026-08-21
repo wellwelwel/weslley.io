@@ -24,35 +24,21 @@ const CLOSED: Year[] = [
 const SPIN = 1.5;
 const LEAD = 0.5;
 
-/* A blank row above and below lets the first and last years reach the middle, which puts row N at a scroll offset of exactly N rows. */
-const PADDING = 2;
-
 const WHEEL =
-  'mx-auto h-[calc(var(--row)*3)] w-64 max-w-full touch-pan-y overflow-y-auto overscroll-contain picker [--row:2.75rem] [scrollbar-width:none] short:[--row:2.5rem] sm:w-70 sm:[--row:3rem] [&::-webkit-scrollbar]:hidden';
-
-const TRACK = 'm-0 flex list-none flex-col p-0 py-(--row)';
-
+  'mx-auto h-[calc(var(--row)*3+1rem)] w-64 max-w-full touch-pan-y overflow-y-auto overscroll-contain scroll-pb-4 picker [--row:2.75rem] [scrollbar-width:none] short:[--row:2.5rem] sm:w-70 sm:[--row:3rem] [&::-webkit-scrollbar]:hidden';
+const TRACK = 'm-0 flex list-none flex-col p-0 pt-[calc(var(--row)*2)] pb-4';
 const ROW =
-  'group flex h-(--row) items-center justify-between gap-3 no-underline [scroll-snap-align:center] hover:no-underline focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-accent';
-
+  'group flex h-(--row) items-center justify-between gap-3 no-underline [scroll-snap-align:end] hover:no-underline focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-accent';
 const LABEL = 'text-sm/none font-bold tracking-widest text-ink/55 tabular-nums';
-
 const VALUE =
   'font-featured text-2xl/none font-extrabold text-ink tabular-nums sm:text-[1.75rem]/none';
-
 const OPEN = 'text-base/none font-semibold text-ink/50 sm:text-lg/none';
-
-/* The row keeps a fixed height, so the note hangs in the breathing room the number leaves below itself and the wheel still measures every row the same. */
 const NOTE =
   'pointer-events-none absolute top-full right-0.25 text-[0.625rem]/none font-semibold tracking-wide text-ink/60';
-
 const ICON =
   'size-3.5 shrink-0 text-accent transition-colors duration-250 ease-swift group-hover:text-ink';
-
-/** The year the chart is still filling in. */
 const RUNNING = 'em curso';
 
-/* A closed year matches the chart npm-stat draws for it. The running one only exists in the history the build reads, so it points there instead. */
 const chart = (year: number): string =>
   `https://npm-stat.com/charts.html?author=weslley.io&from=${year}-01-01&to=${year}-12-31`;
 
@@ -73,7 +59,9 @@ export const Milestones = (): ReactNode => {
     const node = wheel.current;
     if (!node) return;
 
-    const row = node.scrollHeight / (years.length + PADDING);
+    const row = node.querySelector('li')?.getBoundingClientRect().height;
+    if (!row) return;
+
     const roll = { full: focus, reduced: focus * 0.6 };
     const rest = () => setSettled(true);
 
