@@ -1,12 +1,18 @@
+import { usePluginData } from '@docusaurus/useGlobalData';
 import { abbreviate } from '@site/src/helpers/abbreviate';
-import { useStats } from '@site/src/hooks/useStats';
+
+type Downloads = {
+  year: number;
+  total?: number;
+  rolling?: number;
+};
 
 const FALLBACK = '600 milhões';
 
 export const useDownloads = (): string => {
-  const stats = useStats();
+  const { rolling } = usePluginData('downloads') as Downloads;
 
-  return stats
-    ? abbreviate(stats.downloadsPerYear.value, 'pt-BR', 0)
-    : FALLBACK;
+  return rolling ? abbreviate(rolling, 'pt-BR', 0) : FALLBACK;
 };
+
+export const useYear = (): Downloads => usePluginData('downloads') as Downloads;

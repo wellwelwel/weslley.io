@@ -5,40 +5,25 @@ import gsap from 'gsap';
 import { ExternalLink } from 'lucide-react';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { motion } from '@site/src/helpers/reduced-motion';
+import { useYear } from '@site/src/hooks/useDownloads';
 
 type Year = {
   year: number;
-  /** Absent while the year is still running. */
   downloads?: number;
 };
 
-const YEARS: Year[] = [
+const CLOSED: Year[] = [
   { year: 2021, downloads: 91 },
   { year: 2022, downloads: 9_470 },
   { year: 2023, downloads: 9_733 },
   { year: 2024, downloads: 46_912_782 },
   { year: 2025, downloads: 233_754_383 },
-  { year: 2026 },
 ];
-
-/** The wheel comes to rest on the last year already counted, leaving the
-    running one as the row below it. */
-const FOCUS = YEARS.reduce(
-  (last, { downloads }, index) => (downloads === undefined ? last : index),
-  0
-);
-
-/** Rows the wheel travels before it rests, counted back from the focused one. */
-const ROLL = {
-  full: FOCUS,
-  reduced: FOCUS * 0.6,
-};
 
 const SPIN = 1.5;
 const LEAD = 0.5;
 
-/* A blank row above and below lets the first and last years reach the middle,
-   which puts row N at a scroll offset of exactly N rows. */
+/* A blank row above and below lets the first and last years reach the middle, which puts row N at a scroll offset of exactly N rows. */
 const PADDING = 2;
 
 const WHEEL =
@@ -68,19 +53,26 @@ const chart = (year: number): string =>
 export const Milestones = (): ReactNode => {
   const wheel = useRef<HTMLDivElement>(null);
   const [settled, setSettled] = useState(false);
+  const running = useYear();
+  const years = [...CLOSED, { year: running.year, downloads: running.total }];
+  const focus = years.reduce(
+    (last, { downloads }, index) => (downloads === undefined ? last : index),
+    0
+  );
 
   useEffect(() => {
     const node = wheel.current;
     if (!node) return;
 
-    const row = node.scrollHeight / (YEARS.length + PADDING);
+    const row = node.scrollHeight / (years.length + PADDING);
+    const roll = { full: focus, reduced: focus * 0.6 };
     const rest = () => setSettled(true);
 
     const spin = gsap.fromTo(
       node,
-      { scrollTop: (FOCUS - motion(ROLL)) * row },
+      { scrollTop: (focus - motion(roll)) * row },
       {
-        scrollTop: FOCUS * row,
+        scrollTop: focus * row,
         duration: SPIN,
         delay: LEAD,
         ease: 'power3.out',
@@ -102,7 +94,7 @@ export const Milestones = (): ReactNode => {
       node.removeEventListener('pointerdown', release);
       node.removeEventListener('wheel', release);
     };
-  }, []);
+  }, [focus]);
 
   return (
     <div
@@ -111,7 +103,7 @@ export const Milestones = (): ReactNode => {
       className={clsx(WHEEL, settled && '[scroll-snap-type:y_mandatory]')}
     >
       <ul aria-label='Downloads anuais dos projetos autorais' className={TRACK}>
-        {YEARS.map(({ year, downloads }) => {
+        {years.map(({ year, downloads }) => {
           const exact = downloads?.toLocaleString('pt-BR');
 
           return (

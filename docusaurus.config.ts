@@ -8,6 +8,7 @@ try {
 } catch {}
 
 const articlesPlugin = require('./plugins/articles/mount.ts').default;
+const downloadsPlugin = require('./plugins/downloads/mount.ts').default;
 const inlineCssPlugin = require('./plugins/inline-css/mount.ts').default;
 const redirectsPlugin = require('./plugins/redirects/mount.ts').default;
 
@@ -126,6 +127,10 @@ const config: Config = {
     (context) =>
       inlineCssPlugin(context, {
         pluginName: 'inline-css',
+      }),
+    (context) =>
+      downloadsPlugin(context, {
+        pluginName: 'downloads',
       }),
   ],
 };

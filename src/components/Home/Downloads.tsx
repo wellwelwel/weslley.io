@@ -13,35 +13,40 @@ type DigitOptions = {
   index: number;
 };
 
-const NUMBERS = Array.from({ length: 10 }, (_, index) => index);
-const ROLL = { duration: 0.3, stagger: 0.05, ease: 'none' };
-const SPIN = { full: 1, reduced: 0.65 };
+const DIGITS = 10;
+const COPIES = 3;
+
+/** The strip carries the digits three times, so the roll starts and ends on the same glyph and the markup can paint the answer before it spins. */
+const NUMBERS = Array.from(
+  { length: DIGITS * COPIES },
+  (_, index) => index % DIGITS
+);
+
+const ROW = 100 / NUMBERS.length;
+const TURN = ROW * DIGITS;
+const REST = DIGITS * (COPIES - 1);
+
+const ROLL = { duration: 0.5, stagger: 0.075, ease: 'power2.out' };
+const SPIN = { full: TURN * (COPIES - 1), reduced: TURN };
 
 const Digit = ({ char, index }: DigitOptions): ReactNode => {
   const strip = useRef<HTMLSpanElement>(null);
-  const shown = useRef(Number(char));
   const target = Number(char);
 
-  useGSAP(
-    () => {
-      if (!strip.current || shown.current === target) return;
+  useGSAP(() => {
+    if (!strip.current) return;
 
-      const from = (target - shown.current) * 10 * motion(SPIN);
-
-      shown.current = target;
-      gsap.fromTo(
-        strip.current,
-        { yPercent: from },
-        {
-          yPercent: 0,
-          duration: ROLL.duration,
-          ease: ROLL.ease,
-          delay: index * ROLL.stagger,
-        }
-      );
-    },
-    { dependencies: [target] }
-  );
+    gsap.fromTo(
+      strip.current,
+      { yPercent: motion(SPIN) },
+      {
+        yPercent: 0,
+        duration: ROLL.duration,
+        ease: ROLL.ease,
+        delay: index * ROLL.stagger,
+      }
+    );
+  });
 
   return (
     <span className='relative inline-block'>
@@ -49,11 +54,15 @@ const Digit = ({ char, index }: DigitOptions): ReactNode => {
       <span className='absolute inset-0 overflow-hidden'>
         <span
           className='block'
-          style={{ transform: `translateY(-${target * 10}%)` }}
+          style={{ transform: `translateY(-${(REST + target) * ROW}%)` }}
         >
-          <span ref={strip} className='block'>
-            {NUMBERS.map((number) => (
-              <span key={number} className='block'>
+          <span
+            ref={strip}
+            className='block'
+            style={{ transform: `translateY(${SPIN.full}%)` }}
+          >
+            {NUMBERS.map((number, position) => (
+              <span key={`roll:${position}`} className='block'>
                 <Name stroke>{String(number)}</Name>
               </span>
             ))}
