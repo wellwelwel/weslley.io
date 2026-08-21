@@ -1,6 +1,7 @@
 import type { MouseEvent, ReactElement, ReactNode } from 'react';
 import { Children, cloneElement, isValidElement, memo, useMemo } from 'react';
 import gsap from 'gsap';
+import { canHover } from '@site/src/helpers/hover';
 import { motion } from '@site/src/helpers/reduced-motion';
 
 export type NameOptions = {
@@ -18,6 +19,8 @@ const STROKE_WIDTHS = {
 const STROKE_STEP = { duration: 0.25, ease: 'power1.out', autoRound: false };
 
 const pop = ({ currentTarget }: MouseEvent<HTMLSpanElement>) => {
+  if (!canHover()) return;
+
   const width = motion(STROKE_WIDTHS);
 
   gsap.killTweensOf(currentTarget);
