@@ -15,6 +15,7 @@ export type DialogOptions = {
   onClose: () => void;
   onClosed: () => void;
   fill?: boolean;
+  solid?: boolean;
   children: ReactNode;
 };
 
@@ -27,7 +28,12 @@ const TRAVEL = {
 };
 
 const PANEL =
-  'relative flex max-h-full w-full flex-col overflow-hidden rounded-[2rem] border border-paper/50 bg-paper/90 shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none backdrop-blur-2xl max-sm:h-full max-sm:max-w-none max-sm:rounded-none max-sm:border-0';
+  'relative flex max-h-full w-full flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none max-sm:h-full max-sm:max-w-none max-sm:rounded-none';
+
+const SURFACES = {
+  glass: 'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0',
+  solid: 'bg-paper',
+};
 
 const SIZES = {
   content: 'max-w-5xl',
@@ -61,6 +67,7 @@ export const Dialog = ({
   onClose,
   onClosed,
   fill = false,
+  solid = false,
   children,
 }: DialogOptions): ReactNode => {
   const overlay = useRef<HTMLDivElement>(null);
@@ -136,23 +143,29 @@ export const Dialog = ({
         aria-modal='true'
         aria-label={label}
         tabIndex={-1}
-        className={clsx(PANEL, fill ? SIZES.fill : SIZES.content)}
+        className={clsx(
+          PANEL,
+          fill ? SIZES.fill : SIZES.content,
+          solid ? SURFACES.solid : SURFACES.glass
+        )}
       >
-        <Picture
-          src={images.velvet}
-          alt=''
-          aria-hidden='true'
-          sizes='(min-width: 80rem) 80rem, 100vw'
-          decoding='async'
-          draggable={false}
-          className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
-        />
+        {!solid && (
+          <Picture
+            src={images.velvet}
+            alt=''
+            aria-hidden='true'
+            sizes='(min-width: 80rem) 80rem, 100vw'
+            decoding='async'
+            draggable={false}
+            className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
+          />
+        )}
 
         <button
           type='button'
           onClick={onClose}
           aria-label='Fechar'
-          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-white/30 bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,box-shadow,scale] duration-200 ease-swift hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
+          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-[color-mix(in_srgb,white_30%,var(--color-blush))] bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,border-color,box-shadow,scale] duration-200 ease-swift hover:border-[color-mix(in_srgb,white_30%,var(--color-blush-deep))] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
         >
           <X aria-hidden='true' />
         </button>

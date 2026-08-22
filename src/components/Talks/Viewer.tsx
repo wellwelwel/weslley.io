@@ -34,7 +34,7 @@ export const useViewer = (): Show => {
 };
 
 const STEPPER =
-  'absolute top-1/2 flex size-10 -translate-y-1/2 cursor-pointer appearance-none items-center justify-center rounded-full border-0 bg-paper/80 p-0 text-ink shadow-[0_1px_2px_rgb(14_9_39_/_0.15),0_8px_20px_-10px_rgb(14_9_39_/_0.45)] backdrop-blur-md transition-[background-color,opacity,scale] duration-250 ease-swift hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90 disabled:pointer-events-none disabled:opacity-0';
+  'absolute top-1/2 flex size-10 -translate-y-1/2 cursor-pointer appearance-none items-center justify-center rounded-full border-0 bg-paper p-0 text-ink shadow-[0_1px_2px_rgb(14_9_39_/_0.15),0_8px_20px_-10px_rgb(14_9_39_/_0.45)] transition-[background-color,opacity,scale] duration-250 ease-swift hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90 disabled:pointer-events-none disabled:opacity-0';
 
 const within = (index: number, count: number): number =>
   Math.min(Math.max(index, 0), count - 1);
@@ -71,7 +71,7 @@ export const Viewer = ({ gallery, onBack }: ViewerOptions): ReactNode => {
         <button
           type='button'
           onClick={onBack}
-          className='group inline-flex h-9 cursor-pointer appearance-none items-center gap-2 rounded-full border border-ink/12 bg-paper pr-4 pl-2.5 text-sm font-semibold text-ink transition-[border-color,scale] duration-200 ease-swift hover:border-ink/25 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95'
+          className='group inline-flex h-9 cursor-pointer appearance-none items-center gap-2 rounded-full border border-line bg-paper pr-4 pl-2.5 text-sm font-semibold text-ink transition-[border-color,scale] duration-200 ease-swift hover:border-edge focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95'
         >
           <ArrowLeft
             aria-hidden='true'
@@ -82,7 +82,7 @@ export const Viewer = ({ gallery, onBack }: ViewerOptions): ReactNode => {
 
         <p
           aria-live='polite'
-          className='m-0 ml-auto text-[0.6875rem]/none font-bold tracking-widest text-ink/55 uppercase tabular-nums'
+          className='m-0 ml-auto text-[0.6875rem]/none font-bold tracking-widest text-muted uppercase tabular-nums'
         >
           {gallery.label} · {index + 1} / {count}
         </p>
@@ -99,7 +99,7 @@ export const Viewer = ({ gallery, onBack }: ViewerOptions): ReactNode => {
         />
 
         {shot.caption && (
-          <figcaption className='m-0 shrink-0 text-center text-[0.8125rem]/normal font-medium text-ink/70 text-pretty'>
+          <figcaption className='m-0 shrink-0 text-center text-[0.8125rem]/normal font-medium text-soft text-pretty'>
             {shot.caption}
           </figcaption>
         )}

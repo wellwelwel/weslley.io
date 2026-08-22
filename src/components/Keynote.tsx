@@ -23,9 +23,9 @@ export const Keynote = memo(({ slides }: KeynoteOptions): ReactNode => {
       type='button'
       onClick={() => show({ label: LABEL, shots, at: 0 })}
       aria-label={`Iniciar apresentação com ${count} ${count === 1 ? 'slide' : 'slides'}`}
-      className='group/deck flex w-full cursor-pointer appearance-none items-center gap-4 overflow-hidden rounded-2xl border-0 bg-ink/6 p-0 text-left transition-[background-color,scale] duration-250 ease-swift hover:bg-ink/10 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.99]'
+      className='group/deck flex w-full cursor-pointer appearance-none items-center gap-4 overflow-hidden rounded-2xl border-0 bg-well p-0 text-left transition-[background-color,scale] duration-250 ease-swift hover:bg-line focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.99]'
     >
-      <span className='relative aspect-video w-40 shrink-0 overflow-hidden bg-ink/6 max-sm:w-28'>
+      <span className='relative aspect-video w-40 shrink-0 overflow-hidden bg-well max-sm:w-28'>
         <Picture
           src={slides[0]}
           alt=''
@@ -44,7 +44,7 @@ export const Keynote = memo(({ slides }: KeynoteOptions): ReactNode => {
           />
           Iniciar apresentação
         </span>
-        <span className='text-[0.625rem]/none font-bold tracking-widest text-ink/55 uppercase tabular-nums'>
+        <span className='text-[0.625rem]/none font-bold tracking-widest text-muted uppercase tabular-nums'>
           {count} {count === 1 ? 'slide' : 'slides'}
         </span>
       </span>

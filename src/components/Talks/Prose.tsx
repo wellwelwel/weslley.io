@@ -20,10 +20,10 @@ type AdmonitionOptions = {
   children?: ReactNode;
 };
 
-const TEXT = 'text-[0.9375rem]/[1.7] text-ink/80 text-pretty';
+const TEXT = 'text-[0.9375rem]/[1.7] text-body text-pretty';
 
 const LINK =
-  'font-semibold text-accent underline decoration-accent/40 underline-offset-2 transition-colors duration-200 ease-swift hover:text-accent hover:decoration-accent';
+  'font-semibold text-accent underline decoration-trim underline-offset-2 transition-colors duration-200 ease-swift hover:text-accent hover:decoration-accent';
 
 const ICONS: Record<string, LucideIcon> = {
   note: StickyNote,
@@ -55,7 +55,7 @@ const Admonition = ({
   const Icon = ICONS[type] ?? StickyNote;
 
   return (
-    <aside className='flex flex-col gap-2.5 rounded-2xl bg-accent/8 px-4 py-3.5 ring-1 ring-accent/15 ring-inset'>
+    <aside className='flex flex-col gap-2.5 rounded-2xl bg-wash px-4 py-3.5 ring-1 ring-trim ring-inset'>
       {title && (
         <p className='m-0 flex items-center gap-1.5 text-[0.625rem]/none font-bold tracking-widest text-accent uppercase'>
           <Icon className='size-3 shrink-0' aria-hidden='true' />
@@ -96,8 +96,8 @@ export const components: Components = {
       className={`m-0 flex list-decimal flex-col gap-1.5 pl-5 ${TEXT}`}
     />
   ),
-  li: (props) => <li {...props} className='pl-1 marker:text-ink/40' />,
-  hr: () => <hr className='m-0 h-px w-full border-0 bg-ink/10' />,
+  li: (props) => <li {...props} className='pl-1 marker:text-muted' />,
+  hr: () => <hr className='m-0 h-px w-full border-0 bg-line' />,
   img: ({ alt = '', ...props }) => (
     <img
       {...props}

@@ -6,6 +6,7 @@ import type {
 } from '@docusaurus/types';
 import type { Author, ProcessedArticle } from '../../src/@types/article';
 import type { Preview, SlideId } from '../../src/components/Home/previews';
+import type { Shape } from '../../tools/measure-image';
 import { relative, resolve, sep } from 'node:path';
 import { slots } from '../../src/components/Agenda/slots';
 import { pathOf, previews, ROOT } from '../../src/components/Home/previews';
@@ -14,9 +15,14 @@ import { stripMarkdown } from '../../src/helpers/strip-markdown';
 import { downloads } from '../../tools/downloads';
 import { findArticles } from '../../tools/find-articles';
 import { loadAuthors } from '../../tools/load-authors';
+import { measureImage } from '../../tools/measure-image';
 
 type PluginOptions = {
   pluginName: string;
+};
+
+type Banner = Shape & {
+  file: string;
 };
 
 type Talk = {
@@ -26,7 +32,7 @@ type Talk = {
   content: string;
   counter: string;
   authors: Author[];
-  banner?: string;
+  banner?: Banner;
 };
 
 type Content = {
@@ -51,6 +57,14 @@ const aliased = (siteDir: string, file: string): string =>
 const lazy = (siteDir: string, file: string): string =>
   `() => import(${JSON.stringify(aliased(siteDir, file))})`;
 
+const bannerOf = async (
+  file: string | undefined
+): Promise<Banner | undefined> =>
+  file ? { file, ...(await measureImage(file)) } : undefined;
+
+const bannerLine = (siteDir: string, { file, width, height }: Banner): string =>
+  `    banner: { load: ${lazy(siteDir, file)}, width: ${width}, height: ${height} },`;
+
 const catalog = (talks: Talk[], siteDir: string): string =>
   [
     'export const sources = new Map([',
@@ -60,7 +74,7 @@ const catalog = (talks: Talk[], siteDir: string): string =>
         `    content: ${lazy(siteDir, content)},`,
         `    counter: ${JSON.stringify(counter)},`,
         `    authors: ${JSON.stringify(authors)},`,
-        ...(banner ? [`    banner: ${lazy(siteDir, banner)},`] : []),
+        ...(banner ? [bannerLine(siteDir, banner)] : []),
         '  }],',
       ].join('\n')
     ),
@@ -93,22 +107,26 @@ export default (
       return author;
     };
 
-    const found = articles.map((article): Talk => {
-      if (!article.slug)
-        throw new Error(
-          `The talk "${article.title}" (${article.mdxPath}) has no slug.`
-        );
+    const found = await Promise.all(
+      articles.map(async (article): Promise<Talk> => {
+        if (!article.slug)
+          throw new Error(
+            `The talk "${article.title}" (${article.mdxPath}) has no slug.`
+          );
 
-      return {
-        slug: routeSlug(article.slug),
-        title: article.title,
-        description: summarize(article.description),
-        content: article.mdxPath,
-        counter: decodeURIComponent(article.slug),
-        authors: article.authors.map((name) => credit(article, name)),
-        ...(article.socialPath && { banner: article.socialPath }),
-      };
-    });
+        const banner = await bannerOf(article.socialPath);
+
+        return {
+          slug: routeSlug(article.slug),
+          title: article.title,
+          description: summarize(article.description),
+          content: article.mdxPath,
+          counter: decodeURIComponent(article.slug),
+          authors: article.authors.map((name) => credit(article, name)),
+          ...(banner && { banner }),
+        };
+      })
+    );
 
     const known = new Set(found.map(({ slug }) => slug));
     const orphan = slots.find(({ talk }) => talk && !known.has(talk));
@@ -159,7 +177,7 @@ export default (
       );
       const modules: RouteModules = { preview: data };
 
-      if (banner) modules.banner = banner;
+      if (banner) modules.banner = banner.file;
 
       routes.push({
         path: `${localePrefix}${pathOf('talks')}${slug}`,

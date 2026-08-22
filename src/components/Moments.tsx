@@ -33,7 +33,7 @@ export const Moments = memo(({ moments }: MomentsOptions): ReactNode => {
             type='button'
             onClick={() => show({ label: LABEL, shots, at: index })}
             aria-label={`Abrir imagem ${index + 1} de ${shots.length}`}
-            className='group/shot relative block aspect-4/3 w-full cursor-pointer appearance-none overflow-hidden rounded-2xl border-0 bg-ink/6 p-0 transition-[scale,box-shadow] duration-250 ease-swift hover:scale-102 hover:shadow-[0_12px_28px_-14px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
+            className='group/shot relative block aspect-4/3 w-full cursor-pointer appearance-none overflow-hidden rounded-2xl border-0 bg-well p-0 transition-[scale,box-shadow] duration-250 ease-swift hover:scale-102 hover:shadow-[0_12px_28px_-14px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
           >
             <Picture
               src={shot.src}

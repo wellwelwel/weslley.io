@@ -83,7 +83,7 @@ const openedFromCard = (state: unknown): boolean =>
 
 const THEMES: Record<Theme, string> = {
   light: '',
-  dark: '[--color-ink:#f0f4ff] [--color-paper:#0e0927]',
+  dark: 'inverted',
 };
 
 const SHADOWS: Record<Theme, string> = {
@@ -128,6 +128,7 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
     footnote,
   } = slides[active];
   const { stage: Stage, cta: Cta } = actions ?? {};
+  const current = talk !== null && shown !== null ? talk : shown;
   const [titleLead, titleTail, titleMark] = slides[active].title;
   const flow = align === 'left' && 'max-lg:inline-block';
   const tint: PageStyle = { '--tint': color ?? hill };
@@ -454,10 +455,10 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
         />
       )}
 
-      {shown && (
+      {current !== null && (
         <talkDialog.View
-          slug={shown}
-          open={talk === shown}
+          slug={current}
+          open={talk === current}
           onClose={closeTalk}
           onClosed={settleTalk}
         />

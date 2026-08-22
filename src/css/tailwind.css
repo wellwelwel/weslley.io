@@ -179,6 +179,20 @@
   --color-veil: #0e0927;
 }
 
+/* Opaque tints mixed over paper, for surfaces that must not see through.
+   Inline, so each utility resolves ink and paper where it is used and an
+   inverted scope flips the whole set. */
+@theme inline {
+  --color-well: color-mix(in srgb, var(--color-ink) 6%, var(--color-paper));
+  --color-line: color-mix(in srgb, var(--color-ink) 10%, var(--color-paper));
+  --color-edge: color-mix(in srgb, var(--color-ink) 25%, var(--color-paper));
+  --color-muted: color-mix(in srgb, var(--color-ink) 55%, var(--color-paper));
+  --color-soft: color-mix(in srgb, var(--color-ink) 70%, var(--color-paper));
+  --color-body: color-mix(in srgb, var(--color-ink) 80%, var(--color-paper));
+  --color-wash: color-mix(in srgb, var(--color-accent) 10%, var(--color-paper));
+  --color-trim: color-mix(in srgb, var(--color-accent) 30%, var(--color-paper));
+}
+
 :root {
   --title-travel: 55%;
   --title-blur: 6px;
@@ -211,6 +225,47 @@
   }
 }
 
+/* Talk switches: the band morphs while the content slides the way the user
+   went. Only the named talk pieces are captured, so the page around them stays
+   live, and since snapshots escape the panel's clipping, the overlay is cut to
+   the panel's rect for the duration. */
+:root {
+  view-transition-name: none;
+}
+
+::view-transition {
+  clip-path: var(--talk-clip, none);
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.36s;
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+
+::view-transition-old(talk-header),
+::view-transition-old(talk-body) {
+  animation: leave 0.2s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+::view-transition-new(talk-header),
+::view-transition-new(talk-body) {
+  animation: arrive 0.36s cubic-bezier(0.2, 0, 0, 1) both;
+}
+
+@keyframes leave {
+  to {
+    translate: calc(var(--talk-leave) * -1) 0;
+    opacity: 0;
+  }
+}
+
+@keyframes arrive {
+  from {
+    translate: var(--talk-arrive) 0;
+    opacity: 0;
+  }
+}
+
 @keyframes head {
   from {
     --head: 0px;
@@ -221,6 +276,12 @@
   to {
     --tail: 0px;
   }
+}
+
+/* Swaps ink and paper, so every token mixed from them follows. */
+@utility inverted {
+  --color-ink: #f0f4ff;
+  --color-paper: #0e0927;
 }
 
 /* Shadows tinted by the slide, so they read as depth on any background. */
