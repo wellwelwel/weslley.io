@@ -2,8 +2,14 @@ name: '🚀 CD (Website) — Publish'
 
 on:
   schedule:
-    - cron: '30 3 * * *'
+    # - cron: '30 3 * * *'
+    - cron: '30 6 * * *'
+    - cron: '30 9 * * *'
+    - cron: '30 12 * * *'
     - cron: '30 15 * * *'
+    # - cron: '30 18 * * *'
+    # - cron: '30 21 * * *'
+    # - cron: '30 0 * * *'
   push:
     branches:
       - 'main'
