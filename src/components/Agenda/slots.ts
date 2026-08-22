@@ -14,6 +14,8 @@ export type Slot = {
   address?: string;
   title: string;
   role: string;
+  /** Slug of the talk page the card opens as a dialog. */
+  talk?: string;
 };
 
 export const AVATAR = '/img/avatar.png';
@@ -63,7 +65,7 @@ export const slots: Slot[] = [
     time: '10:00',
     event: 'Codecon Summit',
     logo: '/img/codecon2.svg',
-    url: '/talks/2025/07/19/codecon-summit/',
+    talk: 'codecon-summit-embrace-the-hacker-way',
     coupon: {
       code: 'PALESTRANTE15',
       url: 'https://eventos.codecon.dev/codecon-summit-25?cp=PALESTRANTE15',
@@ -144,6 +146,7 @@ export const slots: Slot[] = [
     event: 'MVP Conf',
     logo: '/img/mvpconf.png',
     url: 'https://mvpconf.com.br/',
+    talk: 'mvp-conf-2025-brasil',
     venue: 'São Paulo, SP',
     address: 'Rua Vergueiro, 1211 (UNIP) - São Paulo, SP',
     title:

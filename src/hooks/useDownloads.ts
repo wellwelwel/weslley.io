@@ -1,5 +1,5 @@
 import { usePluginData } from '@docusaurus/useGlobalData';
-import { abbreviate } from '@site/src/helpers/abbreviate';
+import { downloadsLabel } from '@site/src/helpers/downloads';
 
 type Downloads = {
   year: number;
@@ -8,12 +8,10 @@ type Downloads = {
   rolling?: number;
 };
 
-const FALLBACK = '700 milhões';
-
 export const useDownloads = (): string => {
   const { rolling } = usePluginData('downloads') as Downloads;
 
-  return rolling ? abbreviate(rolling, 'pt-BR', 0) : FALLBACK;
+  return downloadsLabel(rolling);
 };
 
 export const useYear = (): Downloads => usePluginData('downloads') as Downloads;

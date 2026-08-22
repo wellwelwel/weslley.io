@@ -12,15 +12,11 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
   const { viewMode, ViewToggle, isListView } = useViewMode();
   const currentLocale = i18n.currentLocale;
 
-  const socialBanner =
-    route === 'talks'
-      ? '/img/slide/codecon-002.jpg'
-      : '/img/slide/roga-002.jpg';
+  const socialBanner = '/img/slide/roga-002.jpg';
 
   const translations = {
     title: {
       articles: currentLocale === 'en' ? 'Articles' : 'Artigos',
-      talks: currentLocale === 'en' ? 'Talks' : 'Palestras',
     },
     noArticles:
       currentLocale === 'en'

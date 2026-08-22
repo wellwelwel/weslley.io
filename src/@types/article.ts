@@ -36,7 +36,7 @@ export type ArticleNavigation = {
 };
 
 export type ProcessedArticle = ArticleFrontMatter & {
-  route: 'articles' | 'talks';
+  route: 'articles';
   content: string;
   filePath: string;
   mdxPath: string;

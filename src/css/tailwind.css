@@ -2,21 +2,25 @@
 @import 'tailwindcss/preflight.css' layer(base);
 @import 'tailwindcss/utilities.css' source(none);
 
-@source '../pages/index.tsx';
+@source '../pages/_dynamic/home';
 @source '../components/Adopters.tsx';
 @source '../components/Agenda';
 @source '../components/Backdrop.tsx';
 @source '../components/Badges.tsx';
+@source '../components/Dialog.tsx';
 @source '../components/Header.tsx';
 @source '../components/Hill.tsx';
 @source '../components/Home';
+@source '../components/Keynote.tsx';
 @source '../components/Memories.tsx';
 @source '../components/Milestones.tsx';
+@source '../components/Moments.tsx';
 @source '../components/Partners';
 @source '../components/Picture.tsx';
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
 @source '../components/Star.tsx';
+@source '../components/Talks';
 @source '../components/Tooltip.tsx';
 @source '../theme/NotFound';
 

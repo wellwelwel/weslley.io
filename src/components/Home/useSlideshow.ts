@@ -18,9 +18,12 @@ const TOLERANCE = 10;
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
+/** A landing slide opens an unhashed URL without rewriting it, so a talk route
+    lands on its slide and keeps its own path. */
 export const useSlideshow = (
   ids: readonly string[],
-  paused: boolean
+  paused: boolean,
+  landing?: string
 ): Slideshow => {
   const [active, setActive] = useState(0);
   const current = useRef(0);
@@ -89,6 +92,11 @@ export const useSlideshow = (
       if (index === undefined) {
         if (opening && current.current !== 0) return;
 
+        if (landing !== undefined) {
+          activate(indices.get(landing) ?? 0);
+          return;
+        }
+
         activate(0);
         window.history.replaceState(null, '', `#${ids[0]}`);
         return;
@@ -103,7 +111,7 @@ export const useSlideshow = (
     window.addEventListener('hashchange', onHashChange);
 
     return () => window.removeEventListener('hashchange', onHashChange);
-  }, [activate, ids, indices]);
+  }, [activate, ids, indices, landing]);
 
   useGSAP(
     () => {

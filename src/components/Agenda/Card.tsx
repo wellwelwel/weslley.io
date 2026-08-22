@@ -9,6 +9,7 @@ import {
   Copy,
   ExternalLink,
   GraduationCap,
+  Info,
   Star,
   TicketPercent,
 } from 'lucide-react';
@@ -25,6 +26,8 @@ type SwapOptions = {
   className?: string;
 };
 
+export type TalkOpener = (slug: string, slot: Slot) => void;
+
 export type CardOptions = {
   slot: Slot;
   place: number;
@@ -35,6 +38,7 @@ export type CardOptions = {
   /** An undressed card keeps its shell, so it still has a state to animate from. */
   dressed: boolean;
   onFocus: () => void;
+  onTalk: TalkOpener;
 };
 
 const COUPON =
@@ -50,6 +54,12 @@ const BODY = 'transition-opacity duration-500 ease-swift';
 
 const FLIGHT =
   'col-start-1 row-start-1 transition-transform duration-300 ease-swift';
+
+const ACTION =
+  'relative flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-swift after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95';
+
+/** Room the footer keeps clear for the corner actions, by their count. */
+const CLEARANCE = ['', 'pr-10.5', 'pr-20.5'];
 
 const LAUNCH = {
   leave: `${FLIGHT} size-4 group-hover/launch:translate-x-[120%] group-hover/launch:translate-y-[-120%]`,
@@ -99,15 +109,17 @@ export const Card = ({
   frosted,
   dressed,
   onFocus,
+  onTalk,
 }: CardOptions): ReactNode => {
   const [copiedCoupon, copyCoupon] = useCopy();
   const [copiedAddress, copyAddress] = useCopy();
   const [origin] = useState(place);
-  const { address, coupon } = slot;
+  const { address, coupon, talk } = slot;
   const center = place === 0;
   const clickable = place === 1;
   const free = coupon?.code.toLowerCase() === 'gratuito';
   const details = slot.material ?? slot.url;
+  const actions = Number(Boolean(talk)) + Number(Boolean(details));
   const Role = ROLES[slot.role] ?? TbMicrophone2;
 
   return (
@@ -172,7 +184,7 @@ export const Card = ({
             className={clsx(
               BODY,
               'mt-auto flex items-center justify-between gap-3',
-              details && 'pr-10.5'
+              CLEARANCE[actions]
             )}
           >
             <div className='flex min-w-0 flex-col items-start gap-1.5'>
@@ -244,30 +256,52 @@ export const Card = ({
                 ))}
             </div>
 
-            {details && (
-              <a
-                href={details}
-                target='_blank'
-                rel='noopener noreferrer'
-                tabIndex={center ? undefined : -1}
-                aria-label={
-                  slot.time
-                    ? `Detalhes da palestra às ${slot.time}`
-                    : 'Detalhes da palestra'
-                }
-                className={clsx(
-                  'group/launch absolute right-5 bottom-5 flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-swift after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3 short:bottom-3',
-                  !center && 'pointer-events-none opacity-0'
+            {actions > 0 && (
+              <div className='absolute right-5 bottom-5 flex items-center gap-2.5 max-sm:right-3.5 max-sm:bottom-3.5 short:right-3 short:bottom-3'>
+                {talk && (
+                  <button
+                    type='button'
+                    onClick={() => onTalk(talk, slot)}
+                    tabIndex={center ? undefined : -1}
+                    aria-haspopup='dialog'
+                    aria-label='Sobre a palestra'
+                    className={clsx(
+                      ACTION,
+                      'cursor-pointer appearance-none border-0 p-0',
+                      !center && 'pointer-events-none opacity-0'
+                    )}
+                  >
+                    <Info className='size-4' aria-hidden='true' />
+                  </button>
                 )}
-              >
-                <span
-                  className='relative grid size-4 place-items-center overflow-hidden'
-                  aria-hidden='true'
-                >
-                  <BiLinkExternal className={LAUNCH.leave} />
-                  <BiLinkExternal className={LAUNCH.enter} />
-                </span>
-              </a>
+
+                {details && (
+                  <a
+                    href={details}
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    tabIndex={center ? undefined : -1}
+                    aria-label={
+                      slot.time
+                        ? `Detalhes da palestra às ${slot.time}`
+                        : 'Detalhes da palestra'
+                    }
+                    className={clsx(
+                      'group/launch',
+                      ACTION,
+                      !center && 'pointer-events-none opacity-0'
+                    )}
+                  >
+                    <span
+                      className='relative grid size-4 place-items-center overflow-hidden'
+                      aria-hidden='true'
+                    >
+                      <BiLinkExternal className={LAUNCH.leave} />
+                      <BiLinkExternal className={LAUNCH.enter} />
+                    </span>
+                  </a>
+                )}
+              </div>
             )}
           </footer>
         </>

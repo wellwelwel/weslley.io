@@ -1,164 +1,51 @@
-import type { FC } from 'react';
-import { memo, useEffect, useId, useMemo, useRef, useState } from 'react';
+import type { ReactNode } from 'react';
+import { memo } from 'react';
+import { Picture } from '@site/src/components/Picture';
+import { useViewer } from '@site/src/components/Talks/Viewer';
 
-export type MomentOptions = {
+export type Moment = {
   src: string;
   alt?: string;
 };
 
-export type MomentsProps = {
-  moments: MomentOptions[];
+export type MomentsOptions = {
+  moments: Moment[];
 };
 
-const MomentsBase: FC<MomentsProps> = ({ moments }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const [activeIndex, setActiveIndex] = useState<number>(0);
-  const dialogTitleId = useId();
-  const closeButtonRef = useRef<HTMLButtonElement | null>(null);
-  const canGoPrev = activeIndex > 0;
-  const canGoNext = activeIndex < moments.length - 1;
-  const active = useMemo(() => moments[activeIndex], [moments, activeIndex]);
+const LABEL = 'Momentos';
 
-  const openAt = (index: number) => {
-    setActiveIndex(index);
-    setIsOpen(true);
-  };
-
-  const close = () => setIsOpen(false);
-
-  const goPrev = () => {
-    if (!canGoPrev) return;
-    setActiveIndex((v) => v - 1);
-  };
-
-  const goNext = () => {
-    if (!canGoNext) return;
-    setActiveIndex((v) => v + 1);
-  };
-
-  useEffect(() => {
-    if (!isOpen) return;
-
-    const mainWrapper = document.querySelector<HTMLDivElement>('.navbar')!;
-    const previousOverflow = document.body.style.overflow;
-
-    document.body.style.overflow = 'hidden';
-    mainWrapper.style.visibility = 'hidden';
-    mainWrapper.style.pointerEvents = 'none';
-
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      mainWrapper.style.visibility = 'unset';
-      mainWrapper.style.pointerEvents = 'auto';
-    };
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (!isOpen) return;
-    closeButtonRef.current?.focus();
-  }, [isOpen]);
+export const Moments = memo(({ moments }: MomentsOptions): ReactNode => {
+  const show = useViewer();
+  const shots = moments.map(({ src, alt = '' }) => ({
+    src,
+    alt,
+    caption: alt,
+  }));
 
   return (
-    <div className='moments'>
-      <div className='moments__grid' aria-label='Galeria de imagens'>
-        {moments.map(({ src, alt }, index) => (
+    <ul
+      aria-label='Galeria de imagens'
+      className='m-0 grid list-none grid-cols-2 gap-2.5 p-0 sm:grid-cols-3 lg:grid-cols-4'
+    >
+      {shots.map((shot, index) => (
+        <li key={shot.src} className='m-0'>
           <button
-            key={`${src}-${index}`}
             type='button'
-            className='moments__thumb'
-            onClick={() => openAt(index)}
-            aria-label={`Abrir imagem ${index + 1} de ${moments.length}`}
+            onClick={() => show({ label: LABEL, shots, at: index })}
+            aria-label={`Abrir imagem ${index + 1} de ${shots.length}`}
+            className='group/shot relative block aspect-4/3 w-full cursor-pointer appearance-none overflow-hidden rounded-2xl border-0 bg-ink/6 p-0 transition-[scale,box-shadow] duration-250 ease-swift hover:scale-102 hover:shadow-[0_12px_28px_-14px_rgb(14_9_39_/_0.5)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-98'
           >
-            <img
-              className='moments__thumbImage'
+            <Picture
+              src={shot.src}
+              alt={shot.alt}
+              sizes='(min-width: 64rem) 18rem, (min-width: 40rem) 30vw, 45vw'
               loading='lazy'
-              decoding='async'
-              src={src}
-              alt={alt ?? ''}
+              draggable={false}
+              className='size-full object-cover transition-transform duration-500 ease-swift group-hover/shot:scale-105'
             />
           </button>
-        ))}
-      </div>
-
-      {isOpen && (
-        <div
-          className='moments__overlay'
-          role='dialog'
-          aria-modal='true'
-          aria-labelledby={dialogTitleId}
-          tabIndex={-1}
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) close();
-          }}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') close();
-            if (e.key === 'ArrowLeft') goPrev();
-            if (e.key === 'ArrowRight') goNext();
-          }}
-        >
-          <div
-            className='moments__viewer'
-            onMouseDown={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <div className='moments__topBar'>
-              <div className='moments__counter' aria-live='polite'>
-                {activeIndex + 1} / {moments.length}
-              </div>
-
-              <h3>{active.alt}</h3>
-
-              <button
-                ref={closeButtonRef}
-                type='button'
-                className='moments__iconButton'
-                onClick={close}
-                aria-label='Fechar galeria'
-                title='Fechar (Esc)'
-              >
-                <span aria-hidden='true'>×</span>
-              </button>
-            </div>
-
-            <div className='moments__stage'>
-              <button
-                type='button'
-                className='moments__navButton moments__navButton--prev'
-                onClick={goPrev}
-                disabled={!canGoPrev}
-                aria-label='Imagem anterior'
-                title='Anterior (←)'
-              >
-                <span aria-hidden='true'>‹</span>
-              </button>
-
-              <figure className='moments__figure'>
-                <img
-                  className='moments__fullImage'
-                  src={active?.src}
-                  alt={active?.alt ?? ''}
-                  loading='lazy'
-                  decoding='async'
-                />
-              </figure>
-
-              <button
-                type='button'
-                className='moments__navButton moments__navButton--next'
-                onClick={goNext}
-                disabled={!canGoNext}
-                aria-label='Próxima imagem'
-                title='Próxima (→)'
-              >
-                <span aria-hidden='true'>›</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </div>
+        </li>
+      ))}
+    </ul>
   );
-};
-
-export const Moments = memo(MomentsBase);
+});

@@ -1,10 +1,15 @@
+import type { TalkOpener } from '@site/src/components/Agenda/Card';
+import type { Slot } from '@site/src/components/Agenda/slots';
 import type { Section } from '@site/src/components/Header';
 import type { Theme } from '@site/src/components/Home/slides';
 import type { CSSProperties, ReactNode } from 'react';
+import type { RouteConfig } from 'react-router-config';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import Head from '@docusaurus/Head';
-import { useLocation } from '@docusaurus/router';
+import renderRoutes from '@docusaurus/renderRoutes';
+import { matchPath, useHistory, useLocation } from '@docusaurus/router';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import NotFound from '@theme/NotFound';
 import clsx from 'clsx';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
@@ -23,7 +28,7 @@ import {
   textures,
   warm,
 } from '@site/src/components/Home/slides';
-import { partnersDialog } from '@site/src/components/Home/stages';
+import { partnersDialog, talkDialog } from '@site/src/components/Home/stages';
 import { Tint } from '@site/src/components/Home/Tint';
 import { useSlideshow } from '@site/src/components/Home/useSlideshow';
 import { useSpots } from '@site/src/components/Home/useSpots';
@@ -36,6 +41,18 @@ import noto900 from '@site/src/fonts/noto-sans-latin-900.woff2';
 import { todayInBrazil } from '@site/src/helpers/today';
 
 type PageStyle = CSSProperties & { '--tint'?: string };
+
+type HomeOptions = {
+  routes: RouteConfig[];
+};
+
+type ShellOptions = {
+  route: Pick<RouteConfig, 'routes'>;
+};
+
+type Params = {
+  slug: string;
+};
 
 const MEDIA = {
   narrow: '(max-width: 39.9375rem)',
@@ -52,6 +69,25 @@ const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
 const BLURRED_SIZES = '40vw';
 
+const AGENDA = 'agenda';
+
+const TALKS = '/talks/';
+
+const TALK = '/talks/:slug/';
+
+const listingOf = (pathname: string): boolean =>
+  matchPath(pathname, { path: TALKS, exact: true }) !== null;
+
+const talkOf = (pathname: string): string | null =>
+  matchPath<Params>(pathname, { path: TALK, exact: true })?.params.slug ?? null;
+
+/* Opening a talk from a card leaves this mark on the entry it pushes, so
+   closing knows whether to step back or to rewrite a deep link. */
+const MARK = { talk: true };
+
+const marked = (state: unknown): boolean =>
+  typeof state === 'object' && state !== null && 'talk' in state;
+
 const THEMES: Record<Theme, string> = {
   light: '',
   dark: '[--color-ink:#f0f4ff] [--color-paper:#0e0927]',
@@ -62,13 +98,23 @@ const SHADOWS: Record<Theme, string> = {
   dark: 'text-shadow-paper/50',
 };
 
-export default (): ReactNode => {
+const Home = ({ routes }: HomeOptions): ReactNode => {
   const { siteConfig } = useDocusaurusContext();
-  const { search } = useLocation();
+  const history = useHistory();
+  const { pathname, search } = useLocation();
+  const talk = talkOf(pathname);
+  const listing = listingOf(pathname);
+  const [shown, setShown] = useState<string | null>(null);
+  const [slot, setSlot] = useState<Slot | null>(null);
   const [partners, setPartners] = useState(false);
+  const [partnersMounted, setPartnersMounted] = useState(false);
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
-  const { active, show, home } = useSlideshow(slideIds, partners || menu);
+  const { active, show, home } = useSlideshow(
+    slideIds,
+    partners || menu || talk !== null,
+    talk === null && !listing ? undefined : AGENDA
+  );
   const { page, rail, place, spots } = useSpots();
   const group = groupOf[active];
   const preview =
@@ -97,15 +143,59 @@ export default (): ReactNode => {
   const tint: PageStyle = { '--tint': color ?? hill };
 
   const openPartners = useCallback(() => {
-    if (partnersDialog.gate.ready()) return setPartners(true);
+    const reveal = () => {
+      setPartnersMounted(true);
+      setPartners(true);
+    };
 
-    partnersDialog.gate.load().then(
-      () => setPartners(true),
-      () => undefined
-    );
+    if (partnersDialog.gate.ready()) return reveal();
+
+    partnersDialog.gate.load().then(reveal, () => undefined);
   }, []);
 
   const closePartners = useCallback(() => setPartners(false), []);
+
+  const settlePartners = useCallback(() => setPartnersMounted(false), []);
+
+  const openTalk = useCallback<TalkOpener>(
+    (slug, origin) => {
+      setSlot(origin);
+      history.push(`/talks/${slug}/`, MARK);
+    },
+    [history]
+  );
+
+  const closeTalk = useCallback(() => {
+    if (marked(history.location.state)) return history.goBack();
+
+    history.replace(`/#${AGENDA}`);
+  }, [history]);
+
+  const settleTalk = useCallback(() => {
+    setShown(null);
+    setSlot(null);
+  }, []);
+
+  /* The bare /talks/ link keeps the metadata the talks listing always had and
+     lands on the agenda, which is where the talks live now. */
+  useEffect(() => {
+    if (listing) history.replace(`/#${AGENDA}`);
+  }, [listing, history]);
+
+  useEffect(() => {
+    if (talk === null || shown !== null) return;
+
+    let stale = false;
+
+    talkDialog.gate.load().then(
+      () => !stale && setShown(talk),
+      () => undefined
+    );
+
+    return () => {
+      stale = true;
+    };
+  }, [talk, shown]);
 
   useEffect(() => {
     if (new URLSearchParams(search).has('partners')) openPartners();
@@ -182,6 +272,8 @@ export default (): ReactNode => {
           />
         )}
       </Head>
+
+      {renderRoutes(routes)}
 
       <Progress value={(active + 1) / slides.length} color={mark} />
 
@@ -314,7 +406,12 @@ export default (): ReactNode => {
                       key={`cta:${active}`}
                       className='mt-10 animate-slide max-lg:hidden'
                     >
-                      <Cta open={partners} onOpen={openPartners} mark={mark} />
+                      <Cta
+                        open={partners}
+                        onOpen={openPartners}
+                        onTalk={openTalk}
+                        mark={mark}
+                      />
                     </div>
                   )}
                 </div>
@@ -329,7 +426,12 @@ export default (): ReactNode => {
                       !still && 'animate-slide'
                     )}
                   >
-                    <Stage open={partners} onOpen={openPartners} mark={mark} />
+                    <Stage
+                      open={partners}
+                      onOpen={openPartners}
+                      onTalk={openTalk}
+                      mark={mark}
+                    />
                   </div>
                 )}
 
@@ -360,7 +462,33 @@ export default (): ReactNode => {
         )}
       </div>
 
-      {partners && <partnersDialog.View onClose={closePartners} />}
+      {partnersMounted && (
+        <partnersDialog.View
+          open={partners}
+          onClose={closePartners}
+          onClosed={settlePartners}
+        />
+      )}
+
+      {shown && (
+        <talkDialog.View
+          slug={shown}
+          slot={slot}
+          open={talk === shown}
+          onClose={closeTalk}
+          onClosed={settleTalk}
+        />
+      )}
     </>
   );
+};
+
+export default ({ route }: ShellOptions): ReactNode => {
+  const { pathname } = useLocation();
+  const routes = route.routes ?? [];
+  const known = routes.some(({ path, exact }) =>
+    matchPath(pathname, { path, exact })
+  );
+
+  return known ? <Home routes={routes} /> : <NotFound />;
 };

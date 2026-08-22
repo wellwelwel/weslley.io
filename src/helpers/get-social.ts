@@ -9,7 +9,6 @@ export type ArticlesOptions = {
 
 const regex = {
   articles: /^articles\/(.+?)\/[^/]+\.mdx$/,
-  talks: /^talks\/(.+?)\/[^/]+\.mdx$/,
 } as const;
 
 export const getSocialImage = ({

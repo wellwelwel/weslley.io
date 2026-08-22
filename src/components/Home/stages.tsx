@@ -73,3 +73,9 @@ export const partnersDialog = deferred(() =>
     /* webpackChunkName: "partners", webpackPrefetch: true */ '@site/src/components/Partners/Dialog'
   ).then((module) => module.PartnersDialog)
 );
+
+export const talkDialog = deferred(() =>
+  import(
+    /* webpackChunkName: "talks" */ '@site/src/components/Talks/Dialog'
+  ).then((module) => module.TalkDialog)
+);

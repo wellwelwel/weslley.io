@@ -1,3 +1,4 @@
+import type { TalkOpener } from '@site/src/components/Agenda/Card';
 import type { Step } from '@site/src/components/Header';
 import type { Gate } from '@site/src/components/Home/stages';
 import type { Trigger } from '@site/src/components/Partners/Trigger';
@@ -28,7 +29,9 @@ import { Socials } from '@site/src/components/Socials';
 
 export type Theme = 'light' | 'dark';
 
-type SlideAction = ComponentType<Trigger & { mark?: string }>;
+type SlideAction = ComponentType<
+  Trigger & { mark?: string; onTalk: TalkOpener }
+>;
 
 type Slide = {
   id: string;
@@ -109,7 +112,7 @@ export const groups: Group[] = [
         still: true,
         gates: [agenda.gate],
         actions: {
-          stage: () => <agenda.View />,
+          stage: ({ onTalk }) => <agenda.View onTalk={onTalk} />,
           cta: ({ open, onOpen }) => (
             <PartnersTrigger
               open={open}

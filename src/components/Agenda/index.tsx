@@ -1,3 +1,4 @@
+import type { TalkOpener } from '@site/src/components/Agenda/Card';
 import type { CSSProperties, ReactNode, RefObject } from 'react';
 import {
   memo,
@@ -37,6 +38,10 @@ type RootStyle = CSSProperties & {
 type Stage = {
   focus: number;
   from: number;
+};
+
+type AgendaOptions = {
+  onTalk: TalkOpener;
 };
 
 const TONE = '#7a77ff';
@@ -118,7 +123,7 @@ const useDeckHeight = (deck: RefObject<HTMLDivElement | null>) => {
   return height;
 };
 
-export const Agenda = memo((): ReactNode => {
+export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
   const [{ focus, from }, setStage] = useState<Stage>(() => {
     const start = upcomingIndex();
 
@@ -264,6 +269,7 @@ export const Agenda = memo((): ReactNode => {
                 height === undefined || here <= WINDOW || there <= WINDOW
               }
               onFocus={() => focusOn(index)}
+              onTalk={onTalk}
             />
           );
         })}

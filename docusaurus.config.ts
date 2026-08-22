@@ -9,6 +9,7 @@ try {
 
 const articlesPlugin = require('./plugins/articles/mount.ts').default;
 const downloadsPlugin = require('./plugins/downloads/mount.ts').default;
+const homePlugin = require('./plugins/home/mount.ts').default;
 const inlineCssPlugin = require('./plugins/inline-css/mount.ts').default;
 const redirectsPlugin = require('./plugins/redirects/mount.ts').default;
 
@@ -113,6 +114,10 @@ const config: Config = {
     (context) =>
       redirectsPlugin(context, {
         pluginName: 'redirects',
+      }),
+    (context) =>
+      homePlugin(context, {
+        pluginName: 'mount-home',
       }),
     (context) =>
       inlineCssPlugin(context, {

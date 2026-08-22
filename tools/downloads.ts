@@ -16,7 +16,7 @@ const SOURCE = `https://github.com/${REPO}/blob/main/${FILE}`;
 
 const TIMEOUT = 10_000;
 
-export const downloads = async (): Promise<Downloads> => {
+const read = async (): Promise<Downloads> => {
   const year = new Date().getFullYear();
   const base = { year, source: SOURCE };
 
@@ -50,3 +50,7 @@ export const downloads = async (): Promise<Downloads> => {
     return base;
   }
 };
+
+let pending: Promise<Downloads> | undefined;
+
+export const downloads = (): Promise<Downloads> => (pending ??= read());

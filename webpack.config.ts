@@ -208,6 +208,15 @@ export default () => {
               optimization: {
                 splitChunks: {
                   cacheGroups: {
+                    slots: {
+                      test: /[\\/]src[\\/]components[\\/]Agenda[\\/]slots\.ts$/,
+                      chunks: 'async',
+                      minChunks: 2,
+                      minSize: 0,
+                      priority: 40,
+                      reuseExistingChunk: true,
+                      name: 'slots',
+                    },
                     prism: {
                       test: /[\\/]node_modules[\\/](?:prism-react-renderer|prismjs)[\\/]/,
                       chunks: 'async',
