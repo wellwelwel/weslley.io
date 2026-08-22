@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["8945"],{432(e){e.exports=JSON.parse('{"title":"Redes Sociais","description":"Me siga nas redes sociais e acompanhe meu trabalho. Apoie meu trabalho deixando sua estrela nos projetos open source que eu mantenho com todo carinho do mundo.","image":"/img/plush/me.png"}')}}]);
