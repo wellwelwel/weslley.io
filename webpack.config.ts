@@ -28,6 +28,8 @@ type Compiler = {
 
 const STYLESHEET = /\.(css|scss|sass)$/i;
 
+const UTILS_COMMON = /^@docusaurus\/utils-common$/;
+
 /* Two theme client modules go silent. The Prism register drags
    prism-react-renderer into every page's entry bundle, so it lives in
    src/theme/CodeBlock instead. The nprogress bar depends on a stylesheet this
@@ -47,6 +49,7 @@ const ENTRY =
 
 const home = resolve(__dirname, 'src/css/tailwind.css');
 const empty = resolve(__dirname, 'tools/reset/empty.ts');
+const utilsCommon = resolve(__dirname, 'tools/reset/utils-common.ts');
 
 const chained = (request: string) => request.includes('!');
 
@@ -63,6 +66,13 @@ const strip = (resource: Resource) => {
 
 const silence = (resource: Resource) => {
   resource.request = empty;
+};
+
+/* The package ships as CommonJS and requires the whole tslib namespace, which
+   lands in every route's entry bundle. Its deep files are plain ESM, so the
+   client reaches them straight and the bundler drops what no route uses. */
+const lighten = (resource: Resource) => {
+  resource.request = utilsCommon;
 };
 
 const isManifest = (value: unknown): value is Manifest => {
@@ -173,6 +183,14 @@ export default () => {
             SILENCED,
             silence
           ),
+          ...(isServer
+            ? []
+            : [
+                new currentBundler.instance.NormalModuleReplacementPlugin(
+                  UTILS_COMMON,
+                  lighten
+                ),
+              ]),
           ...(patching ? [routeScripts] : []),
         ],
         resolve: {
