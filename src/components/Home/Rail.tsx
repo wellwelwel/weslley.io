@@ -123,7 +123,7 @@ export const Rail = ({
                   draggable={false}
                   className={clsx(
                     'block aspect-square max-h-full w-full origin-bottom object-contain object-bottom drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
-                    index === highlight.current ? 'scale-100' : 'scale-65'
+                    index === highlight.current ? 'scale-85' : 'scale-65'
                   )}
                 />
               </button>

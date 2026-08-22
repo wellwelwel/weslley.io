@@ -157,7 +157,13 @@ export const groups: Group[] = [
         footnote: (
           <>
             Do Brasil para o mundo
-            <img src={brazil} alt='' className='h-4 w-auto' />
+            <img
+              decoding='async'
+              loading='lazy'
+              src={brazil}
+              alt=''
+              className='h-4 w-auto'
+            />
           </>
         ),
         background: defaultBackground,

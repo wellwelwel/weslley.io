@@ -40,7 +40,10 @@ export const Picture = memo(
     const entry = catalog[src];
     const withheld = deferred && !settled;
 
-    if (!entry) return <img src={withheld ? undefined : src} {...image} />;
+    if (!entry)
+      return (
+        <img decoding='async' src={withheld ? undefined : src} {...image} />
+      );
 
     return (
       <picture className='contents'>
@@ -53,7 +56,7 @@ export const Picture = memo(
             sizes={sizes}
           />
         ))}
-        <img src={withheld ? undefined : src} {...image} />
+        <img decoding='async' src={withheld ? undefined : src} {...image} />
       </picture>
     );
   }
