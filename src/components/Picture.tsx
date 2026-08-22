@@ -1,5 +1,6 @@
 import type { ImgHTMLAttributes, ReactNode } from 'react';
 import { memo } from 'react';
+import useIsBrowser from '@docusaurus/useIsBrowser';
 import variants from '@site/src/helpers/variants.json';
 
 type Entry = {
@@ -11,6 +12,8 @@ type Entry = {
 
 export type PictureOptions = ImgHTMLAttributes<HTMLImageElement> & {
   src: string;
+  /** Keeps the box but withholds the fetch until after hydration. */
+  deferred?: boolean;
 };
 
 const FORMATS = ['avif', 'webp'] as const;
@@ -32,10 +35,12 @@ export const srcset = (src: string, format: string): string | undefined => {
 };
 
 export const Picture = memo(
-  ({ src, sizes, ...image }: PictureOptions): ReactNode => {
+  ({ src, sizes, deferred = false, ...image }: PictureOptions): ReactNode => {
+    const settled = useIsBrowser();
     const entry = catalog[src];
+    const withheld = deferred && !settled;
 
-    if (!entry) return <img src={src} {...image} />;
+    if (!entry) return <img src={withheld ? undefined : src} {...image} />;
 
     return (
       <picture className='contents'>
@@ -44,11 +49,11 @@ export const Picture = memo(
             key={format}
             hidden
             type={`image/${format}`}
-            srcSet={sourceSet(src, entry, format)}
+            srcSet={withheld ? undefined : sourceSet(src, entry, format)}
             sizes={sizes}
           />
         ))}
-        <img src={src} {...image} />
+        <img src={withheld ? undefined : src} {...image} />
       </picture>
     );
   }

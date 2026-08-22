@@ -119,6 +119,7 @@ export const Rail = ({
                   alt=''
                   sizes='(min-width: 40rem) 16rem, 25vw'
                   decoding='async'
+                  deferred={groupIndex !== group}
                   draggable={false}
                   className={clsx(
                     'block aspect-square max-h-full w-full origin-bottom object-contain object-bottom drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',

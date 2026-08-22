@@ -34,6 +34,7 @@ export const Backdrop = memo(
         sizes='100vw'
         decoding='async'
         fetchPriority={src === active ? priority : 'low'}
+        deferred={src !== active}
         draggable={false}
         style={src === active ? shown : HIDDEN}
         className={`pointer-events-none inset-0 size-full object-cover transition-opacity duration-700 ease-swift ${className}`}
