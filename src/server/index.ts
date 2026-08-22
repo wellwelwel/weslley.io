@@ -12,13 +12,14 @@ const { Countty, createContext } = createCountty({
   },
 });
 
+const notFound = (): Response =>
+  new Response(JSON.stringify({ message: 'Not Found.' }), { status: 404 });
+
 const Worker: ExportedHandler<Env> = {
   async fetch(request, env) {
-    // Countty Routes
     const { router } = await createContext(request, env);
-    const url = new URL(request.url);
-    const { pathname } = url;
-    const counttyRoute: CounttyRouter = {
+    const { pathname } = new URL(request.url);
+    const routes: CounttyRouter = {
       '/create': router.create,
       '/peek': router.peek,
       '/badge': router.badge,
@@ -28,12 +29,7 @@ const Worker: ExportedHandler<Env> = {
       '/remove': router.remove,
     };
 
-    if (pathname in counttyRoute) return counttyRoute[pathname]();
-
-    // Website Routes
-    return new Response(JSON.stringify({ message: 'Not Found.' }), {
-      status: 404,
-    });
+    return pathname in routes ? routes[pathname]() : notFound();
   },
 };
 

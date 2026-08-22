@@ -44,14 +44,11 @@ const config: Config = {
   onDuplicateRoutes: 'throw',
   i18n: {
     defaultLocale: 'pt-BR',
-    locales: ['pt-BR' /* 'en'*/],
+    locales: ['pt-BR'],
     localeConfigs: {
       'pt-BR': {
         label: '🇧🇷 Português (Brasil)',
       },
-      // en: {
-      //   label: '🇺🇸 English',
-      // },
     },
   },
   presets: [

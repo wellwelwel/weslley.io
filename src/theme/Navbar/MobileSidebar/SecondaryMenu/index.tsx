@@ -17,8 +17,6 @@ function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
   );
 }
 
-// The secondary menu slides from the right and shows contextual information
-// such as the docs sidebar
 export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
   const hasAnchors = anchors.length > 0;
 
@@ -27,7 +25,6 @@ export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
   const secondaryMenu = useNavbarSecondaryMenu();
   return (
     <>
-      {/* edge-case: prevent returning to the primaryMenu when it's empty */}
       {!isPrimaryMenuEmpty && (
         <SecondaryMenuBackButton onClick={() => secondaryMenu.hide()} />
       )}

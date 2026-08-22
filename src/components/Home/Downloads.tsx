@@ -16,7 +16,7 @@ type DigitOptions = {
 const DIGITS = 10;
 const COPIES = 3;
 
-/** The strip carries the digits three times, so the roll starts and ends on the same glyph and the markup can paint the answer before it spins. */
+/** Repeats the digits, so the markup shows the answer before the roll spins. */
 const NUMBERS = Array.from(
   { length: DIGITS * COPIES },
   (_, index) => index % DIGITS

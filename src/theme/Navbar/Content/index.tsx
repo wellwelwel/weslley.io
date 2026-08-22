@@ -14,8 +14,6 @@ import NavbarItem from '@theme/NavbarItem';
 import SearchBar from '@theme/SearchBar';
 import { anchors } from '@site/src/helpers/get-anchors';
 
-// Importa os anchors gerados dinamicamente
-
 function useNavbarItems() {
   return useThemeConfig().navbar.items as NavbarItemConfig[];
 }

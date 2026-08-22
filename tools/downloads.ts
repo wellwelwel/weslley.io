@@ -1,10 +1,10 @@
 export type Downloads = {
   year: number;
-  /** The file these numbers were read from, so the site can point at it. */
+  /** Link to the file the numbers were read from. */
   source: string;
   /** Downloads of the running year, absent when the history is unreachable. */
   total?: number;
-  /** Downloads of the last 365 days, the window the history itself covers. */
+  /** Downloads of the last 365 days. */
   rolling?: number;
 };
 

@@ -6,7 +6,7 @@ type PluginOptions = {
   pluginName: string;
 };
 
-/* The numbers move by less than the gap between two builds, so the site bakes them in and the browser never fetches them. */
+/* Baked in at build time, since the numbers barely move between builds. */
 export default (
   _context: LoadContext,
   options: PluginOptions

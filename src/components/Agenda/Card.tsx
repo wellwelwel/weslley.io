@@ -31,11 +31,11 @@ export type TalkOpener = (slug: string) => void;
 export type CardOptions = {
   slot: Slot;
   place: number;
-  /** A passed card rests to the left, so leaving the focus follows the deck flow. */
+  /** Parks the card left of the focus. */
   passed: boolean;
-  /** Frosted glass only reaches the cards a viewer can actually see. */
+  /** Backdrop blur, reserved for the cards a viewer can see. */
   frosted: boolean;
-  /** An undressed card keeps its shell, so it still has a state to animate from. */
+  /** Renders the body. An undressed card keeps only its shell. */
   dressed: boolean;
   onFocus: () => void;
   onTalk: TalkOpener;
@@ -49,7 +49,7 @@ const REDEEM = `${COUPON} relative transition-[color,scale] duration-250 ease-sw
 const SWAP =
   'absolute inset-0 size-3 transition-[opacity,scale,filter] duration-250 ease-swift';
 
-/** Fades with the deck glide when the sliver peek veils the card's body. */
+/** Eases the body out when the card shrinks to a sliver. */
 const BODY = 'transition-opacity duration-500 ease-swift';
 
 const FLIGHT =

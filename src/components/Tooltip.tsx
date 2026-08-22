@@ -15,7 +15,7 @@ const BUBBLE =
 const ARROW =
   'absolute -bottom-1 left-1/2 size-2.5 translate-x-[calc(-50%_-_var(--point,0px))] rotate-45 rounded-xs bg-ink';
 
-/** Anchors to the closest parent carrying `group relative`, which owns the hover, focus and `data-revealed` states that open it. */
+/** Anchors to the nearest `group relative` parent, owner of its open states. */
 export const Tooltip = ({ label, detail }: TooltipOptions): ReactNode => {
   const bubble = useRef<HTMLSpanElement>(null);
 

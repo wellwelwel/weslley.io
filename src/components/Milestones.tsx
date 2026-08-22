@@ -77,7 +77,6 @@ export const Milestones = (): ReactNode => {
       }
     );
 
-    /** The first touch takes the wheel over, the way a real one stops spinning. */
     const release = () => {
       spin.kill();
       rest();

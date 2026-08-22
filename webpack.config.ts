@@ -30,12 +30,12 @@ const STYLESHEET = /\.(css|scss|sass)$/i;
 
 const UTILS_COMMON = /^@docusaurus\/utils-common$/;
 
-/* Two theme client modules go silent. The Prism register drags
-   prism-react-renderer into every page's entry bundle, so it lives in
-   src/theme/CodeBlock instead. The nprogress bar depends on a stylesheet this
-   config strips, so the module animates something that never renders. */
-const SILENCED =
-  /theme-classic[\\/]lib[\\/](?:prism-include-languages|nprogress)(\.js)?$/;
+/** Registered from src/theme/CodeBlock instead, off the entry bundle. */
+const PRISM_REGISTER =
+  /theme-classic[\\/]lib[\\/]prism-include-languages(\.js)?$/;
+
+/** Animates a stylesheet this config strips. */
+const NPROGRESS = /theme-classic[\\/]lib[\\/]nprogress(\.js)?$/;
 
 const SITE = '@site/';
 
@@ -43,7 +43,7 @@ const MANIFEST = 'client-manifest.json';
 const REGISTRY = 'registry.js';
 const ROUTE_SCRIPTS = 'route-scripts';
 
-/** Each entry pairs the chunk name with the module path the route asks for. */
+/** Pairs each chunk name with the module path its route asks for. */
 const ENTRY =
   /^\s*"(?<chunk>[^"]+)": \[\(\) => import\([^)]*\), "(?<module>[^"]+)"/gm;
 
@@ -68,9 +68,7 @@ const silence = (resource: Resource) => {
   resource.request = empty;
 };
 
-/* The package ships as CommonJS and requires the whole tslib namespace, which
-   lands in every route's entry bundle. Its deep files are plain ESM, so the
-   client reaches them straight and the bundler drops what no route uses. */
+/* Reaches the package's ESM deep files, which keep tslib off every bundle. */
 const lighten = (resource: Resource) => {
   resource.request = utilsCommon;
 };
@@ -113,10 +111,7 @@ const aliasesOf = (registry: string, origins: Manifest['origins']): Alias[] =>
       : [];
   });
 
-/* The server reports the module path a route loaded, while this bundler keys the
-   loadable manifest by chunk name, so every lookup misses and no route script
-   ever reaches the HTML. Aliasing one onto the other hands each page its own
-   scripts up front instead of leaving them for the runtime to discover. */
+/* Keys the manifest by module path too, so the server's lookups hit. */
 const restoreRouteScripts = async (path: string): Promise<void> => {
   const [manifest, registry] = await Promise.all([
     readFile(path, 'utf8'),
@@ -180,7 +175,11 @@ export default () => {
             strip
           ),
           new currentBundler.instance.NormalModuleReplacementPlugin(
-            SILENCED,
+            PRISM_REGISTER,
+            silence
+          ),
+          new currentBundler.instance.NormalModuleReplacementPlugin(
+            NPROGRESS,
             silence
           ),
           ...(isServer

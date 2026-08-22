@@ -9,8 +9,7 @@ type PageErrorOptions = {
 const causes = (error: Error): Error[] =>
   error.cause instanceof Error ? [error, ...causes(error.cause)] : [error];
 
-/* Replaces the core fallback, whose static Layout import chains the whole
-   theme into every page's entry bundle. The crash screen renders bare. */
+/* Bare, so the crash screen never drags Layout into every entry bundle. */
 export default function PageError({
   error,
   tryAgain,

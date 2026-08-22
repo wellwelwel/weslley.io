@@ -4,8 +4,7 @@ import { translate } from '@docusaurus/Translate';
 
 const SearchBar = lazy(() => import('@theme-original/SearchBar'));
 
-/* Mirrors the bar the plugin renders on the server, so a client-side
-   navigation shows the same input while the deferred chunk arrives. */
+/** Mirrors the server-rendered bar while the chunk arrives. */
 const Still = (): ReactNode => {
   const label = translate({
     id: 'theme.SearchBar.label',

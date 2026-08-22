@@ -13,8 +13,7 @@ interface PluginOptions {
   contentDir: string;
 }
 
-/** Global data reaches every page's shared bundle, so only the fields the
-    listings render may travel in it. */
+/** Only the listing fields, since global data ships in every page bundle. */
 const listing = ({
   title,
   slug,

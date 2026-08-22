@@ -21,7 +21,6 @@ export const extractDescription = (content: string): string | null => {
     let i = 0;
 
     while (i < text.length) {
-      // JSX comment {/* */}
       if (text[i] === '{' && text[i + 1] === '/' && text[i + 2] === '*') {
         i += 3;
 
@@ -37,7 +36,6 @@ export const extractDescription = (content: string): string | null => {
         continue;
       }
 
-      // HTML comment <!-- -->
       if (
         text[i] === '<' &&
         text[i + 1] === '!' &&

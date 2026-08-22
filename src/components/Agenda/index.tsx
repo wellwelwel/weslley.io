@@ -71,22 +71,19 @@ const EMPHASIS = {
     'bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] hover:bg-[color-mix(in_srgb,var(--tone)_28%,transparent)]',
 };
 
-/** Matches the card's own `duration-500`, so a leaving card stays dressed. */
+/** Mirrors the card's `duration-500`. */
 const SETTLE = 500;
 
 const SEEN = 1;
 const WINDOW = 2;
 
-/* The card behind the focus waits on the left, so leaving the focus exits
-   with the deck flow instead of sweeping back across it. A card caught
-   between that parking spot and the hidden stack stays put until it fades. */
-const tail = slots.length - 1;
+const BEHIND = slots.length - 1;
 
+/** Parks left: the card behind the focus, and any card leaving from there. */
 const passedOf = (here: number, there: number): boolean =>
-  here === tail || (here > SEEN && (there === 0 || there === tail));
+  here === BEHIND || (here > SEEN && (there === 0 || there === BEHIND));
 
-/* Every card stretches to the tallest one, so the deck keeps the height it
-   measured across visits to the slide, not only across renders. */
+/** Deck height, kept across mounts so a revisit never re-measures. */
 let held: number | undefined;
 
 const useDeckHeight = (deck: RefObject<HTMLDivElement | null>) => {
@@ -95,8 +92,7 @@ const useDeckHeight = (deck: RefObject<HTMLDivElement | null>) => {
   useLayoutEffect(() => {
     if (height !== undefined || !deck.current) return;
 
-    /* Rounding here would resize the deck by half a pixel and nudge every
-       line above it, so the fractional height is the one worth keeping. */
+    /* Fractional on purpose: a rounded height would nudge the lines above. */
     held = deck.current.getBoundingClientRect().height;
     setHeight(held);
   }, [height]);

@@ -7,8 +7,7 @@ type Reveal<T extends HTMLElement> = {
   toggle: (key: string) => void;
 };
 
-/** Keeps one item open at a time on devices without hover, and closes it on
-    the first pointer landing outside `container`. */
+/** Reveals one item at a time, dismissed by a pointer outside the container. */
 export const useReveal = <T extends HTMLElement>(): Reveal<T> => {
   const container = useRef<T>(null);
   const [revealed, setRevealed] = useState<string | null>(null);

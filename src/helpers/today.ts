@@ -1,6 +1,6 @@
 let formatter: Intl.DateTimeFormat | undefined;
 
-/* en-CA prints dates as YYYY-MM-DD, the same shape the agenda slots carry. */
+/* en-CA formats as YYYY-MM-DD. */
 export const todayInBrazil = (): string =>
   (formatter ??= new Intl.DateTimeFormat('en-CA', {
     timeZone: 'America/Sao_Paulo',

@@ -10,7 +10,6 @@ function useNavbarItems() {
   return (useThemeConfig().navbar.items as NavbarItemConfig[]) || [];
 }
 
-// The primary menu displays the navbar items
 export default function NavbarMobilePrimaryMenu(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();

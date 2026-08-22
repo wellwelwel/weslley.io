@@ -27,8 +27,7 @@ const pages = async (dir: string): Promise<string[]> => {
   return found.flat();
 };
 
-/* The single stylesheet is small enough that shipping it inside every page
-   costs less than the render-blocking round trip it takes to fetch it. */
+/* Inlining the one small stylesheet beats its render-blocking round trip. */
 export default (
   _context: LoadContext,
   options: PluginOptions

@@ -15,53 +15,17 @@ export type ProjectOptions = {
   githubStars?: boolean;
   docker?: string;
   vsMarketplaceId?: string;
-  /** For **GitHub** only.
-   *
-   * If the link is not from a **GitHub** repository, use the `url` property instead.
-   */
+  /** GitHub only. Other hosts use `url`. */
   organization?: string;
-  /** For **GitHub** only.
-   *
-   * If the link is not from a **GitHub** repository, use the `url` property instead.
-   */
+  /** GitHub only. Other hosts use `url`. */
   repository?: string;
-  /**
-   * Use this otpion will replace the mounted URL:
-   *
-   * @default `https://github.com/${organization}/${repository}`
-   */
+  /** Replaces the GitHub URL built from `organization` and `repository`. */
   url?: string;
   icon?: ReactNode;
   image?: string;
   skills?: (keyof typeof skills)[];
 };
 
-/**
- * Describe your project here. It expects a sequence of paragraphs, but you can use it any way you like.
- *
- * ---
- *
- * ### Examples
- *
- * - `.tsx` files:
- *
- * > ```tsx
- * > <p>
- * >   Something.
- * > </p>
- * > <p>
- * >   Something more.
- * > </p>
- * > ```
- *
- * - `.mdx` files
- *
- * > ```mdx
- * >   Something.
- * >
- * >   Something more.
- * > ```
- */
 export const Project: FC<ProjectOptions> = ({
   name,
   children = null,

@@ -12,6 +12,11 @@ import { calculateReadingTime } from './reading-time';
 
 const execAsync = promisify(exec);
 
+const registerCounters = (slug: string): void => {
+  execAsync(`countty create "${slug}"`).catch(() => {});
+  execAsync(`countty create "${slug}:like"`).catch(() => {});
+};
+
 export const findArticles = async (
   dir: string
 ): Promise<ProcessedArticle[]> => {
@@ -41,11 +46,7 @@ export const findArticles = async (
         .replace(/[()—]/g, '')
         .replace(/\s+/g, '-');
 
-      // Create Countty slug
-      if (config.customFields?.showViewsCounter) {
-        execAsync(`countty create "${slug}"`).catch(() => {});
-        execAsync(`countty create "${slug}:like"`).catch(() => {});
-      }
+      if (config.customFields?.showViewsCounter) registerCounters(slug);
 
       const socialPath: string | undefined = data.social
         ? join(dirname(fullPath), data.social)

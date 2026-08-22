@@ -4,9 +4,9 @@ import { Picture } from '@site/src/components/Picture';
 import { motion } from '@site/src/helpers/reduced-motion';
 
 type Band = {
-  /** Speed against the middle band, which always runs at one. */
+  /** Speed relative to the middle band. */
   rate: number;
-  /** Where the strip starts inside its own loop. */
+  /** Where the strip starts inside its loop, from 0 to 1. */
   phase: number;
 };
 
@@ -20,8 +20,7 @@ type BandStyle = CSSProperties & {
   '--phase': string;
 };
 
-/* The bands deal from this list in order, so each run of four lands in a band
-   of its own and no event shows up twice inside one. */
+/* Dealt to the bands in runs of four, so no event repeats inside a band. */
 const PHOTOS = [
   '/img/slide/codecon-001.jpg',
   '/img/slide/roga-001.jpg',
@@ -39,8 +38,7 @@ const PHOTOS = [
   '/img/slide/nodebr-001.jpg',
 ];
 
-/** Seconds the middle band takes to advance one photo, so the reel keeps its
-    speed however many photos it carries. */
+/** Seconds per photo on the middle band. */
 const PACE = {
   full: 9,
   reduced: 15,
@@ -51,28 +49,23 @@ const TICKER = {
   reduced: '0.35em',
 };
 
-/** Speed the outer bands hold against the middle one, whatever the pace is. */
 const DRAG = 0.5;
 
 const LEAD = 200;
 const STEP = 90;
 
-/* Three bands have to reach past both edges of the screen, so the band height
-   is the screen plus what the tilt lifts across it, split three ways. A portrait
-   screen gives up on that, since covering it would leave one frame per band. */
+/* Three bands span the screen plus what the tilt sweeps across it. */
 const REEL =
   'pointer-events-none fixed inset-0 overflow-hidden vignette [--band:calc((100dvh+var(--sweep)-2*var(--gap))/3)] [--frame:min(78vw,44svh)] [--gap:1.25rem] [--sweep:calc(100vw*0.115)] [--tilt:-6deg] sm:[--frame:calc(var(--band)*3/2)]';
 
-/* The field reaches past both sides of the reel, so the tilt never swings a
-   strip end into view. */
+/* Overshoots both sides, so the tilt never shows a strip end. */
 const FIELD =
   'absolute inset-y-0 -inset-x-[8%] flex flex-col justify-center gap-(--gap) rotate-(--tilt)';
 
 const FRAME =
   'w-(--frame) shrink-0 overflow-hidden rounded-3xl bg-ink/8 shadow-[inset_0_0_0_1px_rgb(240_244_255_/_0.08),0_16px_32px_-18px_rgb(0_0_0_/_0.6)] aspect-4/3 sm:aspect-3/2';
 
-/* The reel carries its own scrim, since the slide tint dims every pixel alike
-   and the text needs the ground under it darker than the rest. */
+/* Darkens the ground under the text beyond the slide tint. */
 const SCRIM =
   'pointer-events-none fixed inset-0 bg-linear-to-b from-paper/15 via-paper/60 to-paper/25';
 
@@ -84,12 +77,10 @@ const BANDS: Band[] = [
   { rate: DRAG, phase: 0.34 },
 ];
 
-/** Photos a band carries. An even split hands every band its own, and an uneven
-    one repeats a few rather than leaving the strips at different lengths, which
-    is what ties the rates to the speeds. */
+/** Photos per band. Equal strips keep the rates true, even if a few repeat. */
 const SHARE = Math.ceil(PHOTOS.length / BANDS.length);
 
-/** Two copies of the share, so the strip closes on itself. */
+/** Doubled, so the strip loops seamlessly. */
 const strip = (band: number): string[] => {
   const share = Array.from(
     { length: SHARE },

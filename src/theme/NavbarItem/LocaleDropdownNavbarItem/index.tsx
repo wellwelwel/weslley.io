@@ -3,7 +3,6 @@ import type { Props } from '@theme/NavbarItem/LocaleDropdownNavbarItem';
 import type { ReactNode } from 'react';
 import { useLocation } from '@docusaurus/router';
 import { useAlternatePageUtils } from '@docusaurus/theme-common/internal';
-import { translate } from '@docusaurus/Translate';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import IconLanguage from '@theme/Icon/Language';
 import DropdownNavbarItem from '@theme/NavbarItem/DropdownNavbarItem';
@@ -28,7 +27,6 @@ export default function LocaleDropdownNavbarItem({
       locale,
       fullyQualified: false,
     })}`;
-    // preserve ?search#hash suffix on locale switches
     const to = `${baseTo}${search}${hash}${queryString}`;
     return {
       label: localeConfigs[locale]!.label,
@@ -36,29 +34,11 @@ export default function LocaleDropdownNavbarItem({
       to,
       target: '_self',
       autoAddBaseUrl: false,
-      className:
-        // eslint-disable-next-line no-nested-ternary
-        locale === currentLocale
-          ? // Similar idea as DefaultNavbarItem: select the right Infima active
-            // class name. This cannot be substituted with isActive, because the
-            // target URLs contain `pathname://` and therefore are not NavLinks!
-            mobile
-            ? 'menu__link--active'
-            : 'dropdown__link--active'
-          : '',
+      className: locale === currentLocale ? 'dropdown__link--active' : '',
     };
   });
 
   const items = [...dropdownItemsBefore, ...localeItems, ...dropdownItemsAfter];
-
-  // Mobile is handled a bit differently
-  const dropdownLabel = mobile
-    ? translate({
-        message: 'Languages',
-        id: 'theme.navbar.mobileLanguageDropdown.label',
-        description: 'The label for the mobile language switcher dropdown',
-      })
-    : localeConfigs[currentLocale]!.label;
 
   return (
     <DropdownNavbarItem
@@ -67,7 +47,7 @@ export default function LocaleDropdownNavbarItem({
       label={
         <>
           <IconLanguage />
-          <span>{dropdownLabel}</span>
+          <span>{localeConfigs[currentLocale]!.label}</span>
         </>
       }
       items={items}

@@ -17,25 +17,34 @@ const TARGET_LOCALES = config.i18n.locales.filter(
   (locale): locale is string => !!locale && locale !== SOURCE_LOCALE
 );
 
+const EXTENSIONS = new Set([
+  '.md',
+  '.mdx',
+  '.yml',
+  '.yaml',
+  '.png',
+  '.jpg',
+  '.jpeg',
+  '.gif',
+  '.svg',
+  '.webp',
+]);
+
 const getAllFiles = async (
   dir: string,
   files: string[] = []
 ): Promise<string[]> => {
-  try {
-    const entries = await readdir(dir, { withFileTypes: true });
+  const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
 
-    for (const entry of entries) {
-      const fullPath = join(dir, entry.name);
+  for (const entry of entries) {
+    const fullPath = join(dir, entry.name);
 
-      if (entry.isDirectory()) {
-        await getAllFiles(fullPath, files);
-        continue;
-      }
-
-      if (entry.isFile()) files.push(fullPath);
+    if (entry.isDirectory()) {
+      await getAllFiles(fullPath, files);
+      continue;
     }
-  } catch {
-    // Directory doesn't exist or can't be read
+
+    if (entry.isFile()) files.push(fullPath);
   }
 
   return files;
@@ -57,7 +66,6 @@ const fileExists = async (filePath: string): Promise<boolean> => {
 export const syncI18nArticles = async (): Promise<void> => {
   console.log('Starting i18n structure synchronization...\n');
 
-  // Ensure all target locale directories exist first
   for (const targetLocale of TARGET_LOCALES) {
     const targetBaseDir = join(I18N_DIR, targetLocale, 'articles');
     await ensureDirectoryExists(targetBaseDir);
@@ -79,26 +87,9 @@ export const syncI18nArticles = async (): Promise<void> => {
     for (const sourcePath of sourceFiles) {
       const relativePath = relative(sourceDir, sourcePath);
       const targetPath = join(targetBaseDir, relativePath);
-      const ext = extname(sourcePath);
 
-      // Skip non-article and non-asset files
-      if (
-        ![
-          '.md',
-          '.mdx',
-          '.yml',
-          '.yaml',
-          '.png',
-          '.jpg',
-          '.jpeg',
-          '.gif',
-          '.svg',
-          '.webp',
-        ].includes(ext)
-      )
-        continue;
+      if (!EXTENSIONS.has(extname(sourcePath))) continue;
 
-      // NEVER overwrite existing files
       if (await fileExists(targetPath)) {
         console.log(`⏭️  Skipped (already exists): ${relativePath}`);
         skippedCount++;

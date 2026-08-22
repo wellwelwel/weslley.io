@@ -1,12 +1,12 @@
 import type { SideConfig } from '@site/src/@types/side';
 import type { Talk } from '@site/src/components/Talks/catalog';
 import type { Gallery } from '@site/src/components/Talks/Viewer';
-import type { ReactNode } from 'react';
+import type { CSSProperties, ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory } from '@docusaurus/router';
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CassetteTape, Pen } from 'lucide-react';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import { MONTHS } from '@site/src/components/Agenda/timeline';
 import { Dialog } from '@site/src/components/Dialog';
@@ -17,6 +17,8 @@ import { SideContext } from '@site/src/components/Side/context';
 import { talks } from '@site/src/components/Talks/catalog';
 import { components } from '@site/src/components/Talks/Prose';
 import { Viewer, ViewerContext } from '@site/src/components/Talks/Viewer';
+import { getSideLabel } from '@site/src/helpers/get-side-label';
+import { motion } from '@site/src/helpers/reduced-motion';
 
 export type TalkDialogOptions = {
   slug: string;
@@ -31,16 +33,22 @@ type NeighborOptions = {
   onGo: (slug: string) => void;
 };
 
-type TabsOptions = {
+type SidesOptions = {
   sides: SideConfig[];
   active: string | null;
   onSelect: (id: string) => void;
 };
 
+type PanelStyle = CSSProperties & { '--ticker-travel': string };
+
 const EYEBROW =
   'm-0 text-[0.625rem]/none font-bold tracking-widest text-ink/55 uppercase';
 
 const INSET = 'px-[clamp(1.25rem,4vw,3rem)]';
+
+const PANEL = 'talk-side';
+
+const FLIP = { full: '0.75rem', reduced: '0.5rem' };
 
 const TALKS = pathOf('talks');
 
@@ -106,29 +114,63 @@ const Neighbor = ({ slug, direction, onGo }: NeighborOptions): ReactNode => {
   );
 };
 
-const Tabs = ({ sides, active, onSelect }: TabsOptions): ReactNode => (
-  <div
-    role='tablist'
-    aria-label='Seções da palestra'
-    className='flex max-w-full flex-wrap gap-1 self-start rounded-xl border border-ink/12 bg-ink/3 p-1'
-  >
-    {sides.map(({ id, label }) => (
-      <button
-        key={id}
-        type='button'
-        role='tab'
-        aria-selected={active === id}
-        onClick={() => onSelect(id)}
-        className={clsx(
-          'cursor-pointer appearance-none rounded-lg border-0 px-3.5 py-1.5 text-[0.8125rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-[color,background-color,box-shadow] duration-200 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
-          active === id
-            ? 'bg-accent/15 text-ink shadow-[inset_0_0_0_1px_rgb(122_119_255_/_0.5)]'
-            : 'bg-transparent text-ink/60 hover:text-ink'
-        )}
-      >
-        {label}
-      </button>
-    ))}
+const Sides = ({ sides, active, onSelect }: SidesOptions): ReactNode => (
+  <div className='flex flex-col gap-2.5'>
+    <p
+      id={`${PANEL}-choice`}
+      className={`${EYEBROW} flex items-center gap-1.5`}
+    >
+      <Pen className='size-3 shrink-0' aria-hidden='true' />
+      Escolha o lado da palestra
+    </p>
+
+    <div
+      role='tablist'
+      aria-labelledby={`${PANEL}-choice`}
+      className='flex max-w-full flex-wrap gap-2'
+    >
+      {sides.map(({ id, label, description }, index) => {
+        const selected = active === id;
+
+        return (
+          <button
+            key={id}
+            type='button'
+            role='tab'
+            aria-selected={selected}
+            aria-controls={PANEL}
+            onClick={() => onSelect(id)}
+            className={clsx(
+              'flex min-w-0 flex-1 basis-36 cursor-pointer appearance-none flex-col gap-1 rounded-2xl border px-3.5 py-3 text-left transition-[border-color,background-color,box-shadow,translate,scale] duration-250 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.99]',
+              selected
+                ? 'border-accent/50 bg-accent/12 shadow-[inset_0_1px_0_rgb(255_255_255_/_0.45),0_10px_24px_-16px_rgb(122_119_255_/_0.6)]'
+                : 'border-ink/10 bg-paper/70 hover:-translate-y-0.5 hover:border-ink/25 hover:bg-paper'
+            )}
+          >
+            <span
+              className={clsx(
+                `${EYEBROW} flex items-center gap-1`,
+                selected ? 'text-accent' : 'text-ink/55'
+              )}
+            >
+              Lado {getSideLabel(index)}
+              <CassetteTape
+                className='size-3.5 -translate-y-px'
+                aria-hidden='true'
+              />
+            </span>
+            <span className='text-sm/tight font-semibold text-ink'>
+              {label}
+            </span>
+            {description && (
+              <span className='text-[0.8125rem]/normal text-ink/70 text-pretty'>
+                {description}
+              </span>
+            )}
+          </button>
+        );
+      })}
+    </div>
   </div>
 );
 
@@ -181,6 +223,8 @@ export const TalkDialog = ({
   );
 
   const label = subject?.title ?? 'Palestra';
+
+  const flip: PanelStyle = { '--ticker-travel': motion(FLIP) };
 
   const go = (target: string): void =>
     history.replace(`${TALKS}${target}/`, history.location.state);
@@ -236,7 +280,7 @@ export const TalkDialog = ({
               {subject && <p className={EYEBROW}>{subject.role}</p>}
 
               {talk && talk.sides.length > 0 && (
-                <Tabs sides={talk.sides} active={side} onSelect={setSide} />
+                <Sides sides={talk.sides} active={side} onSelect={setSide} />
               )}
             </div>
 
@@ -271,7 +315,13 @@ export const TalkDialog = ({
               <ViewerContext.Provider value={setGallery}>
                 <SideContext.Provider value={sides}>
                   <MDXProvider components={components}>
-                    <div className='flex flex-col gap-4 [&_hr]:m-0 [&_hr]:h-px [&_hr]:border-0 [&_hr]:bg-ink/10'>
+                    <div
+                      key={side}
+                      id={PANEL}
+                      role='tabpanel'
+                      style={flip}
+                      className='flex animate-ticker flex-col gap-4 [&_hr]:m-0 [&_hr]:h-px [&_hr]:border-0 [&_hr]:bg-ink/10'
+                    >
                       <talk.Content />
                     </div>
                   </MDXProvider>

@@ -1,7 +1,3 @@
-/**
- * Projects are automatically loaded from `src/projects` and use the `default` exported component.
- */
-
 import type { ReactNode } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
