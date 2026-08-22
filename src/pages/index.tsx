@@ -23,11 +23,11 @@ import {
   textures,
   warm,
 } from '@site/src/components/Home/slides';
+import { partnersDialog } from '@site/src/components/Home/stages';
 import { Tint } from '@site/src/components/Home/Tint';
 import { useSlideshow } from '@site/src/components/Home/useSlideshow';
 import { useSpots } from '@site/src/components/Home/useSpots';
 import { Name } from '@site/src/components/Name';
-import { PartnersDialog } from '@site/src/components/Partners/Dialog';
 import { srcset } from '@site/src/components/Picture';
 import { Progress } from '@site/src/components/Progress';
 import interLatin from '@site/src/fonts/inter-latin.woff2';
@@ -96,18 +96,26 @@ export default (): ReactNode => {
   const flow = align === 'left' && 'max-lg:inline-block';
   const tint: PageStyle = { '--tint': color ?? hill };
 
-  const openPartners = useCallback(() => setPartners(true), []);
+  const openPartners = useCallback(() => {
+    if (partnersDialog.gate.ready()) return setPartners(true);
+
+    partnersDialog.gate.load().then(
+      () => setPartners(true),
+      () => undefined
+    );
+  }, []);
 
   const closePartners = useCallback(() => setPartners(false), []);
 
   useEffect(() => {
-    if (new URLSearchParams(search).has('partners')) setPartners(true);
-  }, [search]);
+    if (new URLSearchParams(search).has('partners')) openPartners();
+  }, [openPartners, search]);
 
   useEffect(() => {
     const warmUp = () => {
       todayInBrazil();
       warm();
+      partnersDialog.gate.load().catch(() => undefined);
     };
 
     if (typeof window.requestIdleCallback !== 'function') {
@@ -352,7 +360,7 @@ export default (): ReactNode => {
         )}
       </div>
 
-      {partners && <PartnersDialog onClose={closePartners} />}
+      {partners && <partnersDialog.View onClose={closePartners} />}
     </>
   );
 };

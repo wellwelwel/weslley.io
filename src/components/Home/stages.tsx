@@ -67,3 +67,9 @@ export const star = deferred(() =>
     /* webpackChunkName: "star", webpackPrefetch: true */ '@site/src/components/Star'
   ).then((module) => module.Star)
 );
+
+export const partnersDialog = deferred(() =>
+  import(
+    /* webpackChunkName: "partners", webpackPrefetch: true */ '@site/src/components/Partners/Dialog'
+  ).then((module) => module.PartnersDialog)
+);
