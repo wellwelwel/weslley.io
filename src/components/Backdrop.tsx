@@ -11,6 +11,8 @@ export type BackdropOptions = {
   opacity?: number;
   /** Fetch priority of the active layer, for stacks that must yield bandwidth. */
   priority?: 'high' | 'low' | 'auto';
+  /** Candidate width hint, so layers that only ever blur can pick a smaller one. */
+  sizes?: string;
 };
 
 const HIDDEN = { opacity: 0 };
@@ -22,6 +24,7 @@ export const Backdrop = memo(
     className,
     opacity = 1,
     priority = 'high',
+    sizes = '100vw',
   }: BackdropOptions): ReactNode => {
     const shown = { opacity };
 
@@ -31,7 +34,7 @@ export const Backdrop = memo(
         src={src}
         alt=''
         aria-hidden='true'
-        sizes='100vw'
+        sizes={sizes}
         decoding='async'
         fetchPriority={src === active ? priority : 'low'}
         deferred={src !== active}

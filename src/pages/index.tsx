@@ -49,6 +49,8 @@ const grain = opening && srcset(opening, 'avif');
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
+const BLURRED_SIZES = '40vw';
+
 const THEMES: Record<Theme, string> = {
   light: '',
   dark: '[--color-ink:#f0f4ff] [--color-paper:#0e0927]',
@@ -181,12 +183,14 @@ export default (): ReactNode => {
           sources={fallbackBackgrounds}
           active={background ?? defaultBackground}
           className={`fixed ${BLURRED}`}
+          sizes={BLURRED_SIZES}
         />
 
         <Backdrop
           sources={backgrounds}
           active={background}
           className={`fixed object-bottom-right ${BLURRED}`}
+          sizes={BLURRED_SIZES}
         />
 
         {Scene && <Scene />}
