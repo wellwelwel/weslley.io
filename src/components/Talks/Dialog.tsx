@@ -9,6 +9,7 @@ import clsx from 'clsx';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import { MONTHS } from '@site/src/components/Agenda/timeline';
 import { Dialog } from '@site/src/components/Dialog';
+import { Parallax } from '@site/src/components/Parallax';
 import { Picture } from '@site/src/components/Picture';
 import { SideContext } from '@site/src/components/Side/context';
 import { talks } from '@site/src/components/Talks/catalog';
@@ -133,41 +134,59 @@ export const TalkDialog = ({
       ) : (
         <div className='flex min-h-0 flex-1 flex-col'>
           <header
-            className={`flex shrink-0 flex-col gap-4 ${INSET} pt-[clamp(1.25rem,4vw,3rem)] pr-16 pb-4`}
+            className={`grid shrink-0 gap-5 ${INSET} pt-[clamp(1.25rem,4vw,3rem)] pr-16 pb-4 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-start`}
           >
-            {subject && (
-              <div className='flex items-center gap-3'>
-                <Picture
-                  src={subject.logo ?? AVATAR}
-                  alt=''
-                  sizes='3rem'
+            <div className='flex min-w-0 flex-col gap-4'>
+              {subject && (
+                <div className='flex items-center gap-3'>
+                  <Picture
+                    src={subject.logo ?? AVATAR}
+                    alt=''
+                    sizes='3rem'
+                    decoding='async'
+                    draggable={false}
+                    className='size-12 shrink-0 rounded-xl object-contain'
+                  />
+
+                  <div className='flex min-w-0 flex-col gap-1'>
+                    <p className='m-0 truncate text-base/tight font-semibold text-ink'>
+                      {subject.event}
+                    </p>
+                    <p className='m-0 truncate text-[0.8125rem]/normal font-medium text-ink/55'>
+                      {[subject.venue, longDate(subject.date)]
+                        .filter(Boolean)
+                        .join(' · ')}
+                    </p>
+                  </div>
+                </div>
+              )}
+
+              <h2 className='m-0 text-[clamp(1.375rem,3vw,1.875rem)]/[1.2] font-bold tracking-[-0.02em] text-ink text-balance'>
+                {label}
+              </h2>
+
+              {subject && <p className={EYEBROW}>{subject.role}</p>}
+
+              {talk && talk.sides.length > 0 && (
+                <Tabs sides={talk.sides} active={side} onSelect={setSide} />
+              )}
+            </div>
+
+            <Parallax
+              tiltMaxAngleX={0}
+              perspective={1920}
+              className='aspect-video w-full overflow-hidden rounded-2xl bg-ink/6 shadow-[0_16px_40px_-20px_rgb(14_9_39_/_0.5)] max-lg:order-first lg:w-80 xl:w-96'
+            >
+              {talk && (
+                <img
+                  src={talk.banner}
+                  alt={label}
                   decoding='async'
                   draggable={false}
-                  className='size-12 shrink-0 rounded-xl object-contain'
+                  className='size-full object-cover'
                 />
-
-                <div className='flex min-w-0 flex-col gap-1'>
-                  <p className='m-0 truncate text-base/tight font-semibold text-ink'>
-                    {subject.event}
-                  </p>
-                  <p className='m-0 truncate text-[0.8125rem]/normal font-medium text-ink/55'>
-                    {[subject.venue, longDate(subject.date)]
-                      .filter(Boolean)
-                      .join(' · ')}
-                  </p>
-                </div>
-              </div>
-            )}
-
-            <h2 className='m-0 text-[clamp(1.375rem,3vw,1.875rem)]/[1.2] font-bold tracking-[-0.02em] text-ink text-balance'>
-              {label}
-            </h2>
-
-            {subject && <p className={EYEBROW}>{subject.role}</p>}
-
-            {talk && talk.sides.length > 0 && (
-              <Tabs sides={talk.sides} active={side} onSelect={setSide} />
-            )}
+              )}
+            </Parallax>
           </header>
 
           <div
