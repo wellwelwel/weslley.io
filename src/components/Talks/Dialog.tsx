@@ -60,6 +60,7 @@ const subjectOf = (slug: string) => slots.find(({ talk }) => talk === slug);
 
 const neighborsOf = (slug: string) => {
   const at = chronology.indexOf(slug);
+  if (at < 0) return { previous: undefined, next: undefined };
 
   return { previous: chronology[at - 1], next: chronology[at + 1] };
 };
@@ -222,7 +223,7 @@ export const TalkDialog = ({
     [side]
   );
 
-  const label = subject?.title ?? 'Palestra';
+  const label = subject?.title ?? talk?.title ?? 'Palestra';
 
   const flip: PanelStyle = { '--ticker-travel': motion(FLIP) };
 
@@ -289,7 +290,7 @@ export const TalkDialog = ({
               perspective={1920}
               className='aspect-video w-full overflow-hidden rounded-2xl bg-ink/6 shadow-[0_16px_40px_-20px_rgb(14_9_39_/_0.5)] max-lg:order-first lg:w-80 xl:w-96'
             >
-              {talk && (
+              {talk?.banner && (
                 <img
                   src={talk.banner}
                   alt={label}

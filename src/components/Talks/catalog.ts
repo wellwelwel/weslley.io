@@ -1,10 +1,12 @@
 import type { SideConfig } from '@site/src/@types/side';
 import type { ComponentType } from 'react';
+import { sources } from '@generated/mount-home/default/talks';
 
 export type Talk = {
   Content: ComponentType;
+  title: string | null;
   sides: SideConfig[];
-  banner: string;
+  banner: string | null;
 };
 
 type Module = {
@@ -12,9 +14,9 @@ type Module = {
   frontMatter: Record<string, unknown>;
 };
 
-type Source = {
+export type Source = {
   content: () => Promise<Module>;
-  banner: () => Promise<{ default: string }>;
+  banner?: () => Promise<{ default: string }>;
 };
 
 const isSide = (value: unknown): value is SideConfig =>
@@ -23,49 +25,27 @@ const isSide = (value: unknown): value is SideConfig =>
   'id' in value &&
   typeof value.id === 'string' &&
   'label' in value &&
-  typeof value.label === 'string';
+  typeof value.label === 'string' &&
+  (!('description' in value) || typeof value.description === 'string');
 
 const unwrap = async ({ content, banner }: Source): Promise<Talk> => {
   const [{ default: Content, frontMatter }, image] = await Promise.all([
     content(),
-    banner(),
+    banner?.(),
   ]);
-  const { sides } = frontMatter;
+  const { title, sides } = frontMatter;
 
   return {
     Content,
+    title: typeof title === 'string' ? title : null,
     sides: Array.isArray(sides) ? sides.filter(isSide) : [],
-    banner: image.default,
+    banner: image?.default ?? null,
   };
 };
 
-export const talks = new Map<string, () => Promise<Talk>>([
-  [
-    'codecon-summit-embrace-the-hacker-way',
-    () =>
-      unwrap({
-        content: () =>
-          import(
-            /* webpackChunkName: "talk-codecon-summit-2025" */ '@site/i18n/pt-BR/talks/2025/07/19/codecon-summit.mdx'
-          ),
-        banner: () =>
-          import(
-            /* webpackChunkName: "talk-codecon-summit-2025" */ '@site/i18n/pt-BR/talks/2025/07/19/banner.jpeg'
-          ),
-      }),
-  ],
-  [
-    'mvp-conf-2025-brasil',
-    () =>
-      unwrap({
-        content: () =>
-          import(
-            /* webpackChunkName: "talk-mvp-conf-2025" */ '@site/i18n/pt-BR/talks/2025/10/25/mvpconf.mdx'
-          ),
-        banner: () =>
-          import(
-            /* webpackChunkName: "talk-mvp-conf-2025" */ '@site/i18n/pt-BR/talks/2025/10/25/banner.jpeg'
-          ),
-      }),
-  ],
-]);
+export const talks = new Map(
+  [...sources].map(([slug, source]): [string, () => Promise<Talk>] => [
+    slug,
+    () => unwrap(source),
+  ])
+);

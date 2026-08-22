@@ -5,9 +5,8 @@ import type {
   RouteModules,
 } from '@docusaurus/types';
 import type { Preview, SlideId } from '../../src/components/Home/previews';
-import { resolve } from 'node:path';
+import { relative, resolve, sep } from 'node:path';
 import { pathOf, previews, ROOT } from '../../src/components/Home/previews';
-import { talks } from '../../src/components/Talks/catalog';
 import { downloadsLabel } from '../../src/helpers/downloads';
 import { stripMarkdown } from '../../src/helpers/strip-markdown';
 import { downloads } from '../../tools/downloads';
@@ -21,6 +20,7 @@ type Talk = {
   slug: string;
   title: string;
   description: string | null;
+  content: string;
   banner?: string;
 };
 
@@ -38,6 +38,29 @@ const describeTalks = (yearly: string): string =>
 const summarize = (description: string | null): string | null =>
   description && stripMarkdown(description).split('\n').join(' ');
 
+const routeSlug = (slug: string): string => slug.replace(/%/g, '');
+
+const aliased = (siteDir: string, file: string): string =>
+  `@site/${relative(siteDir, file).split(sep).join('/')}`;
+
+const lazy = (siteDir: string, file: string): string =>
+  `() => import(${JSON.stringify(aliased(siteDir, file))})`;
+
+const catalog = (talks: Talk[], siteDir: string): string =>
+  [
+    'export const sources = new Map([',
+    ...talks.map(({ slug, content, banner }) =>
+      [
+        `  [${JSON.stringify(slug)}, {`,
+        `    content: ${lazy(siteDir, content)},`,
+        ...(banner ? [`    banner: ${lazy(siteDir, banner)},`] : []),
+        '  }],',
+      ].join('\n')
+    ),
+    ']);',
+    '',
+  ].join('\n');
+
 export default (
   context: LoadContext,
   options: PluginOptions
@@ -51,20 +74,17 @@ export default (
     ]);
     const yearly = downloadsLabel(rolling);
 
-    const found = [...talks.keys()].map((slug) => {
-      const article = articles.find(
-        (candidate) => candidate.slug?.replace(/%/g, '') === slug
-      );
-
-      if (!article)
+    const found = articles.map((article): Talk => {
+      if (!article.slug)
         throw new Error(
-          `The talk "${slug}" has no MDX file under i18n/${currentLocale}/talks.`
+          `The talk "${article.title}" (${article.mdxPath}) has no slug.`
         );
 
       return {
-        slug,
+        slug: routeSlug(article.slug),
         title: article.title,
         description: summarize(article.description),
+        content: article.mdxPath,
         ...(article.socialPath && { banner: article.socialPath }),
       };
     });
@@ -77,6 +97,8 @@ export default (
     const localePrefix =
       i18n.currentLocale === i18n.defaultLocale ? '' : `/${i18n.currentLocale}`;
     const routes: RouteConfig[] = [];
+
+    await createData('talks.js', catalog(content.talks, context.siteDir));
 
     for (const id of Object.keys(previews) as SlideId[]) {
       const modules: RouteModules = {};
@@ -101,10 +123,10 @@ export default (
       });
     }
 
-    for (const { slug, banner, ...preview } of content.talks) {
+    for (const { slug, title, description, banner } of content.talks) {
       const data = await createData(
         `talk-${slug}.json`,
-        JSON.stringify(preview)
+        JSON.stringify({ title, description })
       );
       const modules: RouteModules = { preview: data };
 
