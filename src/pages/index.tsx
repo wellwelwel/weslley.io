@@ -32,6 +32,7 @@ import { Progress } from '@site/src/components/Progress';
 import interLatin from '@site/src/fonts/inter-latin.woff2';
 import noto800 from '@site/src/fonts/noto-sans-latin-800.woff2';
 import noto900 from '@site/src/fonts/noto-sans-latin-900.woff2';
+import { todayInBrazil } from '@site/src/helpers/today';
 
 type PageStyle = CSSProperties & { '--tint'?: string };
 
@@ -99,6 +100,18 @@ export default (): ReactNode => {
   useEffect(() => {
     if (new URLSearchParams(search).has('partners')) setPartners(true);
   }, [search]);
+
+  useEffect(() => {
+    if (typeof window.requestIdleCallback !== 'function') {
+      const handle = window.setTimeout(todayInBrazil, 1);
+
+      return () => window.clearTimeout(handle);
+    }
+
+    const handle = window.requestIdleCallback(todayInBrazil, { timeout: 1500 });
+
+    return () => window.cancelIdleCallback(handle);
+  }, []);
 
   const sections = useMemo<Section[]>(
     () =>

@@ -1,4 +1,5 @@
 import { slots } from '@site/src/components/Agenda/slots';
+import { todayInBrazil } from '@site/src/helpers/today';
 
 type Calendar = {
   day: string;
@@ -11,18 +12,45 @@ const DAY = 86_400_000;
 
 const PITCH = { inset: 32, least: 72, daily: 4, most: 128 };
 
-const formatters = {
-  monthLong: new Intl.DateTimeFormat('pt-BR', { month: 'long' }),
-  monthShort: new Intl.DateTimeFormat('pt-BR', { month: 'short' }),
-  weekday: new Intl.DateTimeFormat('pt-BR', { weekday: 'long' }),
-  /* en-CA prints dates as YYYY-MM-DD, the same shape the slots carry. */
-  brazil: new Intl.DateTimeFormat('en-CA', {
-    timeZone: 'America/Sao_Paulo',
-    year: 'numeric',
-    month: '2-digit',
-    day: '2-digit',
-  }),
-};
+export const MONTHS = [
+  'janeiro',
+  'fevereiro',
+  'março',
+  'abril',
+  'maio',
+  'junho',
+  'julho',
+  'agosto',
+  'setembro',
+  'outubro',
+  'novembro',
+  'dezembro',
+];
+
+export const BRIEFS = [
+  'jan',
+  'fev',
+  'mar',
+  'abr',
+  'mai',
+  'jun',
+  'jul',
+  'ago',
+  'set',
+  'out',
+  'nov',
+  'dez',
+];
+
+export const WEEKDAYS = [
+  'domingo',
+  'segunda-feira',
+  'terça-feira',
+  'quarta-feira',
+  'quinta-feira',
+  'sexta-feira',
+  'sábado',
+];
 
 const parse = (date: string): Date => {
   const [year, month, day] = date.split('-').map(Number);
@@ -36,9 +64,9 @@ const calendar = (date: string): Calendar => {
 
   return {
     day,
-    month: `${formatters.monthLong.format(when)} ${when.getFullYear()}`,
-    weekday: formatters.weekday.format(when),
-    brief: `${day} ${formatters.monthShort.format(when).replace('.', '')}`,
+    month: `${MONTHS[when.getMonth()]} ${when.getFullYear()}`,
+    weekday: WEEKDAYS[when.getDay()],
+    brief: `${day} ${BRIEFS[when.getMonth()]}`,
   };
 };
 
@@ -65,7 +93,7 @@ export const stations = times.reduce<number[]>(
 export const extent = stations[stations.length - 1] + PITCH.inset;
 
 export const upcomingIndex = (): number => {
-  const today = formatters.brazil.format(new Date());
+  const today = todayInBrazil();
   const nearest = slots.findIndex(({ date }) => date >= today);
 
   return nearest === -1 ? slots.length - 1 : nearest;
