@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["5863"],{2874(e,s,a){a.r(s),a.d(s,{default:()=>l});let l=a.p+"assets/images/banner-a1ee8c3ea3c1707a4c9858bc316d9190.png"}}]);

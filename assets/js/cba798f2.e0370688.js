@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["2864"],{959(e){e.exports=JSON.parse('{"title":"Dev Refer\xeancias","description":"\u{1F399}\uFE0F Palestra: Como se Tornar uma Refer\xeancia na \xc1rea Tech \u{1F4A1} Uma palestra que traz um aprendizado \xfanico sobre como gerar impacto e inspira\xe7\xe3o atrav\xe9s do que fazemos."}')}}]);
