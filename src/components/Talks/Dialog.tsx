@@ -1,3 +1,4 @@
+import type { Author, AuthorSocials } from '@site/src/@types/article';
 import type { SideConfig } from '@site/src/@types/side';
 import type { Talk } from '@site/src/components/Talks/catalog';
 import type { Gallery } from '@site/src/components/Talks/Viewer';
@@ -6,19 +7,21 @@ import { useEffect, useMemo, useState } from 'react';
 import { useHistory } from '@docusaurus/router';
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
-import { ArrowLeft, ArrowRight, CassetteTape, Pen } from 'lucide-react';
+import { ArrowLeft, ArrowRight, CassetteTape, Mic, Pen } from 'lucide-react';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import { MONTHS } from '@site/src/components/Agenda/timeline';
 import { Dialog } from '@site/src/components/Dialog';
 import { pathOf } from '@site/src/components/Home/previews';
 import { Parallax } from '@site/src/components/Parallax';
 import { Picture } from '@site/src/components/Picture';
+import { SafeLink } from '@site/src/components/SafeLink';
 import { SideContext } from '@site/src/components/Side/context';
 import { talks } from '@site/src/components/Talks/catalog';
 import { components } from '@site/src/components/Talks/Prose';
 import { Viewer, ViewerContext } from '@site/src/components/Talks/Viewer';
 import { getSideLabel } from '@site/src/helpers/get-side-label';
 import { motion } from '@site/src/helpers/reduced-motion';
+import { socialLinks } from '@site/src/helpers/social-links';
 
 export type TalkDialogOptions = {
   slug: string;
@@ -39,6 +42,12 @@ type SidesOptions = {
   onSelect: (id: string) => void;
 };
 
+type AuthorsOptions = {
+  authors: Author[];
+};
+
+type Network = keyof AuthorSocials;
+
 type PanelStyle = CSSProperties & { '--ticker-travel': string };
 
 const EYEBROW =
@@ -49,6 +58,15 @@ const INSET = 'px-[clamp(1.25rem,4vw,3rem)]';
 const PANEL = 'talk-side';
 
 const FLIP = { full: '0.75rem', reduced: '0.5rem' };
+
+const NETWORKS: Network[] = ['linkedin', 'github', 'instagram', 'youtube'];
+
+const PROFILES: Record<Network, (handle: string) => string> = {
+  linkedin: (handle) => `https://www.linkedin.com/in/${handle}/`,
+  github: (handle) => `https://github.com/${handle}`,
+  instagram: (handle) => `https://www.instagram.com/${handle}/`,
+  youtube: (handle) => `https://www.youtube.com/@${handle}`,
+};
 
 const TALKS = pathOf('talks');
 
@@ -112,6 +130,77 @@ const Neighbor = ({ slug, direction, onGo }: NeighborOptions): ReactNode => {
         {subject.title}
       </span>
     </button>
+  );
+};
+
+const Authors = ({ authors }: AuthorsOptions): ReactNode => {
+  const heading = authors.length > 1 ? 'Palestrantes' : 'Palestrante';
+
+  return (
+    <section aria-label={heading} className='flex flex-col gap-2.5'>
+      <p className={`${EYEBROW} flex items-center gap-1.5`}>
+        <Mic className='size-3 shrink-0' aria-hidden='true' />
+        {heading}
+      </p>
+
+      <div className='flex flex-wrap gap-3'>
+        {authors.map(({ name, title, url, image_url, socials }) => (
+          <article
+            key={name}
+            className='flex min-w-0 flex-1 basis-72 items-start gap-3 rounded-2xl border border-ink/10 bg-paper/70 px-4 py-3.5'
+          >
+            <Picture
+              src={image_url}
+              alt=''
+              sizes='2.5rem'
+              decoding='async'
+              draggable={false}
+              className='size-10 shrink-0 rounded-full object-cover'
+            />
+
+            <div className='flex min-w-0 flex-col gap-1'>
+              <SafeLink
+                to={url}
+                className='self-start text-sm/tight font-semibold text-ink underline decoration-ink/20 underline-offset-2 transition-colors duration-200 ease-swift hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+              >
+                {name}
+              </SafeLink>
+              <p className='m-0 text-[0.8125rem]/normal text-ink/70 text-pretty'>
+                {title}
+              </p>
+
+              <nav
+                aria-label={`Redes de ${name}`}
+                className='-ml-2.5 flex items-center'
+              >
+                {NETWORKS.flatMap((network) => {
+                  const handle = socials[network];
+                  if (!handle) return [];
+
+                  const { name: label, Icon, tone } = socialLinks[network];
+
+                  return (
+                    <SafeLink
+                      key={network}
+                      to={PROFILES[network](encodeURIComponent(handle))}
+                      aria-label={label}
+                      draggable={false}
+                      style={{ color: tone }}
+                      className='group flex size-10 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+                    >
+                      <Icon
+                        aria-hidden='true'
+                        className='size-4 transition-[scale,translate] duration-250 ease-swift group-hover:-translate-y-0.5 group-hover:scale-115'
+                      />
+                    </SafeLink>
+                  );
+                })}
+              </nav>
+            </div>
+          </article>
+        ))}
+      </div>
+    </section>
   );
 };
 
@@ -314,6 +403,12 @@ export const TalkDialog = ({
               </p>
             ) : talk ? (
               <ViewerContext.Provider value={setGallery}>
+                {talk.authors.length > 0 && (
+                  <div className='mb-5'>
+                    <Authors authors={talk.authors} />
+                  </div>
+                )}
+
                 <SideContext.Provider value={sides}>
                   <MDXProvider components={components}>
                     <div

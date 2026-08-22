@@ -4,13 +4,16 @@ import type {
   RouteConfig,
   RouteModules,
 } from '@docusaurus/types';
+import type { Author, ProcessedArticle } from '../../src/@types/article';
 import type { Preview, SlideId } from '../../src/components/Home/previews';
 import { relative, resolve, sep } from 'node:path';
+import { slots } from '../../src/components/Agenda/slots';
 import { pathOf, previews, ROOT } from '../../src/components/Home/previews';
 import { downloadsLabel } from '../../src/helpers/downloads';
 import { stripMarkdown } from '../../src/helpers/strip-markdown';
 import { downloads } from '../../tools/downloads';
 import { findArticles } from '../../tools/find-articles';
+import { loadAuthors } from '../../tools/load-authors';
 
 type PluginOptions = {
   pluginName: string;
@@ -21,6 +24,7 @@ type Talk = {
   title: string;
   description: string | null;
   content: string;
+  authors: Author[];
   banner?: string;
 };
 
@@ -49,10 +53,11 @@ const lazy = (siteDir: string, file: string): string =>
 const catalog = (talks: Talk[], siteDir: string): string =>
   [
     'export const sources = new Map([',
-    ...talks.map(({ slug, content, banner }) =>
+    ...talks.map(({ slug, content, authors, banner }) =>
       [
         `  [${JSON.stringify(slug)}, {`,
         `    content: ${lazy(siteDir, content)},`,
+        `    authors: ${JSON.stringify(authors)},`,
         ...(banner ? [`    banner: ${lazy(siteDir, banner)},`] : []),
         '  }],',
       ].join('\n')
@@ -68,11 +73,23 @@ export default (
   name: options.pluginName,
   loadContent: async () => {
     const { currentLocale } = context.i18n;
-    const [articles, { rolling }] = await Promise.all([
+    const [articles, { rolling }, authors] = await Promise.all([
       findArticles(resolve(`./i18n/${currentLocale}/talks`)),
       downloads(),
+      loadAuthors(currentLocale),
     ]);
     const yearly = downloadsLabel(rolling);
+
+    const credit = (article: ProcessedArticle, name: string): Author => {
+      const author = authors[name];
+
+      if (!author)
+        throw new Error(
+          `The talk "${article.title}" (${article.mdxPath}) credits "${name}", who is missing from i18n/${currentLocale}/articles/authors.yml.`
+        );
+
+      return author;
+    };
 
     const found = articles.map((article): Talk => {
       if (!article.slug)
@@ -85,9 +102,18 @@ export default (
         title: article.title,
         description: summarize(article.description),
         content: article.mdxPath,
+        authors: article.authors.map((name) => credit(article, name)),
         ...(article.socialPath && { banner: article.socialPath }),
       };
     });
+
+    const known = new Set(found.map(({ slug }) => slug));
+    const orphan = slots.find(({ talk }) => talk && !known.has(talk));
+
+    if (orphan)
+      throw new Error(
+        `The agenda slot "${orphan.event}" (${orphan.date}) points to the talk "${orphan.talk}", which has no MDX file under i18n/${currentLocale}/talks.`
+      );
 
     return { yearly, talks: found };
   },
