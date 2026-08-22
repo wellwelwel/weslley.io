@@ -12,11 +12,8 @@ import { motion } from '@site/src/helpers/reduced-motion';
 export type DialogOptions = {
   open: boolean;
   label: string;
-  /** Asks to close: Escape, the backdrop, or the close button. */
   onClose: () => void;
-  /** Fires once the exit animation has finished. */
   onClosed: () => void;
-  /** A filling dialog takes the viewport instead of sizing to its content. */
   fill?: boolean;
   children: ReactNode;
 };
@@ -37,9 +34,7 @@ const SIZES = {
   fill: 'h-full max-w-7xl',
 };
 
-/* Every open dialog rests on the same inert page, so the page only wakes up
-   when the last one leaves. */
-let depth = 0;
+let openDialogs = 0;
 
 const page = (): HTMLElement | null => document.getElementById('__docusaurus');
 
@@ -47,15 +42,15 @@ const hold = (): (() => void) => {
   const previousOverflow = document.body.style.overflow;
   const opener = document.activeElement;
 
-  depth += 1;
+  openDialogs += 1;
   document.body.style.overflow = 'hidden';
   page()?.setAttribute('inert', '');
 
   return () => {
-    depth -= 1;
+    openDialogs -= 1;
     document.body.style.overflow = previousOverflow;
 
-    if (depth === 0) page()?.removeAttribute('inert');
+    if (openDialogs === 0) page()?.removeAttribute('inert');
     if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
   };
 };

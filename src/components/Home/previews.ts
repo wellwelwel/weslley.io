@@ -1,4 +1,3 @@
-/** What a slide says when its link is shared. */
 export type Preview = {
   title: string;
   description?: string;
@@ -22,8 +21,6 @@ export const images = {
   velvet: '/img/plush/velvet-texture.png',
 };
 
-/** Every slide by id. The root keeps the site's own title and description,
-    and the agenda shares under the name the talks listing always had. */
 export const previews = {
   'open-source': { title: 'Open Source' },
   talks: { title: 'Palestras', image: images.talks },

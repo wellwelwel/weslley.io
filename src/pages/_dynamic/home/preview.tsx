@@ -9,14 +9,13 @@ type Preview = {
 
 type PreviewOptions = {
   preview?: Preview;
-  /** A talk's own banner, resolved by the bundler from its MDX folder. */
-  social?: string;
+  banner?: string;
 };
 
-export default ({ preview, social }: PreviewOptions): ReactNode => {
+export default ({ preview, banner }: PreviewOptions): ReactNode => {
   if (!preview) return null;
 
-  const image = social ?? preview.image;
+  const image = banner ?? preview.image;
 
   return (
     <PageMetadata

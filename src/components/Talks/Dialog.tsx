@@ -1,14 +1,16 @@
 import type { SideConfig } from '@site/src/@types/side';
-import type { Slot } from '@site/src/components/Agenda/slots';
 import type { Talk } from '@site/src/components/Talks/catalog';
 import type { Gallery } from '@site/src/components/Talks/Viewer';
 import type { ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
+import { useHistory } from '@docusaurus/router';
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
+import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import { MONTHS } from '@site/src/components/Agenda/timeline';
 import { Dialog } from '@site/src/components/Dialog';
+import { pathOf } from '@site/src/components/Home/previews';
 import { Parallax } from '@site/src/components/Parallax';
 import { Picture } from '@site/src/components/Picture';
 import { SideContext } from '@site/src/components/Side/context';
@@ -18,11 +20,15 @@ import { Viewer, ViewerContext } from '@site/src/components/Talks/Viewer';
 
 export type TalkDialogOptions = {
   slug: string;
-  /** The card hands its slot over, a deep link looks it up. */
-  slot: Slot | null;
   open: boolean;
   onClose: () => void;
   onClosed: () => void;
+};
+
+type NeighborOptions = {
+  slug: string;
+  direction: 'previous' | 'next';
+  onGo: (slug: string) => void;
 };
 
 type TabsOptions = {
@@ -36,10 +42,68 @@ const EYEBROW =
 
 const INSET = 'px-[clamp(1.25rem,4vw,3rem)]';
 
+const TALKS = pathOf('talks');
+
+const chronology = slots.flatMap(({ talk }) =>
+  talk && talks.has(talk) ? [talk] : []
+);
+
+const subjectOf = (slug: string) => slots.find(({ talk }) => talk === slug);
+
+const neighborsOf = (slug: string) => {
+  const at = chronology.indexOf(slug);
+
+  return { previous: chronology[at - 1], next: chronology[at + 1] };
+};
+
 const longDate = (date: string): string => {
   const [year, month, day] = date.split('-').map(Number);
 
   return `${day} de ${MONTHS[month - 1]} de ${year}`;
+};
+
+const Neighbor = ({ slug, direction, onGo }: NeighborOptions): ReactNode => {
+  const subject = subjectOf(slug);
+  if (!subject) return null;
+
+  const ahead = direction === 'next';
+
+  return (
+    <button
+      type='button'
+      onClick={() => onGo(slug)}
+      className={clsx(
+        'group/neighbor flex cursor-pointer appearance-none flex-col gap-2 rounded-2xl border border-ink/10 bg-paper/70 px-4 py-3.5 transition-[border-color,background-color,scale] duration-250 ease-swift hover:border-ink/25 hover:bg-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-[0.99]',
+        ahead ? 'items-end text-right sm:col-start-2' : 'items-start text-left'
+      )}
+    >
+      <span className={`${EYEBROW} flex items-center gap-1 text-accent`}>
+        {ahead ? (
+          <>
+            Próxima
+            <ArrowRight
+              className='size-3 transition-transform duration-300 ease-swift group-hover/neighbor:translate-x-0.5'
+              aria-hidden='true'
+            />
+          </>
+        ) : (
+          <>
+            <ArrowLeft
+              className='size-3 transition-transform duration-300 ease-swift group-hover/neighbor:-translate-x-0.5'
+              aria-hidden='true'
+            />
+            Anterior
+          </>
+        )}
+      </span>
+      <span className='text-sm/tight font-semibold text-ink'>
+        {subject.event}
+      </span>
+      <span className='line-clamp-2 text-[0.8125rem]/normal text-ink/70 text-pretty'>
+        {subject.title}
+      </span>
+    </button>
+  );
 };
 
 const Tabs = ({ sides, active, onSelect }: TabsOptions): ReactNode => (
@@ -70,12 +134,13 @@ const Tabs = ({ sides, active, onSelect }: TabsOptions): ReactNode => (
 
 export const TalkDialog = ({
   slug,
-  slot,
   open,
   onClose,
   onClosed,
 }: TalkDialogOptions): ReactNode => {
-  const subject = slot ?? slots.find(({ talk }) => talk === slug) ?? null;
+  const history = useHistory();
+  const subject = subjectOf(slug) ?? null;
+  const { previous, next } = neighborsOf(slug);
   const [talk, setTalk] = useState<Talk | null>(null);
   const [failed, setFailed] = useState(false);
   const [side, setSide] = useState<string | null>(null);
@@ -116,6 +181,9 @@ export const TalkDialog = ({
   );
 
   const label = subject?.title ?? 'Palestra';
+
+  const go = (target: string): void =>
+    history.replace(`${TALKS}${target}/`, history.location.state);
 
   return (
     <Dialog
@@ -208,6 +276,24 @@ export const TalkDialog = ({
                     </div>
                   </MDXProvider>
                 </SideContext.Provider>
+
+                {(previous || next) && (
+                  <nav
+                    aria-label='Outras palestras'
+                    className='mt-8 grid gap-3 sm:grid-cols-2'
+                  >
+                    {previous && (
+                      <Neighbor
+                        slug={previous}
+                        direction='previous'
+                        onGo={go}
+                      />
+                    )}
+                    {next && (
+                      <Neighbor slug={next} direction='next' onGo={go} />
+                    )}
+                  </nav>
+                )}
               </ViewerContext.Provider>
             ) : (
               <div

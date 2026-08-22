@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory, useLocation } from '@docusaurus/router';
+import useIsomorphicLayoutEffect from '@docusaurus/useIsomorphicLayoutEffect';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -19,9 +20,7 @@ const TOLERANCE = 10;
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
-/* A talk path sits under the talks slide, so the longest path that starts the
-   pathname names the slide. */
-const indexOf = (paths: readonly string[], pathname: string): number =>
+const longestPrefix = (paths: readonly string[], pathname: string): number =>
   paths.reduce(
     (found, path, index) =>
       pathname.startsWith(path) && path.length > paths[found].length
@@ -39,7 +38,6 @@ export const useSlideshow = (
   const [active, setActive] = useState(0);
   const current = useRef(0);
   const locked = useRef(false);
-  const opening = useRef(true);
   const unlock = useRef<gsap.core.Tween | null>(null);
 
   const activate = useCallback((index: number, after?: () => void) => {
@@ -89,17 +87,8 @@ export const useSlideshow = (
     []
   );
 
-  useEffect(() => {
-    /* The keyboard listener is a layout effect, so it can answer a press before
-       this passive one reads the path. A press already in flight owns the slide
-       and pushes its own path, so the opening alignment steps aside for it. */
-    const first = opening.current;
-
-    opening.current = false;
-
-    if (first && current.current !== 0) return;
-
-    activate(indexOf(paths, pathname));
+  useIsomorphicLayoutEffect(() => {
+    activate(longestPrefix(paths, pathname));
   }, [activate, pathname, paths]);
 
   useGSAP(

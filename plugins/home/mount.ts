@@ -21,7 +21,7 @@ type Talk = {
   slug: string;
   title: string;
   description: string | null;
-  social?: string;
+  banner?: string;
 };
 
 type Content = {
@@ -32,14 +32,8 @@ type Content = {
 const HOME = '@site/src/pages/_dynamic/home/index.tsx';
 const PREVIEW = '@site/src/pages/_dynamic/home/preview.tsx';
 
-/** What the talks listing page always said, with the downloads of the build. */
 const describeTalks = (yearly: string): string =>
   `Com mais de ${yearly} de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.`;
-
-/** The talk pages always dropped the percent signs of an encoded slug, and the
-    links out there carry that shape. */
-const slugOf = (slug: string | undefined): string =>
-  slug?.replace(/%/g, '') ?? '';
 
 const summarize = (description: string | null): string | null =>
   description && stripMarkdown(description).split('\n').join(' ');
@@ -59,7 +53,7 @@ export default (
 
     const found = [...talks.keys()].map((slug) => {
       const article = articles.find(
-        (candidate) => slugOf(candidate.slug) === slug
+        (candidate) => candidate.slug?.replace(/%/g, '') === slug
       );
 
       if (!article)
@@ -71,7 +65,7 @@ export default (
         slug,
         title: article.title,
         description: summarize(article.description),
-        ...(article.socialPath && { social: article.socialPath }),
+        ...(article.socialPath && { banner: article.socialPath }),
       };
     });
 
@@ -107,14 +101,14 @@ export default (
       });
     }
 
-    for (const { slug, social, ...preview } of content.talks) {
+    for (const { slug, banner, ...preview } of content.talks) {
       const data = await createData(
         `talk-${slug}.json`,
         JSON.stringify(preview)
       );
       const modules: RouteModules = { preview: data };
 
-      if (social) modules.social = social;
+      if (banner) modules.banner = banner;
 
       routes.push({
         path: `${localePrefix}${pathOf('talks')}${slug}`,

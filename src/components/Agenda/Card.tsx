@@ -26,7 +26,7 @@ type SwapOptions = {
   className?: string;
 };
 
-export type TalkOpener = (slug: string, slot: Slot) => void;
+export type TalkOpener = (slug: string) => void;
 
 export type CardOptions = {
   slot: Slot;
@@ -58,8 +58,7 @@ const FLIGHT =
 const ACTION =
   'relative flex size-7.5 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] transition-[background-color,color,opacity,scale] duration-250 ease-swift after:absolute after:-inset-1.25 hover:bg-[var(--tone)] hover:text-paper focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95';
 
-/** Room the footer keeps clear for the corner actions, by their count. */
-const CLEARANCE = ['', 'pr-10.5', 'pr-20.5'];
+const CLEARANCE: Record<number, string> = { 1: 'pr-10.5', 2: 'pr-20.5' };
 
 const LAUNCH = {
   leave: `${FLIGHT} size-4 group-hover/launch:translate-x-[120%] group-hover/launch:translate-y-[-120%]`,
@@ -261,7 +260,7 @@ export const Card = ({
                 {talk && (
                   <button
                     type='button'
-                    onClick={() => onTalk(talk, slot)}
+                    onClick={() => onTalk(talk)}
                     tabIndex={center ? undefined : -1}
                     aria-haspopup='dialog'
                     aria-label='Sobre a palestra'

@@ -14,7 +14,6 @@ export type Slot = {
   address?: string;
   title: string;
   role: string;
-  /** Slug of the talk page the card opens as a dialog. */
   talk?: string;
 };
 

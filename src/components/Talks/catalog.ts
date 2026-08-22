@@ -39,7 +39,6 @@ const unwrap = async ({ content, banner }: Source): Promise<Talk> => {
   };
 };
 
-/** Keyed by the slug the talk pages always had, so the old links keep working. */
 export const talks = new Map<string, () => Promise<Talk>>([
   [
     'codecon-summit-embrace-the-hacker-way',

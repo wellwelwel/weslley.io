@@ -1,5 +1,4 @@
 import type { TalkOpener } from '@site/src/components/Agenda/Card';
-import type { Slot } from '@site/src/components/Agenda/slots';
 import type { Section } from '@site/src/components/Header';
 import type { Theme } from '@site/src/components/Home/slides';
 import type { CSSProperties, ReactNode } from 'react';
@@ -77,12 +76,10 @@ const TALK = `${TALKS}:slug/`;
 const talkOf = (pathname: string): string | null =>
   matchPath<Params>(pathname, { path: TALK, exact: true })?.params.slug ?? null;
 
-/* Opening a talk from a card leaves this mark on the entry it pushes, so
-   closing knows whether to step back or to rewrite a deep link. */
-const MARK = { talk: true };
+const FROM_CARD = { origin: 'card' };
 
-const marked = (state: unknown): boolean =>
-  typeof state === 'object' && state !== null && 'talk' in state;
+const openedFromCard = (state: unknown): boolean =>
+  typeof state === 'object' && state !== null && 'origin' in state;
 
 const THEMES: Record<Theme, string> = {
   light: '',
@@ -100,7 +97,6 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const { pathname, search } = useLocation();
   const talk = talkOf(pathname);
   const [shown, setShown] = useState<string | null>(null);
-  const [slot, setSlot] = useState<Slot | null>(null);
   const [partners, setPartners] = useState(false);
   const [partnersMounted, setPartnersMounted] = useState(false);
   const [menu, setMenu] = useState(false);
@@ -152,26 +148,26 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const settlePartners = useCallback(() => setPartnersMounted(false), []);
 
   const openTalk = useCallback<TalkOpener>(
-    (slug, origin) => {
-      setSlot(origin);
-      history.push(`${TALKS}${slug}/`, MARK);
-    },
+    (slug) => history.push(`${TALKS}${slug}/`, FROM_CARD),
     [history]
   );
 
   const closeTalk = useCallback(() => {
-    if (marked(history.location.state)) return history.goBack();
+    if (openedFromCard(history.location.state)) return history.goBack();
 
     history.replace(TALKS);
   }, [history]);
 
-  const settleTalk = useCallback(() => {
-    setShown(null);
-    setSlot(null);
-  }, []);
+  const settleTalk = useCallback(() => setShown(null), []);
 
   useEffect(() => {
-    if (talk === null || shown !== null) return;
+    if (talk === null) return;
+
+    if (shown !== null) {
+      if (talk !== shown && talkDialog.gate.ready()) setShown(talk);
+
+      return;
+    }
 
     let stale = false;
 
@@ -461,7 +457,6 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
       {shown && (
         <talkDialog.View
           slug={shown}
-          slot={slot}
           open={talk === shown}
           onClose={closeTalk}
           onClosed={settleTalk}
