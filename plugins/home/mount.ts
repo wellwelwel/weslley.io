@@ -24,6 +24,7 @@ type Talk = {
   title: string;
   description: string | null;
   content: string;
+  counter: string;
   authors: Author[];
   banner?: string;
 };
@@ -53,10 +54,11 @@ const lazy = (siteDir: string, file: string): string =>
 const catalog = (talks: Talk[], siteDir: string): string =>
   [
     'export const sources = new Map([',
-    ...talks.map(({ slug, content, authors, banner }) =>
+    ...talks.map(({ slug, content, counter, authors, banner }) =>
       [
         `  [${JSON.stringify(slug)}, {`,
         `    content: ${lazy(siteDir, content)},`,
+        `    counter: ${JSON.stringify(counter)},`,
         `    authors: ${JSON.stringify(authors)},`,
         ...(banner ? [`    banner: ${lazy(siteDir, banner)},`] : []),
         '  }],',
@@ -102,6 +104,7 @@ export default (
         title: article.title,
         description: summarize(article.description),
         content: article.mdxPath,
+        counter: decodeURIComponent(article.slug),
         authors: article.authors.map((name) => credit(article, name)),
         ...(article.socialPath && { banner: article.socialPath }),
       };

@@ -5,9 +5,17 @@ import type { Gallery } from '@site/src/components/Talks/Viewer';
 import type { CSSProperties, ReactNode } from 'react';
 import { useEffect, useMemo, useState } from 'react';
 import { useHistory } from '@docusaurus/router';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { MDXProvider } from '@mdx-js/react';
 import clsx from 'clsx';
-import { ArrowLeft, ArrowRight, CassetteTape, Mic, Pen } from 'lucide-react';
+import {
+  ArrowLeft,
+  ArrowRight,
+  CassetteTape,
+  Eye,
+  Mic,
+  Pen,
+} from 'lucide-react';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import { MONTHS } from '@site/src/components/Agenda/timeline';
 import { Dialog } from '@site/src/components/Dialog';
@@ -48,6 +56,12 @@ type AuthorsOptions = {
 
 type Network = keyof AuthorSocials;
 
+type Count = number | 'pending' | 'unavailable';
+
+type ViewsOptions = {
+  count: Count;
+};
+
 type PanelStyle = CSSProperties & { '--ticker-travel': string };
 
 const EYEBROW =
@@ -58,6 +72,8 @@ const INSET = 'px-[clamp(1.25rem,4vw,3rem)]';
 const PANEL = 'talk-side';
 
 const FLIP = { full: '0.75rem', reduced: '0.5rem' };
+
+const NUMBER = new Intl.NumberFormat('pt-BR');
 
 const NETWORKS: Network[] = ['linkedin', 'github', 'instagram', 'youtube'];
 
@@ -81,6 +97,40 @@ const neighborsOf = (slug: string) => {
   if (at < 0) return { previous: undefined, next: undefined };
 
   return { previous: chronology[at - 1], next: chronology[at + 1] };
+};
+
+const counterOf = (
+  fields: Record<string, unknown> | undefined
+): string | null => {
+  const api = fields?.COUNTTY_URL;
+
+  return fields?.showViewsCounter === true &&
+    typeof api === 'string' &&
+    api !== ''
+    ? api
+    : null;
+};
+
+const isViews = (value: unknown): value is { views: number } =>
+  typeof value === 'object' &&
+  value !== null &&
+  'views' in value &&
+  typeof value.views === 'number';
+
+const countView = async (api: string, counter: string): Promise<Count> => {
+  const url = new URL('/views', api);
+
+  url.searchParams.set('slug', counter);
+
+  try {
+    const data: unknown = await fetch(url, { cache: 'no-store' }).then(
+      (response) => response.json()
+    );
+
+    return isViews(data) ? data.views : 'unavailable';
+  } catch {
+    return 'unavailable';
+  }
 };
 
 const longDate = (date: string): string => {
@@ -130,6 +180,24 @@ const Neighbor = ({ slug, direction, onGo }: NeighborOptions): ReactNode => {
         {subject.title}
       </span>
     </button>
+  );
+};
+
+const Views = ({ count }: ViewsOptions): ReactNode => {
+  if (count === 'unavailable') return null;
+
+  return (
+    <span className='inline-flex items-center gap-1 tabular-nums'>
+      <Eye className='size-3 shrink-0' aria-hidden='true' />
+      {count === 'pending' ? (
+        <span
+          aria-label='Carregando visualizações'
+          className='inline-block h-2.5 w-32 animate-pulse rounded-sm bg-ink/10'
+        />
+      ) : (
+        `${NUMBER.format(count)} ${count === 1 ? 'visualização' : 'visualizações'}`
+      )}
+    </span>
   );
 };
 
@@ -271,12 +339,15 @@ export const TalkDialog = ({
   onClosed,
 }: TalkDialogOptions): ReactNode => {
   const history = useHistory();
+  const { siteConfig } = useDocusaurusContext();
+  const api = counterOf(siteConfig.customFields);
   const subject = subjectOf(slug) ?? null;
   const { previous, next } = neighborsOf(slug);
   const [talk, setTalk] = useState<Talk | null>(null);
   const [failed, setFailed] = useState(false);
   const [side, setSide] = useState<string | null>(null);
   const [gallery, setGallery] = useState<Gallery | null>(null);
+  const [views, setViews] = useState<Count>('pending');
 
   useEffect(() => {
     let stale = false;
@@ -284,6 +355,7 @@ export const TalkDialog = ({
     setTalk(null);
     setFailed(false);
     setGallery(null);
+    setViews('pending');
 
     talks
       .get(slug)?.()
@@ -293,6 +365,11 @@ export const TalkDialog = ({
 
           setSide(loaded.sides[0]?.id ?? null);
           setTalk(loaded);
+
+          if (api)
+            countView(api, loaded.counter).then(
+              (count) => !stale && setViews(count)
+            );
         },
         () => !stale && setFailed(true)
       );
@@ -300,7 +377,7 @@ export const TalkDialog = ({
     return () => {
       stale = true;
     };
-  }, [slug]);
+  }, [slug, api]);
 
   const sides = useMemo(
     () => ({
@@ -367,7 +444,17 @@ export const TalkDialog = ({
                 {label}
               </h2>
 
-              {subject && <p className={EYEBROW}>{subject.role}</p>}
+              {(subject || api) && (
+                <p
+                  className={`${EYEBROW} flex flex-wrap items-center gap-x-2 gap-y-1`}
+                >
+                  {subject && <span>{subject.role}</span>}
+                  {subject && api && views !== 'unavailable' && (
+                    <span aria-hidden='true'>·</span>
+                  )}
+                  {api && <Views count={views} />}
+                </p>
+              )}
 
               {talk && talk.sides.length > 0 && (
                 <Sides sides={talk.sides} active={side} onSelect={setSide} />
