@@ -1,4 +1,5 @@
 import type { Step } from '@site/src/components/Header';
+import type { Gate } from '@site/src/components/Home/stages';
 import type { Trigger } from '@site/src/components/Partners/Trigger';
 import type { ComponentType, ReactNode } from 'react';
 import type { IconType } from 'react-icons';
@@ -12,16 +13,18 @@ import {
   TbPig,
   TbUsersGroup,
 } from 'react-icons/tb';
-import { Adopters } from '@site/src/components/Adopters';
-import { Agenda } from '@site/src/components/Agenda';
-import { Badges } from '@site/src/components/Badges';
 import { Downloads } from '@site/src/components/Home/Downloads';
-import { Memories } from '@site/src/components/Memories';
-import { Milestones } from '@site/src/components/Milestones';
+import {
+  adopters,
+  agenda,
+  badges,
+  memories,
+  milestones,
+  star,
+} from '@site/src/components/Home/stages';
 import { PartnersAction } from '@site/src/components/Partners/Action';
 import { PartnersTrigger } from '@site/src/components/Partners/Trigger';
 import { Socials } from '@site/src/components/Socials';
-import { Star } from '@site/src/components/Star';
 
 export type Theme = 'light' | 'dark';
 
@@ -45,6 +48,7 @@ type Slide = {
   theme?: Theme;
   align?: 'left';
   still?: boolean;
+  gates?: Gate[];
   actions?: {
     stage?: SlideAction;
     cta?: SlideAction;
@@ -103,8 +107,9 @@ export const groups: Group[] = [
         theme: 'dark',
         align: 'left',
         still: true,
+        gates: [agenda.gate],
         actions: {
-          stage: () => <Agenda />,
+          stage: () => <agenda.View />,
           cta: ({ open, onOpen }) => (
             <PartnersTrigger
               open={open}
@@ -125,7 +130,8 @@ export const groups: Group[] = [
         hill: '#2d86ff',
         text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
         texture: velvet,
-        actions: { stage: Badges },
+        gates: [badges.gate],
+        actions: { stage: badges.View },
       },
     ],
   },
@@ -155,12 +161,13 @@ export const groups: Group[] = [
           </>
         ),
         background: defaultBackground,
-        scene: Memories,
+        scene: memories.View,
         color: '#0e0927cc',
         mark: pink,
         hill: pink,
         theme: 'dark',
-        actions: { stage: Milestones },
+        gates: [memories.gate, milestones.gate],
+        actions: { stage: milestones.View },
       },
     ],
   },
@@ -184,7 +191,8 @@ export const groups: Group[] = [
         mark: '#00a1ff',
         hill: white,
         still: true,
-        actions: { stage: Adopters },
+        gates: [adopters.gate],
+        actions: { stage: adopters.View },
       },
       {
         id: 'lagune',
@@ -198,8 +206,11 @@ export const groups: Group[] = [
         color: '#00a7ff66',
         mark: '#f0f9ff',
         hill: white,
+        gates: [star.gate],
         actions: {
-          stage: ({ mark }) => <Star repo='wellwelwel/lagune' mark={mark} />,
+          stage: ({ mark }) => (
+            <star.View repo='wellwelwel/lagune' mark={mark} />
+          ),
         },
       },
       {
@@ -214,8 +225,9 @@ export const groups: Group[] = [
         color: '#56d0ff2b',
         mark: pink,
         hill: '#fdff00',
+        gates: [star.gate],
         actions: {
-          stage: ({ mark }) => <Star repo='wellwelwel/poku' mark={mark} />,
+          stage: ({ mark }) => <star.View repo='wellwelwel/poku' mark={mark} />,
         },
       },
     ],
@@ -268,3 +280,14 @@ export const textures = [
 export const colors = [...new Set(slides.flatMap(({ color }) => color ?? []))];
 
 export const steps: Step[] = slides.map(({ name, Icon }) => ({ name, Icon }));
+
+export const ready = (index: number): boolean =>
+  (slides[index].gates ?? []).every((gate) => gate.ready());
+
+export const load = (index: number): Promise<unknown> =>
+  Promise.all((slides[index].gates ?? []).map((gate) => gate.load()));
+
+export const warm = (): void => {
+  for (const { gates } of slides)
+    for (const gate of gates ?? []) gate.load().catch(() => undefined);
+};

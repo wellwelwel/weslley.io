@@ -21,6 +21,7 @@ import {
   starts,
   steps,
   textures,
+  warm,
 } from '@site/src/components/Home/slides';
 import { Tint } from '@site/src/components/Home/Tint';
 import { useSlideshow } from '@site/src/components/Home/useSlideshow';
@@ -104,13 +105,18 @@ export default (): ReactNode => {
   }, [search]);
 
   useEffect(() => {
+    const warmUp = () => {
+      todayInBrazil();
+      warm();
+    };
+
     if (typeof window.requestIdleCallback !== 'function') {
-      const handle = window.setTimeout(todayInBrazil, 1);
+      const handle = window.setTimeout(warmUp, 1);
 
       return () => window.clearTimeout(handle);
     }
 
-    const handle = window.requestIdleCallback(todayInBrazil, { timeout: 1500 });
+    const handle = window.requestIdleCallback(warmUp, { timeout: 1500 });
 
     return () => window.cancelIdleCallback(handle);
   }, []);

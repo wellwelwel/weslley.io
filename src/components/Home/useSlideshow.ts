@@ -2,14 +2,15 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
-
-gsap.registerPlugin(useGSAP, Observer);
+import { load, ready } from '@site/src/components/Home/slides';
 
 type Slideshow = {
   active: number;
   show: (index: number) => void;
   home: () => void;
 };
+
+gsap.registerPlugin(useGSAP, Observer);
 
 const STEP_LOCK = 0.6;
 const TOLERANCE = 10;
@@ -30,25 +31,41 @@ export const useSlideshow = (
     [ids]
   );
 
-  const activate = useCallback((index: number) => {
+  const activate = useCallback((index: number, after?: () => void) => {
     if (index === current.current) return;
 
-    current.current = index;
-    setActive(index);
+    const previous = current.current;
 
-    locked.current = true;
-    unlock.current?.kill();
-    unlock.current = gsap.delayedCall(STEP_LOCK, () => {
-      locked.current = false;
-    });
+    current.current = index;
+
+    const commit = () => {
+      setActive(index);
+      after?.();
+
+      locked.current = true;
+      unlock.current?.kill();
+      unlock.current = gsap.delayedCall(STEP_LOCK, () => {
+        locked.current = false;
+      });
+    };
+
+    if (ready(index)) return commit();
+
+    load(index).then(
+      () => current.current === index && commit(),
+      () => {
+        if (current.current === index) current.current = previous;
+      }
+    );
   }, []);
 
   const show = useCallback(
     (index: number) => {
       if (index === current.current || index < 0 || index >= ids.length) return;
 
-      activate(index);
-      window.history.pushState(null, '', `#${ids[index]}`);
+      activate(index, () =>
+        window.history.pushState(null, '', `#${ids[index]}`)
+      );
     },
     [activate, ids]
   );
@@ -63,10 +80,15 @@ export const useSlideshow = (
   );
 
   useEffect(() => {
-    const sync = () => {
+    /* The keyboard listener is a layout effect, so it can answer a press before
+       this passive one aligns the URL. A press already in flight owns the slide
+       and carries its own hash, so the opening alignment steps aside for it. */
+    const sync = (opening: boolean) => {
       const index = indices.get(window.location.hash.slice(1));
 
       if (index === undefined) {
+        if (opening && current.current !== 0) return;
+
         activate(0);
         window.history.replaceState(null, '', `#${ids[0]}`);
         return;
@@ -75,10 +97,12 @@ export const useSlideshow = (
       activate(index);
     };
 
-    sync();
-    window.addEventListener('hashchange', sync);
+    const onHashChange = () => sync(false);
 
-    return () => window.removeEventListener('hashchange', sync);
+    sync(true);
+    window.addEventListener('hashchange', onHashChange);
+
+    return () => window.removeEventListener('hashchange', onHashChange);
   }, [activate, ids, indices]);
 
   useGSAP(
