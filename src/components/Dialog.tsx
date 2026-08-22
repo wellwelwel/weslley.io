@@ -5,6 +5,7 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { X } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import { images } from '@site/src/components/Home/previews';
 import { Picture } from '@site/src/components/Picture';
 import { motion } from '@site/src/helpers/reduced-motion';
 
@@ -19,8 +20,6 @@ export type DialogOptions = {
   fill?: boolean;
   children: ReactNode;
 };
-
-const velvet = '/img/plush/velvet-texture.png';
 
 const ENTER = 0.35;
 const EXIT = 0.18;
@@ -145,7 +144,7 @@ export const Dialog = ({
         className={clsx(PANEL, fill ? SIZES.fill : SIZES.content)}
       >
         <Picture
-          src={velvet}
+          src={images.velvet}
           alt=''
           aria-hidden='true'
           sizes='(min-width: 80rem) 80rem, 100vw'

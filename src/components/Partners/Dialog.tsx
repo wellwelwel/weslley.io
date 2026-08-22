@@ -7,6 +7,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { Building2, Check, Mail, Send, User } from 'lucide-react';
 import { Dialog } from '@site/src/components/Dialog';
+import { images } from '@site/src/components/Home/previews';
 import {
   PARTNERSHIP_TYPES,
   readDraft,
@@ -20,9 +21,7 @@ type Pill = {
   width: number;
 };
 
-const claude = '/img/plush/claude.png';
-const me = '/img/plush/me.png';
-const mvp = '/img/plush/mvp.png';
+const { claude, me, mvp } = images;
 
 const BADGES = [
   { src: mvp, alt: 'Pelúcia do MVP' },

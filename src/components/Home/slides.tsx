@@ -1,5 +1,6 @@
 import type { TalkOpener } from '@site/src/components/Agenda/Card';
 import type { Step } from '@site/src/components/Header';
+import type { SlideId } from '@site/src/components/Home/previews';
 import type { Gate } from '@site/src/components/Home/stages';
 import type { Trigger } from '@site/src/components/Partners/Trigger';
 import type { ComponentType, ReactNode } from 'react';
@@ -15,6 +16,7 @@ import {
   TbUsersGroup,
 } from 'react-icons/tb';
 import { Downloads } from '@site/src/components/Home/Downloads';
+import { images, pathOf, previews } from '@site/src/components/Home/previews';
 import {
   adopters,
   agenda,
@@ -34,7 +36,7 @@ type SlideAction = ComponentType<
 >;
 
 type Slide = {
-  id: string;
+  id: SlideId;
   src?: string;
   alt?: string;
   name: string;
@@ -63,23 +65,24 @@ type Group = {
   slides: Slide[];
 };
 
-const github = '/img/plush/github.png';
-const lagune = '/img/plush/lagune.png';
-const laguneBackground = '/img/plush/lagune-bg.png';
-const me = '/img/plush/me.png';
-const mvp = '/img/plush/mvp.png';
-const mysql = '/img/plush/mysql.png';
-const mysql2Background = '/img/plush/mysql2-bg.png';
-const poku = '/img/plush/poku.png';
-const pokuBackground = '/img/plush/poku-bg.png';
-const velvet = '/img/plush/velvet-texture.png';
-
-const brazil = '/img/br.svg';
+const {
+  brazil,
+  github,
+  lagune,
+  laguneBackground,
+  me,
+  mvp,
+  mysql,
+  mysql2Background,
+  poku,
+  pokuBackground,
+  velvet,
+} = images;
 
 const pink = '#ff5498';
 const white = '#ffffff';
 
-export const defaultBackground = '/img/talks/codecon-2025/moments/04.jpg';
+export const defaultBackground = images.stage;
 
 export const groups: Group[] = [
   {
@@ -89,7 +92,7 @@ export const groups: Group[] = [
         id: 'open-source',
         src: github,
         alt: 'Pelúcia do GitHub',
-        name: 'Open Source',
+        name: previews['open-source'].title,
         Icon: TbBrandOpenSource,
         title: [<Downloads />, 'de downloads anuais', '.'],
         hill: '#a3b6c9',
@@ -98,7 +101,7 @@ export const groups: Group[] = [
         actions: { stage: PartnersAction },
       },
       {
-        id: 'agenda',
+        id: 'talks',
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
         name: 'Agenda',
@@ -127,11 +130,11 @@ export const groups: Group[] = [
         id: 'recognition',
         src: mvp,
         alt: 'Pelúcia do MVP',
-        name: 'Reconhecimento',
+        name: previews.recognition.title,
         Icon: LuTrophy,
         title: ['Microsoft MVP &', 'Anthropic CVP', '.'],
         hill: '#2d86ff',
-        text: 'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
+        text: previews.recognition.description,
         texture: velvet,
         gates: [badges.gate],
         actions: { stage: badges.View },
@@ -143,7 +146,7 @@ export const groups: Group[] = [
     slides: [
       {
         id: 'impact',
-        name: 'Impacto',
+        name: previews.impact.title,
         Icon: TbUsersGroup,
         title: [
           [
@@ -187,14 +190,14 @@ export const groups: Group[] = [
         id: 'mysql2',
         src: mysql,
         alt: 'Pelúcia do MySQL',
-        name: 'MySQL2',
+        name: previews.mysql2.title,
         Icon: TbBrandMysql,
         title: [
           'O driver MySQL mais baixado do',
           'ecossistema JavaScript',
           '.',
         ],
-        text: 'Weslley é mantenedor do MySQL2 e autor de diversos projetos open source críticos usados publicamente por empresas como Amazon, Microsoft, Google, Cloudflare, Vercel, dentre outras.',
+        text: previews.mysql2.description,
         background: mysql2Background,
         color: '#00afff40',
         mark: '#00a1ff',
@@ -207,10 +210,10 @@ export const groups: Group[] = [
         id: 'lagune',
         src: lagune,
         alt: 'Pelúcia do Lagune',
-        name: 'Lagune',
+        name: previews.lagune.title,
         Icon: GiBigWave,
         title: ['Lagune, seu copiloto', 'em segurança', '.'],
-        text: 'Weslley é o criador do Lagune, o pioneiro de sua categoria (Security-Driven Hardening) ao trazer proteção antes, durante e depois do desenvolvimento para desenvolvedores e não desenvolvedores.',
+        text: previews.lagune.description,
         background: laguneBackground,
         color: '#00a7ff66',
         mark: '#f0f9ff',
@@ -226,10 +229,10 @@ export const groups: Group[] = [
         id: 'poku',
         src: poku,
         alt: 'Pelúcia do Poku',
-        name: 'Poku',
+        name: previews.poku.title,
         Icon: TbPig,
         title: ['Tornando testes fáceis', 'para Node.js, Bun e Deno', '.'],
-        text: 'Weslley é autor do Poku, um executor de testes que democratiza os testes para qualquer desenvolvedor. Usado por projetos oficiais da OWASP, o Poku conta com contribuições de colaboradores do Jest, um dos executores de testes mais populadores da história.',
+        text: previews.poku.description,
         background: pokuBackground,
         color: '#56d0ff2b',
         mark: pink,
@@ -248,11 +251,11 @@ export const groups: Group[] = [
         id: 'socials',
         src: me,
         alt: 'Pelúcia do Weslley Araújo',
-        name: 'Redes Sociais',
+        name: previews.socials.title,
         Icon: TbConfetti,
         title: ['Você chegou', 'ao fim', '.'],
         hill: pink,
-        text: 'Me siga nas redes sociais e acompanhe meu trabalho. Apoie meu trabalho deixando sua estrela nos projetos open source que eu mantenho com todo carinho do mundo.',
+        text: previews.socials.description,
         texture: velvet,
         actions: {
           stage: () => (
@@ -268,7 +271,7 @@ export const groups: Group[] = [
 
 export const slides = groups.flatMap((group) => group.slides);
 
-export const slideIds = slides.map(({ id }) => id);
+export const paths = slides.map(({ id }) => pathOf(id));
 
 export const starts = groups.map((_, index) =>
   groups.slice(0, index).reduce((total, { slides }) => total + slides.length, 0)

@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useHistory, useLocation } from '@docusaurus/router';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
@@ -18,21 +19,28 @@ const TOLERANCE = 10;
 const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
 const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
 
-/** A landing slide opens an unhashed URL without rewriting it, so a talk route
-    lands on its slide and keeps its own path. */
+/* A talk path sits under the talks slide, so the longest path that starts the
+   pathname names the slide. */
+const indexOf = (paths: readonly string[], pathname: string): number =>
+  paths.reduce(
+    (found, path, index) =>
+      pathname.startsWith(path) && path.length > paths[found].length
+        ? index
+        : found,
+    0
+  );
+
 export const useSlideshow = (
-  ids: readonly string[],
-  paused: boolean,
-  landing?: string
+  paths: readonly string[],
+  paused: boolean
 ): Slideshow => {
+  const history = useHistory();
+  const { pathname } = useLocation();
   const [active, setActive] = useState(0);
   const current = useRef(0);
   const locked = useRef(false);
+  const opening = useRef(true);
   const unlock = useRef<gsap.core.Tween | null>(null);
-  const indices = useMemo(
-    () => new Map(ids.map((id, index) => [id, index])),
-    [ids]
-  );
 
   const activate = useCallback((index: number, after?: () => void) => {
     if (index === current.current) return;
@@ -64,13 +72,12 @@ export const useSlideshow = (
 
   const show = useCallback(
     (index: number) => {
-      if (index === current.current || index < 0 || index >= ids.length) return;
+      if (index === current.current || index < 0 || index >= paths.length)
+        return;
 
-      activate(index, () =>
-        window.history.pushState(null, '', `#${ids[index]}`)
-      );
+      activate(index, () => history.push(paths[index]));
     },
-    [activate, ids]
+    [activate, history, paths]
   );
 
   const home = useCallback(() => show(0), [show]);
@@ -84,34 +91,16 @@ export const useSlideshow = (
 
   useEffect(() => {
     /* The keyboard listener is a layout effect, so it can answer a press before
-       this passive one aligns the URL. A press already in flight owns the slide
-       and carries its own hash, so the opening alignment steps aside for it. */
-    const sync = (opening: boolean) => {
-      const index = indices.get(window.location.hash.slice(1));
+       this passive one reads the path. A press already in flight owns the slide
+       and pushes its own path, so the opening alignment steps aside for it. */
+    const first = opening.current;
 
-      if (index === undefined) {
-        if (opening && current.current !== 0) return;
+    opening.current = false;
 
-        if (landing !== undefined) {
-          activate(indices.get(landing) ?? 0);
-          return;
-        }
+    if (first && current.current !== 0) return;
 
-        activate(0);
-        window.history.replaceState(null, '', `#${ids[0]}`);
-        return;
-      }
-
-      activate(index);
-    };
-
-    const onHashChange = () => sync(false);
-
-    sync(true);
-    window.addEventListener('hashchange', onHashChange);
-
-    return () => window.removeEventListener('hashchange', onHashChange);
-  }, [activate, ids, indices, landing]);
+    activate(indexOf(paths, pathname));
+  }, [activate, pathname, paths]);
 
   useGSAP(
     () => {
@@ -156,7 +145,7 @@ export const useSlideshow = (
         window.removeEventListener('keydown', onKeyDown);
       };
     },
-    { dependencies: [paused], revertOnUpdate: true }
+    { dependencies: [paused, show], revertOnUpdate: true }
   );
 
   return { active, show, home };

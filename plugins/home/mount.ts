@@ -4,7 +4,9 @@ import type {
   RouteConfig,
   RouteModules,
 } from '@docusaurus/types';
+import type { Preview, SlideId } from '../../src/components/Home/previews';
 import { resolve } from 'node:path';
+import { pathOf, previews, ROOT } from '../../src/components/Home/previews';
 import { talks } from '../../src/components/Talks/catalog';
 import { downloadsLabel } from '../../src/helpers/downloads';
 import { stripMarkdown } from '../../src/helpers/strip-markdown';
@@ -15,31 +17,24 @@ type PluginOptions = {
   pluginName: string;
 };
 
-type Page = {
+type Talk = {
+  slug: string;
   title: string;
   description: string | null;
-  image?: string;
-};
-
-type Talk = Page & {
-  slug: string;
   social?: string;
 };
 
 type Content = {
-  listing: Page;
+  yearly: string;
   talks: Talk[];
 };
 
 const HOME = '@site/src/pages/_dynamic/home/index.tsx';
-const HEAD = '@site/src/pages/_dynamic/home/head.tsx';
+const PREVIEW = '@site/src/pages/_dynamic/home/preview.tsx';
 
-/** What the talks listing page always shared, kept for the bare /talks/ link. */
-const listingOf = (yearly: string): Page => ({
-  title: 'Palestras',
-  description: `Com mais de ${yearly} de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.`,
-  image: '/img/slide/codecon-002.jpg',
-});
+/** What the talks listing page always said, with the downloads of the build. */
+const describeTalks = (yearly: string): string =>
+  `Com mais de ${yearly} de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.`;
 
 /** The talk pages always dropped the percent signs of an encoded slug, and the
     links out there carry that shape. */
@@ -60,7 +55,7 @@ export default (
       findArticles(resolve(`./i18n/${currentLocale}/talks`)),
       downloads(),
     ]);
-    const listing = listingOf(downloadsLabel(rolling));
+    const yearly = downloadsLabel(rolling);
 
     const found = [...talks.keys()].map((slug) => {
       const article = articles.find(
@@ -80,37 +75,51 @@ export default (
       };
     });
 
-    return { listing, talks: found };
+    return { yearly, talks: found };
   },
   contentLoaded: async ({ content, actions }) => {
     const { addRoute, createData } = actions;
     const { i18n } = context;
     const localePrefix =
       i18n.currentLocale === i18n.defaultLocale ? '' : `/${i18n.currentLocale}`;
-    const listing = await createData(
-      'talks.json',
-      JSON.stringify(content.listing)
-    );
-    const routes: RouteConfig[] = [
-      { path: `${localePrefix}/`, exact: true, component: HEAD },
-      {
-        path: `${localePrefix}/talks`,
-        exact: true,
-        component: HEAD,
-        modules: { page: listing },
-      },
-    ];
+    const routes: RouteConfig[] = [];
 
-    for (const { slug, social, ...page } of content.talks) {
-      const data = await createData(`talk-${slug}.json`, JSON.stringify(page));
-      const modules: RouteModules = { page: data };
+    for (const id of Object.keys(previews) as SlideId[]) {
+      const modules: RouteModules = {};
+
+      if (id !== ROOT) {
+        const preview: Preview = {
+          ...previews[id],
+          ...(id === 'talks' && { description: describeTalks(content.yearly) }),
+        };
+
+        modules.preview = await createData(
+          `preview-${id}.json`,
+          JSON.stringify(preview)
+        );
+      }
+
+      routes.push({
+        path: `${localePrefix}${pathOf(id)}`,
+        exact: true,
+        component: PREVIEW,
+        modules,
+      });
+    }
+
+    for (const { slug, social, ...preview } of content.talks) {
+      const data = await createData(
+        `talk-${slug}.json`,
+        JSON.stringify(preview)
+      );
+      const modules: RouteModules = { preview: data };
 
       if (social) modules.social = social;
 
       routes.push({
-        path: `${localePrefix}/talks/${slug}`,
+        path: `${localePrefix}${pathOf('talks')}${slug}`,
         exact: true,
-        component: HEAD,
+        component: PREVIEW,
         modules,
       });
     }

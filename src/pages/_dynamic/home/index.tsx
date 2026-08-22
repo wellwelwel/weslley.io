@@ -14,6 +14,7 @@ import clsx from 'clsx';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
 import { Hill } from '@site/src/components/Hill';
+import { pathOf } from '@site/src/components/Home/previews';
 import { Rail } from '@site/src/components/Home/Rail';
 import {
   backgrounds,
@@ -21,7 +22,7 @@ import {
   defaultBackground,
   groupOf,
   groups,
-  slideIds,
+  paths,
   slides,
   starts,
   steps,
@@ -69,14 +70,9 @@ const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
 const BLURRED_SIZES = '40vw';
 
-const AGENDA = 'agenda';
+const TALKS = pathOf('talks');
 
-const TALKS = '/talks/';
-
-const TALK = '/talks/:slug/';
-
-const listingOf = (pathname: string): boolean =>
-  matchPath(pathname, { path: TALKS, exact: true }) !== null;
+const TALK = `${TALKS}:slug/`;
 
 const talkOf = (pathname: string): string | null =>
   matchPath<Params>(pathname, { path: TALK, exact: true })?.params.slug ?? null;
@@ -103,7 +99,6 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const history = useHistory();
   const { pathname, search } = useLocation();
   const talk = talkOf(pathname);
-  const listing = listingOf(pathname);
   const [shown, setShown] = useState<string | null>(null);
   const [slot, setSlot] = useState<Slot | null>(null);
   const [partners, setPartners] = useState(false);
@@ -111,9 +106,8 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
   const { active, show, home } = useSlideshow(
-    slideIds,
-    partners || menu || talk !== null,
-    talk === null && !listing ? undefined : AGENDA
+    paths,
+    partners || menu || talk !== null
   );
   const { page, rail, place, spots } = useSpots();
   const group = groupOf[active];
@@ -160,7 +154,7 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const openTalk = useCallback<TalkOpener>(
     (slug, origin) => {
       setSlot(origin);
-      history.push(`/talks/${slug}/`, MARK);
+      history.push(`${TALKS}${slug}/`, MARK);
     },
     [history]
   );
@@ -168,19 +162,13 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   const closeTalk = useCallback(() => {
     if (marked(history.location.state)) return history.goBack();
 
-    history.replace(`/#${AGENDA}`);
+    history.replace(TALKS);
   }, [history]);
 
   const settleTalk = useCallback(() => {
     setShown(null);
     setSlot(null);
   }, []);
-
-  /* The bare /talks/ link keeps the metadata the talks listing always had and
-     lands on the agenda, which is where the talks live now. */
-  useEffect(() => {
-    if (listing) history.replace(`/#${AGENDA}`);
-  }, [listing, history]);
 
   useEffect(() => {
     if (talk === null || shown !== null) return;
