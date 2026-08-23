@@ -33,6 +33,7 @@ import { pathOf } from '@site/src/components/Home/previews';
 import { Picture } from '@site/src/components/Picture';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { SideContext } from '@site/src/components/Side/context';
+import { Stepper } from '@site/src/components/Stepper';
 import { talks } from '@site/src/components/Talks/catalog';
 import { components } from '@site/src/components/Talks/Prose';
 import { Viewer, ViewerContext } from '@site/src/components/Talks/Viewer';
@@ -93,6 +94,8 @@ const EYEBROW =
 const COLUMN = 'mx-auto w-full max-w-4xl px-[clamp(1.25rem,4vw,3rem)]';
 
 const PANEL = 'talk-side';
+
+const FLANK = 'absolute top-1/2 -translate-y-1/2 max-[90rem]:hidden';
 
 const FLIP = { full: '0.75rem', reduced: '0.5rem' };
 
@@ -499,9 +502,14 @@ export const TalkDialog = ({
 
   const moving = useRef(false);
 
+  const around: Record<Direction, string | undefined> = {
+    previous: previous ?? chronology.at(-1),
+    next: next ?? chronology[0],
+  };
+
   const travel = (direction: Direction): void => {
-    const to = direction === 'next' ? next : previous;
-    if (!to || moving.current) return;
+    const to = around[direction];
+    if (!to || to === current || moving.current) return;
 
     navigator.vibrate?.(10);
     moving.current = true;
@@ -582,6 +590,29 @@ export const TalkDialog = ({
       label={label}
       onClose={gallery ? () => setGallery(null) : onClose}
       onClosed={onClosed}
+      aside={
+        !gallery &&
+        chronology.length > 1 && (
+          <>
+            <div className={`${FLANK} right-full mr-4`}>
+              <Stepper
+                direction='previous'
+                label='Palestra anterior'
+                emphasis={next ? 'faint' : 'strong'}
+                onClick={() => travel('previous')}
+              />
+            </div>
+            <div className={`${FLANK} left-full ml-4`}>
+              <Stepper
+                direction='next'
+                label='Próxima palestra'
+                emphasis={next ? 'strong' : 'faint'}
+                onClick={() => travel('next')}
+              />
+            </div>
+          </>
+        )
+      }
     >
       {gallery ? (
         <Viewer
@@ -597,7 +628,7 @@ export const TalkDialog = ({
               className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
             >
               {talk?.banner && (
-                <div className='absolute inset-0 blur-[4px] opacity-5 mask-b-from-30% grayscale'>
+                <div className='absolute inset-0 blur-[4px] opacity-10 mask-b-from-30% grayscale'>
                   <Cover src={talk.banner} alt='' />
                 </div>
               )}

@@ -16,6 +16,7 @@ export type DialogOptions = {
   onClosed: () => void;
   fill?: boolean;
   solid?: boolean;
+  aside?: ReactNode;
   children: ReactNode;
 };
 
@@ -27,8 +28,11 @@ const TRAVEL = {
   reduced: { y: 14, scale: 0.99 },
 };
 
+const FRAME =
+  'relative flex max-h-full w-full flex-col max-sm:h-full max-sm:max-w-none';
+
 const PANEL =
-  'relative flex max-h-full w-full flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none max-sm:h-full max-sm:max-w-none max-sm:rounded-none';
+  'relative flex min-h-0 flex-auto flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none max-sm:rounded-none';
 
 const SURFACES = {
   glass: 'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0',
@@ -68,9 +72,11 @@ export const Dialog = ({
   onClosed,
   fill = false,
   solid = false,
+  aside,
   children,
 }: DialogOptions): ReactNode => {
   const overlay = useRef<HTMLDivElement>(null);
+  const frame = useRef<HTMLDivElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const timeline = useRef<gsap.core.Timeline | null>(null);
   const settle = useRef(onClosed);
@@ -106,7 +112,7 @@ export const Dialog = ({
         { autoAlpha: 1, duration: ENTER, ease: 'power2.out' }
       )
       .fromTo(
-        panel.current,
+        frame.current,
         { autoAlpha: 0, y: travel.y, scale: travel.scale },
         { autoAlpha: 1, y: 0, scale: 1, duration: ENTER, ease: 'power3.out' },
         0
@@ -138,41 +144,44 @@ export const Dialog = ({
       className='fixed inset-0 z-100 flex items-center justify-center bg-ink/70 p-[clamp(1rem,3vw,2.5rem)] backdrop-blur-sm outline-none max-sm:p-0'
     >
       <div
-        ref={panel}
-        role='dialog'
-        aria-modal='true'
-        aria-label={label}
-        tabIndex={-1}
-        className={clsx(
-          PANEL,
-          fill ? SIZES.fill : SIZES.content,
-          solid ? SURFACES.solid : SURFACES.glass
-        )}
+        ref={frame}
+        className={clsx(FRAME, fill ? SIZES.fill : SIZES.content)}
       >
-        {!solid && (
-          <Picture
-            src={images.velvet}
-            alt=''
-            aria-hidden='true'
-            sizes='(min-width: 80rem) 80rem, 100vw'
-            decoding='async'
-            draggable={false}
-            className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
-          />
-        )}
-
-        <button
-          type='button'
-          onClick={onClose}
-          aria-label='Fechar'
-          className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-[color-mix(in_srgb,white_30%,var(--color-blush))] bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,border-color,box-shadow,scale] duration-200 ease-swift hover:border-[color-mix(in_srgb,white_30%,var(--color-blush-deep))] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
+        <div
+          ref={panel}
+          role='dialog'
+          aria-modal='true'
+          aria-label={label}
+          tabIndex={-1}
+          className={clsx(PANEL, solid ? SURFACES.solid : SURFACES.glass)}
         >
-          <X aria-hidden='true' />
-        </button>
+          {!solid && (
+            <Picture
+              src={images.velvet}
+              alt=''
+              aria-hidden='true'
+              sizes='(min-width: 80rem) 80rem, 100vw'
+              decoding='async'
+              draggable={false}
+              className='pointer-events-none absolute inset-0 size-full object-cover opacity-12'
+            />
+          )}
 
-        <div className='relative flex min-h-0 flex-1 flex-col overflow-y-auto'>
-          {children}
+          <button
+            type='button'
+            onClick={onClose}
+            aria-label='Fechar'
+            className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-[color-mix(in_srgb,white_30%,var(--color-blush))] bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,border-color,box-shadow,scale] duration-200 ease-swift hover:border-[color-mix(in_srgb,white_30%,var(--color-blush-deep))] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
+          >
+            <X aria-hidden='true' />
+          </button>
+
+          <div className='relative flex min-h-0 flex-1 flex-col overflow-y-auto'>
+            {children}
+          </div>
         </div>
+
+        {aside}
       </div>
     </div>,
     document.body

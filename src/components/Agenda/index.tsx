@@ -11,7 +11,6 @@ import {
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
-import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { Card } from '@site/src/components/Agenda/Card';
 import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import {
@@ -24,6 +23,7 @@ import {
   upcomingIndex,
 } from '@site/src/components/Agenda/timeline';
 import { Picture } from '@site/src/components/Picture';
+import { Stepper } from '@site/src/components/Stepper';
 import { motion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(Observer);
@@ -59,16 +59,6 @@ const RISE = {
 const HOP = {
   full: '1',
   reduced: '0.6',
-};
-
-const STEPPER =
-  'relative flex size-9 shrink-0 cursor-pointer appearance-none items-center justify-center rounded-full border-0 p-0 transition-[background-color,color,scale] duration-250 ease-swift after:absolute after:-inset-0.75 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90 max-sm:size-8 short:size-8';
-
-const EMPHASIS = {
-  strong:
-    'bg-[var(--tone)] text-paper hover:bg-[color-mix(in_srgb,var(--tone)_82%,white)]',
-  faint:
-    'bg-[color-mix(in_srgb,var(--tone)_15%,transparent)] text-[var(--tone)] hover:bg-[color-mix(in_srgb,var(--tone)_28%,transparent)]',
 };
 
 /** Mirrors the card's `duration-500`. */
@@ -226,22 +216,18 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
         </time>
 
         <div className='flex gap-2 max-sm:hidden'>
-          <button
-            type='button'
-            aria-label='Evento anterior'
+          <Stepper
+            direction='previous'
+            label='Evento anterior'
+            emphasis={ahead ? 'faint' : 'strong'}
             onClick={() => step(-1)}
-            className={clsx(STEPPER, ahead ? EMPHASIS.faint : EMPHASIS.strong)}
-          >
-            <ArrowLeft className='size-4' aria-hidden='true' />
-          </button>
-          <button
-            type='button'
-            aria-label='Próximo evento'
+          />
+          <Stepper
+            direction='next'
+            label='Próximo evento'
+            emphasis={ahead ? 'strong' : 'faint'}
             onClick={() => step(1)}
-            className={clsx(STEPPER, ahead ? EMPHASIS.strong : EMPHASIS.faint)}
-          >
-            <ArrowRight className='size-4' aria-hidden='true' />
-          </button>
+          />
         </div>
       </div>
 
