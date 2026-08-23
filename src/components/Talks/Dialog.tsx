@@ -608,7 +608,7 @@ export const TalkDialog = ({
               className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
             >
               {talk?.banner && (
-                <div className='absolute inset-0 blur-[5px] opacity-25 mask-b-from-30%'>
+                <div className='absolute inset-0 blur-[5px] opacity-10 mask-b-from-30%'>
                   <Cover src={talk.banner} alt='' />
                 </div>
               )}
@@ -616,7 +616,7 @@ export const TalkDialog = ({
 
             <header
               key={current}
-              className={`${COLUMN} col-start-1 row-start-1 flex inverted flex-col gap-6 pt-[clamp(3.5rem,6vw,5rem)] pb-[clamp(1.5rem,3vw,2.5rem)] [view-transition-name:talk-header]`}
+              className={`${COLUMN} col-start-1 row-start-1 flex inverted flex-col gap-6 pt-[clamp(3.5rem,6vw,5rem)] pb-[clamp(1.5rem,3vw,2.5rem)] [text-shadow:0_1px_3px_rgb(0_0_0_/_0.85)] [view-transition-name:talk-header]`}
             >
               <h2 className='m-0 animate-ticker text-[clamp(1.625rem,3vw,2.25rem)]/[1.15] font-bold tracking-[-0.02em] text-ink text-balance'>
                 {label}
@@ -663,7 +663,7 @@ export const TalkDialog = ({
 
             {shape && (
               <div className={`${COLUMN} col-start-1 row-span-2 row-start-2`}>
-                <div className='animate-ticker rounded-[1.5rem] bg-white/5 p-[0.4rem] shadow-[0_1px_2px_rgb(14_9_39_/_0.04),0_16px_40px_-16px_rgb(14_9_39_/_0.2)] backdrop-blur-[4px] [animation-delay:140ms] [view-transition-name:talk-banner]'>
+                <div className='animate-ticker rounded-[1rem] shadow-[0_1px_4px_rgb(14_9_39_/_0.5)] [animation-delay:140ms] [view-transition-name:talk-banner]'>
                   <div
                     style={{ aspectRatio: `${shape.width} / ${shape.height}` }}
                     className='overflow-hidden rounded-[1rem] bg-well [view-transition-name:talk-cover]'
