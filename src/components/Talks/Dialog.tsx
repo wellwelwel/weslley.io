@@ -80,6 +80,11 @@ type CoverOptions = {
   alt: string;
 };
 
+type Ready = {
+  slug: string;
+  talk: Talk;
+};
+
 type RootStyle = CSSProperties & { '--ticker-travel': string };
 
 const EYEBROW =
@@ -434,7 +439,8 @@ export const TalkDialog = ({
   const subject = subjectOf(current) ?? null;
   const shape = talks.get(current)?.shape ?? null;
   const { previous, next } = neighborsOf(current);
-  const [talk, setTalk] = useState<Talk | null>(null);
+  const [ready, setReady] = useState<Ready | null>(null);
+  const talk = ready?.slug === current ? ready.talk : null;
   const [failed, setFailed] = useState(false);
   const [side, setSide] = useState<string | null>(null);
   const [gallery, setGallery] = useState<Gallery | null>(null);
@@ -444,7 +450,6 @@ export const TalkDialog = ({
   useEffect(() => {
     let stale = false;
 
-    setTalk(null);
     setFailed(false);
     setGallery(null);
     setViews('pending');
@@ -458,7 +463,7 @@ export const TalkDialog = ({
 
           startTransition(() => {
             setSide(loaded.sides[0]?.id ?? null);
-            setTalk(loaded);
+            setReady({ slug: current, talk: loaded });
           });
           warm(previous);
           warm(next);
@@ -589,8 +594,14 @@ export const TalkDialog = ({
           <div className='grid grid-cols-1 grid-rows-[auto_1fr_1fr]'>
             <div
               aria-hidden='true'
-              className='col-start-1 row-span-2 row-start-1 inverted bg-wash [view-transition-name:talk-band]'
-            />
+              className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
+            >
+              {talk?.banner && (
+                <div className='absolute inset-0 blur-[4px] opacity-5 mask-b-from-30% grayscale'>
+                  <Cover src={talk.banner} alt='' />
+                </div>
+              )}
+            </div>
 
             <header
               key={current}
@@ -642,11 +653,12 @@ export const TalkDialog = ({
             {shape && (
               <div className={`${COLUMN} col-start-1 row-span-2 row-start-2`}>
                 <div
-                  key={current}
                   style={{ aspectRatio: `${shape.width} / ${shape.height}` }}
                   className='animate-ticker overflow-hidden rounded-3xl bg-well shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_24px_56px_-24px_rgb(14_9_39_/_0.55)] [animation-delay:140ms] [view-transition-name:talk-banner]'
                 >
-                  {talk?.banner && <Cover src={talk.banner} alt={label} />}
+                  <div className='size-full [view-transition-name:talk-cover]'>
+                    {talk?.banner && <Cover src={talk.banner} alt={label} />}
+                  </div>
                 </div>
               </div>
             )}

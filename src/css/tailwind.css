@@ -242,6 +242,23 @@
   animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
 }
 
+::view-transition-old(talk-band),
+::view-transition-new(talk-band),
+::view-transition-old(talk-banner),
+::view-transition-new(talk-banner) {
+  block-size: 100%;
+}
+
+::view-transition-image-pair(talk-cover) {
+  clip-path: inset(0 round var(--radius-3xl));
+}
+
+::view-transition-old(talk-cover),
+::view-transition-new(talk-cover) {
+  block-size: 100%;
+  object-fit: cover;
+}
+
 ::view-transition-old(talk-header),
 ::view-transition-old(talk-body) {
   animation: leave 0.2s cubic-bezier(0.2, 0, 0, 1) both;
