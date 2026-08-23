@@ -587,6 +587,7 @@ export const TalkDialog = ({
       fill
       bare
       screen={Boolean(gallery)}
+      back={Boolean(gallery)}
       open={open}
       label={label}
       onClose={gallery ? () => setGallery(null) : onClose}
@@ -616,11 +617,7 @@ export const TalkDialog = ({
       }
     >
       {gallery ? (
-        <Viewer
-          key={`${gallery.label}:${gallery.at}`}
-          gallery={gallery}
-          onBack={() => setGallery(null)}
-        />
+        <Viewer key={`${gallery.label}:${gallery.at}`} gallery={gallery} />
       ) : (
         <div ref={attach} style={rootStyle} className='flex flex-1 flex-col'>
           <div className='grid grid-cols-1 grid-rows-[auto_1fr_1fr]'>

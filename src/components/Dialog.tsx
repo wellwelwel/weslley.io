@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
-import { X } from 'lucide-react';
+import { ArrowLeft, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { images } from '@site/src/components/Home/previews';
 import { Picture } from '@site/src/components/Picture';
@@ -17,6 +17,7 @@ export type DialogOptions = {
   fill?: boolean;
   bare?: boolean;
   screen?: boolean;
+  back?: boolean;
   aside?: ReactNode;
   children: ReactNode;
 };
@@ -34,6 +35,11 @@ const FRAME =
 
 const PANEL =
   'relative flex min-h-0 flex-auto flex-col overflow-hidden shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none';
+
+const SWAP =
+  'size-4.5 transition-[opacity,scale,filter] duration-300 ease-swift';
+
+const FADED = 'scale-25 opacity-0 blur-xs';
 
 const GLASS =
   'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0';
@@ -73,6 +79,7 @@ export const Dialog = ({
   fill = false,
   bare = false,
   screen = false,
+  back = false,
   aside,
   children,
 }: DialogOptions): ReactNode => {
@@ -181,10 +188,14 @@ export const Dialog = ({
           <button
             type='button'
             onClick={onClose}
-            aria-label='Fechar'
-            className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-[color-mix(in_srgb,white_30%,var(--color-blush))] bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,border-color,box-shadow,scale] duration-200 ease-swift hover:border-[color-mix(in_srgb,white_30%,var(--color-blush-deep))] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95 [&>svg]:size-4.5'
+            aria-label={back ? 'Voltar' : 'Fechar'}
+            className='absolute top-3 right-3 z-2 inline-flex size-9 cursor-pointer appearance-none items-center justify-center rounded-full border border-[color-mix(in_srgb,white_30%,var(--color-blush))] bg-blush text-white shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_4px_5px_-4px_rgb(253_121_168_/_0.85)] transition-[background-color,border-color,box-shadow,scale] duration-200 ease-swift hover:border-[color-mix(in_srgb,white_30%,var(--color-blush-deep))] hover:bg-blush-deep hover:shadow-[inset_0_1px_0_rgb(255_255_255_/_0.35),0_5px_10px_-4px_rgb(232_67_147_/_0.95)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blush-deep active:scale-95'
           >
-            <X aria-hidden='true' />
+            <X aria-hidden='true' className={clsx(SWAP, back && FADED)} />
+            <ArrowLeft
+              aria-hidden='true'
+              className={clsx(SWAP, 'absolute inset-0 m-auto', !back && FADED)}
+            />
           </button>
 
           <div className='relative flex min-h-0 flex-1 flex-col overflow-y-auto'>
