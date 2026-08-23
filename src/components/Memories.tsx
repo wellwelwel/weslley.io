@@ -10,6 +10,8 @@ type Band = {
   phase: number;
 };
 
+type Strip = readonly [string, string, string, string];
+
 type ReelStyle = CSSProperties & {
   '--pace': string;
   '--ticker-travel': string;
@@ -20,23 +22,28 @@ type BandStyle = CSSProperties & {
   '--phase': string;
 };
 
-/* Dealt to the bands in runs of four, so no event repeats inside a band. */
-const PHOTOS = [
-  '/img/slide/codecon-001.jpg',
-  '/img/slide/roga-001.jpg',
-  '/img/slide/devfest-cerrado-001.jpg',
-  '/img/slide/tdc-001.jpg',
-
-  '/img/slide/codecon-002.jpg',
-  '/img/slide/roga-002.jpg',
-  '/img/slide/devfest-cerrado-002.jpg',
-  '/img/slide/usp-001.jpg',
-
-  '/img/slide/mvpconf-001.jpg',
-  '/img/slide/oracle-001.jpg',
-  '/img/talks/devfest-cerrado-2025/moments/07.jpg',
-  '/img/slide/nodebr-001.jpg',
+const STRIPS: Strip[] = [
+  [
+    '/img/slide/codecon-001.jpg',
+    '/img/slide/roga-001.jpg',
+    '/img/slide/devfest-cerrado-001.jpg',
+    '/img/slide/tdc-001.jpg',
+  ],
+  [
+    '/img/slide/codecon-002.jpg',
+    '/img/slide/roga-002.jpg',
+    '/img/slide/devfest-cerrado-002.jpg',
+    '/img/slide/usp-001.jpg',
+  ],
+  [
+    '/img/slide/mvpconf-001.jpg',
+    '/img/slide/oracle-001.jpg',
+    '/img/talks/devfest-cerrado-2025/moments/07.jpg',
+    '/img/slide/nodebr-001.jpg',
+  ],
 ];
+
+const SHARE = STRIPS[0].length;
 
 /** Seconds per photo on the middle band. */
 const PACE = {
@@ -58,7 +65,7 @@ const STEP = 90;
 const REEL =
   'pointer-events-none fixed inset-0 overflow-hidden vignette [--band:calc((100dvh+var(--sweep)-2*var(--gap))/3)] [--frame:min(78vw,44svh)] [--gap:1.25rem] [--sweep:calc(100vw*0.115)] [--tilt:-6deg] sm:[--frame:calc(var(--band)*3/2)]';
 
-/* Overshoots both sides, so the tilt never shows a strip end. */
+/* The overshoot covers the strip ends the tilt exposes. */
 const FIELD =
   'absolute inset-y-0 -inset-x-[8%] flex flex-col justify-center gap-(--gap) rotate-(--tilt)';
 
@@ -77,18 +84,8 @@ const BANDS: Band[] = [
   { rate: DRAG, phase: 0.34 },
 ];
 
-/** Photos per band. Equal strips keep the rates true, even if a few repeat. */
-const SHARE = Math.ceil(PHOTOS.length / BANDS.length);
-
-/** Doubled, so the strip loops seamlessly. */
-const strip = (band: number): string[] => {
-  const share = Array.from(
-    { length: SHARE },
-    (_, index) => PHOTOS[(band * SHARE + index) % PHOTOS.length]
-  );
-
-  return [...share, ...share];
-};
+/** The drift animation travels half the strip. */
+const strip = (band: number): string[] => [...STRIPS[band], ...STRIPS[band]];
 
 export const Memories = memo((): ReactNode => {
   const style: ReelStyle = {

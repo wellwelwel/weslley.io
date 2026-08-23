@@ -13,7 +13,7 @@ interface PluginOptions {
   contentDir: string;
 }
 
-/** Only the listing fields, since global data ships in every page bundle. */
+/** Global data ships in every page bundle. */
 const listing = ({
   title,
   slug,

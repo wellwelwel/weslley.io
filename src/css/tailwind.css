@@ -179,9 +179,8 @@
   --color-veil: #0e0927;
 }
 
-/* Opaque tints mixed over paper, for surfaces that must not see through.
-   Inline, so each utility resolves ink and paper where it is used and an
-   inverted scope flips the whole set. */
+/* Opaque tints over paper. A plain `@theme` would pin ink and paper at the
+   root, beyond the reach of `inverted`. */
 @theme inline {
   --color-well: color-mix(in srgb, var(--color-ink) 6%, var(--color-paper));
   --color-line: color-mix(in srgb, var(--color-ink) 10%, var(--color-paper));
@@ -237,10 +236,7 @@
   }
 }
 
-/* Talk switches: the band morphs while the content slides the way the user
-   went. Only the named talk pieces are captured, so the page around them stays
-   live, and since snapshots escape the panel's clipping, the overlay is cut to
-   the panel's rect for the duration. */
+/* Talk switches. View transition snapshots escape the panel's clipping. */
 :root {
   view-transition-name: none;
 }
@@ -307,13 +303,12 @@
   }
 }
 
-/* Swaps ink and paper, so every token mixed from them follows. */
 @utility inverted {
   --color-ink: #f0f4ff;
   --color-paper: #0e0927;
 }
 
-/* Shadows tinted by the slide, so they read as depth on any background. */
+/* --tint comes from the slide. */
 @utility shaded {
   --shade: color-mix(
     in oklab,
@@ -341,7 +336,7 @@
     calc(100% - 2rem) 100%;
 }
 
-/* Only the bottom row is fully lit, which is the whole focus indicator. */
+/* The lit bottom row is the focus indicator. */
 @utility picker {
   mask-image: linear-gradient(
     to bottom,
@@ -354,14 +349,13 @@
   );
 }
 
-/* Lifts text off a photo with an edge shadow and a ground shadow. */
 @utility halo {
   text-shadow:
     0 1px 2px color-mix(in oklab, var(--color-paper) 92%, transparent),
     0 2px 14px color-mix(in oklab, var(--color-paper) 82%, transparent);
 }
 
-/* Long fades on portrait, where the bands stop short of the top and bottom. */
+/* Portrait bands stop short of the top and bottom. */
 @utility vignette {
   mask-image: linear-gradient(
     to bottom,
@@ -393,7 +387,7 @@
   --fade: min(max(calc(100vw - var(--spread) - 5.25rem), 6.25rem), var(--edge));
   mask-image: linear-gradient(to right, black, transparent var(--fade));
 
-  /* Squat screens hold the fade longer, since the leftover strip is narrow. */
+  /* Squat screens leave a narrow strip. */
   @media (max-width: 40rem) and (max-height: 41rem) {
     --fade: min(
       max(calc(100vw - var(--spread) - 3.5rem), 6.25rem),

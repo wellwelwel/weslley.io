@@ -9,7 +9,7 @@ type PageErrorOptions = {
 const causes = (error: Error): Error[] =>
   error.cause instanceof Error ? [error, ...causes(error.cause)] : [error];
 
-/* Bare, so the crash screen never drags Layout into every entry bundle. */
+/* Layout would land in every entry bundle. */
 export default function PageError({
   error,
   tryAgain,

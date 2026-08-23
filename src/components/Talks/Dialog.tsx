@@ -100,9 +100,8 @@ const FLANK = 'absolute top-1/2 -translate-y-1/2 max-[90rem]:hidden';
 
 const FLIP = { full: '0.75rem', reduced: '0.5rem' };
 
-/** Travel in rem, signed by the direction at runtime. */
+/* Travel in rem, signed by the direction at runtime. */
 const LEAVE = { full: 1.5, reduced: 1 };
-
 const ARRIVE = { full: 2.5, reduced: 1.5 };
 
 const DRIFT: Record<Direction, number> = { previous: -1, next: 1 };
@@ -191,7 +190,7 @@ const clipOf = (panel: Element): string => {
   return `inset(${top}px ${window.innerWidth - right}px ${window.innerHeight - bottom}px ${left}px round ${borderRadius})`;
 };
 
-/** Feeds the transition pseudo-elements, which only inherit from the root. */
+/** View transition pseudo-elements inherit from the root only. */
 const stage = (direction: Direction, panel: Element | null): (() => void) => {
   const { style } = document.documentElement;
   const drift = DRIFT[direction];

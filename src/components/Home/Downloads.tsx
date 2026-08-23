@@ -16,7 +16,7 @@ type DigitOptions = {
 const DIGITS = 10;
 const COPIES = 3;
 
-/** Repeats the digits, so the markup shows the answer before the roll spins. */
+/** Three runs of the digits. The static markup already rests on the answer. */
 const NUMBERS = Array.from(
   { length: DIGITS * COPIES },
   (_, index) => index % DIGITS

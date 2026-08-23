@@ -6,7 +6,7 @@ type PluginOptions = {
   pluginName: string;
 };
 
-/* Baked in at build time, since the numbers barely move between builds. */
+/* The numbers barely move between builds. */
 export default (
   _context: LoadContext,
   options: PluginOptions

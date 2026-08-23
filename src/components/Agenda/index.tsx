@@ -73,7 +73,7 @@ const BEHIND = slots.length - 1;
 const passedOf = (here: number, there: number): boolean =>
   here === BEHIND || (here > SEEN && (there === 0 || there === BEHIND));
 
-/** Deck height, kept across mounts so a revisit never re-measures. */
+/** Deck height, kept across mounts. */
 let held: number | undefined;
 
 const useDeckHeight = (deck: RefObject<HTMLDivElement | null>) => {

@@ -68,7 +68,7 @@ const silence = (resource: Resource) => {
   resource.request = empty;
 };
 
-/* Reaches the package's ESM deep files, which keep tslib off every bundle. */
+/* The package's ESM deep files carry no tslib. */
 const lighten = (resource: Resource) => {
   resource.request = utilsCommon;
 };
@@ -111,7 +111,7 @@ const aliasesOf = (registry: string, origins: Manifest['origins']): Alias[] =>
       : [];
   });
 
-/* Keys the manifest by module path too, so the server's lookups hit. */
+/* The server looks the manifest up by module path. */
 const restoreRouteScripts = async (path: string): Promise<void> => {
   const [manifest, registry] = await Promise.all([
     readFile(path, 'utf8'),

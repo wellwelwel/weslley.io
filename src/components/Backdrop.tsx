@@ -6,12 +6,12 @@ export type BackdropOptions = {
   sources: string[];
   /** Undefined leaves every layer hidden. */
   active: string | undefined;
-  /** Positions the layers, which only fill their own container. */
+  /** The layers fill their own container only. */
   className: string;
   opacity?: number;
   /** Fetch priority of the active layer. */
   priority?: 'high' | 'low' | 'auto';
-  /** Width hint, so blurred stacks can pick smaller candidates. */
+  /** Forwarded as `sizes`. */
   sizes?: string;
 };
 
