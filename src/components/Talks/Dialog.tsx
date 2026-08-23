@@ -1,8 +1,8 @@
-import type { Author, AuthorSocials } from '@site/src/@types/article';
+import type { Author } from '@site/src/@types/article';
 import type { SideConfig } from '@site/src/@types/side';
 import type { Talk } from '@site/src/components/Talks/catalog';
 import type { Gallery } from '@site/src/components/Talks/Viewer';
-import type { CSSProperties, ReactNode } from 'react';
+import type { CSSProperties, MouseEvent, ReactNode } from 'react';
 import {
   startTransition,
   useCallback,
@@ -21,6 +21,7 @@ import {
   ArrowLeft,
   ArrowRight,
   CassetteTape,
+  ExternalLink,
   Eye,
   Mic,
   Pen,
@@ -37,9 +38,11 @@ import { Stepper } from '@site/src/components/Stepper';
 import { talks } from '@site/src/components/Talks/catalog';
 import { components } from '@site/src/components/Talks/Prose';
 import { Viewer, ViewerContext } from '@site/src/components/Talks/Viewer';
+import { Tooltip } from '@site/src/components/Tooltip';
 import { getSideLabel } from '@site/src/helpers/get-side-label';
+import { canHover } from '@site/src/helpers/hover';
 import { motion } from '@site/src/helpers/reduced-motion';
-import { socialLinks } from '@site/src/helpers/social-links';
+import { useReveal } from '@site/src/hooks/useReveal';
 
 gsap.registerPlugin(Observer);
 
@@ -67,8 +70,6 @@ type SidesOptions = {
 type AuthorsOptions = {
   authors: Author[];
 };
-
-type Network = keyof AuthorSocials;
 
 type Count = number | 'pending' | 'unavailable';
 
@@ -109,15 +110,6 @@ const DRIFT: Record<Direction, number> = { previous: -1, next: 1 };
 const SWIPE = 24;
 
 const NUMBER = new Intl.NumberFormat('pt-BR');
-
-const NETWORKS: Network[] = ['linkedin', 'github', 'instagram', 'youtube'];
-
-const PROFILES: Record<Network, (handle: string) => string> = {
-  linkedin: (handle) => `https://www.linkedin.com/in/${handle}/`,
-  github: (handle) => `https://github.com/${handle}`,
-  instagram: (handle) => `https://www.instagram.com/${handle}/`,
-  youtube: (handle) => `https://www.youtube.com/@${handle}`,
-};
 
 const TALKS = pathOf('talks');
 
@@ -297,6 +289,15 @@ const Cover = ({ src, alt }: CoverOptions): ReactNode => {
 
 const Authors = ({ authors }: AuthorsOptions): ReactNode => {
   const heading = authors.length > 1 ? 'Palestrantes' : 'Palestrante';
+  const { container, revealed, toggle } = useReveal<HTMLDivElement>();
+
+  const press = (event: MouseEvent<HTMLElement>, name: string) => {
+    if (canHover()) return;
+
+    if (revealed !== name) event.preventDefault();
+
+    toggle(name);
+  };
 
   return (
     <section
@@ -308,61 +309,37 @@ const Authors = ({ authors }: AuthorsOptions): ReactNode => {
         {heading}
       </p>
 
-      <div className='flex flex-wrap gap-3'>
-        {authors.map(({ name, title, url, image_url, socials }) => (
-          <article
+      <div ref={container} className='flex flex-wrap gap-3'>
+        {authors.map(({ name, title, url, image_url }) => (
+          <SafeLink
             key={name}
-            className='flex min-w-0 flex-1 basis-72 items-start gap-3 rounded-2xl border border-line bg-white px-4 py-3.5'
+            to={url}
+            draggable={false}
+            aria-label={`${name}, ${title}`}
+            data-revealed={revealed === name || undefined}
+            onClick={(event) => press(event, name)}
+            className='group relative block size-14 rounded-2xl focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
           >
-            <Picture
-              src={image_url}
-              alt=''
-              sizes='2.5rem'
-              decoding='async'
-              draggable={false}
-              className='size-10 shrink-0 rounded-full object-cover'
-            />
+            <span className='relative block size-full transition-[scale,translate] duration-250 ease-swift group-hover:-translate-y-0.5 group-hover:scale-110 group-focus-visible:scale-110 group-data-revealed:scale-110'>
+              <Picture
+                src={image_url}
+                alt=''
+                sizes='3.5rem'
+                decoding='async'
+                draggable={false}
+                className='size-full rounded-2xl object-cover shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_10px_20px_-12px_rgb(14_9_39_/_0.5)]'
+              />
 
-            <div className='flex min-w-0 flex-col gap-1'>
-              <SafeLink
-                to={url}
-                className='self-start text-sm/tight font-semibold text-ink underline decoration-edge underline-offset-2 transition-colors duration-200 ease-swift hover:decoration-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
+              <span
+                aria-hidden='true'
+                className='absolute inset-0 flex items-center justify-center rounded-2xl bg-ink/45 opacity-0 transition-opacity duration-250 ease-swift group-hover:opacity-100 group-focus-visible:opacity-100 group-data-revealed:opacity-100'
               >
-                {name}
-              </SafeLink>
-              <p className='m-0 text-[0.8125rem]/normal text-soft text-pretty'>
-                {title}
-              </p>
+                <ExternalLink className='size-5 scale-25 text-paper opacity-0 blur-xs transition-[opacity,scale,filter] duration-300 ease-swift group-hover:scale-100 group-hover:opacity-100 group-hover:blur-none group-focus-visible:scale-100 group-focus-visible:opacity-100 group-focus-visible:blur-none group-data-revealed:scale-100 group-data-revealed:opacity-100 group-data-revealed:blur-none' />
+              </span>
+            </span>
 
-              <nav
-                aria-label={`Redes de ${name}`}
-                className='-ml-2.5 flex items-center'
-              >
-                {NETWORKS.flatMap((network) => {
-                  const handle = socials[network];
-                  if (!handle) return [];
-
-                  const { name: label, Icon, tone } = socialLinks[network];
-
-                  return (
-                    <SafeLink
-                      key={network}
-                      to={PROFILES[network](encodeURIComponent(handle))}
-                      aria-label={label}
-                      draggable={false}
-                      style={{ color: tone }}
-                      className='group flex size-10 items-center justify-center rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent'
-                    >
-                      <Icon
-                        aria-hidden='true'
-                        className='size-4 transition-[scale,translate] duration-250 ease-swift group-hover:-translate-y-0.5 group-hover:scale-115'
-                      />
-                    </SafeLink>
-                  );
-                })}
-              </nav>
-            </div>
-          </article>
+            <Tooltip label={name} detail={title} />
+          </SafeLink>
         ))}
       </div>
     </section>

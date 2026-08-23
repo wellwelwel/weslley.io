@@ -126,7 +126,7 @@ export default ({
 
             {authorsData && authorsData.length > 0 && (
               <div className='authors'>
-                {authorsData.map(({ image_url, name, socials, title, url }) => (
+                {authorsData.map(({ image_url, name, title, url }) => (
                   <div key={name} className='author'>
                     <img
                       src={image_url}
@@ -141,68 +141,6 @@ export default ({
                         </a>
                       </div>
                       <div className='author-title'>{title}</div>
-                      <div className='author-socials'>
-                        {socials.linkedin && (
-                          <a
-                            href={`https://linkedin.com/in/${socials.linkedin}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            title='LinkedIn'
-                          >
-                            <img
-                              alt='LinkedIn'
-                              src='/img/linkedin.svg'
-                              loading='lazy'
-                              decoding='async'
-                            />
-                          </a>
-                        )}
-                        {socials.github && (
-                          <a
-                            href={`https://github.com/${socials.github}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            title='GitHub'
-                          >
-                            <img
-                              src='/img/github.svg'
-                              alt='GitHub'
-                              loading='lazy'
-                              decoding='async'
-                            />
-                          </a>
-                        )}
-                        {socials.instagram && (
-                          <a
-                            href={`https://instagram.com/${socials.instagram}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            title='Instagram'
-                          >
-                            <img
-                              src='/img/instagram.svg'
-                              alt='Instagram'
-                              loading='lazy'
-                              decoding='async'
-                            />
-                          </a>
-                        )}
-                        {socials.youtube && (
-                          <a
-                            href={`https://youtube.com/@${socials.youtube}`}
-                            target='_blank'
-                            rel='noopener noreferrer'
-                            title='YouTube'
-                          >
-                            <img
-                              src='/img/youtube.svg'
-                              alt='YouTube'
-                              loading='lazy'
-                              decoding='async'
-                            />
-                          </a>
-                        )}
-                      </div>
                     </div>
                   </div>
                 ))}

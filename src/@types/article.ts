@@ -1,19 +1,11 @@
 import type { ComponentType } from 'react';
 import type { SideConfig } from './side';
 
-export type AuthorSocials = {
-  linkedin?: string;
-  github?: string;
-  instagram?: string;
-  youtube?: string;
-};
-
 export type Author = {
   name: string;
   title: string;
   url: string;
   image_url: string;
-  socials: AuthorSocials;
 };
 
 export type AuthorsMap = Record<string, Author>;
