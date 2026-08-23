@@ -4,7 +4,7 @@ description: Authoritative engineering reference covering code conventions, comm
 user-invocable: true
 metadata:
   author: Weslley Araújo
-  version: '1.0.0'
+  version: '1.0.1'
   source: https://github.com/wellwelwel/skills
 ---
 
@@ -39,6 +39,8 @@ Where the project already has an established convention that contradicts one bel
 - **Never add obvious comments.** Assume that if code needs a comment to be understood, the implementation is poor, dirty/messy, or even rotten.
 - **The length of the comment reflects how bad the implementation is:** the more explanation it needs, the worse the code.
 - **Don't explain the implementation in the comments:** improve the implementation (clear names, decoupled functions with clearly defined scopes, proper abstractions, etc.) over explaining it with comments.
+  - **Connectives betray an explanation.** A comment that reads as reasoning ("so", "then", "because", "which means", "in order to", "this way", "otherwise", etc.) is walking the reader through the code, which is the violation above in disguise. Make the code carry the reasoning instead. The comment that survives states a fact the code cannot show on its own (an external constraint, a quirk, a team decision), plainly and without narrating the code around it.
+  - **Inline comments are inline for a reason.** Never stack them into improvised multi-line comments. When one line is not enough, use a comment block, and keep it as short and direct as it can be.
 
 ### Types (TypeScript)
 
