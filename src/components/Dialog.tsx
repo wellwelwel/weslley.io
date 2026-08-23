@@ -16,6 +16,7 @@ export type DialogOptions = {
   onClosed: () => void;
   fill?: boolean;
   bare?: boolean;
+  screen?: boolean;
   aside?: ReactNode;
   children: ReactNode;
 };
@@ -32,7 +33,7 @@ const FRAME =
   'relative flex max-h-full w-full flex-col max-sm:h-full max-sm:max-w-none';
 
 const PANEL =
-  'relative flex min-h-0 flex-auto flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none max-sm:rounded-none';
+  'relative flex min-h-0 flex-auto flex-col overflow-hidden shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none';
 
 const GLASS =
   'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0';
@@ -40,6 +41,7 @@ const GLASS =
 const SIZES = {
   content: 'max-w-5xl',
   fill: 'h-full max-w-7xl',
+  screen: 'h-full max-w-none',
 };
 
 let openDialogs = 0;
@@ -70,6 +72,7 @@ export const Dialog = ({
   onClosed,
   fill = false,
   bare = false,
+  screen = false,
   aside,
   children,
 }: DialogOptions): ReactNode => {
@@ -139,11 +142,17 @@ export const Dialog = ({
       role='presentation'
       tabIndex={-1}
       onPointerDown={onBackdrop}
-      className='fixed inset-0 z-100 flex items-center justify-center bg-ink/70 p-[clamp(1rem,3vw,2.5rem)] backdrop-blur-sm outline-none max-sm:p-0'
+      className={clsx(
+        'fixed inset-0 z-100 flex items-center justify-center bg-ink/70 backdrop-blur-sm outline-none',
+        !screen && 'p-[clamp(1rem,3vw,2.5rem)] max-sm:p-0'
+      )}
     >
       <div
         ref={frame}
-        className={clsx(FRAME, fill ? SIZES.fill : SIZES.content)}
+        className={clsx(
+          FRAME,
+          screen ? SIZES.screen : fill ? SIZES.fill : SIZES.content
+        )}
       >
         <div
           ref={panel}
@@ -151,7 +160,11 @@ export const Dialog = ({
           aria-modal='true'
           aria-label={label}
           tabIndex={-1}
-          className={clsx(PANEL, !bare && GLASS)}
+          className={clsx(
+            PANEL,
+            !screen && 'rounded-[2rem] max-sm:rounded-none',
+            !bare && GLASS
+          )}
         >
           {!bare && (
             <Picture

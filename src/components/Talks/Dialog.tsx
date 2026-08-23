@@ -586,6 +586,7 @@ export const TalkDialog = ({
     <Dialog
       fill
       bare
+      screen={Boolean(gallery)}
       open={open}
       label={label}
       onClose={gallery ? () => setGallery(null) : onClose}
@@ -598,7 +599,7 @@ export const TalkDialog = ({
               <Stepper
                 direction='previous'
                 label='Palestra anterior'
-                emphasis={next ? 'faint' : 'strong'}
+                emphasis={previous ? 'strong' : 'faint'}
                 onClick={() => travel('previous')}
               />
             </div>
@@ -633,7 +634,7 @@ export const TalkDialog = ({
               className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
             >
               {talk?.banner && (
-                <div className='absolute inset-0 blur-[4px] opacity-10 mask-b-from-30% grayscale'>
+                <div className='absolute inset-0 blur-[4px] opacity-6 mask-b-from-30% grayscale'>
                   <Cover src={talk.banner} alt='' />
                 </div>
               )}
