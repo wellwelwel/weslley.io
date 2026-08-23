@@ -250,7 +250,7 @@
 }
 
 ::view-transition-image-pair(talk-cover) {
-  clip-path: inset(0 round var(--radius-3xl));
+  clip-path: inset(0 round 1rem);
 }
 
 ::view-transition-old(talk-cover),

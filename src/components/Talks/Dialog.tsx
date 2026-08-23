@@ -92,7 +92,7 @@ type RootStyle = CSSProperties & { '--ticker-travel': string };
 const EYEBROW =
   'm-0 text-[0.625rem]/none font-bold tracking-widest text-muted uppercase';
 
-const COLUMN = 'mx-auto w-full max-w-4xl px-[clamp(1.25rem,4vw,3rem)]';
+const COLUMN = 'mx-auto w-full max-w-6xl px-[clamp(1.25rem,4vw,3rem)]';
 
 const PANEL = 'talk-side';
 
@@ -608,7 +608,7 @@ export const TalkDialog = ({
               className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
             >
               {talk?.banner && (
-                <div className='absolute inset-0 blur-[4px] opacity-6 mask-b-from-30% grayscale'>
+                <div className='absolute inset-0 blur-[5px] opacity-25 mask-b-from-30%'>
                   <Cover src={talk.banner} alt='' />
                 </div>
               )}
@@ -663,11 +663,11 @@ export const TalkDialog = ({
 
             {shape && (
               <div className={`${COLUMN} col-start-1 row-span-2 row-start-2`}>
-                <div
-                  style={{ aspectRatio: `${shape.width} / ${shape.height}` }}
-                  className='animate-ticker overflow-hidden rounded-3xl bg-well shadow-[0_1px_2px_rgb(14_9_39_/_0.12),0_24px_56px_-24px_rgb(14_9_39_/_0.55)] [animation-delay:140ms] [view-transition-name:talk-banner]'
-                >
-                  <div className='size-full [view-transition-name:talk-cover]'>
+                <div className='animate-ticker rounded-[1.5rem] bg-white/5 p-[0.4rem] shadow-[0_1px_2px_rgb(14_9_39_/_0.04),0_16px_40px_-16px_rgb(14_9_39_/_0.2)] backdrop-blur-[4px] [animation-delay:140ms] [view-transition-name:talk-banner]'>
+                  <div
+                    style={{ aspectRatio: `${shape.width} / ${shape.height}` }}
+                    className='overflow-hidden rounded-[1rem] bg-well [view-transition-name:talk-cover]'
+                  >
                     {talk?.banner && <Cover src={talk.banner} alt={label} />}
                   </div>
                 </div>
