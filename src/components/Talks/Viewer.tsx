@@ -65,7 +65,7 @@ export const Viewer = ({ gallery, onBack }: ViewerOptions): ReactNode => {
       tabIndex={-1}
       onKeyDown={onKeyDown}
       aria-label={gallery.label}
-      className='flex min-h-0 flex-1 flex-col outline-none'
+      className='flex min-h-0 flex-1 flex-col bg-paper outline-none'
     >
       <div className='flex items-center gap-3 px-[clamp(1rem,3vw,2rem)] pt-[clamp(1rem,3vw,2rem)] pr-16'>
         <button

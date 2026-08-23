@@ -15,7 +15,7 @@ export type DialogOptions = {
   onClose: () => void;
   onClosed: () => void;
   fill?: boolean;
-  solid?: boolean;
+  bare?: boolean;
   aside?: ReactNode;
   children: ReactNode;
 };
@@ -34,10 +34,8 @@ const FRAME =
 const PANEL =
   'relative flex min-h-0 flex-auto flex-col overflow-hidden rounded-[2rem] shadow-[0_40px_120px_-30px_rgb(14_9_39_/_0.75)] outline-none max-sm:rounded-none';
 
-const SURFACES = {
-  glass: 'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0',
-  solid: 'bg-paper',
-};
+const GLASS =
+  'border border-paper/50 bg-paper/90 backdrop-blur-2xl max-sm:border-0';
 
 const SIZES = {
   content: 'max-w-5xl',
@@ -71,7 +69,7 @@ export const Dialog = ({
   onClose,
   onClosed,
   fill = false,
-  solid = false,
+  bare = false,
   aside,
   children,
 }: DialogOptions): ReactNode => {
@@ -153,9 +151,9 @@ export const Dialog = ({
           aria-modal='true'
           aria-label={label}
           tabIndex={-1}
-          className={clsx(PANEL, solid ? SURFACES.solid : SURFACES.glass)}
+          className={clsx(PANEL, !bare && GLASS)}
         >
-          {!solid && (
+          {!bare && (
             <Picture
               src={images.velvet}
               alt=''

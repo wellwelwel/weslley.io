@@ -585,7 +585,7 @@ export const TalkDialog = ({
   return (
     <Dialog
       fill
-      solid
+      bare
       open={open}
       label={label}
       onClose={gallery ? () => setGallery(null) : onClose}
@@ -621,8 +621,13 @@ export const TalkDialog = ({
           onBack={() => setGallery(null)}
         />
       ) : (
-        <div ref={attach} style={rootStyle} className='flex flex-col'>
+        <div ref={attach} style={rootStyle} className='flex flex-1 flex-col'>
           <div className='grid grid-cols-1 grid-rows-[auto_1fr_1fr]'>
+            <div
+              aria-hidden='true'
+              className='col-start-1 row-start-3 bg-paper'
+            />
+
             <div
               aria-hidden='true'
               className='relative col-start-1 row-span-2 row-start-1 inverted overflow-hidden bg-wash [view-transition-name:talk-band]'
@@ -695,76 +700,80 @@ export const TalkDialog = ({
             )}
           </div>
 
-          <div
-            className={`${COLUMN} flex flex-col gap-6 pt-[clamp(1.5rem,3vw,2.5rem)] pb-[clamp(1.25rem,4vw,3rem)] [view-transition-name:talk-body]`}
-          >
-            {failed ? (
-              <p
-                role='alert'
-                className='m-0 animate-ticker text-[0.9375rem]/[1.7] text-soft'
-              >
-                Não foi possível carregar esta palestra. Tente novamente.
-              </p>
-            ) : talk ? (
-              <ViewerContext.Provider value={setGallery}>
-                {talk.authors.length > 0 && <Authors authors={talk.authors} />}
+          <div className='flex flex-1 flex-col bg-paper'>
+            <div
+              className={`${COLUMN} flex flex-col gap-6 pt-[clamp(1.5rem,3vw,2.5rem)] pb-[clamp(1.25rem,4vw,3rem)] [view-transition-name:talk-body]`}
+            >
+              {failed ? (
+                <p
+                  role='alert'
+                  className='m-0 animate-ticker text-[0.9375rem]/[1.7] text-soft'
+                >
+                  Não foi possível carregar esta palestra. Tente novamente.
+                </p>
+              ) : talk ? (
+                <ViewerContext.Provider value={setGallery}>
+                  {talk.authors.length > 0 && (
+                    <Authors authors={talk.authors} />
+                  )}
 
-                <SideContext.Provider value={sides}>
-                  <div className='flex flex-col gap-4'>
-                    {talk.sides.length > 0 && (
-                      <Sides
-                        sides={talk.sides}
-                        active={side}
-                        onSelect={setSide}
-                      />
-                    )}
+                  <SideContext.Provider value={sides}>
+                    <div className='flex flex-col gap-4'>
+                      {talk.sides.length > 0 && (
+                        <Sides
+                          sides={talk.sides}
+                          active={side}
+                          onSelect={setSide}
+                        />
+                      )}
 
-                    <MDXProvider components={components}>
-                      <div
-                        key={side}
-                        id={PANEL}
-                        role='tabpanel'
-                        className='flex animate-ticker flex-col gap-4 [&_hr]:m-0 [&_hr]:h-px [&_hr]:border-0 [&_hr]:bg-line'
-                      >
-                        <talk.Content />
-                      </div>
-                    </MDXProvider>
-                  </div>
-                </SideContext.Provider>
+                      <MDXProvider components={components}>
+                        <div
+                          key={side}
+                          id={PANEL}
+                          role='tabpanel'
+                          className='flex animate-ticker flex-col gap-4 [&_hr]:m-0 [&_hr]:h-px [&_hr]:border-0 [&_hr]:bg-line'
+                        >
+                          <talk.Content />
+                        </div>
+                      </MDXProvider>
+                    </div>
+                  </SideContext.Provider>
 
-                {(previous || next) && (
-                  <nav
-                    aria-label='Outras palestras'
-                    className='mt-2 grid animate-ticker gap-3 sm:grid-cols-2 [animation-delay:70ms]'
-                  >
-                    {previous && (
-                      <Neighbor
-                        slug={previous}
-                        direction='previous'
-                        onGo={() => travel('previous')}
-                      />
-                    )}
-                    {next && (
-                      <Neighbor
-                        slug={next}
-                        direction='next'
-                        onGo={() => travel('next')}
-                      />
-                    )}
-                  </nav>
-                )}
-              </ViewerContext.Provider>
-            ) : (
-              <div
-                aria-busy='true'
-                aria-label='Carregando a palestra'
-                className='flex animate-pulse flex-col gap-4'
-              >
-                <div className='h-24 rounded-2xl bg-well' />
-                <div className='h-5 w-3/4 rounded-lg bg-well' />
-                <div className='h-40 rounded-2xl bg-well' />
-              </div>
-            )}
+                  {(previous || next) && (
+                    <nav
+                      aria-label='Outras palestras'
+                      className='mt-2 grid animate-ticker gap-3 sm:grid-cols-2 [animation-delay:70ms]'
+                    >
+                      {previous && (
+                        <Neighbor
+                          slug={previous}
+                          direction='previous'
+                          onGo={() => travel('previous')}
+                        />
+                      )}
+                      {next && (
+                        <Neighbor
+                          slug={next}
+                          direction='next'
+                          onGo={() => travel('next')}
+                        />
+                      )}
+                    </nav>
+                  )}
+                </ViewerContext.Provider>
+              ) : (
+                <div
+                  aria-busy='true'
+                  aria-label='Carregando a palestra'
+                  className='flex animate-pulse flex-col gap-4'
+                >
+                  <div className='h-24 rounded-2xl bg-well' />
+                  <div className='h-5 w-3/4 rounded-lg bg-well' />
+                  <div className='h-40 rounded-2xl bg-well' />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       )}
