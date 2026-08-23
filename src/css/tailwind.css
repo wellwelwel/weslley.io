@@ -193,6 +193,18 @@
   --color-trim: color-mix(in srgb, var(--color-accent) 30%, var(--color-paper));
 }
 
+@layer base {
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(
+        in srgb,
+        var(--color-ink) 45%,
+        var(--color-paper)
+      )
+      transparent;
+  }
+}
+
 :root {
   --title-travel: 55%;
   --title-blur: 6px;

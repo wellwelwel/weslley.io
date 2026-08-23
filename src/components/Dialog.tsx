@@ -198,7 +198,7 @@ export const Dialog = ({
             />
           </button>
 
-          <div className='relative flex min-h-0 flex-1 flex-col overflow-y-auto'>
+          <div className='relative flex min-h-0 flex-1 flex-col overflow-y-auto [scrollbar-width:none] [&::-webkit-scrollbar]:hidden'>
             {children}
           </div>
         </div>
