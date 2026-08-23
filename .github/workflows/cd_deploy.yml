@@ -72,4 +72,4 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./build
           cname: weslley.io
-          allow_empty_commit: true
+          allow_empty_commit: false
