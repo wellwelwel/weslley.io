@@ -1,6 +1,7 @@
 name: '🗑️ CD (Website) — Purge Cache'
 
 on:
+  deployment_status:
   workflow_dispatch:
 
 jobs:
