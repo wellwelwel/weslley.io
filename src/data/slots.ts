@@ -1,5 +1,6 @@
 export type Slot = {
-  date: string;
+  /** An array marks a multi-day event with no talk day set. */
+  date: string | string[];
   time?: string;
   event: string;
   logo?: string;
@@ -295,7 +296,7 @@ export const slots: Slot[] = [
     role: 'Keynote',
   },
   {
-    date: '2026-09-18',
+    date: ['2026-09-18', '2026-09-19'],
     event: 'GO!RN & DevFest Natal',
     logo: '/img/gorn.svg',
     url: 'https://gorn.com.br/',

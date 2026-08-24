@@ -1,3 +1,4 @@
+import type { Slot } from '@site/src/data/slots';
 import { slots } from '@site/src/data/slots';
 import { todayInBrazil } from '@site/src/helpers/today';
 
@@ -6,6 +7,7 @@ type Calendar = {
   month: string;
   weekday: string;
   brief: string;
+  opens: string;
 };
 
 const DAY = 86_400_000;
@@ -52,27 +54,54 @@ export const WEEKDAYS = [
   'sábado',
 ];
 
-export const longDate = (date: string): string => {
-  const [year, month, day] = date.split('-').map(Number);
-
-  return `${day} de ${MONTHS[month - 1]} de ${year}`;
-};
-
 const parse = (date: string): Date => {
   const [year, month, day] = date.split('-').map(Number);
 
   return new Date(year, month - 1, day);
 };
 
-const calendar = (date: string): Calendar => {
-  const when = parse(date);
-  const day = String(when.getDate()).padStart(2, '0');
+const span = (date: Slot['date']): string[] =>
+  Array.isArray(date) ? date : [date];
+
+const opensAt = (date: Slot['date']): string => span(date)[0];
+
+const closesAt = (date: Slot['date']): string => {
+  const covered = span(date);
+
+  return covered[covered.length - 1];
+};
+
+const series = (parts: string[]): string =>
+  parts.length > 1
+    ? `${parts.slice(0, -1).join(', ')} e ${parts[parts.length - 1]}`
+    : parts[0];
+
+const numeral = (when: Date): string => String(when.getDate()).padStart(2, '0');
+
+const range = (numerals: string[]): string =>
+  numerals.length > 1
+    ? `${numerals[0]}-${numerals[numerals.length - 1]}`
+    : numerals[0];
+
+export const longDate = (date: Slot['date']): string => {
+  const covered = span(date).map(parse);
+  const opening = covered[0];
+  const numbers = series(covered.map((when) => String(when.getDate())));
+
+  return `${numbers} de ${MONTHS[opening.getMonth()]} de ${opening.getFullYear()}`;
+};
+
+const calendar = (date: Slot['date']): Calendar => {
+  const covered = span(date).map(parse);
+  const opening = covered[0];
+  const numerals = covered.map(numeral);
 
   return {
-    day,
-    month: `${MONTHS[when.getMonth()]} ${when.getFullYear()}`,
-    weekday: WEEKDAYS[when.getDay()],
-    brief: `${day} ${BRIEFS[when.getMonth()]}`,
+    day: series(numerals),
+    month: `${MONTHS[opening.getMonth()]} ${opening.getFullYear()}`,
+    weekday: series(covered.map((when) => WEEKDAYS[when.getDay()])),
+    brief: `${range(numerals)} ${BRIEFS[opening.getMonth()]}`,
+    opens: opensAt(date),
   };
 };
 
@@ -82,7 +111,7 @@ const gauge = (left: number, right: number): number =>
     PITCH.most
   );
 
-const times = slots.map(({ date }) => parse(date).getTime());
+const times = slots.map(({ date }) => parse(opensAt(date)).getTime());
 
 export const labels = slots.map(({ date }) => calendar(date));
 
@@ -100,7 +129,7 @@ export const extent = stations[stations.length - 1] + PITCH.inset;
 
 export const upcomingIndex = (): number => {
   const today = todayInBrazil();
-  const nearest = slots.findIndex(({ date }) => date >= today);
+  const nearest = slots.findIndex(({ date }) => closesAt(date) >= today);
 
   return nearest === -1 ? slots.length - 1 : nearest;
 };

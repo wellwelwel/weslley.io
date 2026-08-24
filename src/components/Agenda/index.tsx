@@ -65,8 +65,7 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
   const deck = useRef<HTMLDivElement | null>(null);
   const { focus, from, focusOn, step } = useStage(deck);
   const height = useDeckHeight(deck);
-  const { date } = slots[focus];
-  const { day, month, weekday } = labels[focus];
+  const { day, month, weekday, opens } = labels[focus];
   const opening = openings[focus];
   const ahead = focus < slots.length - 1;
 
@@ -106,24 +105,24 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
     >
       <div className='flex w-full animate-ticker items-center justify-between gap-3 [animation-delay:420ms]'>
         <time
-          dateTime={opening ? `${date}T${opening}` : date}
+          dateTime={opening ? `${opens}T${opening}` : opens}
           className='flex items-center gap-3 text-shadow-sm text-shadow-paper/50 short:gap-2'
         >
           <span
-            key={date}
+            key={opens}
             className='animate-ticker text-[2rem]/none font-[800] text-[var(--tone)] tabular-nums short:text-lg/none'
           >
             {day}
           </span>
 
           <span
-            key={`labels:${date}:${opening}`}
+            key={`labels:${opens}:${opening}`}
             className='flex animate-ticker flex-col gap-1 [animation-delay:80ms]'
           >
             <span className='text-[0.6875rem]/none font-bold tracking-widest text-ink uppercase'>
               {month}
             </span>
-            <span className='text-[0.6875rem]/none font-medium text-ink/55 capitalize tabular-nums short:hidden'>
+            <span className='text-[0.6875rem]/none font-medium text-ink/55 tabular-nums first-letter:uppercase short:hidden'>
               {opening ? `${weekday} · ${opening}` : weekday}
             </span>
           </span>
@@ -152,7 +151,7 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
       >
         {slots.map((slot, index) => (
           <Card
-            key={`${slot.date}:${slot.title}`}
+            key={`${labels[index].opens}:${slot.title}`}
             slot={slot}
             {...placement(index)}
             onFocus={() => focusOn(index)}
@@ -174,7 +173,7 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
           >
             {slots.map((slot, index) => (
               <button
-                key={`${slot.date}:${slot.title}`}
+                key={`${labels[index].opens}:${slot.title}`}
                 type='button'
                 onClick={() => focusOn(index)}
                 aria-current={index === focus ? 'date' : undefined}
