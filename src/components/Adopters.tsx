@@ -1,4 +1,5 @@
-import type { ComponentType, CSSProperties, ReactNode, SVGProps } from 'react';
+import type { Vars } from '@site/src/helpers/vars';
+import type { ComponentType, ReactNode, SVGProps } from 'react';
 import clsx from 'clsx';
 import Amazon from 'devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg';
 import Cloudflare from 'devicon/icons/cloudflare/cloudflare-original.svg';
@@ -17,7 +18,7 @@ type Adopter = {
   tone?: string;
 };
 
-type ListStyle = CSSProperties & { '--ticker-travel': string };
+type ListStyle = Vars<'--ticker-travel'>;
 
 const ADOPTERS: Adopter[] = [
   { name: 'Google', Logo: Google },

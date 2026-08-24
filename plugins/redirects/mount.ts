@@ -1,6 +1,7 @@
 import type { LoadContext, Plugin } from '@docusaurus/types';
 import type { ProcessedRedirect } from '../../src/@types/redirect';
-import { redirects } from '../../src/pages/_dynamic/redirect/_redirects.js';
+import { redirects } from '../../src/data/redirects';
+import { localePrefix } from '../locale';
 
 type PluginOptions = {
   pluginName: string;
@@ -23,29 +24,17 @@ export default (
 
   return {
     name: pluginName,
-    loadContent: async () => {
-      const processed: ProcessedRedirect[] = [];
-
-      for (const redirect of redirects) {
-        const socialUrl = redirect.social ?? getDefaultSocialUrl(redirect.url);
-
-        processed.push({
-          title: redirect.title,
-          slug: redirect.slug,
-          url: redirect.url,
-          social: redirect.social,
-          socialUrl,
-        });
-      }
-
-      return processed;
-    },
+    loadContent: async () =>
+      redirects.map(({ title, slug, url, social }) => ({
+        title,
+        slug,
+        url,
+        social,
+        socialUrl: social ?? getDefaultSocialUrl(url),
+      })),
     contentLoaded: async ({ content, actions }) => {
       const { addRoute, createData } = actions;
-      const { i18n } = context;
-      const currentLocale = i18n.currentLocale;
-      const localePrefix =
-        currentLocale === i18n.defaultLocale ? '' : `/${currentLocale}`;
+      const prefix = localePrefix(context.i18n);
 
       for (const redirect of content) {
         const dataPath = await createData(
@@ -57,7 +46,7 @@ export default (
         modules.data = dataPath;
 
         addRoute({
-          path: `${localePrefix}/r/${redirect.slug}`,
+          path: `${prefix}/r/${redirect.slug}`,
           component: '@site/src/pages/_dynamic/redirect/index.tsx',
           exact: true,
           modules,

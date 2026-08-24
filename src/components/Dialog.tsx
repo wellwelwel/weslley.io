@@ -5,9 +5,10 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { ArrowLeft, X } from 'lucide-react';
 import { createPortal } from 'react-dom';
-import { images } from '@site/src/components/Home/previews';
 import { Picture } from '@site/src/components/Picture';
+import { images } from '@site/src/data/previews';
 import { motion } from '@site/src/helpers/reduced-motion';
+import { hold } from '@site/src/helpers/scroll-lock';
 
 export type DialogOptions = {
   open: boolean;
@@ -48,27 +49,6 @@ const SIZES = {
   content: 'max-w-5xl',
   fill: 'h-full max-w-7xl',
   screen: 'h-full max-w-none',
-};
-
-let openDialogs = 0;
-
-const page = (): HTMLElement | null => document.getElementById('__docusaurus');
-
-const hold = (): (() => void) => {
-  const previousOverflow = document.body.style.overflow;
-  const opener = document.activeElement;
-
-  openDialogs += 1;
-  document.body.style.overflow = 'hidden';
-  page()?.setAttribute('inert', '');
-
-  return () => {
-    openDialogs -= 1;
-    document.body.style.overflow = previousOverflow;
-
-    if (openDialogs === 0) page()?.removeAttribute('inert');
-    if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
-  };
 };
 
 export const Dialog = ({

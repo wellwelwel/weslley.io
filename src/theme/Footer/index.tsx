@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import { memo } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { SafeLink } from '@site/src/components/SafeLink';
-import { socials } from '@site/src/helpers/get-socials';
+import { socialLinks } from '@site/src/data/socials';
 
 const footers: Record<string, ReactNode> = {
   'pt-BR': (
@@ -40,7 +40,6 @@ const footers: Record<string, ReactNode> = {
 const Footer = (): ReactNode => {
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
-  const Socials = socials(currentLocale);
 
   return (
     <footer>
@@ -48,8 +47,10 @@ const Footer = (): ReactNode => {
         <section>{footers[currentLocale]}</section>
       </aside>
       <aside className='right'>
-        {Socials.map((Social, i) => (
-          <Social key={`card:${i}`} />
+        {Object.values(socialLinks).map(({ name, imageSrc, url }) => (
+          <SafeLink key={name} to={url}>
+            <img loading='lazy' decoding='async' src={imageSrc} alt={name} />
+          </SafeLink>
         ))}
       </aside>
     </footer>

@@ -15,6 +15,13 @@ const BUBBLE =
 const ARROW =
   'absolute -bottom-1 left-1/2 size-2.5 translate-x-[calc(-50%_-_var(--point,0px))] rotate-45 rounded-xs bg-ink';
 
+const clipperOf = (node: Element): Element | null => {
+  for (let parent = node.parentElement; parent; parent = parent.parentElement)
+    if (getComputedStyle(parent).overflow !== 'visible') return parent;
+
+  return null;
+};
+
 /** Anchors to the nearest `group relative` parent, owner of its open states. */
 export const Tooltip = ({ label, detail }: TooltipOptions): ReactNode => {
   const bubble = useRef<HTMLSpanElement>(null);
@@ -24,16 +31,7 @@ export const Tooltip = ({ label, detail }: TooltipOptions): ReactNode => {
     const group = node?.closest('.group');
     if (!node || !group) return;
 
-    const clipper = (() => {
-      for (
-        let parent = node.parentElement;
-        parent;
-        parent = parent.parentElement
-      )
-        if (getComputedStyle(parent).overflow !== 'visible') return parent;
-
-      return null;
-    })();
+    const clipper = clipperOf(node);
 
     const fit = () => {
       const anchor = group.getBoundingClientRect();

@@ -1,9 +1,5 @@
+import type { Shape } from '../src/@types/image';
 import sharp from 'sharp';
-
-export type Shape = {
-  width: number;
-  height: number;
-};
 
 /** EXIF orientations from this value on are rotated a quarter turn. */
 const ROTATED = 5;

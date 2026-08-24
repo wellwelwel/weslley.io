@@ -2,9 +2,9 @@ import type { ReactNode } from 'react';
 import { useState } from 'react';
 import clsx from 'clsx';
 import { IoRocketSharp } from 'react-icons/io5';
-import { socialLinks } from '@site/src/helpers/social-links';
+import { socialLinks } from '@site/src/data/socials';
 
-export type Trigger = {
+export type TriggerOptions = {
   open: boolean;
   onOpen: () => void;
 };
@@ -13,7 +13,7 @@ type Tone = 'ink' | 'night';
 
 type Shape = 'pill' | 'nested';
 
-type TriggerOptions = Trigger & {
+type PartnersTriggerOptions = TriggerOptions & {
   label?: string;
   social?: string | null;
   tone?: Tone;
@@ -55,7 +55,7 @@ export const PartnersTrigger = ({
   tone = 'ink',
   shape = 'pill',
   onRestore,
-}: TriggerOptions): ReactNode => {
+}: PartnersTriggerOptions): ReactNode => {
   const current = social ?? label;
   const [rolling, setRolling] = useState<RollingLabel>({
     current,

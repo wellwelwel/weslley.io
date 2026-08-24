@@ -1,10 +1,11 @@
 import type { CSSProperties, ReactNode, RefObject } from 'react';
-import { useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useGSAP } from '@gsap/react';
 import clsx from 'clsx';
 import gsap from 'gsap';
-import { groupOf, groups, starts } from '@site/src/components/Home/slides';
+import { groupOf, starts } from '@site/src/components/Home/catalog';
 import { Picture } from '@site/src/components/Picture';
+import { groups } from '@site/src/data/slides';
 import { motion } from '@site/src/helpers/reduced-motion';
 
 gsap.registerPlugin(useGSAP);
@@ -46,10 +47,13 @@ export const Rail = ({
 }: RailOptions): ReactNode => {
   const placed = useRef(false);
   const carried = useRef(false);
-  const highlight = useRef(0);
+  const [lastOpen, setLastOpen] = useState(0);
   const group = groupOf[active];
+  const highlight = open ? active : lastOpen;
 
-  if (open) highlight.current = active;
+  useEffect(() => {
+    if (open) setLastOpen(active);
+  }, [open, active]);
 
   useGSAP(
     () => {
@@ -123,7 +127,7 @@ export const Rail = ({
                   draggable={false}
                   className={clsx(
                     'block aspect-square max-h-full w-full origin-bottom object-contain object-bottom drop-shadow-[0_2px_3px_var(--shade-deep)] transition-[scale] duration-250 ease-swift',
-                    index === highlight.current ? 'scale-85' : 'scale-65'
+                    index === highlight ? 'scale-85' : 'scale-65'
                   )}
                 />
               </button>

@@ -2,7 +2,8 @@ import type { ComponentProps, ReactNode } from 'react';
 import { useThemeConfig } from '@docusaurus/theme-common';
 import { useNavbarSecondaryMenu } from '@docusaurus/theme-common/internal';
 import Translate from '@docusaurus/Translate';
-import { anchors } from '@site/src/helpers/get-anchors';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { anchors } from '@site/src/helpers/localized';
 
 function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
   return (
@@ -18,7 +19,8 @@ function SecondaryMenuBackButton(props: ComponentProps<'button'>) {
 }
 
 export default function NavbarMobileSidebarSecondaryMenu(): ReactNode {
-  const hasAnchors = anchors.length > 0;
+  const { i18n } = useDocusaurusContext();
+  const hasAnchors = anchors(i18n.currentLocale).length > 0;
 
   const isPrimaryMenuEmpty =
     useThemeConfig().navbar.items.length === 0 && !hasAnchors;

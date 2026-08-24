@@ -1,15 +1,11 @@
-import {
-  dynamicImport,
-  dynamicRequire,
-} from '@site/src/helpers/dynamic-require';
+import type { FC } from 'react';
+import { localized } from '@site/src/helpers/localized';
 
-export const projects = (locate: string) =>
-  dynamicRequire(
-    dynamicImport(locate, {
-      'pt-BR': require.context(
-        '@site/i18n/pt-BR/projects',
-        false,
-        /\.(tsx|jsx|mdx)$/
-      ),
-    })
-  );
+export const projects = (locale: string): FC[] =>
+  localized(locale, {
+    'pt-BR': require.context(
+      '@site/i18n/pt-BR/projects',
+      false,
+      /\.(tsx|jsx|mdx)$/
+    ),
+  });

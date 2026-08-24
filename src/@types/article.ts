@@ -1,5 +1,5 @@
-import type { ComponentType } from 'react';
-import type { SideConfig } from './side';
+import type { SideConfig } from '@site/src/@types/side';
+import type { ComponentType, ReactNode } from 'react';
 
 export type Author = {
   name: string;
@@ -10,6 +10,14 @@ export type Author = {
 
 export type AuthorsMap = Record<string, Author>;
 
+export type ArticleRoute = 'articles';
+
+export type ArticlesOptions = {
+  route: ArticleRoute;
+  description?: string;
+  children?: ReactNode;
+};
+
 export type ArticleFrontMatter = {
   title: string;
   slug?: string;
@@ -18,17 +26,20 @@ export type ArticleFrontMatter = {
   tags: string[];
   social?: string;
   sides?: SideConfig[];
+  order?: number;
 };
 
 export type ArticleNavigation = {
   title: string;
-  slug: string;
+  path: string;
   description: string | null;
   social?: string;
 };
 
-export type ProcessedArticle = ArticleFrontMatter & {
-  route: 'articles';
+/** `slug` is the counter key, `path` the route segment. */
+export type FoundArticle = Omit<ArticleFrontMatter, 'slug'> & {
+  slug: string;
+  path: string;
   content: string;
   filePath: string;
   mdxPath: string;
@@ -37,16 +48,20 @@ export type ProcessedArticle = ArticleFrontMatter & {
   socialPath?: string;
   readingTime: number;
   lastModified?: string;
+};
+
+export type ProcessedArticle = FoundArticle & {
+  route: string;
   authorsData: Author[];
   previousArticle?: ArticleNavigation;
   nextArticle?: ArticleNavigation;
-  order?: number;
 };
 
 export type ArticleListing = Pick<
   ProcessedArticle,
   | 'title'
   | 'slug'
+  | 'path'
   | 'date'
   | 'description'
   | 'readingTime'
@@ -57,7 +72,7 @@ export type ArticleListing = Pick<
   | 'mdxPath'
 >;
 
-export type ArticlePageProps = {
+export type ArticlePageOptions = {
   data: ProcessedArticle;
   content: ComponentType;
   social?: string;

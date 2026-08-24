@@ -1,10 +1,10 @@
-import type { SummaryItem } from '../../../@types/article';
+import type { SummaryItem } from '@site/src/@types/article';
 import { useContext, useEffect, useMemo, useState } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import GithubSlugger from 'github-slugger';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
-import { SideContext } from '../../../components/Side/context';
+import { SideContext } from '@site/src/components/Side/context';
 
 const regex = /[_*:"'?]/g;
 

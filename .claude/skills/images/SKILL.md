@@ -41,7 +41,7 @@ The hook needs `sharp`. Check it with `npm ls sharp` and install it as a develop
 
 ## Running it
 
-The hook ships with this skill, at [tools/images.ts](tools/images.ts) next to this file, and the project exposes it as npm scripts:
+The hook lives in the project, at `tools/images.ts`, and is exposed as npm scripts:
 
 ```sh
 npm run images:scan

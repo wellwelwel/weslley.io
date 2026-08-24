@@ -1,18 +1,29 @@
-import type { SideConfig } from '../../@types/side';
+import type { SideConfig } from '@site/src/@types/side';
 import { useContext, useEffect, useMemo } from 'react';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { CassetteTape, Pen } from 'lucide-react';
-import { getSideLabel } from '../../helpers/get-side-label';
-import { SideContext } from './context';
+import { SideContext } from '@site/src/components/Side/context';
+import { getSideLabel } from '@site/src/helpers/side-label';
 
-interface SideSelectorProps {
+type SideSelectorOptions = {
   sides: SideConfig[];
-}
+};
 
-export const SideSelector = ({ sides }: SideSelectorProps) => {
+export const SideSelector = ({ sides }: SideSelectorOptions) => {
   const context = useContext(SideContext);
   const { i18n } = useDocusaurusContext();
   const currentLocale = i18n.currentLocale;
+  const defaultId = useMemo(() => sides[0]?.id ?? null, [sides]);
+  const activeId = context?.activeId ?? null;
+  const setActiveId = context?.setActiveId;
+  const setDefaultId = context?.setDefaultId;
+
+  useEffect(() => {
+    if (!setDefaultId || !setActiveId) return;
+
+    setDefaultId(defaultId);
+    if (activeId === null) setActiveId(defaultId);
+  }, [defaultId, setDefaultId, activeId, setActiveId]);
 
   const translations = {
     chooseArticleSide:
@@ -23,21 +34,7 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
   };
 
   if (!context) return null;
-  if (!sides || sides.length === 0) return null;
-
-  const { activeId, setActiveId, setDefaultId } = context;
-
-  const defaultId = useMemo(
-    () => (sides.length > 0 ? sides[0].id : null),
-    [sides]
-  );
-
-  useEffect(() => {
-    setDefaultId(defaultId);
-    if (activeId === null) {
-      setActiveId(defaultId);
-    }
-  }, [defaultId, setDefaultId, activeId, setActiveId]);
+  if (sides.length === 0) return null;
 
   const currentId = activeId ?? defaultId;
 
@@ -54,7 +51,7 @@ export const SideSelector = ({ sides }: SideSelectorProps) => {
           return (
             <button
               key={side.id}
-              onClick={() => setActiveId(side.id)}
+              onClick={() => context.setActiveId(side.id)}
               aria-pressed={currentId === side.id}
             >
               <span>

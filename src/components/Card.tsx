@@ -1,20 +1,21 @@
 import type { FC, ReactNode } from 'react';
 import { useEffect, useRef, useState } from 'react';
-import Link from '@docusaurus/Link';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import {
-  Box,
-  CalendarDays,
-  Clock,
-  ExternalLink,
-  GraduationCap,
-  MapPin,
-  Rocket,
-  Star,
-  TicketPercent,
-} from 'lucide-react';
+import { Box, ExternalLink, Rocket, Star } from 'lucide-react';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { useScroll } from '@site/src/hooks/useScroll';
+
+type Metric = {
+  value?: number;
+  label?: string;
+};
+
+type Awesome = {
+  stats: {
+    npm: Metric;
+    stars: Metric;
+    repositoryDependents: Metric;
+  };
+};
 
 export type CardOptions = {
   name: string;
@@ -25,16 +26,6 @@ export type CardOptions = {
   npm?: string;
   repo?: string;
   className?: string;
-};
-
-export type TalkCardOptions = CardOptions & {
-  date?: string;
-  location?: string;
-  material?: string;
-  coupon?: {
-    code?: string;
-    url?: string;
-  };
 };
 
 export const Card: FC<CardOptions> = ({
@@ -69,7 +60,7 @@ export const Card: FC<CardOptions> = ({
     })
       .then((response) => response.json())
       .then((data: unknown) => {
-        const { stats } = data as { stats: any };
+        const { stats } = data as Awesome;
         setStats({
           downloads: stats.npm.value ? stats.npm.label : undefined,
           stars: stats.stars.label,
@@ -121,147 +112,6 @@ export const Card: FC<CardOptions> = ({
               <strong>{stats?.stars}</strong> estrelas
             </span>
           </div>
-        </footer>
-      )}
-    </div>
-  );
-};
-
-export const TalkCard: FC<TalkCardOptions> = ({
-  name,
-  imageSrc,
-  alt,
-  url,
-  children,
-  date: datetime,
-  location,
-  material,
-  coupon,
-  className,
-}) => {
-  const ref = useRef<HTMLDivElement>(null);
-  const { i18n } = useDocusaurusContext();
-  const { currentLocale } = i18n;
-  const isPtBr = currentLocale === 'pt-BR';
-  const hasFooter = datetime || location || coupon;
-  const date = datetime
-    ? new Date(datetime).toLocaleDateString(isPtBr ? 'pt-BR' : 'en-US', {
-        day: '2-digit',
-        month: '2-digit',
-        year: 'numeric',
-      })
-    : undefined;
-  const time = datetime
-    ? (() => {
-        const dateObj = new Date(datetime);
-        const hours = dateObj.getHours();
-        const minutes = dateObj.getMinutes();
-
-        if (hours === 0 && minutes === 0) return undefined;
-
-        return dateObj.toLocaleTimeString(isPtBr ? 'pt-BR' : 'en-US', {
-          hour: '2-digit',
-          minute: '2-digit',
-        });
-      })()
-    : undefined;
-
-  const isPast = Boolean(datetime && new Date() > new Date(datetime));
-
-  const LinkContent = () => (
-    <>
-      <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
-      <div>
-        <header>{name}</header>
-        <main>{children}</main>
-      </div>
-      <ExternalLink />
-    </>
-  );
-
-  useScroll(ref, (isVisible, target) => {
-    if (!isVisible) return;
-
-    target.classList.add('show');
-  });
-
-  return (
-    <div
-      ref={ref}
-      className={(() => {
-        const classes: string[] = [];
-
-        if (isPast) classes.push('past');
-        if (className) classes.push(className);
-
-        return classes.join(' ');
-      })()}
-    >
-      {url.startsWith('http') ? (
-        <SafeLink
-          to={url}
-          title={alt}
-          className={hasFooter ? 'has-footer' : undefined}
-        >
-          <LinkContent />
-        </SafeLink>
-      ) : (
-        <Link
-          to={url}
-          title={alt}
-          className={hasFooter ? 'has-footer' : undefined}
-        >
-          <LinkContent />
-        </Link>
-      )}
-      {hasFooter && (
-        <footer>
-          <img loading='lazy' decoding='async' src={imageSrc} alt={alt} />
-          {(datetime || coupon) && (
-            <div className='groups'>
-              {datetime && (
-                <>
-                  <div className='group'>
-                    <CalendarDays />
-                    <time>{date}</time>
-                  </div>
-                  {time && (
-                    <div className='group'>
-                      <Clock />
-                      <time dateTime={time}>
-                        {time}
-                        {`${isPtBr ? 'h' : ''}`}
-                      </time>
-                    </div>
-                  )}
-                </>
-              )}
-              {coupon && (
-                <div className='group'>
-                  <TicketPercent />
-                  <SafeLink to={coupon.url} title={isPtBr ? 'Cupom' : 'Coupon'}>
-                    {coupon.code}
-                    <ExternalLink />
-                  </SafeLink>
-                </div>
-              )}
-            </div>
-          )}
-          {material && (
-            <div className='group'>
-              <GraduationCap />
-              <SafeLink to={material}>
-                {isPtBr ? 'Material de Estudo' : 'Study Material'}
-                <ExternalLink />
-              </SafeLink>
-            </div>
-          )}
-          {location && (
-            <div className='group'>
-              <MapPin />
-              <address>{location}</address>
-            </div>
-          )}
         </footer>
       )}
     </div>

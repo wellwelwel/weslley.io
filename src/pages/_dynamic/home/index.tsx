@@ -1,46 +1,42 @@
-import type { TalkOpener } from '@site/src/components/Agenda/Card';
 import type { Section } from '@site/src/components/Header';
-import type { Theme } from '@site/src/components/Home/slides';
-import type { CSSProperties, ReactNode } from 'react';
+import type { Theme } from '@site/src/data/slides';
+import type { Vars } from '@site/src/helpers/vars';
+import type { ReactNode } from 'react';
 import type { RouteConfig } from 'react-router-config';
-import { useCallback, useEffect, useMemo, useState } from 'react';
-import Head from '@docusaurus/Head';
+import { useEffect, useMemo, useState } from 'react';
 import renderRoutes from '@docusaurus/renderRoutes';
-import { matchPath, useHistory, useLocation } from '@docusaurus/router';
-import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { matchPath, useLocation } from '@docusaurus/router';
 import NotFound from '@theme/NotFound';
 import clsx from 'clsx';
 import { Backdrop } from '@site/src/components/Backdrop';
 import { Header } from '@site/src/components/Header';
 import { Hill } from '@site/src/components/Hill';
-import { pathOf } from '@site/src/components/Home/previews';
-import { Rail } from '@site/src/components/Home/Rail';
 import {
   backgrounds,
   colors,
-  defaultBackground,
   groupOf,
-  groups,
   paths,
   slides,
   starts,
   steps,
   textures,
-  warm,
-} from '@site/src/components/Home/slides';
+} from '@site/src/components/Home/catalog';
+import { warm } from '@site/src/components/Home/gates';
+import { Hero } from '@site/src/components/Home/Hero';
+import { Preloads } from '@site/src/components/Home/Preloads';
+import { Rail } from '@site/src/components/Home/Rail';
 import { partnersDialog, talkDialog } from '@site/src/components/Home/stages';
 import { Tint } from '@site/src/components/Home/Tint';
+import { usePartnersDialog } from '@site/src/components/Home/usePartnersDialog';
 import { useSlideshow } from '@site/src/components/Home/useSlideshow';
 import { useSpots } from '@site/src/components/Home/useSpots';
-import { Name } from '@site/src/components/Name';
-import { srcset } from '@site/src/components/Picture';
+import { useTalkDialog } from '@site/src/components/Home/useTalkDialog';
 import { Progress } from '@site/src/components/Progress';
-import interLatin from '@site/src/fonts/inter-latin.woff2';
-import noto800 from '@site/src/fonts/noto-sans-latin-800.woff2';
-import noto900 from '@site/src/fonts/noto-sans-latin-900.woff2';
+import { defaultBackground, groups } from '@site/src/data/slides';
+import { whenIdle } from '@site/src/helpers/idle';
 import { todayInBrazil } from '@site/src/helpers/today';
 
-type PageStyle = CSSProperties & { '--tint'?: string };
+type PageStyle = Partial<Vars<'--tint'>>;
 
 type HomeOptions = {
   routes: RouteConfig[];
@@ -50,57 +46,35 @@ type ShellOptions = {
   route: Pick<RouteConfig, 'routes'>;
 };
 
-type Params = {
-  slug: string;
-};
-
-const MEDIA = {
-  narrow: '(max-width: 39.9375rem)',
-  wide: '(min-width: 40rem)',
-};
-
 const fallbackBackgrounds = [defaultBackground];
-
-const opening = slides[0].texture;
-
-const grain = opening && srcset(opening, 'avif');
 
 const BLURRED = 'scale-125 blur-[24px] saturate-150 brightness-125';
 
 const BLURRED_SIZES = '40vw';
-
-const TALKS = pathOf('talks');
-
-const TALK = `${TALKS}:slug/`;
-
-const talkOf = (pathname: string): string | null =>
-  matchPath<Params>(pathname, { path: TALK, exact: true })?.params.slug ?? null;
-
-const FROM_CARD = { origin: 'card' };
-
-const openedFromCard = (state: unknown): boolean =>
-  typeof state === 'object' && state !== null && 'origin' in state;
 
 const THEMES: Record<Theme, string> = {
   light: '',
   dark: 'inverted',
 };
 
-const SHADOWS: Record<Theme, string> = {
-  light: 'text-shadow-paper/18',
-  dark: 'text-shadow-paper/50',
-};
-
 const Home = ({ routes }: HomeOptions): ReactNode => {
-  const { siteConfig } = useDocusaurusContext();
-  const history = useHistory();
   const { pathname, search } = useLocation();
-  const talk = talkOf(pathname);
-  const [shown, setShown] = useState<string | null>(null);
-  const [partners, setPartners] = useState(false);
-  const [partnersMounted, setPartnersMounted] = useState(false);
   const [menu, setMenu] = useState(false);
   const [hovered, setHovered] = useState<number | null>(null);
+  const {
+    partners,
+    mounted: partnersMounted,
+    open: openPartners,
+    close: closePartners,
+    settle: settlePartners,
+  } = usePartnersDialog(search);
+  const {
+    talk,
+    current,
+    open: openTalk,
+    close: closeTalk,
+    settle: settleTalk,
+  } = useTalkDialog(pathname);
   const { active, show, home } = useSlideshow(
     paths,
     partners || menu || talk !== null
@@ -112,8 +86,8 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
       ? hovered
       : null;
   const focus = preview ?? active;
+  const slide = slides[active];
   const {
-    actions,
     src: plush,
     background,
     texture,
@@ -122,87 +96,18 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
     hill,
     scene: Scene,
     theme = 'light',
-    align,
-    still,
-    text,
-    footnote,
-  } = slides[active];
-  const { stage: Stage, cta: Cta } = actions ?? {};
-  const current = talk !== null && shown !== null ? talk : shown;
-  const [titleLead, titleTail, titleMark] = slides[active].title;
-  const flow = align === 'left' && 'max-lg:inline-block';
+  } = slide;
   const tint: PageStyle = { '--tint': color ?? hill };
 
-  const openPartners = useCallback(() => {
-    const reveal = () => {
-      setPartnersMounted(true);
-      setPartners(true);
-    };
-
-    if (partnersDialog.gate.ready()) return reveal();
-
-    partnersDialog.gate.load().then(reveal, () => undefined);
-  }, []);
-
-  const closePartners = useCallback(() => setPartners(false), []);
-
-  const settlePartners = useCallback(() => setPartnersMounted(false), []);
-
-  const openTalk = useCallback<TalkOpener>(
-    (slug) => history.push(`${TALKS}${slug}/`, FROM_CARD),
-    [history]
+  useEffect(
+    () =>
+      whenIdle(() => {
+        todayInBrazil();
+        warm();
+        partnersDialog.gate.load().catch(() => undefined);
+      }),
+    []
   );
-
-  const closeTalk = useCallback(() => {
-    if (openedFromCard(history.location.state)) return history.goBack();
-
-    history.replace(TALKS);
-  }, [history]);
-
-  const settleTalk = useCallback(() => setShown(null), []);
-
-  useEffect(() => {
-    if (talk === null) return;
-
-    if (shown !== null) {
-      if (talk !== shown && talkDialog.gate.ready()) setShown(talk);
-
-      return;
-    }
-
-    let stale = false;
-
-    talkDialog.gate.load().then(
-      () => !stale && setShown(talk),
-      () => undefined
-    );
-
-    return () => {
-      stale = true;
-    };
-  }, [talk, shown]);
-
-  useEffect(() => {
-    if (new URLSearchParams(search).has('partners')) openPartners();
-  }, [openPartners, search]);
-
-  useEffect(() => {
-    const warmUp = () => {
-      todayInBrazil();
-      warm();
-      partnersDialog.gate.load().catch(() => undefined);
-    };
-
-    if (typeof window.requestIdleCallback !== 'function') {
-      const handle = window.setTimeout(warmUp, 1);
-
-      return () => window.clearTimeout(handle);
-    }
-
-    const handle = window.requestIdleCallback(warmUp, { timeout: 1500 });
-
-    return () => window.cancelIdleCallback(handle);
-  }, []);
 
   const sections = useMemo<Section[]>(
     () =>
@@ -215,48 +120,7 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
 
   return (
     <>
-      <Head>
-        <title>{siteConfig.title}</title>
-        <meta
-          name='description'
-          content='Microsoft MVP e Anthropic CVP, Weslley Araújo mantém o MySQL2 e criou o Poku e o Lagune, impactando milhões de desenvolvedores através do open source.'
-        />
-        <body className='clean overscroll-none' />
-        <link
-          rel='preload'
-          as='font'
-          type='font/woff2'
-          href={interLatin}
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preload'
-          as='font'
-          type='font/woff2'
-          href={noto900}
-          media={MEDIA.narrow}
-          crossOrigin='anonymous'
-        />
-        <link
-          rel='preload'
-          as='font'
-          type='font/woff2'
-          href={noto800}
-          media={MEDIA.wide}
-          crossOrigin='anonymous'
-        />
-        {grain && (
-          <link
-            rel='preload'
-            as='image'
-            type='image/avif'
-            imageSrcSet={grain}
-            imageSizes='100vw'
-            media={MEDIA.wide}
-            fetchPriority='high'
-          />
-        )}
-      </Head>
+      <Preloads />
 
       {renderRoutes(routes)}
 
@@ -332,103 +196,13 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
                   'pt-[clamp(1rem,7.75svh-1.75rem,3.5rem)] max-sm:pt-[clamp(0.75rem,7.75svh-2.5rem,3.5rem)] short:pt-1 cramped:pt-0'
               )}
             >
-              <div
-                className={clsx(
-                  plush
-                    ? 'mt-auto'
-                    : 'flex flex-1 flex-col justify-center gap-[clamp(1.5rem,5svh,3rem)]',
-                  align === 'left'
-                    ? 'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-center short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10'
-                    : 'text-center'
-                )}
-              >
-                <div className='min-w-0'>
-                  <h1
-                    className={clsx(
-                      'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-balance text-shadow-md select-none sm:text-hero sm:font-[800]',
-                      SHADOWS[theme]
-                    )}
-                  >
-                    <span
-                      key={`lead:${active}`}
-                      className={clsx('block animate-title', flow)}
-                    >
-                      <Name stroke>{titleLead}</Name>
-                    </span>{' '}
-                    <span
-                      key={`tail:${active}`}
-                      className={clsx(
-                        'block animate-title [animation-delay:50ms]',
-                        flow
-                      )}
-                    >
-                      <Name stroke>{titleTail}</Name>
-                      {titleMark && (
-                        <span className='text-accent' style={{ color: mark }}>
-                          <Name stroke>{titleMark}</Name>
-                        </span>
-                      )}
-                    </span>
-                  </h1>
-
-                  {text && (
-                    <p
-                      key={`text:${active}`}
-                      className={clsx(
-                        'mt-[clamp(1rem,4svh-0.5rem,1.75rem)] mb-0 w-full max-w-225 animate-slide text-[max(0.875rem,min(1rem,3svh-0.25rem))]/normal font-semibold text-ink/70 text-pretty text-shadow-sm sm:mt-10 sm:text-lede short:mt-2',
-                        plush &&
-                          'min-h-[clamp(2.5rem,6.67svh+2.25rem,6.75rem)] short:min-h-10',
-                        align !== 'left' && 'mx-auto',
-                        SHADOWS[theme]
-                      )}
-                    >
-                      {text}
-                    </p>
-                  )}
-
-                  {Cta && (
-                    <div
-                      key={`cta:${active}`}
-                      className='mt-10 animate-slide max-lg:hidden'
-                    >
-                      <Cta
-                        open={partners}
-                        onOpen={openPartners}
-                        onTalk={openTalk}
-                        mark={mark}
-                      />
-                    </div>
-                  )}
-                </div>
-
-                {Stage && (
-                  <div
-                    key={`stage:${active}`}
-                    className={clsx(
-                      align === 'left'
-                        ? 'mt-[clamp(1.5rem,20svh-7.25rem,4rem)] shrink-0 short:mt-3 cramped:mt-1 short-wide:mt-0 lg:mt-0'
-                        : plush && 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]',
-                      !still && 'animate-slide'
-                    )}
-                  >
-                    <Stage
-                      open={partners}
-                      onOpen={openPartners}
-                      onTalk={openTalk}
-                      mark={mark}
-                    />
-                  </div>
-                )}
-
-                {footnote && (
-                  <p
-                    key={`footnote:${active}`}
-                    className='m-0 flex animate-ticker items-center justify-center gap-2 text-[0.8125rem]/none font-semibold text-ink/55 halo [animation-delay:700ms]'
-                  >
-                    {footnote}
-                  </p>
-                )}
-              </div>
+              <Hero
+                slide={slide}
+                index={active}
+                partners={partners}
+                onPartners={openPartners}
+                onTalk={openTalk}
+              />
 
               <Rail
                 ref={rail}
@@ -467,7 +241,7 @@ const Home = ({ routes }: HomeOptions): ReactNode => {
   );
 };
 
-export default ({ route }: ShellOptions): ReactNode => {
+const Shell = ({ route }: ShellOptions): ReactNode => {
   const { pathname } = useLocation();
   const routes = route.routes ?? [];
   const known = routes.some(({ path, exact }) =>
@@ -476,3 +250,5 @@ export default ({ route }: ShellOptions): ReactNode => {
 
   return known ? <Home routes={routes} /> : <NotFound />;
 };
+
+export default Shell;

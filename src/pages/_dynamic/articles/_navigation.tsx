@@ -1,24 +1,20 @@
-import type { ArticleNavigation } from '../../../@types/article';
+import type { ArticleNavigation } from '@site/src/@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
-import { MarkdownWithAdmonitions } from '@site/src/components/Articles/Articles';
+import { MarkdownWithAdmonitions } from '@site/src/components/Articles/Admonition';
 import { stripLinks } from '@site/src/helpers/strip-links';
 
-type ArticleNavigationProps = {
+type NavigationOptions = {
   previous?: ArticleNavigation;
   next?: ArticleNavigation;
   route: string;
 };
 
-export const Navigation = ({
-  previous,
-  next,
-  route,
-}: ArticleNavigationProps) => {
-  if (!previous && !next) return null;
-
+export const Navigation = ({ previous, next, route }: NavigationOptions) => {
   const { i18n } = useDocusaurusContext();
   const currentLocale = i18n.currentLocale;
+
+  if (!previous && !next) return null;
 
   const translations = {
     previous: currentLocale === 'en' ? '← Previous' : '← Anterior',
@@ -30,7 +26,7 @@ export const Navigation = ({
       <hr />
       <nav className='article-navigation'>
         {previous ? (
-          <Link to={`/${route}/${previous.slug}`}>
+          <Link to={`/${route}/${previous.path}`}>
             <div className='nav-label'>{translations.previous}</div>
             {previous.social && (
               <div className='nav-image'>
@@ -61,7 +57,7 @@ export const Navigation = ({
         )}
 
         {next ? (
-          <Link to={`/${route}/${next.slug}`}>
+          <Link to={`/${route}/${next.path}`}>
             <div className='nav-label next'>{translations.next}</div>
             {next.social && (
               <div className='nav-image'>

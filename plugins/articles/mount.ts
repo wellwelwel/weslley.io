@@ -1,22 +1,37 @@
 import type {
+  LoadContext,
+  Plugin,
+  PluginContentLoadedActions,
+} from '@docusaurus/types';
+import type {
   ArticleListing,
+  ArticleNavigation,
+  FoundArticle,
   ProcessedArticle,
 } from '../../src/@types/article';
-import { resolve } from 'node:path';
-import { LoadContext, Plugin } from '@docusaurus/types';
 import { findArticles } from '../../tools/find-articles';
 import { loadAuthors } from '../../tools/load-authors';
 import { normalizeTag } from '../../tools/normalize-tag';
+import { registerCounters } from '../../tools/register-counters';
+import { contentDir, localePrefix, watchGlob } from '../locale';
 
-interface PluginOptions {
+type PluginOptions = {
   pluginName: string;
   contentDir: string;
-}
+};
+
+type RouteOptions = {
+  articles: ProcessedArticle[];
+  actions: PluginContentLoadedActions;
+  route: string;
+  prefix: string;
+};
 
 /** Global data ships in every page bundle. */
 const listing = ({
   title,
   slug,
+  path,
   date,
   description,
   readingTime,
@@ -28,6 +43,7 @@ const listing = ({
 }: ProcessedArticle): ArticleListing => ({
   title,
   slug,
+  path,
   date,
   description,
   readingTime,
@@ -38,134 +54,131 @@ const listing = ({
   mdxPath,
 });
 
+const neighbor = ({
+  title,
+  path,
+  description,
+  socialPath,
+}: FoundArticle): ArticleNavigation => ({
+  title,
+  path,
+  description,
+  social: socialPath,
+});
+
+const newestFirst = (left: FoundArticle, right: FoundArticle): number =>
+  new Date(right.date).getTime() - new Date(left.date).getTime();
+
+const articleRoutes = async ({
+  articles,
+  actions,
+  route,
+  prefix,
+}: RouteOptions): Promise<void> => {
+  for (const article of articles) {
+    const dataPath = await actions.createData(
+      `${route}-${article.path}.json`,
+      JSON.stringify(article, null, 0)
+    );
+
+    const modules: Record<string, string> = Object.create(null);
+    modules.data = dataPath;
+    modules.content = article.mdxPath;
+
+    if (article.socialPath) modules.social = article.socialPath;
+
+    if (article.previousArticle?.social)
+      modules.previousSocial = article.previousArticle.social;
+
+    if (article.nextArticle?.social)
+      modules.nextSocial = article.nextArticle.social;
+
+    actions.addRoute({
+      path: `${prefix}/${route}/${article.path}`,
+      component: `@site/src/pages/_dynamic/${route}/index.tsx`,
+      exact: true,
+      modules,
+    });
+  }
+};
+
+const tagRoutes = async ({
+  articles,
+  actions,
+  route,
+  prefix,
+}: RouteOptions): Promise<void> => {
+  const tagMap: Record<string, ProcessedArticle[]> = Object.create(null);
+
+  for (const article of articles)
+    for (const tag of article.tags) {
+      const normalized = normalizeTag(tag);
+      if (!tagMap[normalized]) tagMap[normalized] = [];
+      tagMap[normalized].push(article);
+    }
+
+  for (const [normalized, tagged] of Object.entries(tagMap)) {
+    const originalTag = tagged[0].tags.find(
+      (tag) => normalizeTag(tag) === normalized
+    );
+
+    const dataPath = await actions.createData(
+      `tag-${normalized.replace(/[^a-z0-9]/g, '-')}.json`,
+      JSON.stringify({ route, tag: originalTag, articles: tagged }, null, 0)
+    );
+
+    actions.addRoute({
+      path: `${prefix}/${route}/tag/${normalized}`,
+      component: '@site/src/pages/_dynamic/tag/index.tsx',
+      exact: true,
+      modules: { data: dataPath },
+    });
+  }
+};
+
 export default (
   context: LoadContext,
   options: PluginOptions
 ): Plugin<ProcessedArticle[]> => {
-  const pluginName = options.pluginName;
-  const contentDir = options.contentDir;
+  const { pluginName, contentDir: route } = options;
 
   return {
     name: pluginName,
     loadContent: async () => {
-      const { i18n } = context;
-      const currentLocale = i18n.currentLocale;
-
-      const articlesDir = resolve(`./i18n/${currentLocale}/${contentDir}`);
-
-      const articles = await findArticles(articlesDir);
+      const { currentLocale } = context.i18n;
+      const found = await findArticles(contentDir(currentLocale, route));
       const authorsMap = await loadAuthors(currentLocale);
 
-      for (const article of articles) {
-        article.authorsData = article.authors
+      if (context.siteConfig.customFields?.showViewsCounter === true)
+        await registerCounters(found.map(({ slug }) => slug));
+
+      const sorted = found.sort(newestFirst);
+
+      return sorted.map((article, index) => ({
+        ...article,
+        route,
+        authorsData: article.authors
           .map((authorName) => authorsMap[authorName])
-          .filter(Boolean);
-      }
-
-      articles.sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-      );
-
-      for (let i = 0; i < articles.length; i++) {
-        const current = articles[i];
-        const previous = articles[i - 1];
-        const next = articles[i + 1];
-
-        if (previous)
-          current.previousArticle = {
-            title: previous.title,
-            slug: previous.slug?.replace(/%/g, '') ?? '',
-            description: previous.description,
-            social: previous.socialPath,
-          };
-
-        if (next)
-          current.nextArticle = {
-            title: next.title,
-            slug: next.slug?.replace(/%/g, '') ?? '',
-            description: next.description,
-            social: next.socialPath,
-          };
-      }
-
-      return articles;
+          .filter(Boolean),
+        ...(sorted[index - 1] && {
+          previousArticle: neighbor(sorted[index - 1]),
+        }),
+        ...(sorted[index + 1] && { nextArticle: neighbor(sorted[index + 1]) }),
+      }));
     },
     contentLoaded: async ({ content, actions }) => {
-      const { addRoute, createData, setGlobalData } = actions;
-      const { i18n } = context;
-      const currentLocale = i18n.currentLocale;
-      const localePrefix =
-        currentLocale === i18n.defaultLocale ? '' : `/${currentLocale}`;
+      const scope = {
+        articles: content,
+        actions,
+        route,
+        prefix: localePrefix(context.i18n),
+      };
 
-      setGlobalData(content.map(listing));
+      actions.setGlobalData(content.map(listing));
 
-      for (const article of content) {
-        const dataPath = await createData(
-          `${contentDir}-${article.slug}.json`,
-          JSON.stringify({ ...article, route: contentDir }, null, 0)
-        );
-
-        const modules: Record<string, string> = Object.create(null);
-        modules.data = dataPath;
-        modules.content = article.mdxPath;
-
-        if (article.socialPath) modules.social = article.socialPath;
-
-        if (article.previousArticle?.social)
-          modules.previousSocial = article.previousArticle.social;
-
-        if (article.nextArticle?.social)
-          modules.nextSocial = article.nextArticle.social;
-
-        addRoute({
-          path: `${localePrefix}/${contentDir}/${article.slug?.replace(/%/g, '')}`,
-          component: `@site/src/pages/_dynamic/${contentDir}/index.tsx`,
-          exact: true,
-          modules,
-        });
-      }
-
-      const tagMap: Record<string, ProcessedArticle[]> = Object.create(null);
-
-      for (const article of content)
-        for (const tag of article.tags) {
-          const normalized = normalizeTag(tag);
-          if (!tagMap[normalized]) tagMap[normalized] = [];
-          tagMap[normalized].push(article);
-        }
-
-      for (const [normalized, articles] of Object.entries(tagMap)) {
-        const originalTag = articles[0].tags.find(
-          (t) => normalizeTag(t) === normalized
-        );
-
-        const tagDataPath = await createData(
-          `tag-${normalized.replace(/[^a-z0-9]/g, '-')}.json`,
-          JSON.stringify(
-            { route: contentDir, tag: originalTag, articles },
-            null,
-            0
-          )
-        );
-
-        addRoute({
-          path: `${localePrefix}/${contentDir}/tag/${normalized}`,
-          component: '@site/src/pages/_dynamic/tag/index.tsx',
-          exact: true,
-          modules: {
-            data: tagDataPath,
-          },
-        });
-      }
+      await articleRoutes(scope);
+      await tagRoutes(scope);
     },
-
-    getPathsToWatch() {
-      const { i18n } = context;
-      return i18n.locales
-        .filter((locale) => !!locale)
-        .map((locale) =>
-          resolve(`./i18n/${locale}/${contentDir}/**/*.{md,mdx}`)
-        );
-    },
+    getPathsToWatch: () => watchGlob(context.i18n.locales, route),
   };
 };

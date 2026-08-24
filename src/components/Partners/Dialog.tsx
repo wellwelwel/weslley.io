@@ -1,25 +1,36 @@
-import type {
-  Draft,
-  PartnershipType,
-} from '@site/src/components/Partners/draft';
+import type { Draft } from '@site/src/components/Partners/draft';
 import type { ChangeEvent, FormEvent, ReactNode } from 'react';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import clsx from 'clsx';
+import { useRef, useState } from 'react';
 import { Building2, Check, Mail, Send, User } from 'lucide-react';
 import { Dialog } from '@site/src/components/Dialog';
-import { images } from '@site/src/components/Home/previews';
-import {
-  PARTNERSHIP_TYPES,
-  readDraft,
-  saveDraft,
-} from '@site/src/components/Partners/draft';
+import { readDraft, saveDraft } from '@site/src/components/Partners/draft';
+import { submit } from '@site/src/components/Partners/submit';
+import { TypeChips } from '@site/src/components/Partners/TypeChips';
 import { Picture } from '@site/src/components/Picture';
-import { useDownloads } from '@site/src/hooks/useDownloads';
+import { images } from '@site/src/data/previews';
+import { useDownloadsLabel } from '@site/src/hooks/useDownloads';
+import { useDraft } from '@site/src/hooks/useDraft';
 
-type Pill = {
-  left: number;
-  width: number;
+type PartnersDialogOptions = {
+  open: boolean;
+  onClose: () => void;
+  onClosed: () => void;
 };
+
+type SentOptions = {
+  onReset: () => void;
+};
+
+type FieldOptions = {
+  label: string;
+  children: ReactNode;
+};
+
+type InlineFieldOptions = FieldOptions & {
+  icon: ReactNode;
+};
+
+type Status = 'idle' | 'sending' | 'error';
 
 const { claude, me, mvp } = images;
 
@@ -28,33 +39,27 @@ const BADGES = [
   { src: claude, alt: 'Pelúcia do Claude' },
 ];
 
-const SAVE_DELAY_MS = 400;
-const WEB3FORMS_PUBLIC_KEY = '0e430072-493e-4eba-9991-9879134fe5ef';
 const SUBMIT_COOLDOWN_MS = 8000;
 
-const groupClass =
+const STORE = { read: readDraft, save: saveDraft };
+
+const GROUP =
   'flex items-stretch overflow-hidden rounded-xl border border-ink/12 bg-paper transition-[border-color,box-shadow] duration-200 ease-swift hover:border-ink/25 focus-within:border-accent focus-within:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
 
-const groupIconClass =
+const GROUP_ICON =
   'flex w-12 shrink-0 items-center justify-center border-r border-ink/10 bg-ink/3 text-ink/45 [&>svg]:size-4.5';
 
-const groupInputClass =
+const GROUP_INPUT =
   'w-full appearance-none border-0 bg-transparent px-3.5 py-2.5 font-sans text-base font-medium text-ink outline-none placeholder:font-normal placeholder:text-ink/35';
 
-const fieldClass =
+const FIELD =
   'w-full appearance-none rounded-xl border border-ink/12 bg-paper px-3.5 py-2.5 font-sans text-base text-ink outline-none transition-[border-color,box-shadow] duration-200 ease-swift placeholder:text-ink/35 hover:border-ink/25 focus:border-accent focus:shadow-[0_0_0_3px_rgb(122_119_255_/_0.25)]';
 
-const labelClass =
+const LABEL =
   'flex flex-col gap-2 text-[0.8125rem] font-semibold tracking-[-0.005em] text-ink';
 
-const Field = ({
-  label,
-  children,
-}: {
-  label: string;
-  children: ReactNode;
-}): ReactNode => (
-  <label className={labelClass}>
+const Field = ({ label, children }: FieldOptions): ReactNode => (
+  <label className={LABEL}>
     {label}
     {children}
   </label>
@@ -64,13 +69,9 @@ const InlineField = ({
   label,
   icon,
   children,
-}: {
-  label: string;
-  icon: ReactNode;
-  children: ReactNode;
-}): ReactNode => (
-  <label className={groupClass}>
-    <span className={groupIconClass} aria-hidden='true'>
+}: InlineFieldOptions): ReactNode => (
+  <label className={GROUP}>
+    <span className={GROUP_ICON} aria-hidden='true'>
       {icon}
     </span>
     <span className='sr-only'>{label}</span>
@@ -78,81 +79,7 @@ const InlineField = ({
   </label>
 );
 
-const TypeChips = ({
-  value,
-  onChange,
-}: {
-  value: PartnershipType | '';
-  onChange: (type: PartnershipType) => void;
-}): ReactNode => {
-  const group = useRef<HTMLDivElement>(null);
-  const chips = useRef<Record<string, HTMLButtonElement | null>>({});
-  const [pill, setPill] = useState<Pill | null>(null);
-
-  useLayoutEffect(() => {
-    const measure = () => {
-      const chip = value ? chips.current[value] : null;
-
-      setPill(chip ? { left: chip.offsetLeft, width: chip.offsetWidth } : null);
-    };
-
-    measure();
-
-    if (!group.current) return;
-
-    let frame = 0;
-
-    const observer = new ResizeObserver(() => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(measure);
-    });
-
-    observer.observe(group.current);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      observer.disconnect();
-    };
-  }, [value]);
-
-  return (
-    <div
-      ref={group}
-      role='radiogroup'
-      aria-label='Tipo de parceria'
-      className='relative flex items-stretch gap-1 rounded-xl border border-ink/12 bg-ink/3 p-1'
-    >
-      {pill && (
-        <span
-          aria-hidden='true'
-          style={{ left: pill.left, width: pill.width }}
-          className='pointer-events-none absolute top-1 bottom-1 rounded-lg border border-accent/50 bg-accent/15 transition-[left,width] duration-300 ease-[cubic-bezier(0.22,1,0.36,1)]'
-        />
-      )}
-
-      {PARTNERSHIP_TYPES.map((type) => (
-        <button
-          key={type}
-          ref={(chip) => {
-            chips.current[type] = chip;
-          }}
-          type='button'
-          role='radio'
-          aria-checked={value === type}
-          onClick={() => onChange(type)}
-          className={clsx(
-            'relative z-1 flex-1 cursor-pointer appearance-none rounded-lg border-0 bg-transparent px-3.5 py-1.5 text-[0.8125rem] font-bold tracking-[-0.01em] whitespace-nowrap transition-colors duration-200 ease-swift focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent',
-            value === type ? 'text-ink' : 'text-ink/60 hover:text-ink'
-          )}
-        >
-          {type}
-        </button>
-      ))}
-    </div>
-  );
-};
-
-const Sent = ({ onReset }: { onReset: () => void }): ReactNode => (
+const Sent = ({ onReset }: SentOptions): ReactNode => (
   <div className='flex flex-col items-center gap-4 py-8 text-center'>
     <span className='flex size-14 items-center justify-center rounded-full bg-accent/15 text-accent [&>svg]:size-7'>
       <Check aria-hidden='true' />
@@ -181,32 +108,23 @@ export const PartnersDialog = ({
   open,
   onClose,
   onClosed,
-}: {
-  open: boolean;
-  onClose: () => void;
-  onClosed: () => void;
-}): ReactNode => {
+}: PartnersDialogOptions): ReactNode => {
   const lastSubmit = useRef(0);
   const [sent, setSent] = useState(false);
-  const [status, setStatus] = useState<'idle' | 'sending' | 'error'>('idle');
-  const [draft, setDraft] = useState<Draft>(readDraft);
-  const latest = useRef(draft);
-  const downloads = useDownloads();
-
-  useEffect(() => {
-    latest.current = draft;
-
-    const timer = setTimeout(() => saveDraft(draft), SAVE_DELAY_MS);
-
-    return () => clearTimeout(timer);
-  }, [draft]);
-
-  useEffect(() => () => saveDraft(latest.current), []);
+  const [status, setStatus] = useState<Status>('idle');
+  const [draft, setDraft] = useDraft<Draft>(STORE);
+  const downloads = useDownloadsLabel();
 
   const update =
     (field: keyof Omit<Draft, 'type'>) =>
     (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) =>
       setDraft((current) => ({ ...current, [field]: event.target.value }));
+
+  const finish = () => {
+    setSent(true);
+    setStatus('idle');
+    setDraft((current) => ({ ...current, type: '', message: '' }));
+  };
 
   const onSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -215,13 +133,7 @@ export const PartnersDialog = ({
 
     const honeypot = event.currentTarget.elements.namedItem('website');
 
-    if (honeypot instanceof HTMLInputElement && honeypot.value) {
-      setSent(true);
-      setStatus('idle');
-      setDraft((current) => ({ ...current, type: '', message: '' }));
-
-      return;
-    }
+    if (honeypot instanceof HTMLInputElement && honeypot.value) return finish();
 
     const now = performance.now();
 
@@ -230,39 +142,10 @@ export const PartnersDialog = ({
     lastSubmit.current = now;
     setStatus('sending');
 
-    try {
-      const response = await fetch('https://api.web3forms.com/submit', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_PUBLIC_KEY,
-          botcheck: false,
-          subject: 'Nova proposta de parceria: weslley.io',
-          from_name: draft.name,
-          name: draft.name,
-          email: draft.email,
-          company: draft.company,
-          partnership_type: draft.type,
-          message: draft.message,
-        }),
-      });
+    if (await submit(draft)) return finish();
 
-      const data: unknown = await response.json();
-      const success =
-        typeof data === 'object' &&
-        data !== null &&
-        'success' in data &&
-        data.success === true;
-
-      if (!success) throw new Error('Submission failed');
-
-      setSent(true);
-      setStatus('idle');
-      setDraft((current) => ({ ...current, type: '', message: '' }));
-    } catch {
-      setStatus('error');
-      lastSubmit.current = 0;
-    }
+    setStatus('error');
+    lastSubmit.current = 0;
   };
 
   return (
@@ -305,7 +188,7 @@ export const PartnersDialog = ({
 
             <InlineField label='Nome' icon={<User />}>
               <input
-                className={groupInputClass}
+                className={GROUP_INPUT}
                 type='text'
                 name='name'
                 autoComplete='name'
@@ -318,7 +201,7 @@ export const PartnersDialog = ({
 
             <InlineField label='E-mail' icon={<Mail />}>
               <input
-                className={groupInputClass}
+                className={GROUP_INPUT}
                 type='email'
                 name='email'
                 autoComplete='email'
@@ -331,7 +214,7 @@ export const PartnersDialog = ({
 
             <InlineField label='Empresa' icon={<Building2 />}>
               <input
-                className={groupInputClass}
+                className={GROUP_INPUT}
                 type='text'
                 name='company'
                 autoComplete='organization'
@@ -353,7 +236,7 @@ export const PartnersDialog = ({
 
             <Field label='O que você tem em mente?'>
               <textarea
-                className={`${fieldClass} min-h-28 resize-y`}
+                className={`${FIELD} min-h-28 resize-y`}
                 name='message'
                 rows={4}
                 placeholder='Conte o que vamos construir ✨'

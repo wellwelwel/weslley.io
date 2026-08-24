@@ -1,5 +1,5 @@
 import { ExternalLink } from 'lucide-react';
-import { SafeLink } from './SafeLink';
+import { SafeLink } from '@site/src/components/SafeLink';
 
 export const YearLink = ({ year }: { year: number }) => {
   return (

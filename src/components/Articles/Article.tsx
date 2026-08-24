@@ -1,18 +1,18 @@
-import type { ArticleListing } from '@site/src/@types/article';
+import type { ArticleListing, ArticlesOptions } from '@site/src/@types/article';
 import type { ViewMode } from '@site/src/hooks/useViewMode';
 import type { FC } from 'react';
 import { useRef } from 'react';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import { MarkdownWithAdmonitions } from '@site/src/components/Articles/Admonition';
 import { Parallax } from '@site/src/components/Parallax';
 import {
-  ArticlesOptions,
   createImagesContext,
   getSocialImage,
-} from '@site/src/helpers/get-social';
+} from '@site/src/helpers/article-image';
+import { isDevelopment } from '@site/src/helpers/environment';
+import { localeDate } from '@site/src/helpers/format-date';
 import { useScroll } from '@site/src/hooks/useScroll';
-import { isDevelopment } from '@site/tools/environment';
-import { MarkdownWithAdmonitions } from './Admonition';
 
 export const Article: FC<{
   article: ArticleListing;
@@ -77,7 +77,7 @@ export const Article: FC<{
       <article className='card'>
         <div className='card__body'>
           {getSocialImage({ article, route, currentLocale, imageMap }) && (
-            <Link to={`/${route}/${article.slug?.replace(/%/g, '')}`}>
+            <Link to={`/${route}/${article.path}`}>
               {viewMode === 'list' ? (
                 <img
                   src={
@@ -119,9 +119,7 @@ export const Article: FC<{
 
           <div className='content-wrapper'>
             <h2>
-              <Link to={`/${route}/${article.slug?.replace(/%/g, '')}`}>
-                {article.title}
-              </Link>
+              <Link to={`/${route}/${article.path}`}>{article.title}</Link>
             </h2>
 
             {viewMode === 'card' && article.description && (
@@ -136,11 +134,7 @@ export const Article: FC<{
           <div>
             <time dateTime={datetime}>
               <strong>{translations.date}:</strong>{' '}
-              {new Date(datetime).toLocaleDateString(currentLocale, {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
+              {localeDate(datetime, currentLocale)}
             </time>
             {' · '}
             <span>
@@ -164,14 +158,7 @@ export const Article: FC<{
                     }
                   >
                     <strong>{translations.lastUpdate}</strong>{' '}
-                    {new Date(article.lastModified).toLocaleDateString(
-                      currentLocale,
-                      {
-                        year: 'numeric',
-                        month: 'long',
-                        day: 'numeric',
-                      }
-                    )}
+                    {localeDate(article.lastModified, currentLocale)}
                   </span>
                 )}
               {isDevelopment && <em> {translations.simulatedDev}</em>}

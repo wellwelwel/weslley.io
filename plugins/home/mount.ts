@@ -4,18 +4,20 @@ import type {
   RouteConfig,
   RouteModules,
 } from '@docusaurus/types';
-import type { Author, ProcessedArticle } from '../../src/@types/article';
-import type { Preview, SlideId } from '../../src/components/Home/previews';
-import type { Shape } from '../../tools/measure-image';
-import { relative, resolve, sep } from 'node:path';
-import { slots } from '../../src/components/Agenda/slots';
-import { pathOf, previews, ROOT } from '../../src/components/Home/previews';
+import type { Author, FoundArticle } from '../../src/@types/article';
+import type { Shape } from '../../src/@types/image';
+import type { Preview, SlideId } from '../../src/data/previews';
+import { relative, sep } from 'node:path';
+import { describeTalks, pathOf, previews, ROOT } from '../../src/data/previews';
+import { slots } from '../../src/data/slots';
 import { downloadsLabel } from '../../src/helpers/downloads';
 import { stripMarkdown } from '../../src/helpers/strip-markdown';
 import { downloads } from '../../tools/downloads';
 import { findArticles } from '../../tools/find-articles';
 import { loadAuthors } from '../../tools/load-authors';
 import { measureImage } from '../../tools/measure-image';
+import { registerCounters } from '../../tools/register-counters';
+import { contentDir, localePrefix, watchGlob } from '../locale';
 
 type PluginOptions = {
   pluginName: string;
@@ -40,16 +42,13 @@ type Content = {
   talks: Talk[];
 };
 
+const TALKS = 'talks';
+
 const HOME = '@site/src/pages/_dynamic/home/index.tsx';
 const PREVIEW = '@site/src/pages/_dynamic/home/preview.tsx';
 
-const describeTalks = (yearly: string): string =>
-  `Com mais de ${yearly} de downloads anuais em projetos autorais, sou autor e mantenedor de projetos críticos no ecossistema open source e levo ao palco experiências reais de sistemas usados em escala global.`;
-
 const summarize = (description: string | null): string | null =>
   description && stripMarkdown(description).split('\n').join(' ');
-
-const routeSlug = (slug: string): string => slug.replace(/%/g, '');
 
 const aliased = (siteDir: string, file: string): string =>
   `@site/${relative(siteDir, file).split(sep).join('/')}`;
@@ -90,13 +89,16 @@ export default (
   loadContent: async () => {
     const { currentLocale } = context.i18n;
     const [articles, { rolling }, authors] = await Promise.all([
-      findArticles(resolve(`./i18n/${currentLocale}/talks`)),
+      findArticles(contentDir(currentLocale, TALKS)),
       downloads(),
       loadAuthors(currentLocale),
     ]);
     const yearly = downloadsLabel(rolling);
 
-    const credit = (article: ProcessedArticle, name: string): Author => {
+    if (context.siteConfig.customFields?.showViewsCounter === true)
+      await registerCounters(articles.map(({ slug }) => slug));
+
+    const credit = (article: FoundArticle, name: string): Author => {
       const author = authors[name];
 
       if (!author)
@@ -117,11 +119,11 @@ export default (
         const banner = await bannerOf(article.socialPath);
 
         return {
-          slug: routeSlug(article.slug),
+          slug: article.path,
           title: article.title,
           description: summarize(article.description),
           content: article.mdxPath,
-          counter: decodeURIComponent(article.slug),
+          counter: article.slug,
           authors: article.authors.map((name) => credit(article, name)),
           ...(banner && { banner }),
         };
@@ -140,9 +142,7 @@ export default (
   },
   contentLoaded: async ({ content, actions }) => {
     const { addRoute, createData } = actions;
-    const { i18n } = context;
-    const localePrefix =
-      i18n.currentLocale === i18n.defaultLocale ? '' : `/${i18n.currentLocale}`;
+    const prefix = localePrefix(context.i18n);
     const routes: RouteConfig[] = [];
 
     await createData('talks.js', catalog(content.talks, context.siteDir));
@@ -163,7 +163,7 @@ export default (
       }
 
       routes.push({
-        path: `${localePrefix}${pathOf(id)}`,
+        path: `${prefix}${pathOf(id)}`,
         exact: true,
         component: PREVIEW,
         modules,
@@ -180,7 +180,7 @@ export default (
       if (banner) modules.banner = banner.file;
 
       routes.push({
-        path: `${localePrefix}${pathOf('talks')}${slug}`,
+        path: `${prefix}${pathOf('talks')}${slug}`,
         exact: true,
         component: PREVIEW,
         modules,
@@ -188,13 +188,11 @@ export default (
     }
 
     addRoute({
-      path: `${localePrefix}/`,
+      path: `${prefix}/`,
       exact: false,
       component: HOME,
       routes,
     });
   },
-  getPathsToWatch: () => [
-    resolve(`./i18n/${context.i18n.currentLocale}/talks/**/*.{md,mdx}`),
-  ],
+  getPathsToWatch: () => watchGlob([context.i18n.currentLocale], TALKS),
 });

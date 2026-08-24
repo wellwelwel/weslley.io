@@ -6,7 +6,7 @@ import { defineConfig } from 'rollup';
 import esbuild from 'rollup-plugin-esbuild';
 
 export default defineConfig({
-  input: 'src/server/index.ts',
+  input: 'worker/index.ts',
   output: {
     file: 'server/index.js',
     format: 'esm',

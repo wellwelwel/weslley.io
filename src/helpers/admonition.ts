@@ -1,22 +1,24 @@
-type AdmonitionType =
-  'note' | 'tip' | 'info' | 'warning' | 'danger' | 'caution';
+type AdmonitionType = (typeof ADMONITION_TYPES)[number];
 
-const ADMONITION_TYPES = new Set<string>([
+type AdmonitionMatch = {
+  type: AdmonitionType;
+  title: string;
+  body: string;
+  start: number;
+  end: number;
+};
+
+const ADMONITION_TYPES = [
   'note',
   'tip',
   'info',
   'warning',
   'danger',
   'caution',
-]);
+] as const;
 
-interface AdmonitionMatch {
-  type: AdmonitionType;
-  title: string;
-  body: string;
-  start: number;
-  end: number;
-}
+const isAdmonition = (value: string): value is AdmonitionType =>
+  ADMONITION_TYPES.some((type) => type === value);
 
 export const parseAdmonitionBlocks = (content: string): AdmonitionMatch[] => {
   const matches: AdmonitionMatch[] = [];
@@ -45,7 +47,7 @@ export const parseAdmonitionBlocks = (content: string): AdmonitionMatch[] => {
 
     const type = afterColons.slice(0, typeEnd);
 
-    if (!ADMONITION_TYPES.has(type)) {
+    if (!isAdmonition(type)) {
       lineStart += line.length + 1;
       continue;
     }
@@ -94,7 +96,7 @@ export const parseAdmonitionBlocks = (content: string): AdmonitionMatch[] => {
     if (end > content.length) end = content.length;
 
     matches.push({
-      type: type as AdmonitionType,
+      type,
       title,
       body: bodyLines.join('\n').trim(),
       start,

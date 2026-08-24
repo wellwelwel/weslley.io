@@ -9,8 +9,10 @@ const DEFAULT_OPTIONS: Required<MatterOptions> = {
   delimiters: ['---', '---'],
 };
 
+const empty = <T>(): T => Object.create(null);
+
 const createEmptyResult = <T>(content: string): MatterResult<T> => ({
-  data: Object.create(null),
+  data: empty<T>(),
   content,
   isEmpty: true,
   matter: '',
@@ -56,7 +58,7 @@ export const matter: Matter = <T>(input: string, options?: MatterOptions) => {
 
   const matterContent = afterOpenDelimiter.slice(0, closeIndex - 1);
   const isEmpty = !matterContent.trim();
-  const data: T = isEmpty ? Object.create(null) : parse(matterContent);
+  const data: T = isEmpty ? empty<T>() : parse<T>(matterContent);
   const bodyContent = afterOpenDelimiter
     .slice(closeIndex + closeDelimiter.length)
     .replace(/^(\r\n|\n)/, '');

@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { memo } from 'react';
 import { Picture } from '@site/src/components/Picture';
-import { useViewer } from '@site/src/components/Talks/Viewer';
+import { useViewer } from '@site/src/components/Talks/gallery';
 
 export type Moment = {
   src: string;

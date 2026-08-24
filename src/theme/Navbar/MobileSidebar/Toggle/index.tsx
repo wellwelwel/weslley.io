@@ -1,11 +1,13 @@
 import type { ReactNode } from 'react';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import { translate } from '@docusaurus/Translate';
+import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import IconMenu from '@theme/Icon/Menu';
-import { anchors } from '@site/src/helpers/get-anchors';
+import { anchors } from '@site/src/helpers/localized';
 
 export default function MobileSidebarToggle(): ReactNode {
-  const hasAnchors = anchors.length > 0;
+  const { i18n } = useDocusaurusContext();
+  const hasAnchors = anchors(i18n.currentLocale).length > 0;
   const { toggle, shown } = useNavbarMobileSidebar();
 
   return (

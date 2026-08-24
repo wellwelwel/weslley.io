@@ -14,13 +14,13 @@ export default function LocaleDropdownNavbarItem({
   queryString = '',
   ...props
 }: Props): ReactNode {
-  if (mobile) return null;
-
   const {
     i18n: { currentLocale, locales, localeConfigs },
   } = useDocusaurusContext();
   const alternatePageUtils = useAlternatePageUtils();
   const { search, hash } = useLocation();
+
+  if (mobile) return null;
 
   const localeItems = locales.map((locale): LinkLikeNavbarItemProps => {
     const baseTo = `pathname://${alternatePageUtils.createUrl({

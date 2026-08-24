@@ -1,5 +1,5 @@
 import { describe, it, strict } from 'poku';
-import { calculateReadingTime } from '../../tools/reading-time.js';
+import { calculateReadingTime } from '../../tools/reading-time';
 
 describe('calculateReadingTime', () => {
   it(() => {

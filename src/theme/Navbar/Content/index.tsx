@@ -12,7 +12,7 @@ import NavbarMobileSidebarToggle from '@theme/Navbar/MobileSidebar/Toggle';
 import NavbarSearch from '@theme/Navbar/Search';
 import NavbarItem from '@theme/NavbarItem';
 import SearchBar from '@theme/SearchBar';
-import { anchors } from '@site/src/helpers/get-anchors';
+import { anchors } from '@site/src/helpers/localized';
 
 function useNavbarItems() {
   return useThemeConfig().navbar.items as NavbarItemConfig[];
@@ -58,12 +58,12 @@ function NavbarContentLayout({
 export default function NavbarContent(): ReactNode {
   const mobileSidebar = useNavbarMobileSidebar();
   const items = useNavbarItems();
-  const hasAnchors = anchors.length > 0;
   const [, rightItems] = splitNavbarItems(items);
   const searchBarItem = items.find((item) => item.type === 'search');
   const { i18n } = useDocusaurusContext();
   const { currentLocale } = i18n;
   const Anchors = anchors(currentLocale);
+  const hasAnchors = Anchors.length > 0;
 
   return (
     <NavbarContentLayout

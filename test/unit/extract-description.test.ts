@@ -1,5 +1,5 @@
 import { describe, it, strict } from 'poku';
-import { extractDescription } from '../../tools/extract-description.js';
+import { extractDescription } from '../../tools/extract-description';
 
 describe('extractDescription', () => {
   it(() => {

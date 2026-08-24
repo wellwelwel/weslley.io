@@ -1,6 +1,7 @@
 import type { LoadContext, Plugin } from '@docusaurus/types';
-import { readdir, readFile, writeFile } from 'node:fs/promises';
+import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { walk } from '../../tools/walk';
 
 type PluginOptions = {
   pluginName: string;
@@ -10,22 +11,6 @@ const STYLESHEET = /<link rel=stylesheet href=([^ >]{1,300}) \/>/;
 
 const local = (href: string): boolean =>
   href.startsWith('/assets/css/') && href.endsWith('.css');
-
-const pages = async (dir: string): Promise<string[]> => {
-  const entries = await readdir(dir, { withFileTypes: true });
-
-  const found = await Promise.all(
-    entries.map((entry) =>
-      entry.isDirectory()
-        ? pages(join(dir, entry.name))
-        : entry.name.endsWith('.html')
-          ? [join(dir, entry.name)]
-          : []
-    )
-  );
-
-  return found.flat();
-};
 
 /* Inlining the one small stylesheet beats its render-blocking round trip. */
 export default (
@@ -53,7 +38,7 @@ export default (
       );
     };
 
-    const files = await pages(outDir);
+    const files = await walk(outDir, (name) => name.endsWith('.html'));
 
     await Promise.all(files.map(inline));
   },

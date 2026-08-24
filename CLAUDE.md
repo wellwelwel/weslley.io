@@ -13,6 +13,7 @@ Personal site built with Docusaurus and TypeScript. Content is authored in Portu
 - Build scripts and anything that needs backend resources live in `tools/`.
 - Docusaurus plugins live in `plugins/`.
 - Frontend utilities live in `src/helpers/`, pages in `src/pages/`, and components in `src/components/`.
+- `src/pages/_dynamic/` holds the pages the plugins in `plugins/` mount by route. The leading underscore keeps the Docusaurus pages plugin away from them.
 - Articles and talks live under `i18n/`, with no fixed hierarchy below the locale, so directories are organized freely.
 - Tests live in `test/`.
 
@@ -37,8 +38,8 @@ Personal site built with Docusaurus and TypeScript. Content is authored in Portu
 
 ### Styling
 
-- Pages are styled with Tailwind. New pages never use plain CSS or SCSS, and the home page is the reference for how that looks in practice.
-- Older pages still carry native SCSS in `src/css`, which stays as it is. CSS modules are not used.
+- Pages are styled with Tailwind, and the home page is the reference for how that looks in practice. CSS modules are not used.
+- `src/css/tailwind.css` is the only stylesheet, and its `@source` list decides which files get their classes generated. Every new file that carries Tailwind classes goes into that list.
 
 ### Animation
 

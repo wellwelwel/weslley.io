@@ -1,5 +1,6 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
+import { useOutside } from '@site/src/hooks/useOutside';
 
 type Reveal<T extends HTMLElement> = {
   container: RefObject<T | null>;
@@ -11,20 +12,9 @@ type Reveal<T extends HTMLElement> = {
 export const useReveal = <T extends HTMLElement>(): Reveal<T> => {
   const container = useRef<T>(null);
   const [revealed, setRevealed] = useState<string | null>(null);
+  const hide = useCallback(() => setRevealed(null), []);
 
-  useEffect(() => {
-    if (!revealed) return;
-
-    const dismiss = ({ target }: PointerEvent) => {
-      if (target instanceof Node && container.current?.contains(target)) return;
-
-      setRevealed(null);
-    };
-
-    document.addEventListener('pointerdown', dismiss);
-
-    return () => document.removeEventListener('pointerdown', dismiss);
-  }, [revealed]);
+  useOutside(Boolean(revealed), container, hide);
 
   return {
     container,

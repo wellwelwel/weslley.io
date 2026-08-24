@@ -1,18 +1,9 @@
 import type { TalkOpener } from '@site/src/components/Agenda/Card';
-import type { CSSProperties, ReactNode, RefObject } from 'react';
-import {
-  memo,
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
+import type { Vars } from '@site/src/helpers/vars';
+import type { ReactNode } from 'react';
+import { memo, useCallback, useEffect, useRef } from 'react';
 import clsx from 'clsx';
-import gsap from 'gsap';
-import { Observer } from 'gsap/Observer';
 import { Card } from '@site/src/components/Agenda/Card';
-import { AVATAR, slots } from '@site/src/components/Agenda/slots';
 import {
   anchor,
   extent,
@@ -20,28 +11,27 @@ import {
   openings,
   placeOf,
   stations,
-  upcomingIndex,
 } from '@site/src/components/Agenda/timeline';
+import { useDeckHeight } from '@site/src/components/Agenda/useDeckHeight';
+import { useStage } from '@site/src/components/Agenda/useStage';
 import { Picture } from '@site/src/components/Picture';
 import { Stepper } from '@site/src/components/Stepper';
+import { AVATAR, slots } from '@site/src/data/slots';
 import { motion } from '@site/src/helpers/reduced-motion';
 
-gsap.registerPlugin(Observer);
-
-type RootStyle = CSSProperties & {
-  '--tone': string;
-  '--ticker-travel': string;
-  '--rise-travel': string;
-  '--hop-travel': string;
-};
-
-type Stage = {
-  focus: number;
-  from: number;
-};
+type RootStyle = Vars<
+  '--tone' | '--ticker-travel' | '--rise-travel' | '--hop-travel'
+>;
 
 type AgendaOptions = {
   onTalk: TalkOpener;
+};
+
+type Placement = {
+  place: number;
+  passed: boolean;
+  frosted: boolean;
+  dressed: boolean;
 };
 
 const TONE = '#7a77ff';
@@ -61,9 +51,6 @@ const HOP = {
   reduced: '0.6',
 };
 
-/** Mirrors the card's `duration-500`. */
-const SETTLE = 500;
-
 const SEEN = 1;
 const WINDOW = 2;
 
@@ -73,55 +60,15 @@ const BEHIND = slots.length - 1;
 const passedOf = (here: number, there: number): boolean =>
   here === BEHIND || (here > SEEN && (there === 0 || there === BEHIND));
 
-/** Deck height, kept across mounts. */
-let held: number | undefined;
-
-const useDeckHeight = (deck: RefObject<HTMLDivElement | null>) => {
-  const [height, setHeight] = useState(held);
-
-  useLayoutEffect(() => {
-    if (height !== undefined || !deck.current) return;
-
-    /* Fractional on purpose: a rounded height would nudge the lines above. */
-    held = deck.current.getBoundingClientRect().height;
-    setHeight(held);
-  }, [height]);
-
-  useEffect(() => {
-    let frame = 0;
-
-    const remeasure = () => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        held = undefined;
-        setHeight(undefined);
-      });
-    };
-
-    window.addEventListener('resize', remeasure);
-
-    return () => {
-      cancelAnimationFrame(frame);
-      window.removeEventListener('resize', remeasure);
-    };
-  }, []);
-
-  return height;
-};
-
 export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
-  const [{ focus, from }, setStage] = useState<Stage>(() => {
-    const start = upcomingIndex();
-
-    return { focus: start, from: start };
-  });
   const track = useRef<HTMLElement | null>(null);
   const deck = useRef<HTMLDivElement | null>(null);
-  const swiped = useRef(false);
+  const { focus, from, focusOn, step } = useStage(deck);
   const height = useDeckHeight(deck);
   const { date } = slots[focus];
   const { day, month, weekday } = labels[focus];
   const opening = openings[focus];
+  const ahead = focus < slots.length - 1;
 
   const style: RootStyle = {
     '--tone': TONE,
@@ -136,54 +83,21 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
     track.current = node;
   }, []);
 
-  const focusOn = (index: number): void =>
-    setStage(({ focus: current }) => ({ focus: index, from: current }));
+  const placement = (index: number): Placement => {
+    const here = placeOf(index, focus);
+    const there = placeOf(index, from);
 
-  const step = (delta: number): void => {
-    navigator.vibrate?.(10);
-    setStage(({ focus: current }) => ({
-      focus: (current + delta + slots.length) % slots.length,
-      from: current,
-    }));
+    return {
+      place: here,
+      passed: passedOf(here, there),
+      frosted: here <= SEEN || there <= SEEN,
+      dressed: height === undefined || here <= WINDOW || there <= WINDOW,
+    };
   };
-
-  const swipe = (delta: number): void => {
-    if (swiped.current) return;
-
-    swiped.current = true;
-    step(delta);
-  };
-
-  const ahead = focus < slots.length - 1;
-
-  useEffect(() => {
-    const observer = Observer.create({
-      target: deck.current,
-      type: 'touch',
-      lockAxis: true,
-      tolerance: 24,
-      onDragStart: () => (swiped.current = false),
-      onLeft: () => swipe(1),
-      onRight: () => swipe(-1),
-    });
-
-    return () => observer.kill();
-  }, []);
 
   useEffect(() => {
     track.current?.scrollTo({ left: anchor(focus), behavior: 'smooth' });
   }, [focus]);
-
-  useEffect(() => {
-    if (from === focus) return;
-
-    const timer = window.setTimeout(
-      () => setStage((stage) => ({ focus: stage.focus, from: stage.focus })),
-      SETTLE
-    );
-
-    return () => window.clearTimeout(timer);
-  }, [from, focus]);
 
   return (
     <div
@@ -236,25 +150,15 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
         style={{ minHeight: height }}
         className='grid animate-rise [animation-delay:500ms] short-wide:pr-(--reach) lg:pr-(--reach)'
       >
-        {slots.map((slot, index) => {
-          const here = placeOf(index, focus);
-          const there = placeOf(index, from);
-
-          return (
-            <Card
-              key={`${slot.date}:${slot.title}`}
-              slot={slot}
-              place={here}
-              passed={passedOf(here, there)}
-              frosted={here <= SEEN || there <= SEEN}
-              dressed={
-                height === undefined || here <= WINDOW || there <= WINDOW
-              }
-              onFocus={() => focusOn(index)}
-              onTalk={onTalk}
-            />
-          );
-        })}
+        {slots.map((slot, index) => (
+          <Card
+            key={`${slot.date}:${slot.title}`}
+            slot={slot}
+            {...placement(index)}
+            onFocus={() => focusOn(index)}
+            onTalk={onTalk}
+          />
+        ))}
       </div>
 
       <div className='mt-[clamp(0.75rem,18svh-7.125rem,3rem)] w-full animate-ticker [animation-delay:580ms] max-sm:mb-[clamp(0px,5svh-2rem,1.5rem)] sm:mb-2 short:mt-4.5 short:mb-0 short-wide:mt-0 cramped:hidden'>

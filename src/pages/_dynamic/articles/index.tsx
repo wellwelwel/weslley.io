@@ -1,4 +1,4 @@
-import type { ArticlePageProps } from '../../../@types/article';
+import type { ArticlePageOptions } from '@site/src/@types/article';
 import Head from '@docusaurus/Head';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
@@ -6,13 +6,15 @@ import Layout from '@theme/Layout';
 import MDXContent from '@theme/MDXContent';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
+import { SideProvider } from '@site/src/components/Side/context';
+import { SideSelector } from '@site/src/components/Side/Selector';
+import { isDevelopment } from '@site/src/helpers/environment';
+import { localeDate } from '@site/src/helpers/format-date';
+import { counterApi } from '@site/src/helpers/site';
 import { stripMarkdown } from '@site/src/helpers/strip-markdown';
-import { isDevelopment } from '../../../../tools/environment';
-import { SideProvider } from '../../../components/Side/context';
-import { SideSelector } from '../../../components/Side/Selector';
-import { Navigation } from './_navigation';
-import { SocialShare } from './_social-share';
-import { Summary } from './_summary';
+import { Navigation } from '@site/src/pages/_dynamic/articles/_navigation';
+import { SocialShare } from '@site/src/pages/_dynamic/articles/_social-share';
+import { Summary } from '@site/src/pages/_dynamic/articles/_summary';
 
 export default ({
   data,
@@ -20,11 +22,12 @@ export default ({
   social,
   previousSocial,
   nextSocial,
-}: ArticlePageProps) => {
+}: ArticlePageOptions) => {
   const {
     route,
     title,
     slug,
+    path,
     date,
     authorsData,
     tags,
@@ -37,10 +40,9 @@ export default ({
     sides,
   } = data;
   const { siteConfig, i18n } = useDocusaurusContext();
-  const API = siteConfig.customFields?.COUNTTY_URL as string | undefined;
-  const showViewsCounter = siteConfig.customFields?.showViewsCounter === true;
+  const api = counterApi(siteConfig.customFields);
   const socialBanner = social ? `${siteConfig.url}${social}` : undefined;
-  const articleUrl = `${siteConfig.url}/${route}/${slug}`;
+  const articleUrl = `${siteConfig.url}/${route}/${path}`;
   const { currentLocale } = i18n;
   const datetime = date.includes('T') ? date : `${date}T00:00`;
   const authorName =
@@ -89,11 +91,7 @@ export default ({
 
             <div className='metadata'>
               <time dateTime={datetime}>
-                {new Date(datetime).toLocaleDateString(currentLocale, {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+                {localeDate(datetime, currentLocale)}
               </time>
               {' · '}
               <span>
@@ -108,16 +106,7 @@ export default ({
                     title={translations.lastModification}
                   >
                     {translations.lastUpdate}{' '}
-                    <strong>
-                      {new Date(lastModified).toLocaleDateString(
-                        currentLocale,
-                        {
-                          year: 'numeric',
-                          month: 'long',
-                          day: 'numeric',
-                        }
-                      )}
-                    </strong>
+                    <strong>{localeDate(lastModified, currentLocale)}</strong>
                   </span>
                 )}
                 {isDevelopment && <em> {translations.simulatedDev}</em>}
@@ -192,13 +181,13 @@ export default ({
 
           <hr />
 
-          {showViewsCounter && (
+          {api && (
             <SafeLink
               to='https://github.com/wellwelwel/countty'
               className='views-counter'
             >
               <img
-                src={`${API}/badge?slug=${slug}&label=${encodeURIComponent(translations.views)}&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
+                src={`${api}/badge?slug=${encodeURIComponent(slug)}&label=${encodeURIComponent(translations.views)}&labelColor=70a1ff&color=273c75&logo=PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNiIgaGVpZ2h0PSIxNiIgZmlsbD0iI2ZmZmZmZiIgdmlld0JveD0iMCAwIDE2IDE2Ij48cGF0aCBkPSJNMTAuNSA4YTIuNSAyLjUgMCAxIDEtNSAwIDIuNSAyLjUgMCAwIDEgNSAwIi8+PHBhdGggZD0iTTAgOHMzLTUuNSA4LTUuNVMxNiA4IDE2IDhzLTMgNS41LTggNS41UzAgOCAwIDhtOCAzLjVhMy41IDMuNSAwIDEgMCAwLTcgMy41IDMuNSAwIDAgMCAwIDciLz48L3N2Zz4=`}
               />
             </SafeLink>
           )}

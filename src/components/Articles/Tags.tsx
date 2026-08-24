@@ -1,5 +1,4 @@
-import type { ArticlesOptions } from '@site/src/helpers/get-social';
-import type { ArticleListing } from '../../@types/article';
+import type { ArticleListing, ArticlesOptions } from '@site/src/@types/article';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';

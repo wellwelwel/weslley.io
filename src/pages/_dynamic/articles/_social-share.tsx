@@ -1,7 +1,8 @@
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Link } from 'lucide-react';
+import { useCopy } from '@site/src/hooks/useCopy';
 
-type SocialShareProps = {
+type SocialShareOptions = {
   url: string;
   title: string;
   author: string;
@@ -10,36 +11,9 @@ type SocialShareProps = {
 const shareText = (title: string, author: string, locale: string) =>
   locale === 'en' ? `"${title}" by ${author}:` : `"${title}" por ${author}:`;
 
-const fallbackCopyToClipboard = (text: string) => {
-  const textArea = document.createElement('textarea');
-  textArea.value = text;
-  textArea.style.position = 'fixed';
-  textArea.style.left = '-999999px';
-  textArea.style.top = '-999999px';
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-
-  try {
-    document.execCommand('copy');
-  } finally {
-    document.body.removeChild(textArea);
-  }
-};
-
-const copyToClipboard = async (text: string) => {
-  if (navigator.clipboard?.writeText) {
-    try {
-      await navigator.clipboard.writeText(text);
-      return;
-    } catch {}
-  }
-
-  fallbackCopyToClipboard(text);
-};
-
-export const SocialShare = ({ url, title, author }: SocialShareProps) => {
+export const SocialShare = ({ url, title, author }: SocialShareOptions) => {
   const { i18n } = useDocusaurusContext();
+  const [, copy] = useCopy();
   const currentLocale = i18n.currentLocale;
   const encodedUrl = encodeURIComponent(url);
   const encodedTitle = encodeURIComponent(title);
@@ -121,7 +95,7 @@ export const SocialShare = ({ url, title, author }: SocialShareProps) => {
   const copyLink = {
     name: 'Copy Link',
     ariaLabel: translations.copyLink,
-    onClick: () => copyToClipboard(url),
+    onClick: () => copy(url),
   };
 
   return (

@@ -1,10 +1,10 @@
-import type { Trigger } from '@site/src/components/Partners/Trigger';
+import type { TriggerOptions } from '@site/src/components/Partners/Trigger';
 import type { ReactNode } from 'react';
 import { useState } from 'react';
 import { PartnersTrigger } from '@site/src/components/Partners/Trigger';
 import { Socials } from '@site/src/components/Socials';
 
-export const PartnersAction = ({ open, onOpen }: Trigger): ReactNode => {
+export const PartnersAction = ({ open, onOpen }: TriggerOptions): ReactNode => {
   const [social, setSocial] = useState<string | null>(null);
 
   return (

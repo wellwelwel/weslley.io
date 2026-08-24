@@ -1,20 +1,25 @@
 import type { ReactNode } from 'react';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useMemo, useState } from 'react';
 
-interface SideContextValue {
+type SideContextValue = {
   activeId: string | null;
   setActiveId: (id: string | null) => void;
   defaultId: string | null;
   setDefaultId: (id: string | null) => void;
-}
+};
+
+type SideProviderOptions = {
+  children: ReactNode;
+};
+
+type SideScopeOptions = SideProviderOptions & {
+  activeId: string | null;
+  setActiveId: (id: string | null) => void;
+};
 
 export const SideContext = createContext<SideContextValue | null>(null);
 
-interface SideProviderProps {
-  children: ReactNode;
-}
-
-export const SideProvider = ({ children }: SideProviderProps) => {
+export const SideProvider = ({ children }: SideProviderOptions) => {
   const [activeId, setActiveId] = useState<string | null>(null);
   const [defaultId, setDefaultId] = useState<string | null>(null);
 
@@ -25,6 +30,24 @@ export const SideProvider = ({ children }: SideProviderProps) => {
       {children}
     </SideContext.Provider>
   );
+};
+
+export const SideScope = ({
+  activeId,
+  setActiveId,
+  children,
+}: SideScopeOptions) => {
+  const value = useMemo(
+    () => ({
+      activeId,
+      setActiveId,
+      defaultId: null,
+      setDefaultId: () => undefined,
+    }),
+    [activeId, setActiveId]
+  );
+
+  return <SideContext.Provider value={value}>{children}</SideContext.Provider>;
 };
 
 export const useSideContext = (): SideContextValue => {

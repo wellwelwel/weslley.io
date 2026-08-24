@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Name } from '@site/src/components/Name';
 import { motion } from '@site/src/helpers/reduced-motion';
-import { useDownloads } from '@site/src/hooks/useDownloads';
+import { useDownloadsLabel } from '@site/src/hooks/useDownloads';
 
 gsap.registerPlugin(useGSAP);
 
@@ -74,7 +74,7 @@ const Digit = ({ char, index }: DigitOptions): ReactNode => {
 };
 
 export const Downloads = (): ReactNode => {
-  const downloads = useDownloads();
+  const downloads = useDownloadsLabel();
   const [amount, suffix] = downloads.split(' ');
 
   return (

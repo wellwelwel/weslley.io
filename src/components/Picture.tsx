@@ -1,7 +1,7 @@
 import type { ImgHTMLAttributes, ReactNode } from 'react';
 import { memo } from 'react';
 import useIsBrowser from '@docusaurus/useIsBrowser';
-import variants from '@site/src/helpers/variants.json';
+import variants from '@site/src/data/variants.json';
 
 type Entry = {
   widths: number[];

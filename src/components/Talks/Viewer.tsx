@@ -1,35 +1,12 @@
+import type { Gallery } from '@site/src/components/Talks/gallery';
 import type { KeyboardEvent, ReactNode } from 'react';
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import { Picture } from '@site/src/components/Picture';
 
-export type Shot = {
-  src: string;
-  alt: string;
-  caption?: string;
-};
-
-export type Gallery = {
-  label: string;
-  shots: Shot[];
-  at: number;
-};
-
 type ViewerOptions = {
   gallery: Gallery;
-};
-
-type Show = (gallery: Gallery) => void;
-
-export const ViewerContext = createContext<Show | null>(null);
-
-export const useViewer = (): Show => {
-  const show = useContext(ViewerContext);
-
-  if (!show) throw new Error('useViewer must be used within a ViewerContext');
-
-  return show;
 };
 
 const STEPPER =

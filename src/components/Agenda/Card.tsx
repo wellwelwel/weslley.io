@@ -1,4 +1,4 @@
-import type { Slot } from '@site/src/components/Agenda/slots';
+import type { Slot } from '@site/src/data/slots';
 import type { LucideIcon } from 'lucide-react';
 import type { ReactNode } from 'react';
 import type { IconType } from 'react-icons';
@@ -17,8 +17,8 @@ import { BiLinkExternal } from 'react-icons/bi';
 import { FaRegHeart } from 'react-icons/fa';
 import { RiVideoOnAiLine } from 'react-icons/ri';
 import { TbMicrophone2 } from 'react-icons/tb';
-import { AVATAR } from '@site/src/components/Agenda/slots';
 import { Picture } from '@site/src/components/Picture';
+import { AVATAR } from '@site/src/data/slots';
 import { useCopy } from '@site/src/hooks/useCopy';
 
 type SwapOptions = {

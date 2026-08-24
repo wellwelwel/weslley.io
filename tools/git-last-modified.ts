@@ -1,5 +1,5 @@
 import { spawn } from 'node:child_process';
-import { isDevelopment } from './environment';
+import { isDevelopment } from '../src/helpers/environment';
 
 export const getGitLastModified = async (
   filePath: string
@@ -38,7 +38,7 @@ export const getGitLastModified = async (
           return;
         }
 
-        const date = new Date(parseInt(timestamp, 10) * 1000);
+        const date = new Date(Number(timestamp) * 1000);
         resolve(date.toISOString());
       });
 

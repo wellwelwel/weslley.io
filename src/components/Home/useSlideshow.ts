@@ -4,7 +4,7 @@ import useIsomorphicLayoutEffect from '@docusaurus/useIsomorphicLayoutEffect';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
-import { load, ready } from '@site/src/components/Home/slides';
+import { load, ready } from '@site/src/components/Home/gates';
 
 type Slideshow = {
   active: number;
@@ -14,11 +14,17 @@ type Slideshow = {
 
 gsap.registerPlugin(useGSAP, Observer);
 
-const STEP_LOCK = 0.6;
+const STEP_LOCK_MS = 600;
 const TOLERANCE = 10;
 
-const FORWARD_KEYS = ['ArrowDown', 'ArrowRight', 'PageDown'];
-const BACKWARD_KEYS = ['ArrowUp', 'ArrowLeft', 'PageUp'];
+const STEPS: Record<string, 1 | -1 | undefined> = {
+  ArrowDown: 1,
+  ArrowRight: 1,
+  PageDown: 1,
+  ArrowUp: -1,
+  ArrowLeft: -1,
+  PageUp: -1,
+};
 
 const longestPrefix = (paths: readonly string[], pathname: string): number =>
   paths.reduce(
@@ -38,7 +44,7 @@ export const useSlideshow = (
   const [active, setActive] = useState(0);
   const current = useRef(0);
   const locked = useRef(false);
-  const unlock = useRef<gsap.core.Tween | null>(null);
+  const unlock = useRef(0);
 
   const activate = useCallback((index: number, after?: () => void) => {
     if (index === current.current) return;
@@ -52,10 +58,10 @@ export const useSlideshow = (
       after?.();
 
       locked.current = true;
-      unlock.current?.kill();
-      unlock.current = gsap.delayedCall(STEP_LOCK, () => {
+      window.clearTimeout(unlock.current);
+      unlock.current = window.setTimeout(() => {
         locked.current = false;
-      });
+      }, STEP_LOCK_MS);
     };
 
     if (ready(index)) return commit();
@@ -80,12 +86,7 @@ export const useSlideshow = (
 
   const home = useCallback(() => show(0), [show]);
 
-  useEffect(
-    () => () => {
-      unlock.current?.kill();
-    },
-    []
-  );
+  useEffect(() => () => window.clearTimeout(unlock.current), []);
 
   useIsomorphicLayoutEffect(() => {
     activate(longestPrefix(paths, pathname));
@@ -115,11 +116,7 @@ export const useSlideshow = (
       });
 
       const onKeyDown = (event: KeyboardEvent) => {
-        const direction = FORWARD_KEYS.includes(event.key)
-          ? 1
-          : BACKWARD_KEYS.includes(event.key)
-            ? -1
-            : 0;
+        const direction = STEPS[event.key];
 
         if (!direction) return;
 

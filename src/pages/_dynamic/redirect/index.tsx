@@ -1,14 +1,14 @@
+import type { ProcessedRedirect } from '@site/src/@types/redirect';
 import type { ReactNode } from 'react';
-import type { ProcessedRedirect } from '../../../@types/redirect';
 import { useEffect } from 'react';
 import Head from '@docusaurus/Head';
 import { SafeLink } from '@site/src/components/SafeLink';
 
-type RedirectProps = {
+type RedirectOptions = {
   data: ProcessedRedirect;
 };
 
-const Redirect = ({ data }: RedirectProps): ReactNode => {
+const Redirect = ({ data }: RedirectOptions): ReactNode => {
   useEffect(() => {
     window.location.href = data.url;
   }, [data.url]);

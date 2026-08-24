@@ -1,9 +1,5 @@
+import type { Gate } from '@site/src/components/Home/gates';
 import type { ComponentType, ReactNode } from 'react';
-
-export type Gate = {
-  ready: () => boolean;
-  load: () => Promise<void>;
-};
 
 type Deferred<Props extends object> = {
   gate: Gate;

@@ -1,79 +1,51 @@
-import type { ProcessedArticle } from '../src/@types/article';
-import { exec } from 'node:child_process';
-import { readdir, readFile } from 'node:fs/promises';
-import { dirname, extname, join } from 'node:path';
-import { promisify } from 'node:util';
-import config from '../docusaurus.config';
+import type { ArticleFrontMatter, FoundArticle } from '../src/@types/article';
+import { readFile } from 'node:fs/promises';
+import { basename, dirname, join } from 'node:path';
 import { extractDescription } from './extract-description';
 import { extractSummary } from './extract-summary';
 import { matter } from './front-matter';
 import { getGitLastModified } from './git-last-modified';
 import { calculateReadingTime } from './reading-time';
+import { walk } from './walk';
 
-const execAsync = promisify(exec);
+const MARKDOWN = /\.mdx?$/;
 
-const registerCounters = (slug: string): void => {
-  execAsync(`countty create "${slug}"`).catch(() => {});
-  execAsync(`countty create "${slug}:like"`).catch(() => {});
+const slugOf = (data: ArticleFrontMatter): string =>
+  (data.slug || data.title)
+    .toLocaleLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[()—]/g, '')
+    .replace(/\s+/g, '-');
+
+const read = async (file: string): Promise<FoundArticle> => {
+  const { data, content } = matter<ArticleFrontMatter>(
+    await readFile(file, 'utf8')
+  );
+  const slug = slugOf(data);
+  const lastModified = await getGitLastModified(file);
+  const socialPath = data.social ? join(dirname(file), data.social) : undefined;
+
+  return {
+    title: data.title,
+    order: data.order,
+    slug,
+    path: encodeURIComponent(slug).replace(/%/g, ''),
+    date: data.date,
+    authors: data.authors || [],
+    tags: data.tags || [],
+    content,
+    filePath: basename(file),
+    mdxPath: file,
+    summary: extractSummary(content),
+    description: extractDescription(content),
+    social: data.social,
+    socialPath,
+    readingTime: calculateReadingTime(content),
+    ...(lastModified && { lastModified }),
+    ...(data.sides && { sides: data.sides }),
+  };
 };
 
-export const findArticles = async (
-  dir: string
-): Promise<ProcessedArticle[]> => {
-  const articles: ProcessedArticle[] = [];
-  const entries = await readdir(dir, { withFileTypes: true });
-
-  for (const entry of entries) {
-    const fullPath = join(dir, entry.name);
-
-    if (entry.isDirectory()) {
-      const subArticles = await findArticles(fullPath);
-
-      articles.push(...subArticles);
-      continue;
-    }
-
-    if (entry.isFile()) {
-      const ext = extname(entry.name);
-      if (ext !== '.mdx' && ext !== '.md') continue;
-
-      const fileContent = await readFile(fullPath, 'utf8');
-      const { data, content } = matter<ProcessedArticle>(fileContent);
-      const slug = (data.slug || data.title)
-        .toLocaleLowerCase()
-        .normalize('NFD')
-        .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[()—]/g, '')
-        .replace(/\s+/g, '-');
-
-      if (config.customFields?.showViewsCounter) registerCounters(slug);
-
-      const socialPath: string | undefined = data.social
-        ? join(dirname(fullPath), data.social)
-        : undefined;
-
-      const lastModified = await getGitLastModified(fullPath);
-
-      articles.push({
-        title: data.title,
-        order: data.order,
-        slug: encodeURIComponent(slug),
-        date: data.date,
-        authors: data.authors || [],
-        tags: data.tags || [],
-        content,
-        filePath: entry.name,
-        mdxPath: fullPath,
-        summary: extractSummary(content),
-        description: extractDescription(content),
-        social: data.social,
-        socialPath,
-        readingTime: calculateReadingTime(content),
-        ...(lastModified ? { lastModified } : Object.create(null)),
-        ...(data.sides ? { sides: data.sides } : Object.create(null)),
-      });
-    }
-  }
-
-  return articles;
-};
+export const findArticles = async (dir: string): Promise<FoundArticle[]> =>
+  Promise.all((await walk(dir, (name) => MARKDOWN.test(name))).map(read));

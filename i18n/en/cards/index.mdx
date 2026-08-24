@@ -1,12 +1,5 @@
-import {
-  HeartHandshake,
-  History,
-  Pin,
-  Sparkle,
-  Star,
-  Video,
-} from 'lucide-react';
-import { Card, TalkCard } from '@site/src/components/Card';
+import { HeartHandshake, Sparkle, Star } from 'lucide-react';
+import { Card } from '@site/src/components/Card';
 import { Slide } from '@site/src/components/Slide';
 
 ## <Sparkle /> Memories
@@ -75,103 +68,6 @@ import { Slide } from '@site/src/components/Slide';
     },
   ]}
 />
-
-## <Pin /> Calendar
-
-<div className='badge'>
-  <span>Talks - Mentorias - Panels</span>
-</div>
-
-<TalkCard
-  name='Codecon Summit 26'
-  imageSrc='/img/codecon2.svg'
-  url='https://codecon.dev/summit'
-  location='Rod. Dep. João Leopoldo Jacomel, 10454 - Vila Amelia, Pinhais - PR'
-  date='2026-08-14T00:00'
-  coupon={{
-    code: 'WELLWELWEL',
-    url: 'https://eventos.codecon.dev/eventos/codecon-summit-26?c=WELLWELWEL'
-  }}
->
-
-🥷🏻 In this talk, I'll show you how real development best practices can be used as means of attack, even when applied the right way. Let's learn security through attack.
-
-</TalkCard>
-
-<TalkCard
-  name='Roga DX 2026'
-  imageSrc='/img/rogadx.png'
-  url='https://rogadx.com/'
-  location='Rua Celso Piatti, 280-372 - Jaraguá, Maceió - AL'
-  date='2026-08-15T00:00'
->
-
-🥳 **"It's over for Devs!":** A different talk on my birthday, where you'll understand _(or not)_ whether programming still makes sense for you. This is the kind of content that _reframes_ our value as humans, especially in the AI era.
-
-</TalkCard>
-
-<TalkCard
-  name='Codecon Universe 26'
-  imageSrc='/img/codecon.svg'
-  url='https://eventos.codecon.dev/eventos/codecon-universe-26'
-  location='Online'
-  date='2026-05-29T19:00'
->
-
-🪐 From May 29 to 31, Codecon Universe takes place, an online hackathon of useless and absurd ideas. I'll be very happy to join you as a mentor in this process!
-
-</TalkCard>
-
-<TalkCard
-  name='Practical AI with Node.js'
-  imageSrc='/img/jsconfbr.svg'
-  url='https://guild.host/events/practical-ai-with-nodejs-pagajf'
-  location='Av. Paulista, 1374 - 12º Andar - Bela Vista, São Paulo - SP, 01310-000'
-  coupon={{
-    code: 'FREE',
-    url: 'https://guild.host/events/practical-ai-with-nodejs-pagajf'
-  }}
-  date='2026-04-09T20:25'
->
-
-👾 We'll demystify everything you know about development and explore how to make our application predictable against the unpredictable.
-
-</TalkCard>
-
-<TalkCard
-  name='Node Congress 2026'
-  imageSrc='/img/node-congress.png'
-  className='sm'
-  url='https://nodecongress.com/'
-  location='Remote (English)'
-  coupon={{
-    code: 'weslley_araujo_154376',
-    url: 'https://gitnation.com/badges/node-congress-2026/weslley_araujo_154376'
-  }}
-  date='2026-03-26T00:00'
->
-
-🧪 What's it like to create a test runner from scratch?
-
-</TalkCard>
-
-## <Video /> Recent Videos
-
-<div className='badge'>
-  <span>Educational Content - Podcasts</span>
-</div>
-
-<TalkCard
-  name='THE BIGGEST SUPPLY CHAIN ATTACK IN HISTORY'
-  imageSrc='/img/npm-original.svg'
-  url='https://www.youtube.com/watch?v=YVUmvJSRGYk'
->
-
-What would you do if you wanted to hack the entire <strong>Node.js</strong> user base in the world?
-
-Let's _recreate_ the attack to understand the biggest supply chain attack in <strong>npm</strong> history. 👾
-
-</TalkCard>
 
 ## <Star /> Featured Projects
 

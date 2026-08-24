@@ -1,13 +1,13 @@
 import type { ReactNode } from 'react';
 import { useContext } from 'react';
-import { SideContext } from './context';
+import { SideContext } from '@site/src/components/Side/context';
 
-interface SideProps {
+type SideOptions = {
   id: string;
   children: ReactNode;
-}
+};
 
-export const Side = ({ id, children }: SideProps) => {
+export const Side = ({ id, children }: SideOptions) => {
   const context = useContext(SideContext);
 
   if (!context) return <>{children}</>;

@@ -5,7 +5,7 @@ import gsap from 'gsap';
 import { ExternalLink } from 'lucide-react';
 import { SafeLink } from '@site/src/components/SafeLink';
 import { motion } from '@site/src/helpers/reduced-motion';
-import { useYear } from '@site/src/hooks/useDownloads';
+import { useDownloads } from '@site/src/hooks/useDownloads';
 
 type Year = {
   year: number;
@@ -23,6 +23,7 @@ const CLOSED: Year[] = [
 
 const SPIN = 1.5;
 const LEAD = 0.5;
+const ROLL_REDUCED = 0.6;
 
 const WHEEL =
   'mx-auto h-[calc(var(--row)*3+1rem)] w-64 max-w-full touch-pan-y overflow-y-auto overscroll-contain scroll-pb-4 picker [--row:2.75rem] [scrollbar-width:none] short:[--row:2.5rem] sm:w-70 sm:[--row:3rem] [&::-webkit-scrollbar]:hidden';
@@ -45,7 +46,7 @@ const chart = (year: number): string =>
 export const Milestones = (): ReactNode => {
   const wheel = useRef<HTMLDivElement>(null);
   const [settled, setSettled] = useState(false);
-  const current = useYear();
+  const current = useDownloads();
   const years: Year[] = [
     ...CLOSED,
     { year: current.year, downloads: current.total, running: true },
@@ -62,7 +63,7 @@ export const Milestones = (): ReactNode => {
     const row = node.querySelector('li')?.getBoundingClientRect().height;
     if (!row) return;
 
-    const roll = { full: focus, reduced: focus * 0.6 };
+    const roll = { full: focus, reduced: focus * ROLL_REDUCED };
     const rest = () => setSettled(true);
 
     const spin = gsap.fromTo(

@@ -1,5 +1,5 @@
 import { strict, test } from 'poku';
-import { getSideLabel } from '../../src/helpers/get-side-label';
+import { getSideLabel } from '../../src/helpers/side-label';
 
 test("Side label's generation", () => {
   strict.equal(getSideLabel(0), 'A', 'should return A for index 0');

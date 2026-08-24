@@ -1,5 +1,5 @@
 import type { RefObject } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 type Spots = {
   page: RefObject<HTMLDivElement | null>;
@@ -55,9 +55,12 @@ export const useSpots = (): Spots => {
     };
   }, []);
 
-  const place = (index: number) => (chip: HTMLButtonElement | null) => {
-    chips.current[index] = chip;
-  };
+  const place = useCallback(
+    (index: number) => (chip: HTMLButtonElement | null) => {
+      chips.current[index] = chip;
+    },
+    []
+  );
 
   return { page, rail, place, spots };
 };

@@ -1,17 +1,9 @@
+import type { Downloads } from '@site/src/@types/downloads';
 import { usePluginData } from '@docusaurus/useGlobalData';
 import { downloadsLabel } from '@site/src/helpers/downloads';
 
-type Downloads = {
-  year: number;
-  source: string;
-  total?: number;
-  rolling?: number;
-};
+export const useDownloads = (): Downloads =>
+  usePluginData('downloads') as Downloads;
 
-export const useDownloads = (): string => {
-  const { rolling } = usePluginData('downloads') as Downloads;
-
-  return downloadsLabel(rolling);
-};
-
-export const useYear = (): Downloads => usePluginData('downloads') as Downloads;
+export const useDownloadsLabel = (): string =>
+  downloadsLabel(useDownloads().rolling);

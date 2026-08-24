@@ -1,15 +1,14 @@
-import type { ArticleListing } from '@site/src/@types/article';
+import type { ArticleListing, ArticlesOptions } from '@site/src/@types/article';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
-import { ArticlesOptions } from '@site/src/helpers/get-social';
+import { Article } from '@site/src/components/Articles/Article';
+import { ViewToggle } from '@site/src/components/Articles/ViewToggle';
 import { useViewMode } from '@site/src/hooks/useViewMode';
-import { MarkdownWithAdmonitions } from './Admonition';
-import { Article } from './Article';
 
 export const Articles = ({ route, description, children }: ArticlesOptions) => {
   const { globalData, i18n } = useDocusaurusContext();
-  const { viewMode, ViewToggle, isListView } = useViewMode();
+  const [viewMode, setViewMode] = useViewMode();
   const currentLocale = i18n.currentLocale;
 
   const socialBanner = '/img/slide/roga-002.jpg';
@@ -39,12 +38,12 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
       <div id='articles'>
         <header>
           <h1>{translations.title[route]}</h1>
-          <ViewToggle />
+          <ViewToggle mode={viewMode} onChange={setViewMode} />
         </header>
 
         {children ?? null}
 
-        <section className={isListView ? 'list-view' : ''}>
+        <section className={viewMode === 'list' ? 'list-view' : ''}>
           {articles.map((article) => (
             <Article
               key={article.slug}
@@ -64,4 +63,3 @@ export const Articles = ({ route, description, children }: ArticlesOptions) => {
     </Layout>
   );
 };
-export { MarkdownWithAdmonitions };

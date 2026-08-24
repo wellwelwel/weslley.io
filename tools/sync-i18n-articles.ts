@@ -1,7 +1,8 @@
 import { constants } from 'node:fs';
-import { access, copyFile, mkdir, readdir } from 'node:fs/promises';
+import { access, copyFile, mkdir } from 'node:fs/promises';
 import { dirname, extname, join, relative } from 'node:path';
 import config from '../docusaurus.config';
+import { walk } from './walk';
 
 if (
   !config?.i18n?.defaultLocale ||
@@ -30,26 +31,6 @@ const EXTENSIONS = new Set([
   '.webp',
 ]);
 
-const getAllFiles = async (
-  dir: string,
-  files: string[] = []
-): Promise<string[]> => {
-  const entries = await readdir(dir, { withFileTypes: true }).catch(() => []);
-
-  for (const entry of entries) {
-    const fullPath = join(dir, entry.name);
-
-    if (entry.isDirectory()) {
-      await getAllFiles(fullPath, files);
-      continue;
-    }
-
-    if (entry.isFile()) files.push(fullPath);
-  }
-
-  return files;
-};
-
 const ensureDirectoryExists = async (dirPath: string): Promise<void> => {
   await mkdir(dirPath, { recursive: true }).catch(() => {});
 };
@@ -72,7 +53,9 @@ export const syncI18nArticles = async (): Promise<void> => {
   }
 
   const sourceDir = join(I18N_DIR, SOURCE_LOCALE, 'articles');
-  const sourceFiles = await getAllFiles(sourceDir);
+  const sourceFiles = await walk(sourceDir, (name) =>
+    EXTENSIONS.has(extname(name))
+  ).catch(() => []);
 
   let totalCopied = 0;
   let totalSkipped = 0;
@@ -87,8 +70,6 @@ export const syncI18nArticles = async (): Promise<void> => {
     for (const sourcePath of sourceFiles) {
       const relativePath = relative(sourceDir, sourcePath);
       const targetPath = join(targetBaseDir, relativePath);
-
-      if (!EXTENSIONS.has(extname(sourcePath))) continue;
 
       if (await fileExists(targetPath)) {
         console.log(`⏭️  Skipped (already exists): ${relativePath}`);

@@ -1,4 +1,4 @@
-import { slots } from '@site/src/components/Agenda/slots';
+import { slots } from '@site/src/data/slots';
 import { todayInBrazil } from '@site/src/helpers/today';
 
 type Calendar = {
@@ -51,6 +51,12 @@ export const WEEKDAYS = [
   'sexta-feira',
   'sábado',
 ];
+
+export const longDate = (date: string): string => {
+  const [year, month, day] = date.split('-').map(Number);
+
+  return `${day} de ${MONTHS[month - 1]} de ${year}`;
+};
 
 const parse = (date: string): Date => {
   const [year, month, day] = date.split('-').map(Number);

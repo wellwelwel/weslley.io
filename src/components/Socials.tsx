@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
 import { useEffect, useRef } from 'react';
 import { SafeLink } from '@site/src/components/SafeLink';
-import { socialLinks } from '@site/src/helpers/social-links';
+import { socialLinks } from '@site/src/data/socials';
 
 export type SocialsOptions = {
   onHover?: (name: string | null) => void;

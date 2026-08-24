@@ -1,15 +1,16 @@
-import type { ProcessedArticle } from '../../../@types/article';
+import type {
+  ArticlesOptions,
+  ProcessedArticle,
+} from '@site/src/@types/article';
 import Head from '@docusaurus/Head';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import { Article } from '@site/src/components/Articles/Article';
-import {
-  ArticlesOptions,
-  createImagesContext,
-} from '@site/src/helpers/get-social';
+import { ViewToggle } from '@site/src/components/Articles/ViewToggle';
+import { createImagesContext } from '@site/src/helpers/article-image';
 import { useViewMode } from '@site/src/hooks/useViewMode';
 
-type TagPageProps = {
+type TagPageOptions = {
   data: {
     route: ArticlesOptions['route'];
     tag: string;
@@ -17,13 +18,13 @@ type TagPageProps = {
   };
 };
 
-export default ({ data }: TagPageProps) => {
+export default ({ data }: TagPageOptions) => {
   const { route, tag, articles } = data;
   const { i18n } = useDocusaurusContext();
   const currentLocale = i18n.currentLocale;
   const imagesContext = createImagesContext();
   const imageMap: Record<string, string> = Object.create(null);
-  const { viewMode, ViewToggle, isListView } = useViewMode();
+  const [viewMode, setViewMode] = useViewMode();
 
   const translations = {
     tag: currentLocale === 'en' ? 'Tag' : 'Tag',
@@ -62,7 +63,7 @@ export default ({ data }: TagPageProps) => {
             <h1>
               {translations.tag}: {tag}
             </h1>
-            <ViewToggle />
+            <ViewToggle mode={viewMode} onChange={setViewMode} />
           </header>
 
           <small>
@@ -76,7 +77,7 @@ export default ({ data }: TagPageProps) => {
             .
           </small>
 
-          <section className={isListView ? 'list-view' : ''}>
+          <section className={viewMode === 'list' ? 'list-view' : ''}>
             {articles.map((article) => (
               <Article
                 key={article.slug}

@@ -3,15 +3,14 @@ import type { Config } from '@docusaurus/types';
 import { env, loadEnvFile } from 'node:process';
 import { themes as prismThemes } from 'prism-react-renderer';
 
+type CustomFields = {
+  COUNTTY_URL: string | undefined;
+  showViewsCounter: boolean;
+};
+
 try {
   loadEnvFile();
 } catch {}
-
-const articlesPlugin = require('./plugins/articles/mount.ts').default;
-const downloadsPlugin = require('./plugins/downloads/mount.ts').default;
-const homePlugin = require('./plugins/home/mount.ts').default;
-const inlineCssPlugin = require('./plugins/inline-css/mount.ts').default;
-const redirectsPlugin = require('./plugins/redirects/mount.ts').default;
 
 const config: Config = {
   title: 'Weslley Araújo',
@@ -21,7 +20,7 @@ const config: Config = {
   customFields: {
     COUNTTY_URL: env.COUNTTY_URL,
     showViewsCounter: true,
-  },
+  } satisfies CustomFields,
   future: {
     v4: {
       removeLegacyPostBuildHeadAttribute: true,
@@ -102,28 +101,18 @@ const config: Config = {
     },
   } satisfies Preset.ThemeConfig,
   plugins: [
-    require.resolve('./webpack.config'),
-    (context) =>
-      articlesPlugin(context, {
-        pluginName: 'mount-articles',
-        contentDir: 'articles',
-      }),
-    (context) =>
-      redirectsPlugin(context, {
-        pluginName: 'redirects',
-      }),
-    (context) =>
-      homePlugin(context, {
-        pluginName: 'mount-home',
-      }),
-    (context) =>
-      inlineCssPlugin(context, {
-        pluginName: 'inline-css',
-      }),
-    (context) =>
-      downloadsPlugin(context, {
-        pluginName: 'downloads',
-      }),
+    require.resolve('./plugins/webpack/mount'),
+    [
+      require.resolve('./plugins/articles/mount'),
+      { pluginName: 'mount-articles', contentDir: 'articles' },
+    ],
+    [require.resolve('./plugins/redirects/mount'), { pluginName: 'redirects' }],
+    [require.resolve('./plugins/home/mount'), { pluginName: 'mount-home' }],
+    [
+      require.resolve('./plugins/inline-css/mount'),
+      { pluginName: 'inline-css' },
+    ],
+    [require.resolve('./plugins/downloads/mount'), { pluginName: 'downloads' }],
   ],
 };
 

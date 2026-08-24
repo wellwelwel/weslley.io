@@ -4,8 +4,8 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import { Github } from '@site/src/components/icons/Github';
 import { Parallax } from '@site/src/components/Parallax';
 import { SafeLink } from '@site/src/components/SafeLink';
+import { skills } from '@site/src/components/Skill';
 import { useScroll } from '@site/src/hooks/useScroll';
-import { skills } from './Skill';
 
 export type ProjectOptions = {
   name: string;

@@ -4,7 +4,7 @@ import { useThemeConfig } from '@docusaurus/theme-common';
 import { useNavbarMobileSidebar } from '@docusaurus/theme-common/internal';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import NavbarItem from '@theme/NavbarItem';
-import { anchors } from '@site/src/helpers/get-anchors';
+import { anchors } from '@site/src/helpers/localized';
 
 function useNavbarItems() {
   return (useThemeConfig().navbar.items as NavbarItemConfig[]) || [];

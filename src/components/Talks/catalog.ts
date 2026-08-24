@@ -1,6 +1,6 @@
 import type { Author } from '@site/src/@types/article';
+import type { Shape } from '@site/src/@types/image';
 import type { SideConfig } from '@site/src/@types/side';
-import type { Shape } from '@site/tools/measure-image';
 import type { ComponentType } from 'react';
 import { sources } from '@generated/mount-home/default/talks';
 

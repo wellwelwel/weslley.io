@@ -6,9 +6,9 @@ import AboutHeadline from '@site/i18n/pt-BR/about/headline.mdx';
 import { AnimatedCount } from '@site/src/components/AnimatedCount';
 import { Name } from '@site/src/components/Name';
 import { Parallax } from '@site/src/components/Parallax';
-import { dynamicImport } from '@site/src/helpers/dynamic-require';
-import { anchors } from '@site/src/helpers/get-anchors';
-import { socials } from '@site/src/helpers/get-socials';
+import { SafeLink } from '@site/src/components/SafeLink';
+import { socialLinks } from '@site/src/data/socials';
+import { anchors, forLocale } from '@site/src/helpers/localized';
 import { useStats } from '@site/src/hooks/useStats';
 import { cards } from '@site/src/legacy/helpers/get-cards';
 
@@ -17,10 +17,9 @@ export default (): ReactNode => {
   const { currentLocale } = i18n;
   const isPtBr = currentLocale === 'pt-BR';
   const Anchors = anchors(currentLocale);
-  const Socials = socials(currentLocale);
   const Cards = cards(currentLocale);
   const stats = useStats();
-  const AboutResume = dynamicImport(currentLocale, { 'pt-BR': AboutHeadline });
+  const AboutResume = forLocale(currentLocale, { 'pt-BR': AboutHeadline });
 
   return (
     <Layout
@@ -52,8 +51,15 @@ export default (): ReactNode => {
               <AboutResume />
             </small>
             <nav>
-              {Socials.map((Social, i) => (
-                <Social key={`card:${i}`} />
+              {Object.values(socialLinks).map(({ name, imageSrc, url }) => (
+                <SafeLink key={name} to={url}>
+                  <img
+                    loading='lazy'
+                    decoding='async'
+                    src={imageSrc}
+                    alt={name}
+                  />
+                </SafeLink>
               ))}
             </nav>
             <menu>

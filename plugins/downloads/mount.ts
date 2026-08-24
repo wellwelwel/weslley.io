@@ -1,5 +1,5 @@
 import type { LoadContext, Plugin } from '@docusaurus/types';
-import type { Downloads } from '../../tools/downloads';
+import type { Downloads } from '../../src/@types/downloads';
 import { downloads } from '../../tools/downloads';
 
 type PluginOptions = {

@@ -1,6 +1,6 @@
-import os from 'node:os';
+import { networkInterfaces } from 'node:os';
 
-const interfaces = os.networkInterfaces();
+const interfaces = networkInterfaces();
 
 console.log('Hosting to these address at the same port as Docusaurus:');
 
