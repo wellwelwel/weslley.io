@@ -303,7 +303,8 @@ export const slots: Slot[] = [
     coupon: { code: 'Gratuito' },
     venue: 'Natal, RN',
     address: 'Centro de Convenções de Natal - Natal, RN',
-    title: 'Você realmente sabe alguma coisa sobre segurança?',
+    title:
+      'Inteligência Sintética: O que acontece quando a criatividade deixa de ser prioridade?',
     role: 'Palestra',
   },
   {
