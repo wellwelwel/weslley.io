@@ -75,25 +75,6 @@ const config: Config = {
       respectPrefersColorScheme: false,
       defaultMode: 'light',
     },
-    navbar: {
-      title: 'Weslley A.',
-      logo: {
-        alt: "Weslley's Araújo Avatar",
-        src: 'img/avatar.png',
-      },
-      items: [
-        {
-          type: 'search',
-          position: 'right',
-        },
-        {
-          type: 'localeDropdown',
-          position: 'right',
-          className: 'locale',
-        },
-      ],
-    },
-    footer: Object.create(null),
     prism: {
       theme: prismThemes.dracula,
       darkTheme: prismThemes.dracula,
