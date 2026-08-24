@@ -298,7 +298,7 @@ export const slots: Slot[] = [
   {
     date: '2026-09-19',
     time: '13:00',
-    event: 'GO!RN & DevFest Natal',
+    event: 'GO!RN, GDG Natal & Caicó Valley',
     logo: '/img/gorn.svg',
     url: 'https://gorn.com.br/',
     coupon: { code: 'Gratuito' },
