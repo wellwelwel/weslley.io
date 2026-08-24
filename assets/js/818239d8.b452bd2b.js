@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkweslley_io=self.webpackChunkweslley_io||[]).push([["4465"],{9823(e){e.exports=JSON.parse('{"title":"Reconhecimentos","description":"Weslley \xe9 reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).","image":"/img/social/recognition.jpg"}')}}]);
