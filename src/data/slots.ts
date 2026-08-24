@@ -295,6 +295,17 @@ export const slots: Slot[] = [
     role: 'Keynote',
   },
   {
+    date: '2026-09-18',
+    event: 'GO!RN & DevFest Natal',
+    logo: '/img/gorn.svg',
+    url: 'https://gorn.com.br/',
+    coupon: { code: 'Gratuito' },
+    venue: 'Natal, RN',
+    address: 'Centro de Convenções de Natal - Natal, RN',
+    title: 'Você realmente sabe alguma coisa sobre segurança?',
+    role: 'Palestra',
+  },
+  {
     date: '2026-11-14',
     event: 'Codecon Select Experience',
     logo: '/img/codecon3.png',
@@ -307,7 +318,7 @@ export const slots: Slot[] = [
     venue: 'São Paulo, SP',
     address: 'STATE INNOVATION CENTER, SÃO PAULO - SP',
     title:
-      'Evento exclusivo voltado para profissionais em cargos sênior ou superiores.',
+      'Evento exclusivo para profissionais em cargos sênior ou superiores.',
     role: 'Embaixador',
   },
 ];
