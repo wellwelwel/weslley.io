@@ -296,7 +296,8 @@ export const slots: Slot[] = [
     role: 'Keynote',
   },
   {
-    date: ['2026-09-18', '2026-09-19'],
+    date: '2026-09-19',
+    time: '13:00',
     event: 'GO!RN & DevFest Natal',
     logo: '/img/gorn.svg',
     url: 'https://gorn.com.br/',
