@@ -70,6 +70,7 @@ const config: Config = {
   ],
   staticDirectories: ['./src/assets'],
   themeConfig: {
+    image: 'img/social/banner.jpg',
     colorMode: {
       disableSwitch: true,
       respectPrefersColorScheme: false,

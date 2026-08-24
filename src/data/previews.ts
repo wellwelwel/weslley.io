@@ -19,6 +19,7 @@ export const images = {
   poku: '/img/plush/poku.png',
   pokuBackground: '/img/plush/poku-bg.png',
   stage: '/img/talks/codecon-2025/moments/04.jpg',
+  summit: '/img/social/recognition.jpg',
   talks: '/img/slide/codecon-002.jpg',
   velvet: '/img/plush/velvet-texture.png',
 };
@@ -30,7 +31,7 @@ export const previews = {
     title: 'Reconhecimentos',
     description:
       'Weslley é reconhecido como Microsoft MVP (Developer Technologies: Developer Tools e Web Development) e verificado pelo Anthropic Cyber Verification Program (CVP).',
-    image: images.mvp,
+    image: images.summit,
   },
   impact: {
     title: 'Impacto',
