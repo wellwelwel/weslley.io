@@ -1,46 +1,66 @@
 import type { Downloads } from '../src/@types/downloads';
 
 const REPO = 'wellwelwel/wellwelwel';
-const FILE = 'docs/downloads-history.json';
+const DOCS = `https://raw.githubusercontent.com/${REPO}/refs/heads/main/docs`;
 
-const HISTORY = `https://raw.githubusercontent.com/${REPO}/refs/heads/main/${FILE}`;
-const SOURCE = `https://github.com/${REPO}/blob/main/${FILE}`;
+const HISTORY = `${DOCS}/downloads-history.json`;
+const STATS = `${DOCS}/stats.json`;
+const SOURCE = `https://github.com/${REPO}/blob/main/docs/downloads-history.json`;
 
 const TIMEOUT = 10_000;
 
-const read = async (): Promise<Downloads> => {
-  const year = new Date().getFullYear();
-  const base = { year, source: SOURCE };
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === 'object' && value !== null;
 
+const isCount = (value: unknown): value is number =>
+  typeof value === 'number' && Number.isFinite(value) && value >= 0;
+
+const fetchJson = async (url: string): Promise<unknown> => {
   try {
-    const response = await fetch(HISTORY, {
+    const response = await fetch(url, {
       signal: AbortSignal.timeout(TIMEOUT),
     });
 
-    if (!response.ok) return base;
-
-    const history: Record<
-      string,
-      Record<string, number>
-    > = await response.json();
-    const running = String(year);
-
-    let total = 0;
-    let rolling = 0;
-
-    for (const daily of Object.values(history))
-      for (const [date, count] of Object.entries(daily)) {
-        if (!Number.isFinite(count)) continue;
-
-        rolling += count;
-
-        if (date.startsWith(running)) total += count;
-      }
-
-    return { ...base, total, rolling };
+    return response.ok ? await response.json() : undefined;
   } catch {
-    return base;
+    return undefined;
   }
+};
+
+const readTotal = async (year: number): Promise<number | undefined> => {
+  const history = await fetchJson(HISTORY);
+
+  if (!isRecord(history)) return undefined;
+
+  const running = String(year);
+
+  let total = 0;
+
+  for (const daily of Object.values(history)) {
+    if (!isRecord(daily)) continue;
+
+    for (const [date, count] of Object.entries(daily))
+      if (date.startsWith(running) && isCount(count)) total += count;
+  }
+
+  return total;
+};
+
+const readRolling = async (): Promise<number | undefined> => {
+  const stats = await fetchJson(STATS);
+
+  if (!isRecord(stats) || !isRecord(stats.downloadsPerYear)) return undefined;
+
+  const { value } = stats.downloadsPerYear;
+
+  return isCount(value) ? value : undefined;
+};
+
+const read = async (): Promise<Downloads> => {
+  const year = new Date().getFullYear();
+  const [total, rolling] = await Promise.all([readTotal(year), readRolling()]);
+
+  return { year, source: SOURCE, total, rolling };
 };
 
 let pending: Promise<Downloads> | undefined;

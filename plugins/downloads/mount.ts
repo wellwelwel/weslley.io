@@ -17,6 +17,9 @@ export default (
     if (content.total === undefined)
       console.warn('Downloads history is unreachable, falling back.');
 
+    if (content.rolling === undefined)
+      console.warn('Downloads stats are unreachable, falling back.');
+
     actions.setGlobalData(content);
   },
 });
