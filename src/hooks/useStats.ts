@@ -1,39 +1,8 @@
+import type { Stats } from '@site/src/helpers/stats';
 import { useEffect, useState } from 'react';
-
-type Metric = {
-  value: number;
-  label: string;
-};
-
-export type Stats = {
-  packages: string[];
-  downloadsPerMonth: Metric;
-  downloadsPerYear: Metric;
-  fetched: string;
-};
+import { isStats } from '@site/src/helpers/stats';
 
 export const statsUrl = 'https://wellwelwel.github.io/wellwelwel/stats.json';
-
-const isMetric = (value: unknown): value is Metric => {
-  if (typeof value !== 'object' || value === null) return false;
-
-  const metric: Partial<Record<keyof Metric, unknown>> = value;
-
-  return typeof metric.value === 'number' && typeof metric.label === 'string';
-};
-
-const isStats = (value: unknown): value is Stats => {
-  if (typeof value !== 'object' || value === null) return false;
-
-  const stats: Partial<Record<keyof Stats, unknown>> = value;
-
-  return (
-    Array.isArray(stats.packages) &&
-    isMetric(stats.downloadsPerMonth) &&
-    isMetric(stats.downloadsPerYear) &&
-    typeof stats.fetched === 'string'
-  );
-};
 
 let cache: Stats | undefined;
 let pending: Promise<Stats | undefined> | undefined;

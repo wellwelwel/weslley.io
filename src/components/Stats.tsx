@@ -6,10 +6,9 @@ import { statsUrl, useStats } from '@site/src/hooks/useStats';
 
 const DownloadsPerYear = (): ReactNode => {
   const stats = useStats();
-
   if (!stats) return null;
 
-  const { value } = stats.downloadsPerYear;
+  const { value } = stats.author.downloadsPerYear;
 
   return (
     <span>
@@ -20,10 +19,9 @@ const DownloadsPerYear = (): ReactNode => {
 
 const DownloadsPerMonth = (): ReactNode => {
   const stats = useStats();
-
   if (!stats) return null;
 
-  const { value } = stats.downloadsPerMonth;
+  const { value } = stats.author.downloadsPerMonth;
 
   return (
     <span>
@@ -34,7 +32,6 @@ const DownloadsPerMonth = (): ReactNode => {
 
 const LastUpdated = (): ReactNode => {
   const stats = useStats();
-
   if (!stats) return null;
 
   return (

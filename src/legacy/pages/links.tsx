@@ -89,7 +89,7 @@ export default (): ReactNode => {
               <img src='/img/rocket.svg' alt='Plus' />{' '}
               <span>
                 <AnimatedCount
-                  value={stats?.downloadsPerYear.value ?? 0}
+                  value={stats?.author.downloadsPerYear.value ?? 0}
                   locale={currentLocale}
                 />
               </span>{' '}
