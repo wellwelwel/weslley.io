@@ -30,17 +30,17 @@
 Cleanly install the dependencies:
 
 ```bash
-npm ci
+bun install --frozen-lockfile
 ```
 
 Main commands:
 
 ```bash
 # To watch your changes in real time:
-npm start
+bun run start
 
 # To preview your build:
-npm run preview
+bun run preview
 
 ```
 
@@ -48,23 +48,23 @@ Useful commands for testing:
 
 ```bash
 # To fix automatic lint errors:
-npm run lint:fix
+bun run lint:fix
 
 # To check for type errors (doesn't work with MDX files):
-npm run typecheck
+bun run typecheck
 
 # To build your website:
-npm run build
+bun run build
 ```
 
 Extra commands:
 
 ```bash
 # To update all dependencies to their latest minor versions:
-npm run update
+bun run update
 
 # To clear all development and build files (useful for cache errors):
-npm run clear
+bun run clear
 ```
 
 ---
@@ -77,6 +77,7 @@ Special thanks:
 
 To create this website, it was used:
 
+- [**Bun**](https://github.com/oven-sh/bun)
 - [**TypeScript**](https://github.com/microsoft/TypeScript)
 - [**React**](https://github.com/facebook/react) (**TSX**)
 - [**Tailwind CSS**](https://github.com/tailwindlabs/tailwindcss)

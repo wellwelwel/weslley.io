@@ -1,4 +1,3 @@
-import { spawn } from 'node:child_process';
 import { isDevelopment } from '../src/helpers/environment';
 
 export const getGitLastModified = async (
@@ -7,45 +6,10 @@ export const getGitLastModified = async (
   if (isDevelopment) return new Date().toISOString();
 
   try {
-    return await new Promise((resolve, reject) => {
-      const git = spawn('git', ['log', '-1', '--format=%ct', '--', filePath]);
-      const stdout: Buffer[] = [];
-      const stderr: Buffer[] = [];
+    const log = Bun.$`git log -1 --format=%ct -- ${filePath}`;
+    const timestamp = (await log.text()).trim();
 
-      git.stdout.on('data', (data) => {
-        stdout.push(data);
-      });
-
-      git.stderr.on('data', (data) => {
-        stderr.push(data);
-      });
-
-      git.on('close', (code) => {
-        if (code !== 0) {
-          reject(
-            new Error(
-              String(Buffer.concat(stderr)) ||
-                `Unable to retrieve last modification date. Is "${filePath}" tracked in Git?`
-            )
-          );
-
-          return;
-        }
-
-        const timestamp = String(Buffer.concat(stdout)).trim();
-        if (!timestamp) {
-          resolve(null);
-          return;
-        }
-
-        const date = new Date(Number(timestamp) * 1000);
-        resolve(date.toISOString());
-      });
-
-      git.on('error', (error) => {
-        reject(error);
-      });
-    });
+    return timestamp ? new Date(Number(timestamp) * 1000).toISOString() : null;
   } catch {
     return null;
   }

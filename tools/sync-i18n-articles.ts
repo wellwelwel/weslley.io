@@ -1,6 +1,4 @@
-import { constants } from 'node:fs';
-import { access, copyFile, mkdir } from 'node:fs/promises';
-import { dirname, extname, join, relative } from 'node:path';
+import { extname, join, relative } from 'node:path';
 import config from '../docusaurus.config';
 import { walk } from './walk';
 
@@ -31,26 +29,8 @@ const EXTENSIONS = new Set([
   '.webp',
 ]);
 
-const ensureDirectoryExists = async (dirPath: string): Promise<void> => {
-  await mkdir(dirPath, { recursive: true }).catch(() => {});
-};
-
-const fileExists = async (filePath: string): Promise<boolean> => {
-  try {
-    await access(filePath, constants.F_OK);
-    return true;
-  } catch {
-    return false;
-  }
-};
-
 export const syncI18nArticles = async (): Promise<void> => {
   console.log('Starting i18n structure synchronization...\n');
-
-  for (const targetLocale of TARGET_LOCALES) {
-    const targetBaseDir = join(I18N_DIR, targetLocale, 'articles');
-    await ensureDirectoryExists(targetBaseDir);
-  }
 
   const sourceDir = join(I18N_DIR, SOURCE_LOCALE, 'articles');
   const sourceFiles = await walk(sourceDir, (name) =>
@@ -71,16 +51,13 @@ export const syncI18nArticles = async (): Promise<void> => {
       const relativePath = relative(sourceDir, sourcePath);
       const targetPath = join(targetBaseDir, relativePath);
 
-      if (await fileExists(targetPath)) {
+      if (await Bun.file(targetPath).exists()) {
         console.log(`⏭️  Skipped (already exists): ${relativePath}`);
         skippedCount++;
         continue;
       }
 
-      const targetDir = dirname(targetPath);
-      await ensureDirectoryExists(targetDir);
-
-      await copyFile(sourcePath, targetPath);
+      await Bun.write(targetPath, Bun.file(sourcePath));
       console.log(`📄 Copied: ${relativePath}`);
       copiedCount++;
     }
@@ -104,4 +81,4 @@ export const syncI18nArticles = async (): Promise<void> => {
   }
 };
 
-if (require.main === module) syncI18nArticles();
+if (import.meta.main) syncI18nArticles();

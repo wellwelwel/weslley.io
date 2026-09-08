@@ -1,5 +1,4 @@
 import type { LoadContext, Plugin } from '@docusaurus/types';
-import { readFile, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { walk } from '../../tools/walk';
 
@@ -22,7 +21,7 @@ export default (
     const sheets = new Map<string, string>();
 
     const inline = async (file: string): Promise<void> => {
-      const html = await readFile(file, 'utf8');
+      const html = await Bun.file(file).text();
       const match = html.match(STYLESHEET);
 
       if (!match || !local(match[1])) return;
@@ -30,9 +29,9 @@ export default (
       const [link, href] = match;
 
       if (!sheets.has(href))
-        sheets.set(href, await readFile(join(outDir, href), 'utf8'));
+        sheets.set(href, await Bun.file(join(outDir, href)).text());
 
-      await writeFile(
+      await Bun.write(
         file,
         html.replace(link, `<style>${sheets.get(href)}</style>`)
       );

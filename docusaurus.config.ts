@@ -1,6 +1,6 @@
 import type * as Preset from '@docusaurus/preset-classic';
 import type { Config } from '@docusaurus/types';
-import { env, loadEnvFile } from 'node:process';
+import { loadEnvFile } from 'node:process';
 import { themes as prismThemes } from 'prism-react-renderer';
 
 type CustomFields = {
@@ -18,7 +18,7 @@ const config: Config = {
   baseUrl: '/',
   url: 'https://weslley.io/',
   customFields: {
-    COUNTTY_URL: env.COUNTTY_URL,
+    COUNTTY_URL: Bun.env.COUNTTY_URL,
     showViewsCounter: true,
   } satisfies CustomFields,
   future: {

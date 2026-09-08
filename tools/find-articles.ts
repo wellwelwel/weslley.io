@@ -1,5 +1,4 @@
 import type { ArticleFrontMatter, FoundArticle } from '../src/@types/article';
-import { readFile } from 'node:fs/promises';
 import { basename, dirname, join } from 'node:path';
 import { extractDescription } from './extract-description';
 import { extractSummary } from './extract-summary';
@@ -20,7 +19,7 @@ const slugOf = (data: ArticleFrontMatter): string =>
 
 const read = async (file: string): Promise<FoundArticle> => {
   const { data, content } = matter<ArticleFrontMatter>(
-    await readFile(file, 'utf8')
+    await Bun.file(file).text()
   );
   const slug = slugOf(data);
   const lastModified = await getGitLastModified(file);

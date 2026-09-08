@@ -4,9 +4,9 @@ Personal site built with Docusaurus and TypeScript. Content is authored in Portu
 
 ## Commands
 
-- `npm run typecheck` checks the TypeScript build.
-- `npm run lint` checks formatting, and `npm run lint:fix` applies it.
-- `npm test` runs the test suite.
+- `bun run typecheck` checks the TypeScript build.
+- `bun run lint` checks formatting, and `bun run lint:fix` applies it.
+- `bun run test` runs the test suite.
 
 ## Structure
 

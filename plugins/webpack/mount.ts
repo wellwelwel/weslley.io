@@ -4,7 +4,6 @@ import type {
   PostCssOptions,
 } from '@docusaurus/types';
 import { resolve } from 'node:path';
-import { env } from 'node:process';
 import {
   lighten,
   NPROGRESS,
@@ -29,7 +28,7 @@ export default (): Plugin => ({
     isServer: boolean,
     { currentBundler }: ConfigureWebpackUtils
   ) => {
-    const patching = !isServer && env.NODE_ENV === 'production';
+    const patching = !isServer && Bun.env.NODE_ENV === 'production';
 
     return {
       plugins: [

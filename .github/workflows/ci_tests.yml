@@ -13,30 +13,29 @@ jobs:
       - name: Actions - Checkout
         uses: actions/checkout@v6
 
-      - name: Actions - Setup Node.js
-        uses: actions/setup-node@v6
+      - name: Actions - Setup Bun
+        uses: oven-sh/setup-bun@v2
         with:
-          check-latest: true
-          node-version: lts/*
+          bun-version: latest
 
       - name: Cache Dependencies
         uses: actions/cache@v5
         with:
-          path: ~/.npm
-          key: npm-${{ hashFiles('package-lock.json') }}
-          restore-keys: npm-
+          path: ~/.bun/install/cache
+          key: bun-${{ hashFiles('bun.lock') }}
+          restore-keys: bun-
 
       - name: Installing Dependencies
-        run: npm ci
+        run: bun install --frozen-lockfile
 
       - name: Checking Types
-        run: npm run typecheck
+        run: bun run typecheck
 
       - name: Checking Lint
-        run: npm run lint
+        run: bun run lint
 
       - name: Testing
-        run: npm test
+        run: bun run test
 
       - name: Building Site
-        run: npm run build
+        run: bun run build

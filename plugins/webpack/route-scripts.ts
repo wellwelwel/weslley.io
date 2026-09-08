@@ -1,4 +1,3 @@
-import { readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
 
 type Manifest = {
@@ -71,8 +70,8 @@ export const aliasesOf = (
 /* The server looks the manifest up by module path. */
 const restore = async (path: string): Promise<void> => {
   const [manifest, registry] = await Promise.all([
-    readFile(path, 'utf8'),
-    readFile(join(dirname(path), REGISTRY), 'utf8'),
+    Bun.file(path).text(),
+    Bun.file(join(dirname(path), REGISTRY)).text(),
   ]);
 
   const parsed: unknown = JSON.parse(manifest);
@@ -83,7 +82,7 @@ const restore = async (path: string): Promise<void> => {
 
   if (!aliases.length) return;
 
-  await writeFile(
+  await Bun.write(
     path,
     JSON.stringify({
       ...parsed,

@@ -1,20 +1,14 @@
-import { readdir } from 'node:fs/promises';
-import { join } from 'node:path';
+import { basename, join } from 'node:path';
 
 type Keep = (name: string) => boolean;
 
+const ALL = new Bun.Glob('**/*');
+
 export const walk = async (dir: string, keep: Keep): Promise<string[]> => {
-  const entries = await readdir(dir, { withFileTypes: true });
+  const found: string[] = [];
 
-  const found = await Promise.all(
-    entries.map((entry) => {
-      const path = join(dir, entry.name);
+  for await (const path of ALL.scan({ cwd: dir, onlyFiles: true }))
+    if (keep(basename(path))) found.push(join(dir, path));
 
-      if (entry.isDirectory()) return walk(path, keep);
-
-      return keep(entry.name) ? [path] : [];
-    })
-  );
-
-  return found.flat();
+  return found;
 };

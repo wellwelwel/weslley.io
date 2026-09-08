@@ -1,8 +1,5 @@
 import type { Shape } from '../src/@types/image';
-import { createHash } from 'node:crypto';
-import { readFile, stat, unlink, writeFile } from 'node:fs/promises';
 import { extname, relative, resolve, sep } from 'node:path';
-import { argv, cwd, exit } from 'node:process';
 import { format, resolveConfig } from 'prettier';
 import sharp from 'sharp';
 import { measureImage } from './measure-image';
@@ -54,7 +51,7 @@ const MANIFEST = 'tools/images.json';
 const LOCK = 'tools/images-lock.json';
 const CATALOG = 'src/data/variants.json';
 
-const root = resolve(cwd());
+const root = resolve(process.cwd());
 
 const contain = (path: string): string => {
   const full = resolve(root, path);
@@ -66,9 +63,9 @@ const contain = (path: string): string => {
 };
 
 const option = (flag: string, fallback: string): string => {
-  const index = argv.indexOf(flag);
+  const index = Bun.argv.indexOf(flag);
 
-  return index === -1 ? fallback : (argv[index + 1] ?? fallback);
+  return index === -1 ? fallback : (Bun.argv[index + 1] ?? fallback);
 };
 
 const posix = (path: string): string => path.split(sep).join('/');
@@ -92,20 +89,13 @@ const publicPath = (master: string): string => {
   return path.slice(STATIC_BASE.length);
 };
 
-const exists = async (path: string): Promise<boolean> => {
-  try {
-    await stat(path);
+const exists = (path: string): Promise<boolean> => Bun.file(path).exists();
 
-    return true;
-  } catch {
-    return false;
-  }
-};
+const sha256 = (data: string | Uint8Array): string =>
+  new Bun.CryptoHasher('sha256').update(data).digest('hex');
 
 const hashFile = async (path: string): Promise<string> =>
-  createHash('sha256')
-    .update(await readFile(path))
-    .digest('hex');
+  sha256(await Bun.file(path).bytes());
 
 const sorted = <Value>(
   record: Record<string, Value>
@@ -123,7 +113,7 @@ const readJson = async <Value>(
 ): Promise<Value> => {
   if (!(await exists(path))) return fallback;
 
-  const parsed: unknown = JSON.parse(await readFile(path, 'utf8'));
+  const parsed: unknown = await Bun.file(path).json();
 
   return parsed as Value;
 };
@@ -135,7 +125,7 @@ const writeJson = async (
   const config = (await resolveConfig(path)) ?? {};
   const raw = JSON.stringify(value, null, 2);
 
-  await writeFile(path, await format(raw, { ...config, parser: 'json' }));
+  await Bun.write(path, await format(raw, { ...config, parser: 'json' }));
 };
 
 const plans = async (): Promise<Plan[]> => {
@@ -180,10 +170,7 @@ const recipeOf = (plan: Plan, widths: number[]): string =>
   JSON.stringify({ widths, quality: plan.quality, lossless: plan.lossless });
 
 const stampOf = (hash: string, recipe: string): string =>
-  createHash('sha256')
-    .update(hash + recipe)
-    .digest('hex')
-    .slice(0, 8);
+  sha256(`${hash}${recipe}`).slice(0, 8);
 
 const expected = (plan: Plan, widths: number[], stamp: string): string[] =>
   FORMATS.flatMap((format) =>
@@ -223,7 +210,11 @@ const prune = async (
   await Promise.all(
     locked.variants
       .filter((variant) => !kept.has(variant))
-      .map((variant) => unlink(contain(variant)).catch(() => {}))
+      .map((variant) =>
+        Bun.file(contain(variant))
+          .delete()
+          .catch(() => {})
+      )
   );
 };
 
@@ -315,7 +306,7 @@ const verify = async (): Promise<void> => {
 
   for (const [verdict, key] of verdicts) console.log(`${verdict}  ${key}`);
 
-  if (verdicts.some(([verdict]) => verdict !== 'ok')) exit(1);
+  if (verdicts.some(([verdict]) => verdict !== 'ok')) process.exit(1);
 };
 
 const scan = async (): Promise<void> => {
@@ -329,7 +320,7 @@ const scan = async (): Promise<void> => {
       async (path) => {
         const key = posix(relative(root, path));
         const shape = await measureImage(path);
-        const bytes = (await stat(path)).size;
+        const bytes = Bun.file(path).size;
 
         return { key, shape, bytes };
       }
@@ -352,14 +343,14 @@ const commands: Record<string, () => Promise<void>> = {
   verify,
 };
 
-const command = commands[argv[2] ?? ''];
+const command = commands[Bun.argv[2] ?? ''];
 
 if (!command) {
   console.error('Usage: images.ts <scan|build|verify> [--manifest] [--dir]');
-  exit(1);
+  process.exit(1);
 }
 
 command().catch((error: Error) => {
   console.error(error.message);
-  exit(1);
+  process.exit(1);
 });
