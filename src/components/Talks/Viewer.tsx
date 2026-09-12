@@ -9,6 +9,8 @@ type ViewerOptions = {
   gallery: Gallery;
 };
 
+type Target = (current: number, count: number) => number;
+
 const STEPPER =
   'absolute top-1/2 flex size-10 -translate-y-1/2 cursor-pointer appearance-none items-center justify-center rounded-full border-0 bg-paper p-0 text-ink shadow-[0_1px_2px_rgb(14_9_39_/_0.15),0_8px_20px_-10px_rgb(14_9_39_/_0.45)] transition-[background-color,opacity,scale] duration-250 ease-swift hover:bg-white focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-90';
 
@@ -16,6 +18,15 @@ const FAINT = 'opacity-45 hover:opacity-70';
 
 const within = (index: number, count: number): number =>
   Math.min(Math.max(index, 0), count - 1);
+
+const wrap = (index: number, count: number): number => (index + count) % count;
+
+const TARGETS: Record<string, Target | undefined> = {
+  ArrowLeft: (current, count) => wrap(current - 1, count),
+  ArrowRight: (current, count) => wrap(current + 1, count),
+  Home: () => 0,
+  End: (_, count) => count - 1,
+};
 
 export const Viewer = ({ gallery }: ViewerOptions): ReactNode => {
   const root = useRef<HTMLDivElement>(null);
@@ -30,11 +41,15 @@ export const Viewer = ({ gallery }: ViewerOptions): ReactNode => {
   }, []);
 
   const step = (delta: number): void =>
-    setIndex((current) => (current + delta + count) % count);
+    setIndex((current) => wrap(current + delta, count));
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'ArrowLeft') step(-1);
-    if (event.key === 'ArrowRight') step(1);
+    const target = TARGETS[event.key];
+
+    if (!target) return;
+
+    event.preventDefault();
+    setIndex((current) => target(current, count));
   };
 
   return (

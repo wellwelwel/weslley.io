@@ -6,6 +6,8 @@ import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { load, ready } from '@site/src/components/Home/gates';
 
+type Target = (current: number, last: number) => number;
+
 type Slideshow = {
   active: number;
   show: (index: number) => void;
@@ -17,13 +19,15 @@ gsap.registerPlugin(useGSAP, Observer);
 const STEP_LOCK_MS = 600;
 const TOLERANCE = 10;
 
-const STEPS: Record<string, 1 | -1 | undefined> = {
-  ArrowDown: 1,
-  ArrowRight: 1,
-  PageDown: 1,
-  ArrowUp: -1,
-  ArrowLeft: -1,
-  PageUp: -1,
+const TARGETS: Record<string, Target | undefined> = {
+  ArrowDown: (current) => current + 1,
+  ArrowRight: (current) => current + 1,
+  PageDown: (current) => current + 1,
+  ArrowUp: (current) => current - 1,
+  ArrowLeft: (current) => current - 1,
+  PageUp: (current) => current - 1,
+  Home: () => 0,
+  End: (_, last) => last,
 };
 
 const longestPrefix = (paths: readonly string[], pathname: string): number =>
@@ -116,12 +120,15 @@ export const useSlideshow = (
       });
 
       const onKeyDown = (event: KeyboardEvent) => {
-        const direction = STEPS[event.key];
+        const target = TARGETS[event.key];
 
-        if (!direction) return;
+        if (!target) return;
 
         event.preventDefault();
-        step(direction);
+
+        if (locked.current) return;
+
+        show(target(current.current, paths.length - 1));
       };
 
       window.addEventListener('keydown', onKeyDown);
