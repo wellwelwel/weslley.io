@@ -285,6 +285,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-09-05',
+    time: '13:30',
     event: 'DevConverge, NuBank & HumaSynk',
     logo: '/img/dcl.png',
     url: 'https://luma.com/gmrjgn41?tk=5tHTfO',
@@ -294,6 +295,19 @@ export const slots: Slot[] = [
     address:
       'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020, Brazil',
     role: 'Keynote',
+  },
+  {
+    date: '2026-09-05',
+    time: '17:15',
+    event: 'DevConverge, NuBank & HumaSynk',
+    logo: '/img/dcl.png',
+    url: 'https://luma.com/gmrjgn41?tk=5tHTfO',
+    coupon: { code: 'Gratuito' },
+    title: 'O impacto da Inteligência Artificial na programação',
+    venue: 'São Paulo, SP',
+    address:
+      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020, Brazil',
+    role: 'Painel',
   },
   {
     date: '2026-09-19',
