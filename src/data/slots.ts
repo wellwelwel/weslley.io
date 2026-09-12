@@ -339,4 +339,11 @@ export const slots: Slot[] = [
       'Evento exclusivo para profissionais em cargos sênior ou superiores.',
     role: 'Embaixador',
   },
+  {
+    date: '2026-12-05',
+    event: 'Anúncio em Breve',
+    logo: '/img/secret.svg',
+    title: 'Segura o coração 🌱',
+    role: 'Palestra (Maybe?)',
+  },
 ];
