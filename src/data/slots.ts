@@ -311,7 +311,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-09-19',
-    time: '13:00',
+    time: '14:00',
     event: 'GO!RN, GDG Natal & Caicó Valley',
     logo: '/img/gorn.svg',
     url: 'https://gorn.com.br/',
@@ -324,6 +324,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-11-14',
+    time: '09:00',
     event: 'Codecon Select Experience',
     logo: '/img/codecon3.png',
     url: 'https://codecon.dev/select',
