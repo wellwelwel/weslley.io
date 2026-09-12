@@ -333,6 +333,30 @@
       "src/assets/img/slide/codecon-002-1040.fa9f3773.webp"
     ]
   },
+  "src/assets/img/slide/devconverge-nubank-001.jpg": {
+    "hash": "9bbd5a1ead5ab47abf347ae1fc489a4bf4e3a54a8598274adf5ec641fa443431",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/devconverge-nubank-001-576.8c3a416b.avif",
+      "src/assets/img/slide/devconverge-nubank-001-828.8c3a416b.avif",
+      "src/assets/img/slide/devconverge-nubank-001-1040.8c3a416b.avif",
+      "src/assets/img/slide/devconverge-nubank-001-576.8c3a416b.webp",
+      "src/assets/img/slide/devconverge-nubank-001-828.8c3a416b.webp",
+      "src/assets/img/slide/devconverge-nubank-001-1040.8c3a416b.webp"
+    ]
+  },
+  "src/assets/img/slide/devconverge-nubank-002.jpg": {
+    "hash": "c8541e96c558be9ba91dff0ecc2752df0d49f7832c61426331b757d80170004e",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/devconverge-nubank-002-576.55750b7b.avif",
+      "src/assets/img/slide/devconverge-nubank-002-828.55750b7b.avif",
+      "src/assets/img/slide/devconverge-nubank-002-1040.55750b7b.avif",
+      "src/assets/img/slide/devconverge-nubank-002-576.55750b7b.webp",
+      "src/assets/img/slide/devconverge-nubank-002-828.55750b7b.webp",
+      "src/assets/img/slide/devconverge-nubank-002-1040.55750b7b.webp"
+    ]
+  },
   "src/assets/img/slide/devfest-cerrado-001.jpg": {
     "hash": "b9c1554e1d6a0248da6752eeee740540aeb3590b9e1e88b1fc0ffb716f2b23e3",
     "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
@@ -357,18 +381,6 @@
       "src/assets/img/slide/devfest-cerrado-002-1040.120e26ff.webp"
     ]
   },
-  "src/assets/img/slide/mvpconf-001.jpg": {
-    "hash": "96c5be356ab69ba25bf74aaf634b08af7ee3419173efebb9e5a9a6c95422bfbb",
-    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
-    "variants": [
-      "src/assets/img/slide/mvpconf-001-576.d581e947.avif",
-      "src/assets/img/slide/mvpconf-001-828.d581e947.avif",
-      "src/assets/img/slide/mvpconf-001-1040.d581e947.avif",
-      "src/assets/img/slide/mvpconf-001-576.d581e947.webp",
-      "src/assets/img/slide/mvpconf-001-828.d581e947.webp",
-      "src/assets/img/slide/mvpconf-001-1040.d581e947.webp"
-    ]
-  },
   "src/assets/img/slide/nodebr-001.jpg": {
     "hash": "5796e63717459e8d47b9ae2cbd6b6bd6b843f64211acda0e6cc2c0cf7f0fed12",
     "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
@@ -379,18 +391,6 @@
       "src/assets/img/slide/nodebr-001-576.adfd8952.webp",
       "src/assets/img/slide/nodebr-001-828.adfd8952.webp",
       "src/assets/img/slide/nodebr-001-1040.adfd8952.webp"
-    ]
-  },
-  "src/assets/img/slide/oracle-001.jpg": {
-    "hash": "de8380f79fa8b18cbef87426d6d34b9875d3d75899ac2f10c39f76b6848e4223",
-    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
-    "variants": [
-      "src/assets/img/slide/oracle-001-576.6fe8ea80.avif",
-      "src/assets/img/slide/oracle-001-828.6fe8ea80.avif",
-      "src/assets/img/slide/oracle-001-1040.6fe8ea80.avif",
-      "src/assets/img/slide/oracle-001-576.6fe8ea80.webp",
-      "src/assets/img/slide/oracle-001-828.6fe8ea80.webp",
-      "src/assets/img/slide/oracle-001-1040.6fe8ea80.webp"
     ]
   },
   "src/assets/img/slide/roga-001.jpg": {

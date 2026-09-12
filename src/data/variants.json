@@ -161,6 +161,18 @@
     "width": 1040,
     "height": 581
   },
+  "/img/slide/devconverge-nubank-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "8c3a416b",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/devconverge-nubank-002.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "55750b7b",
+    "width": 1040,
+    "height": 581
+  },
   "/img/slide/devfest-cerrado-001.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "39988b6d",
@@ -173,21 +185,9 @@
     "width": 1040,
     "height": 581
   },
-  "/img/slide/mvpconf-001.jpg": {
-    "widths": [576, 828, 1040],
-    "stamp": "d581e947",
-    "width": 1040,
-    "height": 581
-  },
   "/img/slide/nodebr-001.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "adfd8952",
-    "width": 1040,
-    "height": 581
-  },
-  "/img/slide/oracle-001.jpg": {
-    "widths": [576, 828, 1040],
-    "stamp": "6fe8ea80",
     "width": 1040,
     "height": 581
   },

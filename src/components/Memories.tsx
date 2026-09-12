@@ -36,10 +36,10 @@ const STRIPS: Strip[] = [
     '/img/slide/usp-001.jpg',
   ],
   [
-    '/img/slide/mvpconf-001.jpg',
-    '/img/slide/oracle-001.jpg',
-    '/img/talks/devfest-cerrado-2025/moments/07.jpg',
     '/img/slide/nodebr-001.jpg',
+    '/img/slide/devconverge-nubank-002.jpg',
+    '/img/talks/devfest-cerrado-2025/moments/07.jpg',
+    '/img/slide/devconverge-nubank-001.jpg',
   ],
 ];
 
