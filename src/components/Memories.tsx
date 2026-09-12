@@ -10,7 +10,7 @@ type Band = {
   phase: number;
 };
 
-type Strip = readonly [string, string, string, string];
+type Strip = readonly [string, string, string, string, string, string];
 
 type ReelStyle = CSSProperties & {
   '--pace': string;
@@ -28,18 +28,24 @@ const STRIPS: Strip[] = [
     '/img/slide/roga-001.jpg',
     '/img/slide/devfest-cerrado-001.jpg',
     '/img/slide/tdc-001.jpg',
+    '/img/slide/codecon-004.jpg',
+    '/img/slide/linuxtips-001.jpg',
   ],
   [
     '/img/slide/codecon-002.jpg',
     '/img/slide/roga-002.jpg',
     '/img/slide/devfest-cerrado-002.jpg',
     '/img/slide/usp-001.jpg',
+    '/img/slide/codecon-005.jpg',
+    '/img/slide/roga-004.jpg',
   ],
   [
     '/img/slide/nodebr-001.jpg',
     '/img/slide/devconverge-nubank-002.jpg',
     '/img/talks/devfest-cerrado-2025/moments/07.jpg',
     '/img/slide/devconverge-nubank-001.jpg',
+    '/img/slide/codecon-003.jpg',
+    '/img/slide/roga-003.jpg',
   ],
 ];
 

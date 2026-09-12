@@ -161,6 +161,24 @@
     "width": 1040,
     "height": 581
   },
+  "/img/slide/codecon-003.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "d37b89a5",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/codecon-004.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "18023445",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/codecon-005.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "1d6c0560",
+    "width": 1040,
+    "height": 581
+  },
   "/img/slide/devconverge-nubank-001.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "8c3a416b",
@@ -185,6 +203,12 @@
     "width": 1040,
     "height": 581
   },
+  "/img/slide/linuxtips-001.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "c616a873",
+    "width": 1040,
+    "height": 581
+  },
   "/img/slide/nodebr-001.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "adfd8952",
@@ -200,6 +224,18 @@
   "/img/slide/roga-002.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "0cb14421",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/roga-003.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "a1769717",
+    "width": 1040,
+    "height": 581
+  },
+  "/img/slide/roga-004.jpg": {
+    "widths": [576, 828, 1040],
+    "stamp": "a49d22bd",
     "width": 1040,
     "height": 581
   },

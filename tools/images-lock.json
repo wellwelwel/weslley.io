@@ -333,6 +333,42 @@
       "src/assets/img/slide/codecon-002-1040.fa9f3773.webp"
     ]
   },
+  "src/assets/img/slide/codecon-003.jpg": {
+    "hash": "aaa76a78e8d69d0c331140da08ab08d744227ada0f0b96752b6f712a02973615",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/codecon-003-576.d37b89a5.avif",
+      "src/assets/img/slide/codecon-003-828.d37b89a5.avif",
+      "src/assets/img/slide/codecon-003-1040.d37b89a5.avif",
+      "src/assets/img/slide/codecon-003-576.d37b89a5.webp",
+      "src/assets/img/slide/codecon-003-828.d37b89a5.webp",
+      "src/assets/img/slide/codecon-003-1040.d37b89a5.webp"
+    ]
+  },
+  "src/assets/img/slide/codecon-004.jpg": {
+    "hash": "3fc06b45cf606e0cb0d33eee0a447b67d11e0a5842c1e060655003da61509e0b",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/codecon-004-576.18023445.avif",
+      "src/assets/img/slide/codecon-004-828.18023445.avif",
+      "src/assets/img/slide/codecon-004-1040.18023445.avif",
+      "src/assets/img/slide/codecon-004-576.18023445.webp",
+      "src/assets/img/slide/codecon-004-828.18023445.webp",
+      "src/assets/img/slide/codecon-004-1040.18023445.webp"
+    ]
+  },
+  "src/assets/img/slide/codecon-005.jpg": {
+    "hash": "5f9ebe2bf8efa391532aa7b41a14076ff55cc4a8cdccd2c589c84f6c0050a430",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/codecon-005-576.1d6c0560.avif",
+      "src/assets/img/slide/codecon-005-828.1d6c0560.avif",
+      "src/assets/img/slide/codecon-005-1040.1d6c0560.avif",
+      "src/assets/img/slide/codecon-005-576.1d6c0560.webp",
+      "src/assets/img/slide/codecon-005-828.1d6c0560.webp",
+      "src/assets/img/slide/codecon-005-1040.1d6c0560.webp"
+    ]
+  },
   "src/assets/img/slide/devconverge-nubank-001.jpg": {
     "hash": "9bbd5a1ead5ab47abf347ae1fc489a4bf4e3a54a8598274adf5ec641fa443431",
     "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
@@ -381,6 +417,18 @@
       "src/assets/img/slide/devfest-cerrado-002-1040.120e26ff.webp"
     ]
   },
+  "src/assets/img/slide/linuxtips-001.jpg": {
+    "hash": "54c7f3d9863c1863f2a4c382bfe897b715b651ea4021c2ce758e0d0f6f72e369",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/linuxtips-001-576.c616a873.avif",
+      "src/assets/img/slide/linuxtips-001-828.c616a873.avif",
+      "src/assets/img/slide/linuxtips-001-1040.c616a873.avif",
+      "src/assets/img/slide/linuxtips-001-576.c616a873.webp",
+      "src/assets/img/slide/linuxtips-001-828.c616a873.webp",
+      "src/assets/img/slide/linuxtips-001-1040.c616a873.webp"
+    ]
+  },
   "src/assets/img/slide/nodebr-001.jpg": {
     "hash": "5796e63717459e8d47b9ae2cbd6b6bd6b843f64211acda0e6cc2c0cf7f0fed12",
     "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
@@ -415,6 +463,30 @@
       "src/assets/img/slide/roga-002-576.0cb14421.webp",
       "src/assets/img/slide/roga-002-828.0cb14421.webp",
       "src/assets/img/slide/roga-002-1040.0cb14421.webp"
+    ]
+  },
+  "src/assets/img/slide/roga-003.jpg": {
+    "hash": "db83992183ef4831e72abd41d23f18525e58d27aef8d9b31d29647c90bc031fb",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/roga-003-576.a1769717.avif",
+      "src/assets/img/slide/roga-003-828.a1769717.avif",
+      "src/assets/img/slide/roga-003-1040.a1769717.avif",
+      "src/assets/img/slide/roga-003-576.a1769717.webp",
+      "src/assets/img/slide/roga-003-828.a1769717.webp",
+      "src/assets/img/slide/roga-003-1040.a1769717.webp"
+    ]
+  },
+  "src/assets/img/slide/roga-004.jpg": {
+    "hash": "c47c1f1ae84d9c23b39826a5e8715784eacdb53bb7d21c4ed35ff9be3866125b",
+    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
+    "variants": [
+      "src/assets/img/slide/roga-004-576.a49d22bd.avif",
+      "src/assets/img/slide/roga-004-828.a49d22bd.avif",
+      "src/assets/img/slide/roga-004-1040.a49d22bd.avif",
+      "src/assets/img/slide/roga-004-576.a49d22bd.webp",
+      "src/assets/img/slide/roga-004-828.a49d22bd.webp",
+      "src/assets/img/slide/roga-004-1040.a49d22bd.webp"
     ]
   },
   "src/assets/img/slide/tdc-001.jpg": {
