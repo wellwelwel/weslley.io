@@ -209,12 +209,6 @@
     "width": 1040,
     "height": 581
   },
-  "/img/slide/nodebr-001.jpg": {
-    "widths": [576, 828, 1040],
-    "stamp": "adfd8952",
-    "width": 1040,
-    "height": 581
-  },
   "/img/slide/roga-001.jpg": {
     "widths": [576, 828, 1040],
     "stamp": "69136c62",
@@ -245,12 +239,6 @@
     "width": 1040,
     "height": 581
   },
-  "/img/slide/usp-001.jpg": {
-    "widths": [576, 828, 1040],
-    "stamp": "384581f6",
-    "width": 1040,
-    "height": 581
-  },
   "/img/ssi.png": {
     "widths": [48, 64, 72, 96, 108],
     "stamp": "f6b8959b",
@@ -262,12 +250,6 @@
     "stamp": "461f9c98",
     "width": 4032,
     "height": 2268
-  },
-  "/img/talks/devfest-cerrado-2025/moments/07.jpg": {
-    "widths": [576, 828, 1040],
-    "stamp": "35af5c6d",
-    "width": 2048,
-    "height": 1365
   },
   "/img/tdc.png": {
     "widths": [48, 64, 72, 96, 108],

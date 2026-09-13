@@ -46,10 +46,10 @@ export const memories = deferred(() =>
   ).then((module) => module.Memories)
 );
 
-export const milestones = deferred(() =>
+export const impact = deferred(() =>
   import(
-    /* webpackChunkName: "impact", webpackPrefetch: true */ '@site/src/components/Milestones'
-  ).then((module) => module.Milestones)
+    /* webpackChunkName: "impact", webpackPrefetch: true */ '@site/src/components/Impact'
+  ).then((module) => module.Impact)
 );
 
 export const adopters = deferred(() =>

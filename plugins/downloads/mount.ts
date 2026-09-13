@@ -16,7 +16,7 @@ export default (
   contentLoaded: ({ content, actions }) => {
     if (content.rolling === undefined)
       console.warn('Downloads stats are unreachable, falling back.');
-    else if (content.total === undefined)
+    else if (content.daily === undefined)
       console.warn('Downloads history is unreachable, falling back.');
 
     actions.setGlobalData(content);

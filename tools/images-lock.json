@@ -429,18 +429,6 @@
       "src/assets/img/slide/linuxtips-001-1040.c616a873.webp"
     ]
   },
-  "src/assets/img/slide/nodebr-001.jpg": {
-    "hash": "5796e63717459e8d47b9ae2cbd6b6bd6b843f64211acda0e6cc2c0cf7f0fed12",
-    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
-    "variants": [
-      "src/assets/img/slide/nodebr-001-576.adfd8952.avif",
-      "src/assets/img/slide/nodebr-001-828.adfd8952.avif",
-      "src/assets/img/slide/nodebr-001-1040.adfd8952.avif",
-      "src/assets/img/slide/nodebr-001-576.adfd8952.webp",
-      "src/assets/img/slide/nodebr-001-828.adfd8952.webp",
-      "src/assets/img/slide/nodebr-001-1040.adfd8952.webp"
-    ]
-  },
   "src/assets/img/slide/roga-001.jpg": {
     "hash": "2e4284f9ca2453ea901f47f27676ae17979b382516199a2610d8a85b1a1162a4",
     "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
@@ -501,18 +489,6 @@
       "src/assets/img/slide/tdc-001-1040.784951cf.webp"
     ]
   },
-  "src/assets/img/slide/usp-001.jpg": {
-    "hash": "97fd50c11ee064f54d6cf7c9efb682c3495be881dae6d21fddde7f474d9ec400",
-    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
-    "variants": [
-      "src/assets/img/slide/usp-001-576.384581f6.avif",
-      "src/assets/img/slide/usp-001-828.384581f6.avif",
-      "src/assets/img/slide/usp-001-1040.384581f6.avif",
-      "src/assets/img/slide/usp-001-576.384581f6.webp",
-      "src/assets/img/slide/usp-001-828.384581f6.webp",
-      "src/assets/img/slide/usp-001-1040.384581f6.webp"
-    ]
-  },
   "src/assets/img/ssi.png": {
     "hash": "e861a37378d253eab434ec75633492ab1a2de6692b7f95039905951175ad7ce6",
     "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
@@ -541,18 +517,6 @@
       "src/assets/img/talks/codecon-2025/moments/04-1280.461f9c98.webp",
       "src/assets/img/talks/codecon-2025/moments/04-1920.461f9c98.webp",
       "src/assets/img/talks/codecon-2025/moments/04-2560.461f9c98.webp"
-    ]
-  },
-  "src/assets/img/talks/devfest-cerrado-2025/moments/07.jpg": {
-    "hash": "abf5cb6315ae02bdd0e3de8dc491cd3053d1bc45418b002e6b45f2cf87f66c4b",
-    "recipe": "{\"widths\":[576,828,1040],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":false}",
-    "variants": [
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-576.35af5c6d.avif",
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-828.35af5c6d.avif",
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-1040.35af5c6d.avif",
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-576.35af5c6d.webp",
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-828.35af5c6d.webp",
-      "src/assets/img/talks/devfest-cerrado-2025/moments/07-1040.35af5c6d.webp"
     ]
   },
   "src/assets/img/tdc.png": {

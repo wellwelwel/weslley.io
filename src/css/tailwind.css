@@ -3,25 +3,34 @@
 @import 'tailwindcss/utilities.css' source(none);
 
 @source '../data/slides.tsx';
+@source '../helpers/roll.ts';
 @source '../pages/_dynamic/home';
 @source '../components/Adopters.tsx';
 @source '../components/Agenda';
 @source '../components/Backdrop.tsx';
 @source '../components/Badges.tsx';
+@source '../components/Chips.tsx';
 @source '../components/Dialog.tsx';
+@source '../components/Figure.tsx';
 @source '../components/Header';
 @source '../components/Hill.tsx';
 @source '../components/Home';
+@source '../components/Impact.tsx';
 @source '../components/Keynote.tsx';
+@source '../components/Lifetime.tsx';
 @source '../components/Memories.tsx';
 @source '../components/Milestones.tsx';
 @source '../components/Modal.tsx';
 @source '../components/Moments.tsx';
+@source '../components/Monthly.tsx';
 @source '../components/Partners';
+@source '../components/Periods.tsx';
 @source '../components/Picture.tsx';
 @source '../components/Progress.tsx';
 @source '../components/Socials.tsx';
 @source '../components/Star.tsx';
+@source '../components/Stepper.tsx';
+@source '../components/Stream.tsx';
 @source '../components/Talks';
 @source '../components/Tooltip.tsx';
 @source '../theme/NotFound';
@@ -83,6 +92,9 @@
 
 @theme {
   --ease-swift: cubic-bezier(0.2, 0, 0, 1);
+
+  /* The stage keeps this distance from the lede above and the caption below. */
+  --spacing-stage: clamp(1.5rem, 5svh, 3rem);
 
   --font-sans:
     'Inter', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
@@ -177,6 +189,7 @@
   --color-accent: #7a77ff;
   --color-blush: #fd79a8;
   --color-blush-deep: #e84393;
+  --color-millions: #ff5498;
   --color-progress-track: #21115a;
   --color-veil: #0e0927;
 }

@@ -19,12 +19,13 @@ import {
   adopters,
   agenda,
   badges,
+  impact,
   memories,
-  milestones,
   star,
 } from '@site/src/components/Home/stages';
 import { PartnersAction } from '@site/src/components/Partners/Action';
 import { PartnersTrigger } from '@site/src/components/Partners/Trigger';
+import { Periods } from '@site/src/components/Periods';
 import { Socials } from '@site/src/components/Socials';
 import { images, previews } from '@site/src/data/previews';
 
@@ -56,6 +57,7 @@ export type Slide = {
   actions?: {
     stage?: SlideAction;
     cta?: SlideAction;
+    footer?: SlideAction;
   };
 };
 
@@ -65,7 +67,6 @@ type Group = {
 };
 
 const {
-  brazil,
   github,
   lagune,
   laguneBackground,
@@ -149,36 +150,23 @@ export const groups: Group[] = [
         Icon: TbUsersGroup,
         title: [
           [
-            'Os ',
             <span key='millions' style={{ color: pink }}>
-              milhões
+              Instalações
             </span>,
             ' não são',
           ],
           'apenas números',
           '.',
         ],
-        text: 'Eles refletem milhões de usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
-        footnote: (
-          <>
-            Do Brasil para o mundo
-            <img
-              decoding='async'
-              loading='lazy'
-              src={brazil}
-              alt=''
-              className='h-4 w-auto'
-            />
-          </>
-        ),
+        text: 'Elas refletem milhões de usuários e projetos que dependem do trabalho autoral que Weslley mantém ativamente através do open source.',
         background: defaultBackground,
         scene: memories.View,
         color: '#0e0927cc',
         mark: pink,
         hill: pink,
         theme: 'dark',
-        gates: [memories.gate, milestones.gate],
-        actions: { stage: milestones.View },
+        gates: [memories.gate, impact.gate],
+        actions: { stage: impact.View, footer: Periods },
       },
     ],
   },
@@ -252,7 +240,7 @@ export const groups: Group[] = [
         alt: 'Pelúcia do Weslley Araújo',
         name: previews.socials.title,
         Icon: TbConfetti,
-        title: ['Você chegou', 'ao fim', '.'],
+        title: ['Você chegou ao fim,', 'mas não precisa ser assim', '.'],
         hill: pink,
         text: previews.socials.description,
         texture: velvet,

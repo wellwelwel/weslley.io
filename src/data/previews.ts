@@ -7,7 +7,6 @@ export type Preview = {
 export type SlideId = keyof typeof previews;
 
 export const images = {
-  brazil: '/img/br.svg',
   claude: '/img/plush/claude.png',
   github: '/img/plush/github.png',
   lagune: '/img/plush/lagune.png',
@@ -36,7 +35,7 @@ export const previews = {
   impact: {
     title: 'Impacto',
     description:
-      'Os milhões não são apenas números: refletem usuários e projetos que dependem do trabalho que Weslley desenvolveu do zero, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
+      'Os milhões não são apenas números: eles refletem usuários e projetos que dependem do trabalho autoral que Weslley mantém ativamente através do open source, de desenvolvedores independentes a empresas como Google, Microsoft e Cloudflare.',
     image: images.stage,
   },
   mysql2: {
@@ -60,7 +59,7 @@ export const previews = {
   socials: {
     title: 'Redes Sociais',
     description:
-      'Me siga nas redes sociais e acompanhe meu trabalho. Apoie meu trabalho deixando sua estrela nos projetos open source que eu mantenho com todo carinho do mundo.',
+      'Me acompanhe nas redes sociais e apoie meu trabalho deixando sua estrela nos projetos open source que mantenho com todo carinho do mundo.',
     image: images.me,
   },
 } satisfies Record<string, Preview>;

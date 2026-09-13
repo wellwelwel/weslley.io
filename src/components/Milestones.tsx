@@ -1,5 +1,6 @@
+import type { Vars } from '@site/src/helpers/vars';
 import type { ReactNode } from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useRef, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { ExternalLink } from 'lucide-react';
@@ -7,27 +8,17 @@ import { SafeLink } from '@site/src/components/SafeLink';
 import { motion } from '@site/src/helpers/reduced-motion';
 import { useDownloads } from '@site/src/hooks/useDownloads';
 
-type Year = {
-  year: number;
-  downloads?: number;
-  running?: boolean;
-};
+type TrackStyle = Vars<'--above' | '--below'>;
 
-const CLOSED: Year[] = [
-  { year: 2021, downloads: 91 },
-  { year: 2022, downloads: 9_470 },
-  { year: 2023, downloads: 9_733 },
-  { year: 2024, downloads: 46_912_782 },
-  { year: 2025, downloads: 233_754_383 },
-];
-
+const SLOTS = 3;
 const SPIN = 1.5;
 const LEAD = 0.5;
-const ROLL_REDUCED = 0.6;
+const SPIN_REDUCED = 0.6;
 
 const WHEEL =
-  'mx-auto h-[calc(var(--row)*3+1rem)] w-64 max-w-full touch-pan-y overflow-y-auto overscroll-contain scroll-pb-4 picker [--row:2.75rem] [scrollbar-width:none] short:[--row:2.5rem] sm:w-70 sm:[--row:3rem] [&::-webkit-scrollbar]:hidden';
-const TRACK = 'm-0 flex list-none flex-col p-0 pt-[calc(var(--row)*2)] pb-4';
+  'mx-auto h-[calc(var(--row)*3+1rem)] w-60 max-w-full touch-pan-y overflow-y-auto overscroll-contain scroll-pb-4 [scrollbar-width:none] sm:w-80 [&::-webkit-scrollbar]:hidden';
+const TRACK =
+  'm-0 flex list-none flex-col px-0 pt-[calc(var(--row)*var(--above))] pb-[calc(var(--row)*var(--below)+1rem)]';
 const ROW =
   'group flex h-(--row) items-center justify-between gap-3 no-underline [scroll-snap-align:end] hover:no-underline focus-visible:rounded-lg focus-visible:outline-2 focus-visible:outline-accent';
 const LABEL = 'text-sm/none font-bold tracking-widest text-ink/55 tabular-nums';
@@ -40,37 +31,33 @@ const ICON =
   'size-3.5 shrink-0 text-accent transition-colors duration-250 ease-swift group-hover:text-ink';
 const RUNNING = 'em curso';
 
-const chart = (year: number): string =>
-  `https://npm-stat.com/charts.html?author=weslley.io&from=${year}-01-01&to=${year}-12-31`;
+const endOf = ({ scrollHeight, clientHeight }: HTMLDivElement): number =>
+  scrollHeight - clientHeight;
 
-export const Milestones = (): ReactNode => {
+export const Milestones = memo((): ReactNode => {
   const wheel = useRef<HTMLDivElement>(null);
   const [settled, setSettled] = useState(false);
-  const current = useDownloads();
-  const years: Year[] = [
-    ...CLOSED,
-    { year: current.year, downloads: current.total, running: true },
-  ];
-  const focus = years.reduce(
-    (last, { downloads }, index) => (downloads === undefined ? last : index),
-    0
-  );
+  const { milestones, source } = useDownloads();
+  const scrollable = milestones.length > SLOTS;
+  const slack = scrollable ? 0 : (SLOTS - milestones.length) / 2;
+  const track: TrackStyle = {
+    '--above': String(scrollable ? SLOTS - 1 : slack),
+    '--below': String(slack),
+  };
 
   useEffect(() => {
     const node = wheel.current;
-    if (!node) return;
+    const end = node ? endOf(node) : 0;
+    if (!node || !end || settled) return;
 
-    const row = node.querySelector('li')?.getBoundingClientRect().height;
-    if (!row) return;
-
-    const roll = { full: focus, reduced: focus * ROLL_REDUCED };
+    const travel = { full: end, reduced: end * SPIN_REDUCED };
     const rest = () => setSettled(true);
 
     const spin = gsap.fromTo(
       node,
-      { scrollTop: (focus - motion(roll)) * row },
+      { scrollTop: end - motion(travel) },
       {
-        scrollTop: focus * row,
+        scrollTop: end,
         duration: SPIN,
         delay: LEAD,
         ease: 'power3.out',
@@ -91,24 +78,26 @@ export const Milestones = (): ReactNode => {
       node.removeEventListener('pointerdown', release);
       node.removeEventListener('wheel', release);
     };
-  }, [focus]);
+  }, [settled]);
 
   return (
     <div
       ref={wheel}
       data-scroll=''
-      className={clsx(WHEEL, settled && '[scroll-snap-type:y_mandatory]')}
+      className={clsx(
+        WHEEL,
+        scrollable && 'picker',
+        settled && '[scroll-snap-type:y_mandatory]'
+      )}
     >
-      <ul aria-label='Downloads anuais dos projetos autorais' className={TRACK}>
-        {years.map(({ year, downloads, running }) => {
-          const exact = downloads?.toLocaleString('pt-BR');
-          const note = running && exact ? RUNNING : '';
-          const reading = `${year}: ${exact ? `${exact} downloads` : RUNNING}${note ? `, ${note}` : ''}`;
+      <ul aria-label='Downloads anuais' style={track} className={TRACK}>
+        {milestones.map(({ year, value, running, reading }) => {
+          const note = running && value ? RUNNING : '';
 
           return (
             <li key={year} className='halo'>
               <SafeLink
-                to={running ? current.source : chart(year)}
+                to={source}
                 draggable={false}
                 aria-label={reading}
                 className={ROW}
@@ -117,9 +106,13 @@ export const Milestones = (): ReactNode => {
 
                 <span className='flex items-center gap-1.5'>
                   <span className='relative flex'>
-                    <span className={exact ? VALUE : OPEN}>
-                      {exact ?? RUNNING}
-                    </span>
+                    {value ? (
+                      <span aria-hidden='true' className={VALUE}>
+                        {value}
+                      </span>
+                    ) : (
+                      <span className={OPEN}>{RUNNING}</span>
+                    )}
 
                     {note && (
                       <span aria-hidden='true' className={NOTE}>
@@ -137,4 +130,4 @@ export const Milestones = (): ReactNode => {
       </ul>
     </div>
   );
-};
+});

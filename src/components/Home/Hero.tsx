@@ -20,8 +20,7 @@ const SHADOWS: Record<Theme, string> = {
 const FRAME =
   'mx-auto flex w-full max-w-7xl flex-col text-left short-wide:flex-row short-wide:items-center short-wide:justify-between short-wide:gap-8 lg:flex-row lg:items-center lg:justify-between lg:gap-10';
 
-const LOOSE =
-  'flex flex-1 flex-col justify-center gap-[clamp(1.5rem,5svh,3rem)]';
+const LOOSE = 'flex flex-1 flex-col justify-center gap-stage';
 
 const TITLE =
   'm-0 text-[calc(var(--text-hero)+2px)]/[var(--text-hero--line-height)] font-[900] tracking-[-0.02em] text-ink text-balance text-shadow-md select-none sm:text-hero sm:font-[800]';
@@ -40,6 +39,9 @@ const STAGE_UNDER = 'mt-[clamp(0.5rem,2.2svh-0.25rem,1.25rem)]';
 const FOOTNOTE =
   'm-0 flex animate-ticker items-center justify-center gap-2 text-[0.8125rem]/none font-semibold text-ink/55 halo [animation-delay:700ms]';
 
+const FOOTER =
+  'flex shrink-0 justify-center pt-[clamp(0.5rem,2svh,1.25rem)] max-sm:short:hidden short-wide:absolute short-wide:right-8 short-wide:bottom-0 short-wide:pt-0 lg:short-wide:right-14';
+
 export const Hero = ({
   slide,
   index,
@@ -57,56 +59,81 @@ export const Hero = ({
     footnote,
     actions,
   } = slide;
-  const { stage: Stage, cta: Cta } = actions ?? {};
+  const { stage: Stage, cta: Cta, footer: Footer } = actions ?? {};
   const [titleLead, titleTail, titleMark] = slide.title;
   const left = align === 'left';
   const flow = left && 'max-lg:inline-block';
 
   return (
-    <div
-      className={clsx(plush ? 'mt-auto' : LOOSE, left ? FRAME : 'text-center')}
-    >
-      <div className='min-w-0'>
-        <h1 className={clsx(TITLE, SHADOWS[theme])}>
-          <span
-            key={`lead:${index}`}
-            className={clsx('block animate-title', flow)}
-          >
-            <Name stroke>{titleLead}</Name>
-          </span>{' '}
-          <span
-            key={`tail:${index}`}
-            className={clsx('block animate-title [animation-delay:50ms]', flow)}
-          >
-            <Name stroke>{titleTail}</Name>
-            {titleMark && (
-              <span className='text-accent' style={{ color: mark }}>
-                <Name stroke>{titleMark}</Name>
-              </span>
-            )}
-          </span>
-        </h1>
-
-        {text && (
-          <p
-            key={`text:${index}`}
-            className={clsx(
-              LEDE,
-              plush && LEDE_PLUSH,
-              !left && 'mx-auto',
-              SHADOWS[theme]
-            )}
-          >
-            {text}
-          </p>
+    <>
+      <div
+        className={clsx(
+          plush ? 'mt-auto' : LOOSE,
+          left ? FRAME : 'text-center'
         )}
+      >
+        <div className='min-w-0'>
+          <h1 className={clsx(TITLE, SHADOWS[theme])}>
+            <span
+              key={`lead:${index}`}
+              className={clsx('block animate-title', flow)}
+            >
+              <Name stroke>{titleLead}</Name>
+            </span>{' '}
+            <span
+              key={`tail:${index}`}
+              className={clsx(
+                'block animate-title [animation-delay:50ms]',
+                flow
+              )}
+            >
+              <Name stroke>{titleTail}</Name>
+              {titleMark && (
+                <span className='text-accent' style={{ color: mark }}>
+                  <Name stroke>{titleMark}</Name>
+                </span>
+              )}
+            </span>
+          </h1>
 
-        {Cta && (
+          {text && (
+            <p
+              key={`text:${index}`}
+              className={clsx(
+                LEDE,
+                plush && LEDE_PLUSH,
+                !left && 'mx-auto',
+                SHADOWS[theme]
+              )}
+            >
+              {text}
+            </p>
+          )}
+
+          {Cta && (
+            <div
+              key={`cta:${index}`}
+              className='mt-10 animate-slide max-lg:hidden'
+            >
+              <Cta
+                open={partners}
+                onOpen={onPartners}
+                onTalk={onTalk}
+                mark={mark}
+              />
+            </div>
+          )}
+        </div>
+
+        {Stage && (
           <div
-            key={`cta:${index}`}
-            className='mt-10 animate-slide max-lg:hidden'
+            key={`stage:${index}`}
+            className={clsx(
+              left ? STAGE_ASIDE : plush && STAGE_UNDER,
+              !still && 'animate-slide'
+            )}
           >
-            <Cta
+            <Stage
               open={partners}
               onOpen={onPartners}
               onTalk={onTalk}
@@ -114,30 +141,24 @@ export const Hero = ({
             />
           </div>
         )}
+
+        {footnote && (
+          <p key={`footnote:${index}`} className={FOOTNOTE}>
+            {footnote}
+          </p>
+        )}
       </div>
 
-      {Stage && (
-        <div
-          key={`stage:${index}`}
-          className={clsx(
-            left ? STAGE_ASIDE : plush && STAGE_UNDER,
-            !still && 'animate-slide'
-          )}
-        >
-          <Stage
+      {Footer && (
+        <footer key={`footer:${index}`} className={FOOTER}>
+          <Footer
             open={partners}
             onOpen={onPartners}
             onTalk={onTalk}
             mark={mark}
           />
-        </div>
+        </footer>
       )}
-
-      {footnote && (
-        <p key={`footnote:${index}`} className={FOOTNOTE}>
-          {footnote}
-        </p>
-      )}
-    </div>
+    </>
   );
 };
