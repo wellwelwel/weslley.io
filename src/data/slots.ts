@@ -341,9 +341,12 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-12-05',
-    event: 'Anúncio em Breve',
-    logo: '/img/secret.svg',
-    title: 'Segura o coração 🌱',
-    role: 'Palestra (Maybe?)',
+    event: 'DevFest Recife (GDG)',
+    logo: '/img/devfest-recife.png',
+    venue: 'Recife, PE',
+    address: 'NERD - Porto Digital - Recife, PE',
+    title: 'Você realmente sabe alguma coisa sobre segurança?',
+    role: 'Palestra',
+    url: 'https://gdg.rec.br/',
   },
 ];
