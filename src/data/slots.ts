@@ -311,7 +311,7 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-09-19',
-    time: '14:00',
+    time: '13:00',
     event: 'GO!RN, GDG Natal & Caicó Valley',
     logo: '/img/gorn.svg',
     url: 'https://gorn.com.br/',
