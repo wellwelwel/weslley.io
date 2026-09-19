@@ -331,7 +331,7 @@ export const slots: Slot[] = [
     coupon: {
       code: 'WELLWELWEL',
       url: 'https://eventos.codecon.dev/eventos/select-experience-26?c=WELLWELWEL',
-      off: 10,
+      off: 20,
     },
     venue: 'São Paulo, SP',
     address: 'STATE INNOVATION CENTER, SÃO PAULO - SP',
