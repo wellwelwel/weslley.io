@@ -83,6 +83,22 @@
       "src/assets/img/devfest-cerrado-108.101a0a39.webp"
     ]
   },
+  "src/assets/img/devfest.png": {
+    "hash": "05ca73155d35c0b9e2f298eef4477510e9322abc92d803825d297df426ddca9e",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
+    "variants": [
+      "src/assets/img/devfest-48.1bdb02be.avif",
+      "src/assets/img/devfest-64.1bdb02be.avif",
+      "src/assets/img/devfest-72.1bdb02be.avif",
+      "src/assets/img/devfest-96.1bdb02be.avif",
+      "src/assets/img/devfest-108.1bdb02be.avif",
+      "src/assets/img/devfest-48.1bdb02be.webp",
+      "src/assets/img/devfest-64.1bdb02be.webp",
+      "src/assets/img/devfest-72.1bdb02be.webp",
+      "src/assets/img/devfest-96.1bdb02be.webp",
+      "src/assets/img/devfest-108.1bdb02be.webp"
+    ]
+  },
   "src/assets/img/devreferencias.png": {
     "hash": "e187ab773d0d5b93ea7b7636b4f1fe8796b86f34eda40b454f54e7180635b17c",
     "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",

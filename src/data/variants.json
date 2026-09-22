@@ -35,6 +35,12 @@
     "width": 256,
     "height": 256
   },
+  "/img/devfest.png": {
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "1bdb02be",
+    "width": 454,
+    "height": 220
+  },
   "/img/devreferencias.png": {
     "widths": [48, 64, 72, 96, 108],
     "stamp": "7eb4c695",
