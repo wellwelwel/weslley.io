@@ -10,9 +10,15 @@ type Calendar = {
   opens: string;
 };
 
+type Marker = {
+  center: number;
+  first: number;
+  last: number;
+};
+
 const DAY = 86_400_000;
 
-const PITCH = { inset: 32, least: 72, daily: 4, most: 128 };
+const PITCH = { inset: 32, least: 72, daily: 4, most: 128, sibling: 48 };
 
 export const MONTHS = [
   'janeiro',
@@ -113,17 +119,33 @@ const gauge = (left: number, right: number): number =>
 
 const times = slots.map(({ date }) => parse(opensAt(date)).getTime());
 
+const keys = slots.map(({ event, date }) => `${event}:${span(date).join()}`);
+
+const sibling = (index: number): boolean =>
+  index > 0 && keys[index] === keys[index - 1];
+
+const distance = (index: number): number =>
+  sibling(index) ? PITCH.sibling : gauge(times[index - 1], times[index]);
+
 export const labels = slots.map(({ date }) => calendar(date));
 
 export const openings = slots.map(({ time }) => time?.split(' - ')[0]);
 
-export const stations = times.reduce<number[]>(
-  (positions, time, index) =>
+export const stations = slots.reduce<number[]>(
+  (positions, _, index) =>
     index === 0
       ? [PITCH.inset]
-      : [...positions, positions[index - 1] + gauge(times[index - 1], time)],
+      : [...positions, positions[index - 1] + distance(index)],
   []
 );
+
+const heads = slots.flatMap((_, index) => (sibling(index) ? [] : [index]));
+
+export const markers = heads.map<Marker>((first, order) => {
+  const last = (heads[order + 1] ?? slots.length) - 1;
+
+  return { center: (stations[first] + stations[last]) / 2, first, last };
+});
 
 export const extent = stations[stations.length - 1] + PITCH.inset;
 

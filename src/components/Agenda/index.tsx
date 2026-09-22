@@ -8,6 +8,7 @@ import {
   anchor,
   extent,
   labels,
+  markers,
   openings,
   placeOf,
   stations,
@@ -171,6 +172,30 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
             className='relative h-14 short:h-8.5 sm:h-16.5'
             style={{ width: extent }}
           >
+            {markers.map(({ center, first, last }) => (
+              <span
+                key={`${labels[first].opens}:${first}`}
+                aria-hidden='true'
+                style={{ left: center }}
+                className={clsx(
+                  'pointer-events-none absolute top-0 flex -translate-x-1/2 flex-col items-center gap-1 transition-[opacity,scale] duration-250 ease-swift short:gap-0.5',
+                  first <= focus && focus <= last ? 'scale-105' : 'opacity-55'
+                )}
+              >
+                <span
+                  className={clsx(
+                    'text-[0.625rem]/none font-bold tracking-widest whitespace-nowrap uppercase',
+                    first <= focus && focus <= last
+                      ? 'text-ink'
+                      : 'text-ink/55 max-sm:invisible'
+                  )}
+                >
+                  {labels[first].brief}
+                </span>
+                <span className='h-2 w-px bg-ink/25 short:h-1' />
+              </span>
+            ))}
+
             {slots.map((slot, index) => (
               <button
                 key={`${labels[index].opens}:${slot.title}`}
@@ -180,22 +205,10 @@ export const Agenda = memo(({ onTalk }: AgendaOptions): ReactNode => {
                 aria-label={`${labels[index].brief}: ${slot.event}`}
                 style={{ left: stations[index] }}
                 className={clsx(
-                  'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none flex-col items-center gap-1 border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-swift after:absolute after:inset-x-0 after:-inset-y-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 short:gap-0.5',
+                  'absolute bottom-0 flex -translate-x-1/2 cursor-pointer appearance-none border-0 bg-transparent p-0 transition-[opacity,scale] duration-250 ease-swift after:absolute after:-inset-x-1.5 after:-top-8 after:-bottom-1.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent active:scale-95 short:after:-inset-x-3.5 short:after:-top-6 sm:after:inset-x-0',
                   index === focus ? 'scale-105' : 'opacity-55 hover:opacity-75'
                 )}
               >
-                <span
-                  className={clsx(
-                    'text-[0.625rem]/none font-bold tracking-widest whitespace-nowrap uppercase',
-                    index === focus ? 'text-ink' : 'text-ink/55 max-sm:hidden'
-                  )}
-                >
-                  {labels[index].brief}
-                </span>
-                <span
-                  aria-hidden='true'
-                  className='h-2 w-px bg-ink/25 short:h-1'
-                />
                 <span className='flex size-7.5 items-center justify-center short:size-4 sm:size-10'>
                   <Picture
                     src={slot.logo ?? AVATAR}
