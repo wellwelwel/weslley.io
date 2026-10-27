@@ -1,34 +1,31 @@
-type Locale = 'en' | 'pt-BR';
+type Scale = { limit: number; one: string; other: string };
 
-type Scale = { limit: number; suffix: string };
-
-const DECIMALS: Record<Locale, string> = { 'pt-BR': ',', en: '.' };
-
-const SCALES: Record<Locale, Scale[]> = {
-  'pt-BR': [
-    { limit: 1_000_000_000, suffix: ' bilhões' },
-    { limit: 1_000_000, suffix: ' milhões' },
-    { limit: 1_000, suffix: ' mil' },
-  ],
-  en: [
-    { limit: 1_000_000_000, suffix: ' billion' },
-    { limit: 1_000_000, suffix: ' million' },
-    { limit: 1_000, suffix: ' thousand' },
-  ],
+type AbbreviateOptions = {
+  fractionDigits?: number;
+  decimal?: string;
 };
+
+const LOCALE = 'pt-BR';
+
+const PLURALS = new Intl.PluralRules(LOCALE);
+
+const SCALES: Scale[] = [
+  { limit: 1_000_000_000, one: 'bilhão', other: 'bilhões' },
+  { limit: 1_000_000, one: 'milhão', other: 'milhões' },
+  { limit: 1_000, one: 'mil', other: 'mil' },
+];
 
 export const abbreviate = (
   value: number,
-  locale: Locale = 'pt-BR',
-  fractionDigits: number = 1
+  { fractionDigits = 1, decimal = ',' }: AbbreviateOptions = {}
 ): string => {
-  const scale = SCALES[locale].find(({ limit }) => value >= limit);
+  const scale = SCALES.find(({ limit }) => value >= limit);
 
-  if (!scale) return value.toLocaleString(locale);
+  if (!scale) return value.toLocaleString(LOCALE);
 
-  const compact = (value / scale.limit)
-    .toFixed(fractionDigits)
-    .replace('.', DECIMALS[locale]);
+  const compact = (value / scale.limit).toFixed(fractionDigits);
+  const suffix =
+    PLURALS.select(Number(compact)) === 'one' ? scale.one : scale.other;
 
-  return `${compact}${scale.suffix}`;
+  return `${compact.replace('.', decimal)} ${suffix}`;
 };

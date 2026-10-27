@@ -1,15 +1,25 @@
 import type { ReactNode } from 'react';
-import { useRef } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
+import { useRoll } from '@site/src/components/Home/useRoll';
 import { Name } from '@site/src/components/Name';
-import { motion } from '@site/src/helpers/reduced-motion';
 import { useDownloadsLabel } from '@site/src/hooks/useDownloads';
 
-gsap.registerPlugin(useGSAP);
+type GlyphOptions = {
+  character: string;
+  index: number;
+};
 
-type DigitOptions = {
-  char: string;
+type ClipOptions = {
+  character: string;
+  children: ReactNode;
+  bleed?: boolean;
+};
+
+type FlipOptions = {
+  index: number;
+};
+
+type SuffixOptions = {
+  word: string;
   index: number;
 };
 
@@ -23,53 +33,90 @@ const NUMBERS = Array.from(
 );
 
 const ROW = 100 / NUMBERS.length;
-const TURN = ROW * DIGITS;
 const REST = DIGITS * (COPIES - 1);
 
-const ROLL = { duration: 0.5, stagger: 0.075, ease: 'power2.out' };
-const SPIN = { full: TURN * (COPIES - 1), reduced: TURN };
+const ROWS = { full: REST, reduced: DIGITS };
+const SPIN = { full: ROWS.full * ROW, reduced: ROWS.reduced * ROW };
+const LIFT = { full: ROWS.full * 100, reduced: ROWS.reduced * 100 };
 
-const Digit = ({ char, index }: DigitOptions): ReactNode => {
-  const strip = useRef<HTMLSpanElement>(null);
-  const target = Number(char);
+const SCALE = { from: 'm', to: 'b' };
+const FLIP = { full: 100, reduced: 75 };
 
-  useGSAP(() => {
-    if (!strip.current) return;
+const Clip = ({ character, children, bleed }: ClipOptions): ReactNode => (
+  <span className='relative inline-block'>
+    <span className='invisible'>{character}</span>
+    <span
+      className={`absolute inset-0 ${bleed ? 'overflow-y-clip' : 'overflow-hidden'}`}
+    >
+      {children}
+    </span>
+  </span>
+);
 
-    gsap.fromTo(
-      strip.current,
-      { yPercent: motion(SPIN) },
-      {
-        yPercent: 0,
-        duration: ROLL.duration,
-        ease: ROLL.ease,
-        delay: index * ROLL.stagger,
-      }
-    );
-  });
+const Digit = ({ character, index }: GlyphOptions): ReactNode => {
+  const strip = useRoll(SPIN, index);
+  const target = Number(character);
 
   return (
-    <span className='relative inline-block'>
-      <span className='invisible'>{char}</span>
-      <span className='absolute inset-0 overflow-hidden'>
+    <Clip character={character}>
+      <span
+        className='block'
+        style={{ transform: `translateY(-${(REST + target) * ROW}%)` }}
+      >
         <span
+          ref={strip}
           className='block'
-          style={{ transform: `translateY(-${(REST + target) * ROW}%)` }}
+          style={{ transform: `translateY(${SPIN.full}%)` }}
         >
-          <span
-            ref={strip}
-            className='block'
-            style={{ transform: `translateY(${SPIN.full}%)` }}
-          >
-            {NUMBERS.map((number, position) => (
-              <span key={`roll:${position}`} className='block'>
-                <Name stroke>{String(number)}</Name>
-              </span>
-            ))}
-          </span>
+          {NUMBERS.map((number, position) => (
+            <span key={`roll:${position}`} className='block'>
+              <Name stroke>{String(number)}</Name>
+            </span>
+          ))}
         </span>
       </span>
-    </span>
+    </Clip>
+  );
+};
+
+const Separator = ({ character, index }: GlyphOptions): ReactNode => {
+  const glyph = useRoll(LIFT, index);
+
+  return (
+    <Clip character={character}>
+      <span ref={glyph} className='block'>
+        <Name stroke>{character}</Name>
+      </span>
+    </Clip>
+  );
+};
+
+const Flip = ({ index }: FlipOptions): ReactNode => {
+  const strip = useRoll(FLIP, index, { clearProps: 'transform' });
+
+  return (
+    <Clip character={SCALE.to} bleed>
+      <span ref={strip} className='relative block'>
+        <span className='absolute right-[-0.04em] bottom-full'>
+          <Name stroke>{SCALE.from}</Name>
+        </span>
+        <Name stroke>{SCALE.to}</Name>
+      </span>
+    </Clip>
+  );
+};
+
+const Suffix = ({ word, index }: SuffixOptions): ReactNode => {
+  if (!word.startsWith(SCALE.to)) return <Name stroke>{word}</Name>;
+
+  return (
+    <>
+      <span className='sr-only'>{word}</span>
+      <span aria-hidden='true'>
+        <Flip index={index} />
+        <Name stroke>{word.slice(SCALE.to.length)}</Name>
+      </span>
+    </>
   );
 };
 
@@ -83,18 +130,24 @@ export const Downloads = (): ReactNode => {
       <span className='font-featured tabular-nums'>
         <span className='sr-only'>{amount}</span>
         <span aria-hidden='true'>
-          {[...amount].map((char, index) =>
-            /^\d$/.test(char) ? (
-              <Digit key={`digit:${index}`} char={char} index={index} />
+          {[...amount].map((character, index) =>
+            /^\d$/.test(character) ? (
+              <Digit
+                key={`digit:${index}`}
+                character={character}
+                index={index}
+              />
             ) : (
-              <Name key={`char:${index}`} stroke>
-                {char}
-              </Name>
+              <Separator
+                key={`separator:${index}`}
+                character={character}
+                index={index}
+              />
             )
           )}
         </span>
-      </span>
-      {` ${suffix}`}
+      </span>{' '}
+      <Suffix word={suffix} index={amount.length + 1} />
     </Name>
   );
 };
