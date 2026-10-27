@@ -4,7 +4,7 @@ description: Authoritative engineering reference covering code conventions, comm
 user-invocable: true
 metadata:
   author: Weslley Araújo
-  version: '1.0.1'
+  version: '1.2.0'
   source: https://github.com/wellwelwel/skills
 ---
 
@@ -34,6 +34,11 @@ Where the project already has an established convention that contradicts one bel
 - **On Node.js, always prefix native imports with `node:`** (for example `node:path`, `node:fs`).
 - **Prefer the async native APIs when viable** (for example `node:fs/promises`).
 
+### Layout
+
+- **Shared declarations live at the top of the file or scope.** Anything used by more than one block is declared before the first block that uses it, never between blocks. Order them by kind: types first, then values and fixtures, then functions.
+- **Group statements by kind, and separate the groups with one blank line.** Consecutive declarations stay together, consecutive calls stay together, and the switch from one kind to the other gets a blank line, even when a group holds a single statement. The same rule applies inside callbacks and between top-level declarations.
+
 ### Comments
 
 - **Never add obvious comments.** Assume that if code needs a comment to be understood, the implementation is poor, dirty/messy, or even rotten.
@@ -46,13 +51,17 @@ Where the project already has an established convention that contradicts one bel
 
 - **`any` and `as unknown as` are forbidden.** No exceptions.
 - **Prefer `type`.** Use `interface` only when a class is meant to implement it.
+- **No pass-through aliases.** A `type` whose whole definition is another named type is a duplicated type under a second name.
 - Reach for `as` last. Prefer a direct type annotation or `satisfies`. A plain `as` cast is allowed, but only when neither of those fits.
 - **Keep type declarations together.** When the project dedicates a place to them (a `types` directory, for example), declare them there instead of scattering `type` and `interface` across the codebase.
 
 ## Testing
 
+- When the `testing` skill is installed, use it to decide what deserves a test and what each test must assert.
 - Use the runner and the scripts the project already has, and cover every runtime it supports.
 - When the project has no runner yet, prefer [**Poku**](https://poku.io/llms.txt), and give each supported runtime its own script (for example `npm test`, `bun run test:bun`, `deno task test:deno`).
+- **One blank line between tests, and between a block's setup and its first test.**
+- **Arrange, then assert.** Every call and declaration comes first, then a blank line, then every assertion. Never interleave them. A test made only of assertions keeps them together with no blank line.
 
 ## Git
 

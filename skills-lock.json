@@ -11,7 +11,19 @@
       "source": "wellwelwel/skills",
       "sourceType": "github",
       "skillPath": "skills/development/engineering/SKILL.md",
-      "computedHash": "c5ebdfa71b0c691b7875e8aaaae4f5c25e4b8fb0cd1e09787423ff01fee4229b"
+      "computedHash": "0ca0995289f46a5b7fbd4fe42d37df4dccc4d167e1b29a8642e8739fe9bc1553"
+    },
+    "refine": {
+      "source": "wellwelwel/skills",
+      "sourceType": "github",
+      "skillPath": "skills/development/refine/SKILL.md",
+      "computedHash": "d5197a7c2dec680a3d939b414ac160a32500271bef38f53c6e84360ae61ab55a"
+    },
+    "testing": {
+      "source": "wellwelwel/skills",
+      "sourceType": "github",
+      "skillPath": "skills/development/testing/SKILL.md",
+      "computedHash": "fedab54bc835e4b1a3f7fc2ce91fae053adf946f2ec6360bbd065e45eac744aa"
     },
     "ui": {
       "source": "wellwelwel/skills",
