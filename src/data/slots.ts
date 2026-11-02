@@ -350,6 +350,14 @@ export const slots: Slot[] = [
     role: 'Palestra',
   },
   {
+    date: '2026-11-28',
+    event: 'DevFest (GDG)',
+    logo: '/img/devfest.png',
+    title:
+      'Inteligência Sintética: O que acontece quando a criatividade deixa de ser prioridade?',
+    role: 'Palestra',
+  },
+  {
     date: '2026-12-05',
     event: 'DevFest Recife (GDG)',
     logo: '/img/devfest-recife.png',
