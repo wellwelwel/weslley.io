@@ -46,7 +46,7 @@ export const slots: Slot[] = [
   {
     date: '2025-03-14',
     event: 'GitHub Brasil',
-    logo: '/img/github-brazil.png',
+    logo: '/img/github-brasil.png',
     talk: 'github-brasil-open-source-friday',
     coupon: { code: 'Gratuito' },
     venue: 'Online',
@@ -293,7 +293,7 @@ export const slots: Slot[] = [
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     venue: 'São Paulo, SP',
     address:
-      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020, Brazil',
+      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020',
     role: 'Keynote',
   },
   {
@@ -306,7 +306,7 @@ export const slots: Slot[] = [
     title: 'O impacto da Inteligência Artificial na programação',
     venue: 'São Paulo, SP',
     address:
-      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020, Brazil',
+      'Av. Manuel Bandeira, 500 - Vila Leopoldina, São Paulo - SP, 05317-020',
     role: 'Painel',
   },
   {
@@ -334,7 +334,8 @@ export const slots: Slot[] = [
       off: 20,
     },
     venue: 'São Paulo, SP',
-    address: 'STATE INNOVATION CENTER, SÃO PAULO - SP',
+    address:
+      'STATE Innovation Center — Av. Manuel Bandeira, 360 - Vila Leopoldina, São Paulo - SP, 05317-020',
     title:
       'Evento exclusivo para profissionais em cargos sênior ou superiores.',
     role: 'Embaixador',
@@ -345,7 +346,8 @@ export const slots: Slot[] = [
     logo: '/img/devfest.png',
     url: 'https://devfestjoaopessoa.gdgjoaopessoa.com.br/',
     venue: 'João Pessoa, PB',
-    address: 'Uniesp - João Pessoa, PB',
+    address:
+      'Uniesp — Rod. BR-230, Km 14 - Morada Nova, Cabedelo - PB, 58109-303',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     role: 'Palestra',
   },
@@ -353,6 +355,10 @@ export const slots: Slot[] = [
     date: '2026-11-28',
     event: 'DevFest (GDG)',
     logo: '/img/devfest.png',
+    url: 'https://gdg.community.dev/gdg-cloud-sao-paulo/',
+    venue: 'São Paulo, SP',
+    address:
+      'FIAP — Av. Paulista, 1106 - Bela Vista, São Paulo - SP, 01310-914',
     title:
       'Inteligência Sintética: O que acontece quando a criatividade deixa de ser prioridade?',
     role: 'Palestra',
@@ -362,7 +368,8 @@ export const slots: Slot[] = [
     event: 'DevFest Recife (GDG)',
     logo: '/img/devfest-recife.png',
     venue: 'Recife, PE',
-    address: 'NERD - Porto Digital - Recife, PE',
+    address:
+      'NERD Porto Digital — R. Dona Maria César, 70 - Bairro do Recife, Recife - PE, 50030-140',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     role: 'Palestra',
     url: 'https://gdg.rec.br/',
