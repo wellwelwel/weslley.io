@@ -371,7 +371,7 @@ export const slots: Slot[] = [
     address:
       'NERD Porto Digital — R. Dona Maria César, 70 - Bairro do Recife, Recife - PE, 50030-140',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
-    role: 'Palestra',
+    role: 'Keynote',
     url: 'https://gdg.rec.br/',
   },
 ];
