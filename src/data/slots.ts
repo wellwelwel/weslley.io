@@ -345,6 +345,11 @@ export const slots: Slot[] = [
     event: 'DevFest João Pessoa (GDG)',
     logo: '/img/devfest.png',
     url: 'https://devfestjoaopessoa.gdgjoaopessoa.com.br/',
+    coupon: {
+      code: 'PALESTRANTE30',
+      url: 'https://doity.com.br/devfest-joao-pessoa?c=PALESTRANTE30',
+      off: 30,
+    },
     venue: 'João Pessoa, PB',
     address:
       'Uniesp — Rod. BR-230, Km 14 - Morada Nova, Cabedelo - PB, 58109-303',
@@ -365,6 +370,19 @@ export const slots: Slot[] = [
   },
   {
     date: '2026-12-05',
+    time: '10:30',
+    event: 'DevFest Recife (GDG)',
+    logo: '/img/devfest-recife.png',
+    venue: 'Recife, PE',
+    address:
+      'NERD Porto Digital — R. Dona Maria César, 70 - Bairro do Recife, Recife - PE, 50030-140',
+    title: 'APONTI EP1 — Web, IA e open source',
+    role: 'Podcast',
+    url: 'https://gdg.rec.br/',
+  },
+  {
+    date: '2026-12-05',
+    time: '14:20',
     event: 'DevFest Recife (GDG)',
     logo: '/img/devfest-recife.png',
     venue: 'Recife, PE',
@@ -372,6 +390,18 @@ export const slots: Slot[] = [
       'NERD Porto Digital — R. Dona Maria César, 70 - Bairro do Recife, Recife - PE, 50030-140',
     title: 'Você realmente sabe alguma coisa sobre segurança?',
     role: 'Keynote',
+    url: 'https://gdg.rec.br/',
+  },
+  {
+    date: '2026-12-05',
+    time: '15:40',
+    event: 'DevFest Recife (GDG)',
+    logo: '/img/devfest-recife.png',
+    venue: 'Recife, PE',
+    address:
+      'NERD Porto Digital — R. Dona Maria César, 70 - Bairro do Recife, Recife - PE, 50030-140',
+    title: 'Capture the Flag ⚡️',
+    role: 'Competição',
     url: 'https://gdg.rec.br/',
   },
 ];
