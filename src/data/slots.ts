@@ -46,7 +46,7 @@ export const slots: Slot[] = [
   {
     date: '2025-03-14',
     event: 'GitHub Brasil',
-    logo: '/img/github-brasil.png',
+    logo: '/img/github-brazil.png',
     talk: 'github-brasil-open-source-friday',
     coupon: { code: 'Gratuito' },
     venue: 'Online',
