@@ -1,0 +1,5 @@
+{
+  "$schema": "https://lagune.ai/schemas/configs.json",
+  "categories": ["owasp", "javascript"],
+  "checkers": { "ignore": [".claude", "i18n", "plugins", "tools", "test"] }
+}
