@@ -1,41 +1,45 @@
 {
-  "version": 1,
+  "version": 2,
   "skills": {
     "cdp": {
       "source": "wellwelwel/skills",
+      "commit": "ddc852e8423316ad971137b937d3c56e063f75ee",
       "sourceType": "github",
       "skillPath": "skills/frontend/cdp/SKILL.md",
-      "computedHash": "32e59c05d49c93972ac0644a03197561123aac4da49f2901163741fcd615cf3b"
+      "computedHash": "4281da7aa21dd8e666df025053248810dc791e387787db5b5322ef2ff2be6e3d"
     },
     "engineering": {
       "source": "wellwelwel/skills",
+      "commit": "ddc852e8423316ad971137b937d3c56e063f75ee",
       "sourceType": "github",
       "skillPath": "skills/development/engineering/SKILL.md",
-      "computedHash": "0ca0995289f46a5b7fbd4fe42d37df4dccc4d167e1b29a8642e8739fe9bc1553"
+      "computedHash": "e6044c9bdb37bad54cefd2e68b88e5b2f459a4c9ce609cc940fadf3074a9e0ad"
     },
     "refine": {
       "source": "wellwelwel/skills",
+      "commit": "ddc852e8423316ad971137b937d3c56e063f75ee",
       "sourceType": "github",
       "skillPath": "skills/development/refine/SKILL.md",
-      "computedHash": "d5197a7c2dec680a3d939b414ac160a32500271bef38f53c6e84360ae61ab55a"
+      "computedHash": "e9159c3beffe3139697912dc9562860f4738fd5996c68ff7fea2f78dd26950e3"
     },
     "testing": {
       "source": "wellwelwel/skills",
+      "commit": "ddc852e8423316ad971137b937d3c56e063f75ee",
       "sourceType": "github",
       "skillPath": "skills/development/testing/SKILL.md",
-      "computedHash": "fedab54bc835e4b1a3f7fc2ce91fae053adf946f2ec6360bbd065e45eac744aa"
+      "computedHash": "1f2339da8d640da04502f28313be40b3e394909c290b93bc46b179889850fb50"
     },
     "ui": {
       "source": "wellwelwel/skills",
       "sourceType": "github",
       "skillPath": "skills/frontend/ui/SKILL.md",
-      "computedHash": "e3a6b5afdba06aae2e4e7b3018f6052c8b706925658e550e76e999d528ab2294"
+      "computedHash": ""
     },
     "writer": {
       "source": "wellwelwel/skills",
       "sourceType": "github",
       "skillPath": "skills/texts/writer/SKILL.md",
-      "computedHash": "9c145f6b619de88503d1505a322aa7a981ed4e241eca2601e1994bbc6092ab7e"
+      "computedHash": ""
     }
   }
 }
