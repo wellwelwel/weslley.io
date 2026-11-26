@@ -341,7 +341,8 @@ export const slots: Slot[] = [
     role: 'Embaixador',
   },
   {
-    date: ['2026-11-20', '2026-11-21'],
+    date: '2026-11-20',
+    time: '14:40',
     event: 'DevFest João Pessoa (GDG)',
     logo: '/img/devfest.png',
     url: 'https://devfestjoaopessoa.gdgjoaopessoa.com.br/',
