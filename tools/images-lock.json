@@ -131,6 +131,22 @@
       "src/assets/img/github-brazil-108.b40147bf.webp"
     ]
   },
+  "src/assets/img/linuxtips.png": {
+    "hash": "4276636d54f18b7b6ef4bb3b8413702e24c04a86c9a9a3c2d16fc75ca78b1a0b",
+    "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",
+    "variants": [
+      "src/assets/img/linuxtips-48.50173d03.avif",
+      "src/assets/img/linuxtips-64.50173d03.avif",
+      "src/assets/img/linuxtips-72.50173d03.avif",
+      "src/assets/img/linuxtips-96.50173d03.avif",
+      "src/assets/img/linuxtips-108.50173d03.avif",
+      "src/assets/img/linuxtips-48.50173d03.webp",
+      "src/assets/img/linuxtips-64.50173d03.webp",
+      "src/assets/img/linuxtips-72.50173d03.webp",
+      "src/assets/img/linuxtips-96.50173d03.webp",
+      "src/assets/img/linuxtips-108.50173d03.webp"
+    ]
+  },
   "src/assets/img/mvpconf.png": {
     "hash": "062fdaefe8688ff739842183c35918932bbe4f6362d9d9dfe80831e02e467b9d",
     "recipe": "{\"widths\":[48,64,72,96,108],\"quality\":{\"avif\":55,\"webp\":80},\"lossless\":true}",

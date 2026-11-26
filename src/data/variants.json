@@ -53,6 +53,12 @@
     "width": 200,
     "height": 200
   },
+  "/img/linuxtips.png": {
+    "widths": [48, 64, 72, 96, 108],
+    "stamp": "50173d03",
+    "width": 192,
+    "height": 192
+  },
   "/img/mvpconf.png": {
     "widths": [48, 64, 72, 96, 108],
     "stamp": "e1a426ea",

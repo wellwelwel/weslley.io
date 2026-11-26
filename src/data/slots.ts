@@ -357,6 +357,17 @@ export const slots: Slot[] = [
     role: 'Palestra',
   },
   {
+    date: '2026-11-26',
+    time: '21:00',
+    event: 'LINUXtips',
+    logo: '/img/linuxtips.png',
+    url: 'https://www.youtube.com/watch?v=8yq4Dqd8w_0',
+    coupon: { code: 'Gratuito' },
+    venue: 'Online',
+    title: 'Reinventando a Segurança na era da IA',
+    role: 'Palestra (Live)',
+  },
+  {
     date: '2026-11-28',
     event: 'DevFest (GDG)',
     logo: '/img/devfest.png',
